@@ -4,7 +4,10 @@ QT += gui
 
 SOURCES += \
     main.cpp \
-    fenprincipale.cpp
+    mainwindow.cpp
 
 HEADERS += \
-    fenprincipale.h
+    mainwindow.h
+
+FORMS += \
+    mainwindow.ui
