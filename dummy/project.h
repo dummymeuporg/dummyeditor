@@ -8,12 +8,15 @@ namespace Dummy {
     class Project
     {
     public:
-        Project();
+        Project(const QString& projectFolder);
 
         static void create(const QString&);
 
     private:
         static QDomDocument _createXmlProjecTree();
+        static void _createXmlProjectFile(const QString&);
+        static void _createFolders(const QString&);
+
     };
 }
 
