@@ -16,7 +16,11 @@ public:
     ~MainWindow();
 
 private:
+    void _initializeProject(const QString&);
     Ui::MainWindow *ui;
+
+private slots:
+    void newProject();
 };
 
 #endif // MAINWINDOW_H
