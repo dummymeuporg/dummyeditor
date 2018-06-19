@@ -22,22 +22,27 @@ MainWindow::~MainWindow()
 void MainWindow::newProject() {
     // Open a file dialog to select a folder
     QString projectDirectory =
-            QFileDialog::getExistingDirectory(
-                this, tr("Choose your project directory"));
-
-    QMessageBox::information(this, tr("Info"), projectDirectory);
+        QFileDialog::getExistingDirectory(this,
+                                          tr("Choose your project directory"));
 
     // Initialize a project into this directory
     _initializeProject(projectDirectory);
 
 }
 
+void MainWindow::openProject() {
+    QString projectDirectory =
+        QFileDialog::getExistingDirectory(
+            this, tr("Choose an existing project directory"));
+
+    Dummy::Project project(projectDirectory);
+
+    ui->treeView->setModel(
+        static_cast<QAbstractItemModel*>(project.mapsModel())
+    );
+}
+
 
 void MainWindow::_initializeProject(const QString& projectDirectory) {
-    // Create project.xml
-    // Create maps folder
-    // Create chipset folder
-    // Create sound folder
-
     Dummy::Project::create(projectDirectory);
 }

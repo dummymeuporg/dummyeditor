@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QDomNode>
 
 #include "treemodel.h"
@@ -7,7 +8,7 @@
 Misc::TreeModel::TreeModel(const QDomNode& mapsNode, QObject* parent)
     : QAbstractItemModel(parent)
 {
-    QString rootData("map name");
+    QString rootData("Maps");
     rootItem = new TreeItem(rootData);
     setupModelData(mapsNode, rootItem);
 }
@@ -72,15 +73,16 @@ int Misc::TreeModel::rowCount(const QModelIndex& parent) const {
 }
 
 int Misc::TreeModel::columnCount(const QModelIndex& parent) const {
-    if (parent.isValid()) {
-        return static_cast<Misc::TreeItem*>(
-            parent.internalPointer())->columnCount();
-    } else {
-        return rootItem->columnCount();
-    }
+    // We only have one column: the map name.
+    return 1;
 }
 
 QVariant Misc::TreeModel::data(const QModelIndex& index, int role) const {
+
+    if (index.column() > 0) {
+        return QVariant();
+    }
+
     if (!index.isValid()) {
         return QVariant();
     }
@@ -118,8 +120,13 @@ void Misc::TreeModel::setupModelData(const QDomNode& node,
 {
     for(QDomNode n = node.firstChild(); !n.isNull(); n = n.nextSibling())
     {
-        Misc::TreeItem* item = new Misc::TreeItem(n.nodeName(), parent);
-        parent->appendChild((item));
-        setupModelData(n, item);
+        if (n.nodeName() == "map") {
+            Misc::TreeItem* item = new Misc::TreeItem(
+                n.attributes().namedItem("name").nodeValue(),
+                parent
+            );
+            parent->appendChild((item));
+            setupModelData(n, item);
+        }
     }
 }

@@ -21,6 +21,7 @@ private:
 
 private slots:
     void newProject();
+    void openProject();
 };
 
 #endif // MAINWINDOW_H

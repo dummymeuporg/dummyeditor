@@ -7,13 +7,33 @@
 #include <QString>
 #include <QTextStream>
 
+#include "misc/treeitem.h"
+#include "misc/treemodel.h"
+
 #include "dummy/project.h"
 
-Dummy::Project::Project(const QString& folderPath)
+Dummy::Project::Project(const QString& folderPath) :
+    m_mapsModel(nullptr)
 {
     Q_UNUSED(folderPath);
     // Try to read the "project.xml" file that should be present in folderPath.
+    QFile xmlProjectFile(folderPath + "/project.xml");
+    m_domDocument.setContent(&xmlProjectFile);
+    xmlProjectFile.close();
 
+    QDomNodeList mapsNodes = m_domDocument
+        .documentElement()
+        .elementsByTagName("maps");
+
+    if (mapsNodes.length() > 0) {
+        m_mapsModel = new Misc::TreeModel(mapsNodes.at(0), nullptr);
+    } else {
+        // TODO: Throw exception?
+    }
+}
+
+Misc::TreeModel* Dummy::Project::mapsModel() {
+    return m_mapsModel;
 }
 
 void Dummy::Project::create(const QString& folder) {
