@@ -27,9 +27,9 @@
        <attribute name="title">
         <string>General</string>
        </attribute>
-       <layout class="QGridLayout" name="tabGeneralGridLayout">
-        <item row="0" column="0">
-         <widget class="QTreeView" name="treeView"/>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QTreeView" name="treeViewMaps"/>
         </item>
        </layout>
       </widget>

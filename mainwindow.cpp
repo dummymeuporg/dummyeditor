@@ -9,9 +9,11 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    m_newMapAction(nullptr)
 {
     ui->setupUi(this);
+
 
     /*----------------------tab GENERAL---------------------------------- */
 
@@ -55,7 +57,17 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     ui->tabGeneralGridLayout->setMenuBar(tabGeneralToolBar);
+
+    m_newMapAction = new QAction(tr("Add new map"));
+    ui->treeViewMaps->setContextMenuPolicy(Qt::ActionsContextMenu);
+    ui->treeViewMaps->addAction(m_newMapAction);
+    QObject::connect(m_newMapAction,
+                     SIGNAL(triggered()),
+                     this,
+                     SLOT(_onNewMapAction()));
+
 }
+
 
 MainWindow::~MainWindow()
 {
@@ -80,7 +92,7 @@ void MainWindow::openProject() {
 
     Dummy::Project project(projectDirectory);
 
-    ui->treeView->setModel(
+    ui->treeViewMaps->setModel(
         static_cast<QAbstractItemModel*>(project.mapsModel())
     );
 }
@@ -88,4 +100,8 @@ void MainWindow::openProject() {
 
 void MainWindow::_initializeProject(const QString& projectDirectory) {
     Dummy::Project::create(projectDirectory);
+}
+
+void MainWindow::_onNewMapAction() {
+    QMessageBox::information(this, "foo", "bar");
 }
