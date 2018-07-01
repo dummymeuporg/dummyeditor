@@ -5,6 +5,7 @@
 #include "dummy/project.h"
 
 #include "mainwindow.h"
+#include "newmapdialog.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -103,5 +104,13 @@ void MainWindow::_initializeProject(const QString& projectDirectory) {
 }
 
 void MainWindow::_onNewMapAction() {
-    QMessageBox::information(this, "foo", "bar");
+    /*
+    QModelIndex index = ui->treeViewMaps->currentIndex();
+    QMessageBox::information(
+        this, "foo",
+        ui->treeViewMaps->model()->data(index).toString());
+    */
+
+    NewMapDialog dlg;
+    dlg.exec();
 }
