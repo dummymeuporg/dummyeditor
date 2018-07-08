@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/cancel_Icon.png</file>
+        <file>icons/copy_Icon.png</file>
+        <file>icons/editor_Icon.png</file>
+        <file>icons/newProject_Icon.png</file>
+        <file>icons/openProject_Icon.png</file>
+        <file>icons/past_Icon.png</file>
+        <file>icons/quit_Icon.png</file>
+        <file>icons/save_Icon.png</file>
+        <file>icons/icon_fullscreen.png</file>
+        <file>icons/icon_launch.png</file>
+        <file>icons/icon_layer0.png</file>
+        <file>icons/icon_layer1.png</file>
+        <file>icons/icon_layer2.png</file>
+        <file>icons/icon_layerEvent.png</file>
+        <file>icons/icon_music.png</file>
+        <file>icons/icon_pen.png</file>
+        <file>icons/icon_prog1.png</file>
+        <file>icons/icon_prog2.png</file>
+        <file>icons/icon_prog3.png</file>
+        <file>icons/icon_prog4.png</file>
+        <file>icons/icon_rect.png</file>
+        <file>icons/icon_selection.png</file>
+    </qresource>
+</RCC>
