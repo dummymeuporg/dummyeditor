@@ -1,5 +1,6 @@
 #include <QFile>
 #include <QFileDialog>
+#include <QGraphicsScene>
 #include <QMessageBox>
 
 #include "dummy/project.h"
@@ -11,7 +12,8 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    m_newMapAction(nullptr)
+    m_newMapAction(nullptr),
+    m_chipsetScene(nullptr)
 {
     ui->setupUi(this);
 
@@ -67,11 +69,19 @@ MainWindow::MainWindow(QWidget *parent) :
                      this,
                      SLOT(_onNewMapAction()));
 
+    m_chipsetScene = new QGraphicsScene();
+    ui->graphicsViewChipset->scale(2.0, 2.0);
+    ui->graphicsViewChipset->setScene(m_chipsetScene);
+
+    // XXX: Test
+    m_chipsetScene->addPixmap(QPixmap("LhynnBis.png"));
+
 }
 
 
 MainWindow::~MainWindow()
 {
+    delete m_newMapAction;
     delete ui;
 }
 

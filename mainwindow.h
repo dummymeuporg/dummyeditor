@@ -8,7 +8,9 @@ namespace Ui {
 class MainWindow;
 }
 
+class QGraphicsScene;
 class QTreeView;
+
 
 class MainWindow : public QMainWindow
 {
@@ -23,6 +25,7 @@ private:
 
     Ui::MainWindow *ui;
     QAction* m_newMapAction;
+    QGraphicsScene* m_chipsetScene;
 
 private slots:
     void newProject();
