@@ -8,17 +8,13 @@ SOURCES += \
     mainwindow.cpp \
     dummy/project.cpp \
     misc/treeitem.cpp \
-    misc/treemodel.cpp \
-    chipsetcell.cpp \
-    mapcell.cpp
+    misc/treemodel.cpp
 
 HEADERS += \
     mainwindow.h \
     dummy/project.h \
     misc/treeitem.h \
-    misc/treemodel.h \
-    chipsetcell.h \
-    mapcell.h
+    misc/treemodel.h
 
 FORMS += \
     mainwindow.ui
