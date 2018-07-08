@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>874</width>
+    <height>644</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,16 +16,364 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QTabWidget" name="tabWidget">
+     <widget class="QTabWidget" name="tabObjects">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
       <widget class="QWidget" name="tabGeneral">
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
        <attribute name="title">
         <string>General</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_2"/>
+       <layout class="QGridLayout" name="tabGeneralGridLayout"/>
       </widget>
-      <widget class="QWidget" name="tab_2">
+      <widget class="QWidget" name="tabChipset">
        <attribute name="title">
-        <string>Tab 2</string>
+        <string>Chipset</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tabClass">
+       <attribute name="title">
+        <string>Class</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="tabClassHorizontalLayout">
+        <item>
+         <widget class="QListWidget" name="listWidget"/>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <widget class="QPushButton" name="addClassButon">
+              <property name="text">
+               <string>Add a class</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="deleteClassButon">
+              <property name="text">
+               <string>Delete a class</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QGridLayout" name="gridLayout">
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="classNameLineEdit"/>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="classInjurySoundLabel">
+              <property name="text">
+               <string>Injury sound :</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="classConcentratioSoundLabel">
+              <property name="text">
+               <string>Concentration sound :</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="classAttaqueSoundLineEdit"/>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="classInjurySoundLineEdit"/>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLineEdit" name="classConcentrationSoundLineEdit"/>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="classAttackSoundLabel">
+              <property name="text">
+               <string>Attack sound :</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="classNameLabel">
+              <property name="text">
+               <string>Name :</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QPushButton" name="classAttackSoundPathButon">
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QPushButton" name="classInjurySoundPathButon">
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="2">
+             <widget class="QPushButton" name="classConcentrationSoundPathButon">
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_10">
+            <item>
+             <layout class="QFormLayout" name="formLayout_2">
+              <item row="0" column="0">
+               <widget class="QLabel" name="label">
+                <property name="text">
+                 <string>Max force :</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_2">
+                <property name="text">
+                 <string>Max dexterity :</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>Max constitution :</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_4">
+                <property name="text">
+                 <string>Max magic :</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="label_5">
+                <property name="text">
+                 <string>Max level :</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="label_6">
+                <property name="text">
+                 <string>Level up point :</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QSpinBox" name="spinBox"/>
+              </item>
+              <item row="1" column="1">
+               <widget class="QSpinBox" name="spinBox_2"/>
+              </item>
+              <item row="2" column="1">
+               <widget class="QSpinBox" name="spinBox_3"/>
+              </item>
+              <item row="3" column="1">
+               <widget class="QSpinBox" name="spinBox_4"/>
+              </item>
+              <item row="4" column="1">
+               <widget class="QSpinBox" name="spinBox_5"/>
+              </item>
+              <item row="5" column="1">
+               <widget class="QSpinBox" name="spinBox_6"/>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="label_36">
+                <property name="text">
+                 <string>Infinite capacity = -1</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QFormLayout" name="formLayout_3">
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_7">
+                <property name="text">
+                 <string>Initial strength :</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_8">
+                <property name="text">
+                 <string>Initial dexterity :</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_9">
+                <property name="text">
+                 <string>Initial constitution :</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_10">
+                <property name="text">
+                 <string>Initial magic :</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QSpinBox" name="spinBox_7"/>
+              </item>
+              <item row="1" column="1">
+               <widget class="QSpinBox" name="spinBox_8"/>
+              </item>
+              <item row="2" column="1">
+               <widget class="QSpinBox" name="spinBox_9"/>
+              </item>
+              <item row="3" column="1">
+               <widget class="QSpinBox" name="spinBox_10"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QFormLayout" name="formLayout_4">
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_11">
+                <property name="text">
+                 <string>Offensive index :</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_12">
+                <property name="text">
+                 <string>Defensive index :</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_13">
+                <property name="text">
+                 <string>Power index :</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_14">
+                <property name="text">
+                 <string>Vitality index :</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="label_15">
+                <property name="text">
+                 <string>Magic index :</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QSpinBox" name="spinBox_11"/>
+              </item>
+              <item row="1" column="1">
+               <widget class="QSpinBox" name="spinBox_12"/>
+              </item>
+              <item row="2" column="1">
+               <widget class="QSpinBox" name="spinBox_13"/>
+              </item>
+              <item row="3" column="1">
+               <widget class="QSpinBox" name="spinBox_14"/>
+              </item>
+              <item row="4" column="1">
+               <widget class="QSpinBox" name="spinBox_15"/>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tabObject">
+       <attribute name="title">
+        <string>Objects</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tabMonsters">
+       <attribute name="title">
+        <string>Monsters</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tabMagic">
+       <attribute name="title">
+        <string>Magic</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tabMonsterArea">
+       <attribute name="title">
+        <string>Monsters' area</string>
        </attribute>
       </widget>
      </widget>
@@ -37,8 +385,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>21</height>
+     <width>874</width>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -52,6 +400,13 @@
     <addaction name="actionImport_project"/>
     <addaction name="actionImport_map"/>
     <addaction name="separator"/>
+    <addaction name="actionClean_project"/>
+    <addaction name="actionMaps_without_parents"/>
+    <addaction name="actionFind_a_map"/>
+    <addaction name="actionCheck_the_map"/>
+    <addaction name="separator"/>
+    <addaction name="actionDelete_test_character"/>
+    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
@@ -59,21 +414,64 @@
      <string>Edit</string>
     </property>
     <addaction name="actionCancel"/>
+    <addaction name="separator"/>
     <addaction name="actionCopy"/>
-    <addaction name="actionCut"/>
+    <addaction name="actionPaste"/>
    </widget>
    <widget class="QMenu" name="menuUpdate_project">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="title">
      <string>Update project</string>
     </property>
    </widget>
    <widget class="QMenu" name="menuHelp">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="title">
      <string>Help</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="actionSelection"/>
+    <addaction name="separator"/>
+    <addaction name="actionPen"/>
+    <addaction name="actionRectangle"/>
+   </widget>
+   <widget class="QMenu" name="menuLayers">
+    <property name="title">
+     <string>Layers</string>
+    </property>
+    <addaction name="actionLow_layer_1"/>
+    <addaction name="actionLow_layer_2"/>
+    <addaction name="actionHigh_layer"/>
+    <addaction name="separator"/>
+    <addaction name="actionEvents_layer"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuick_go_admin"/>
+    <addaction name="actionStarting_point"/>
+    <addaction name="actionRespawn_point"/>
+   </widget>
+   <widget class="QMenu" name="menuGame_test">
+    <property name="title">
+     <string>Game test</string>
+    </property>
+    <addaction name="actionLaunch_test"/>
+    <addaction name="separator"/>
+    <addaction name="actionActivate_fullscreen"/>
+    <addaction name="actionActivate_music"/>
+    <addaction name="actionActivate_character_setting"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuTools"/>
+   <addaction name="menuLayers"/>
+   <addaction name="menuGame_test"/>
    <addaction name="menuUpdate_project"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -88,20 +486,57 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionNew"/>
+   <addaction name="actionSave"/>
+   <addaction name="actionQuit"/>
+   <addaction name="separator"/>
+   <addaction name="actionCancel"/>
+   <addaction name="actionCopy"/>
+   <addaction name="actionPaste"/>
+   <addaction name="separator"/>
   </widget>
   <action name="actionNew">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/newProject_Icon.png</normaloff>icons/newProject_Icon.png</iconset>
+   </property>
    <property name="text">
     <string>New</string>
+   </property>
+   <property name="toolTip">
+    <string>Create a new project</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+   <property name="shortcutVisibleInContextMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionOpen">
    <property name="text">
     <string>Open</string>
    </property>
+   <property name="toolTip">
+    <string>Open an existant project</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
   </action>
   <action name="actionSave">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/save_Icon.png</normaloff>icons/save_Icon.png</iconset>
+   </property>
    <property name="text">
     <string>Save</string>
+   </property>
+   <property name="toolTip">
+    <string>Save the project</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionImport_project">
@@ -115,23 +550,289 @@
    </property>
   </action>
   <action name="actionQuit">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/quit_Icon.png</normaloff>icons/quit_Icon.png</iconset>
+   </property>
    <property name="text">
     <string>Quit</string>
    </property>
+   <property name="toolTip">
+    <string>Quit the editor</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
   </action>
   <action name="actionCancel">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/cancel_Icon.png</normaloff>icons/cancel_Icon.png</iconset>
+   </property>
    <property name="text">
     <string>Cancel</string>
    </property>
+   <property name="toolTip">
+    <string>Cancel the previous action</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
   </action>
   <action name="actionCopy">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/copy_Icon.png</normaloff>icons/copy_Icon.png</iconset>
+   </property>
    <property name="text">
     <string>Copy</string>
    </property>
+   <property name="toolTip">
+    <string>Copy selected evenement(s)/cell(s)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
   </action>
-  <action name="actionCut">
+  <action name="actionPaste">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/past_Icon.png</normaloff>icons/past_Icon.png</iconset>
+   </property>
    <property name="text">
-    <string>Cut</string>
+    <string>Paste</string>
+   </property>
+   <property name="toolTip">
+    <string>Paste event(s)/cell(s) previously copy</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
+  </action>
+  <action name="actionClean_project">
+   <property name="text">
+    <string>Clean project</string>
+   </property>
+  </action>
+  <action name="actionMaps_without_parents">
+   <property name="text">
+    <string>Maps without parents</string>
+   </property>
+  </action>
+  <action name="actionFind_a_map">
+   <property name="text">
+    <string>Find a map</string>
+   </property>
+  </action>
+  <action name="actionCheck_the_map">
+   <property name="text">
+    <string>Check the map</string>
+   </property>
+  </action>
+  <action name="actionPen">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/icon_pen.png</normaloff>icons/icon_pen.png</iconset>
+   </property>
+   <property name="text">
+    <string>Pen</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+S</string>
+   </property>
+  </action>
+  <action name="actionRectangle">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/icon_rect.png</normaloff>icons/icon_rect.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rectangle</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+D</string>
+   </property>
+  </action>
+  <action name="actionLow_layer_1">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/icon_layer0.png</normaloff>icons/icon_layer0.png</iconset>
+   </property>
+   <property name="text">
+    <string>Low layer 1</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+A</string>
+   </property>
+  </action>
+  <action name="actionLow_layer_2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/icon_layer1.png</normaloff>icons/icon_layer1.png</iconset>
+   </property>
+   <property name="text">
+    <string>Low layer 2</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+Z</string>
+   </property>
+  </action>
+  <action name="actionHigh_layer">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/icon_layer2.png</normaloff>icons/icon_layer2.png</iconset>
+   </property>
+   <property name="text">
+    <string>High layer</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+E</string>
+   </property>
+  </action>
+  <action name="actionEvents_layer">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/icon_layerEvent.png</normaloff>icons/icon_layerEvent.png</iconset>
+   </property>
+   <property name="text">
+    <string>Events layer</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+R</string>
+   </property>
+  </action>
+  <action name="actionSelection">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/icon_selection.png</normaloff>icons/icon_selection.png</iconset>
+   </property>
+   <property name="text">
+    <string>Selection</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+Q</string>
+   </property>
+  </action>
+  <action name="actionQuick_go_admin">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/icon_prog1.png</normaloff>icons/icon_prog1.png</iconset>
+   </property>
+   <property name="text">
+    <string>Quick go (admin)</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+T</string>
+   </property>
+  </action>
+  <action name="actionStarting_point">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/icon_prog2.png</normaloff>icons/icon_prog2.png</iconset>
+   </property>
+   <property name="text">
+    <string>Starting point</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+Y</string>
+   </property>
+  </action>
+  <action name="actionRespawn_point">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/icon_prog3.png</normaloff>icons/icon_prog3.png</iconset>
+   </property>
+   <property name="text">
+    <string>Respawn point</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+U</string>
+   </property>
+  </action>
+  <action name="actionLaunch_test">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/icon_launch.png</normaloff>icons/icon_launch.png</iconset>
+   </property>
+   <property name="text">
+    <string>Launch test</string>
+   </property>
+   <property name="shortcut">
+    <string>F9</string>
+   </property>
+  </action>
+  <action name="actionActivate_fullscreen">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/icon_fullscreen.png</normaloff>icons/icon_fullscreen.png</iconset>
+   </property>
+   <property name="text">
+    <string>Activate fullscreen</string>
+   </property>
+  </action>
+  <action name="actionActivate_music">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/icon_music.png</normaloff>icons/icon_music.png</iconset>
+   </property>
+   <property name="text">
+    <string>Activate music</string>
+   </property>
+  </action>
+  <action name="actionActivate_character_setting">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/icon_prog4.png</normaloff>icons/icon_prog4.png</iconset>
+   </property>
+   <property name="text">
+    <string>Activate character setting</string>
+   </property>
+  </action>
+  <action name="actionDelete_test_character">
+   <property name="text">
+    <string>Delete test character</string>
    </property>
   </action>
  </widget>
