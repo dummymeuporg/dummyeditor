@@ -10,7 +10,8 @@ SOURCES += \
     misc/treeitem.cpp \
     misc/treemodel.cpp \
     dummy/map.cpp \
-    newmapdialog.cpp
+    newmapdialog.cpp \
+    chipsetgraphicsscene.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -18,7 +19,8 @@ HEADERS += \
     misc/treeitem.h \
     misc/treemodel.h \
     dummy/map.h \
-    newmapdialog.h
+    newmapdialog.h \
+    chipsetgraphicscene.h
 
 FORMS += \
     mainwindow.ui

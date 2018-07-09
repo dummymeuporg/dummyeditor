@@ -5,6 +5,7 @@
 
 #include "dummy/project.h"
 
+#include "chipsetgraphicscene.h"
 #include "mainwindow.h"
 #include "newmapdialog.h"
 #include "ui_mainwindow.h"
@@ -69,7 +70,7 @@ MainWindow::MainWindow(QWidget *parent) :
                      this,
                      SLOT(_onNewMapAction()));
 
-    m_chipsetScene = new QGraphicsScene();
+    m_chipsetScene = new ChipsetGraphicsScene();
     ui->graphicsViewChipset->scale(2.0, 2.0);
     ui->graphicsViewChipset->setScene(m_chipsetScene);
 
