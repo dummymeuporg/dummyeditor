@@ -1,17 +1,23 @@
 #include <QFile>
 #include <QFileDialog>
+#include <QGraphicsScene>
 #include <QMessageBox>
 
 #include "dummy/project.h"
 
+#include "chipsetgraphicscene.h"
 #include "mainwindow.h"
+#include "newmapdialog.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    m_newMapAction(nullptr),
+    m_chipsetScene(nullptr)
 {
     ui->setupUi(this);
+
 
     /*----------------------tab GENERAL---------------------------------- */
 
@@ -55,10 +61,28 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     ui->tabGeneralGridLayout->setMenuBar(tabGeneralToolBar);
+
+    m_newMapAction = new QAction(tr("Add new map"));
+    ui->treeViewMaps->setContextMenuPolicy(Qt::ActionsContextMenu);
+    ui->treeViewMaps->addAction(m_newMapAction);
+    QObject::connect(m_newMapAction,
+                     SIGNAL(triggered()),
+                     this,
+                     SLOT(_onNewMapAction()));
+
+    m_chipsetScene = new ChipsetGraphicsScene();
+    ui->graphicsViewChipset->scale(2.0, 2.0);
+    ui->graphicsViewChipset->setScene(m_chipsetScene);
+
+    // XXX: Test
+    m_chipsetScene->addPixmap(QPixmap("LhynnBis.png"));
+
 }
+
 
 MainWindow::~MainWindow()
 {
+    delete m_newMapAction;
     delete ui;
 }
 
@@ -80,7 +104,7 @@ void MainWindow::openProject() {
 
     Dummy::Project project(projectDirectory);
 
-    ui->treeView->setModel(
+    ui->treeViewMaps->setModel(
         static_cast<QAbstractItemModel*>(project.mapsModel())
     );
 }
@@ -88,4 +112,16 @@ void MainWindow::openProject() {
 
 void MainWindow::_initializeProject(const QString& projectDirectory) {
     Dummy::Project::create(projectDirectory);
+}
+
+void MainWindow::_onNewMapAction() {
+    /*
+    QModelIndex index = ui->treeViewMaps->currentIndex();
+    QMessageBox::information(
+        this, "foo",
+        ui->treeViewMaps->model()->data(index).toString());
+    */
+
+    NewMapDialog dlg;
+    dlg.exec();
 }
