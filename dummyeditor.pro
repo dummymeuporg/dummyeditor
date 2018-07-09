@@ -23,7 +23,7 @@ HEADERS += \
     chipsetgraphicscene.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
     newmapdialog.ui
 
 RESOURCES += \
