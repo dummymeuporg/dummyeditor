@@ -60,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent) :
     tabGeneralToolBar->addActions(launchTestGroup->actions());
 
 
-    ui->tabGeneralGridLayout->setMenuBar(tabGeneralToolBar);
+    ui->tabGeneral->layout()->setMenuBar(tabGeneralToolBar);
 
     m_newMapAction = new QAction(tr("Add new map"));
     ui->treeViewMaps->setContextMenuPolicy(Qt::ActionsContextMenu);
