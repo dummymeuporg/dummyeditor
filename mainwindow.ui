@@ -532,8 +532,8 @@
   </widget>
   <action name="actionNew">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/newProject_Icon.png</normaloff>icons/newProject_Icon.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/newProject_Icon.png</normaloff>:/icons/newProject_Icon.png</iconset>
    </property>
    <property name="text">
     <string>New</string>
@@ -586,8 +586,8 @@
   </action>
   <action name="actionQuit">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/quit_Icon.png</normaloff>icons/quit_Icon.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/quit_Icon.png</normaloff>:/icons/quit_Icon.png</iconset>
    </property>
    <property name="text">
     <string>Quit</string>
@@ -871,7 +871,9 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionNew</sender>
