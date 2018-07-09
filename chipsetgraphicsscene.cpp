@@ -9,6 +9,11 @@
 ChipsetGraphicsScene::ChipsetGraphicsScene(QObject* parent) :
     QGraphicsScene(parent), m_selectionRectItem(nullptr)
 {
+    QPen pen(Qt::black, 0.5);
+    for (int i = 0; i < 57; i++) {
+        QGraphicsItem* item = addLine(i*16, 0, i*16, 16*16, pen);
+        item->setZValue(99);
+    }
 
 }
 
