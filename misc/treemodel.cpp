@@ -74,6 +74,7 @@ int Misc::TreeModel::rowCount(const QModelIndex& parent) const {
 
 int Misc::TreeModel::columnCount(const QModelIndex& parent) const {
     // We only have one column: the map name.
+    Q_UNUSED(parent);
     return 1;
 }
 

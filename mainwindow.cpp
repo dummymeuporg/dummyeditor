@@ -1,8 +1,10 @@
+#include <QDebug>
 #include <QFile>
 #include <QFileDialog>
 #include <QGraphicsScene>
 #include <QMessageBox>
 
+#include "dummy/map.h"
 #include "dummy/project.h"
 
 #include "chipsetgraphicscene.h"
@@ -75,7 +77,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphicsViewChipset->setScene(m_chipsetScene);
 
     // XXX: Test
-    m_chipsetScene->addPixmap(QPixmap("LhynnBis.png"));
+    m_chipsetScene->addPixmap(QPixmap("chipset/LhynnBis.png"));
 
 }
 
@@ -124,4 +126,11 @@ void MainWindow::_onNewMapAction() {
 
     NewMapDialog dlg;
     dlg.exec();
+
+    if(dlg.result() == QDialog::Accepted) {
+        Dummy::Map map(dlg.getWidth(), dlg.getHeight());
+        map.saveToFile(dlg.getMapName() + ".map");
+        QMessageBox::information(
+            this, tr("Map saved"), tr("Map saved"));
+    }
 }

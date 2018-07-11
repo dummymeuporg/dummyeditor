@@ -15,6 +15,10 @@ public:
     explicit NewMapDialog(QWidget *parent = 0);
     ~NewMapDialog();
 
+    const QString& getMapName() const;
+    quint16 getWidth() const;
+    quint16 getHeight() const;
+
 private:
     Ui::NewMapDialog *ui;
 };
