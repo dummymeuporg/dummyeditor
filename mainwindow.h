@@ -4,6 +4,8 @@
 #include <QAction>
 #include <QMainWindow>
 
+#include "dummy/project.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -24,6 +26,7 @@ private:
     void _initializeProject(const QString&);
 
     Ui::MainWindow *ui;
+    std::shared_ptr<Dummy::Project> m_currentProject;
     QAction* m_newMapAction;
     QGraphicsScene* m_chipsetScene;
 

@@ -15,6 +15,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
+    m_currentProject(nullptr),
     m_newMapAction(nullptr),
     m_chipsetScene(nullptr)
 {
@@ -85,6 +86,9 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete m_newMapAction;
+    if (m_currentProject != nullptr) {
+        m_currentProject.reset();
+    }
     delete ui;
 }
 
