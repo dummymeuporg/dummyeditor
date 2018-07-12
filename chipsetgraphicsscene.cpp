@@ -9,6 +9,16 @@
 ChipsetGraphicsScene::ChipsetGraphicsScene(QObject* parent) :
     QGraphicsScene(parent), m_selectionRectItem(nullptr)
 {
+    QPen pen(Qt::black, 0.5);
+    for (int i = 0; i < 58; i++) {
+        QGraphicsItem* item = addLine(i*16, 0, i*16, 16*16, pen);
+        item->setZValue(99);
+    }
+
+    for (int i = 0; i < 17; i++) {
+        QGraphicsItem* item = addLine(0, i*16, 57*16, i*16, pen);
+        item->setZValue(99);
+    }
 
 }
 
@@ -24,7 +34,7 @@ ChipsetGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
         }
 
         // Add a square
-        QPen pen(Qt::black, 0.6, Qt::DotLine);
+        QPen pen(Qt::red, 1);
         qreal x = pt.x() - (pt.x() % 16);
         qreal y = pt.y() - (pt.y() % 16);
         m_selectionRectItem = addRect(x, y, 16, 16, pen);
