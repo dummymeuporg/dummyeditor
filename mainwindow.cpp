@@ -67,11 +67,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_newMapAction = new QAction(tr("Add new map"));
     ui->treeViewMaps->setContextMenuPolicy(Qt::ActionsContextMenu);
-    ui->treeViewMaps->addAction(m_newMapAction);
-    QObject::connect(m_newMapAction,
-                     SIGNAL(triggered()),
-                     this,
-                     SLOT(_onNewMapAction()));
 
     m_chipsetScene = new ChipsetGraphicsScene();
     ui->graphicsViewChipset->scale(2.0, 2.0);
@@ -80,6 +75,24 @@ MainWindow::MainWindow(QWidget *parent) :
     // XXX: Test
     m_chipsetScene->addPixmap(QPixmap("chipset/LhynnBis.png"));
 
+}
+
+// XXX: Ugly.
+void MainWindow::_enableMapCreation() {
+    m_newMapAction = new QAction(tr("Add new map"));
+    ui->treeViewMaps->addAction(m_newMapAction);
+    QObject::connect(m_newMapAction,
+                     SIGNAL(triggered()),
+                     this,
+                     SLOT(_onNewMapAction()));
+
+}
+
+void MainWindow::_closeCurrentProject() {
+    ui->treeViewMaps->removeAction(m_newMapAction);
+    QObject::disconnect(m_newMapAction, SIGNAL(triggered()), this,
+                        SLOT(_onNewMapAction()));
+    delete m_newMapAction;
 }
 
 
@@ -101,6 +114,10 @@ void MainWindow::newProject() {
     // Initialize a project into this directory
     _initializeProject(projectDirectory);
 
+    m_currentProject = std::shared_ptr<Dummy::Project>(
+        new Dummy::Project(projectDirectory)
+    );
+
 }
 
 void MainWindow::openProject() {
@@ -108,10 +125,12 @@ void MainWindow::openProject() {
         QFileDialog::getExistingDirectory(
             this, tr("Choose an existing project directory"));
 
-    Dummy::Project project(projectDirectory);
+    m_currentProject = std::shared_ptr<Dummy::Project>(
+        new Dummy::Project(projectDirectory)
+    );
 
     ui->treeViewMaps->setModel(
-        static_cast<QAbstractItemModel*>(project.mapsModel())
+        static_cast<QAbstractItemModel*>(m_currentProject->mapsModel())
     );
 }
 

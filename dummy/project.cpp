@@ -13,9 +13,9 @@
 #include "dummy/project.h"
 
 Dummy::Project::Project(const QString& folderPath) :
-    m_mapsModel(nullptr)
+    m_mapsModel(nullptr), m_fullpath(folderPath)
 {
-    Q_UNUSED(folderPath);
+
     // Try to read the "project.xml" file that should be present in folderPath.
     QFile xmlProjectFile(folderPath + "/project.xml");
     m_domDocument.setContent(&xmlProjectFile);
@@ -30,6 +30,10 @@ Dummy::Project::Project(const QString& folderPath) :
     } else {
         // TODO: Throw exception?
     }
+}
+
+Dummy::Project::~Project() {
+    delete m_mapsModel;
 }
 
 Misc::TreeModel* Dummy::Project::mapsModel() {

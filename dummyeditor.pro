@@ -11,7 +11,8 @@ SOURCES += \
     misc/treemodel.cpp \
     dummy/map.cpp \
     newmapdialog.cpp \
-    chipsetgraphicsscene.cpp
+    chipsetgraphicsscene.cpp \
+    misc/mapdocument.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -20,7 +21,8 @@ HEADERS += \
     misc/treemodel.h \
     dummy/map.h \
     newmapdialog.h \
-    chipsetgraphicscene.h
+    chipsetgraphicscene.h \
+    misc/mapdocument.h
 
 FORMS += \
     mainwindow.ui \

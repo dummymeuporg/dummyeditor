@@ -37,5 +37,5 @@ void Dummy::Map::saveToFile(const QString& filename) {
 void Dummy::Map::saveToFile(QFile& file) {
     file.open(QIODevice::WriteOnly);
     QDataStream out(&file);
-    out << m_version << m_width << m_height;
+    out << m_version << m_width << m_height << m_chipset << m_music;
 }

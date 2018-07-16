@@ -13,7 +13,7 @@ NewMapDialog::~NewMapDialog()
     delete ui;
 }
 
-const QString& NewMapDialog::getMapName() const {
+QString NewMapDialog::getMapName() const {
     return ui->lineEditMapName->text();
 }
 
