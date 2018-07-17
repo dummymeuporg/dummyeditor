@@ -7,6 +7,8 @@
 #include "dummy/map.h"
 #include "dummy/project.h"
 
+#include "misc/maptreemodel.h"
+
 #include "chipsetgraphicscene.h"
 #include "mainwindow.h"
 #include "newmapdialog.h"
@@ -147,32 +149,40 @@ void MainWindow::openProject() {
     _enableMapCreation();
 }
 
+void MainWindow::saveProject() {
+    if (nullptr != m_currentProject) {
+        m_currentProject->saveProjectFile();
+    }
+}
+
 
 void MainWindow::_initializeProject(const QString& projectDirectory) {
     Dummy::Project::create(projectDirectory);
 }
 
 void MainWindow::_onNewMapAction() {
-    /*
-    QModelIndex index = ui->treeViewMaps->currentIndex();
-    QMessageBox::information(
-        this, "foo",
-        ui->treeViewMaps->model()->data(index).toString());
-    */
-
-    QModelIndex selectedIndex = ui->treeViewMaps->currentIndex();
-    QStandardItem* selectedParentMap = m_currentProject
-            ->mapsModel()
-            ->itemFromIndex(ui->treeViewMaps->currentIndex());
-
-    qDebug() << selectedParentMap;
 
     NewMapDialog dlg;
     dlg.exec();
 
+    Misc::MapTreeModel* mapModel = m_currentProject->mapsModel();
+
+    QModelIndex selectedIndex = ui->treeViewMaps->currentIndex();
+    QStandardItem* selectedParentMap = nullptr;
+
+    if (selectedIndex.row() == -1) {
+        selectedParentMap = mapModel->invisibleRootItem();
+    } else {
+        selectedParentMap =
+            mapModel->itemFromIndex(ui->treeViewMaps->currentIndex());
+    }
+
+    qDebug() << selectedParentMap;
+
     if(dlg.result() == QDialog::Accepted) {
         QString mapName = dlg.getMapName();
         Dummy::Map map(dlg.getWidth(), dlg.getHeight());
+        map.setChipset(dlg.getChipset()).setMusic(dlg.getMusic());
         map.saveToFile(m_currentProject->fullpath() +
                        "/maps/" + mapName + ".map");
 
@@ -181,4 +191,10 @@ void MainWindow::_onNewMapAction() {
         selectedParentMap->appendRow(mapRow);
         ui->treeViewMaps->expand(selectedIndex);
     }
+}
+
+void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
+    Misc::MapTreeModel* mapModel = m_currentProject->mapsModel();
+    QString mapName(mapModel->itemFromIndex(selectedIndex)->text());
+    qDebug() << mapName;
 }

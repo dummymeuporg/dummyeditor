@@ -1,4 +1,5 @@
 #include <QDataStream>
+#include <QDebug>
 #include <QFile>
 
 #include "map.h"
@@ -38,4 +39,5 @@ void Dummy::Map::saveToFile(QFile& file) {
     file.open(QIODevice::WriteOnly);
     QDataStream out(&file);
     out << m_version << m_width << m_height << m_chipset << m_music;
+
 }

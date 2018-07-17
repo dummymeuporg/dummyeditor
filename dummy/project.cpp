@@ -75,3 +75,37 @@ void Dummy::Project::_createFolders(const QString& baseFolder) {
         qDebug() << "create folder " << folder;
     });
 }
+
+void Dummy::Project::saveProjectFile() {
+    QDomDocument doc;
+    QDomElement projectNode = doc.createElement("project");
+    QDomElement mapsNode = doc.createElement("maps");
+
+    doc.appendChild(projectNode);
+    projectNode.appendChild(mapsNode);
+
+    _dumpToXmlNode(doc, mapsNode, m_mapsModel->invisibleRootItem());
+    QString xmlPath(m_fullpath + "/project.xml");
+
+    // XXX: Handle errors eventually.
+    QFile file(xmlPath);
+    file.open(QIODevice::WriteOnly|QIODevice::Text);
+    QTextStream stream(&file);
+    doc.save(stream, 4);
+}
+
+void Dummy::Project::_dumpToXmlNode(QDomDocument& doc,
+                                    QDomElement& xmlNode,
+                                    QStandardItem* modelItem) {
+
+    for(int i = 0; i < modelItem->rowCount(); ++i) {
+        QStandardItem* mapItem = modelItem->child(i);
+
+        QDomElement mapNode = doc.createElement("map");
+        mapNode.setAttribute("name", mapItem->text());
+
+        xmlNode.appendChild(mapNode);
+
+        _dumpToXmlNode(doc, mapNode, mapItem);
+    }
+}

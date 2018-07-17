@@ -24,3 +24,11 @@ quint16 NewMapDialog::getWidth() const {
 quint16 NewMapDialog::getHeight() const {
     return ui->spinBoxMapHeight->value();
 }
+
+QString NewMapDialog::getChipset() const {
+    return ui->lineEditChipset->text();
+}
+
+QString NewMapDialog::getMusic() const {
+    return ui->lineEditMusic->text();
+}

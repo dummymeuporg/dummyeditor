@@ -35,7 +35,9 @@ private:
 private slots:
     void newProject();
     void openProject();
+    void saveProject();
     void _onNewMapAction();
+    void selectCurrentMap(QModelIndex);
 };
 
 #endif // MAINWINDOW_H

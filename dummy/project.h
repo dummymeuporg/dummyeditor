@@ -30,6 +30,8 @@ namespace Dummy {
             return *this;
         }
 
+        void saveProjectFile();
+
     private:
         QString m_fullpath;
         QDomDocument m_domDocument;
@@ -39,6 +41,9 @@ namespace Dummy {
         static QDomDocument _createXmlProjecTree();
         static void _createXmlProjectFile(const QString&);
         static void _createFolders(const QString&);
+        void _dumpToXmlNode(QDomDocument& document,
+                            QDomElement& xmlNode,
+                            QStandardItem* modelItem);
 
 
     };
