@@ -12,3 +12,23 @@ NewMapDialog::~NewMapDialog()
 {
     delete ui;
 }
+
+QString NewMapDialog::getMapName() const {
+    return ui->lineEditMapName->text();
+}
+
+quint16 NewMapDialog::getWidth() const {
+    return ui->spinBoxMapWidth->value();
+}
+
+quint16 NewMapDialog::getHeight() const {
+    return ui->spinBoxMapHeight->value();
+}
+
+QString NewMapDialog::getChipset() const {
+    return ui->lineEditChipset->text();
+}
+
+QString NewMapDialog::getMusic() const {
+    return ui->lineEditMusic->text();
+}

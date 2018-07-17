@@ -15,6 +15,12 @@ public:
     explicit NewMapDialog(QWidget *parent = 0);
     ~NewMapDialog();
 
+    QString getMapName() const;
+    quint16 getWidth() const;
+    quint16 getHeight() const;
+    QString getChipset() const;
+    QString getMusic() const;
+
 private:
     Ui::NewMapDialog *ui;
 };

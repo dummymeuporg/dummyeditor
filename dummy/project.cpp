@@ -7,15 +7,14 @@
 #include <QString>
 #include <QTextStream>
 
-#include "misc/treeitem.h"
-#include "misc/treemodel.h"
+#include "misc/maptreemodel.h"
 
 #include "dummy/project.h"
 
 Dummy::Project::Project(const QString& folderPath) :
-    m_mapsModel(nullptr)
+    m_mapsModel(nullptr), m_fullpath(folderPath)
 {
-    Q_UNUSED(folderPath);
+
     // Try to read the "project.xml" file that should be present in folderPath.
     QFile xmlProjectFile(folderPath + "/project.xml");
     m_domDocument.setContent(&xmlProjectFile);
@@ -26,13 +25,17 @@ Dummy::Project::Project(const QString& folderPath) :
         .elementsByTagName("maps");
 
     if (mapsNodes.length() > 0) {
-        m_mapsModel = new Misc::TreeModel(mapsNodes.at(0), nullptr);
+        m_mapsModel = new Misc::MapTreeModel(mapsNodes.at(0));
     } else {
         // TODO: Throw exception?
     }
 }
 
-Misc::TreeModel* Dummy::Project::mapsModel() {
+Dummy::Project::~Project() {
+    delete m_mapsModel;
+}
+
+Misc::MapTreeModel* Dummy::Project::mapsModel() {
     return m_mapsModel;
 }
 
@@ -71,4 +74,38 @@ void Dummy::Project::_createFolders(const QString& baseFolder) {
         }
         qDebug() << "create folder " << folder;
     });
+}
+
+void Dummy::Project::saveProjectFile() {
+    QDomDocument doc;
+    QDomElement projectNode = doc.createElement("project");
+    QDomElement mapsNode = doc.createElement("maps");
+
+    doc.appendChild(projectNode);
+    projectNode.appendChild(mapsNode);
+
+    _dumpToXmlNode(doc, mapsNode, m_mapsModel->invisibleRootItem());
+    QString xmlPath(m_fullpath + "/project.xml");
+
+    // XXX: Handle errors eventually.
+    QFile file(xmlPath);
+    file.open(QIODevice::WriteOnly|QIODevice::Text);
+    QTextStream stream(&file);
+    doc.save(stream, 4);
+}
+
+void Dummy::Project::_dumpToXmlNode(QDomDocument& doc,
+                                    QDomElement& xmlNode,
+                                    QStandardItem* modelItem) {
+
+    for(int i = 0; i < modelItem->rowCount(); ++i) {
+        QStandardItem* mapItem = modelItem->child(i);
+
+        QDomElement mapNode = doc.createElement("map");
+        mapNode.setAttribute("name", mapItem->text());
+
+        xmlNode.appendChild(mapNode);
+
+        _dumpToXmlNode(doc, mapNode, mapItem);
+    }
 }

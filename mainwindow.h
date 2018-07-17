@@ -4,6 +4,8 @@
 #include <QAction>
 #include <QMainWindow>
 
+#include "dummy/project.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -22,15 +24,20 @@ public:
 
 private:
     void _initializeProject(const QString&);
+    void _enableMapCreation();
+    void _closeCurrentProject();
 
     Ui::MainWindow *ui;
+    std::shared_ptr<Dummy::Project> m_currentProject;
     QAction* m_newMapAction;
     QGraphicsScene* m_chipsetScene;
 
 private slots:
     void newProject();
     void openProject();
+    void saveProject();
     void _onNewMapAction();
+    void selectCurrentMap(QModelIndex);
 };
 
 #endif // MAINWINDOW_H
