@@ -6,7 +6,7 @@
 #include <QDomDocument>
 #include <QString>
 
-#include "misc/treemodel.h"
+#include "misc/maptreemodel.h"
 
 namespace Dummy {
     class Project
@@ -15,7 +15,7 @@ namespace Dummy {
         Project(const QString& projectFolder);
         virtual ~Project();
         static void create(const QString&);
-        Misc::TreeModel* mapsModel();
+        Misc::MapTreeModel* mapsModel();
 
         inline const QString& fullpath() const {
             return m_fullpath;
@@ -33,7 +33,7 @@ namespace Dummy {
     private:
         QString m_fullpath;
         QDomDocument m_domDocument;
-        Misc::TreeModel* m_mapsModel;
+        Misc::MapTreeModel* m_mapsModel;
         bool m_isModified;
 
         static QDomDocument _createXmlProjecTree();

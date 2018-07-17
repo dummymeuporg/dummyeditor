@@ -8,7 +8,7 @@
 #include <QTextStream>
 
 #include "misc/treeitem.h"
-#include "misc/treemodel.h"
+#include "misc/maptreemodel.h"
 
 #include "dummy/project.h"
 
@@ -26,7 +26,7 @@ Dummy::Project::Project(const QString& folderPath) :
         .elementsByTagName("maps");
 
     if (mapsNodes.length() > 0) {
-        m_mapsModel = new Misc::TreeModel(mapsNodes.at(0), nullptr);
+        m_mapsModel = new Misc::MapTreeModel(mapsNodes.at(0));
     } else {
         // TODO: Throw exception?
     }
@@ -36,7 +36,7 @@ Dummy::Project::~Project() {
     delete m_mapsModel;
 }
 
-Misc::TreeModel* Dummy::Project::mapsModel() {
+Misc::MapTreeModel* Dummy::Project::mapsModel() {
     return m_mapsModel;
 }
 
