@@ -7,8 +7,6 @@
 #include "dummy/map.h"
 #include "dummy/project.h"
 
-#include "misc/treeitem.h"
-
 #include "chipsetgraphicscene.h"
 #include "mainwindow.h"
 #include "newmapdialog.h"
@@ -162,32 +160,25 @@ void MainWindow::_onNewMapAction() {
         ui->treeViewMaps->model()->data(index).toString());
     */
 
-    QModelIndex selectedParentMap = ui->treeViewMaps->currentIndex();
+    QModelIndex selectedIndex = ui->treeViewMaps->currentIndex();
+    QStandardItem* selectedParentMap = m_currentProject
+            ->mapsModel()
+            ->itemFromIndex(ui->treeViewMaps->currentIndex());
+
     qDebug() << selectedParentMap;
-    Misc::TreeItem* parentMap =
-        static_cast<Misc::TreeItem*>(selectedParentMap.internalPointer());
-    qDebug() << parentMap->data();
+
     NewMapDialog dlg;
     dlg.exec();
 
     if(dlg.result() == QDialog::Accepted) {
         QString mapName = dlg.getMapName();
         Dummy::Map map(dlg.getWidth(), dlg.getHeight());
-        map.saveToFile(mapName + ".map");
-        QMessageBox::information(
-            this, tr("Map saved"), tr("Map saved"));
+        map.saveToFile(m_currentProject->fullpath() +
+                       "/maps/" + mapName + ".map");
 
-        Misc::TreeItem* newMap = new Misc::TreeItem(mapName, parentMap);
-        parentMap->appendChild(newMap);
-
-        if(ui->treeViewMaps->model()->insertRow(0, selectedParentMap)) {
-            qDebug() << "row inserted.";
-            QModelIndex newMapIndex = selectedParentMap.child(0, 0);
-            ui->treeViewMaps->model()->setData(newMapIndex, mapName);
-        } else {
-            qDebug() << "Error";
-        }
-
-
+        // Add the new map into the tree.
+        QList<QStandardItem*> mapRow { new QStandardItem(mapName) };
+        selectedParentMap->appendRow(mapRow);
+        ui->treeViewMaps->expand(selectedIndex);
     }
 }

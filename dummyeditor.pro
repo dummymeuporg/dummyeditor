@@ -7,22 +7,20 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     dummy/project.cpp \
-    misc/treeitem.cpp \
-    misc/treemodel.cpp \
     dummy/map.cpp \
     newmapdialog.cpp \
     chipsetgraphicsscene.cpp \
-    misc/mapdocument.cpp
+    misc/mapdocument.cpp \
+    misc/maptreemodel.cpp
 
 HEADERS += \
     mainwindow.h \
     dummy/project.h \
-    misc/treeitem.h \
-    misc/treemodel.h \
     dummy/map.h \
     newmapdialog.h \
     chipsetgraphicscene.h \
-    misc/mapdocument.h
+    misc/mapdocument.h \
+    misc/maptreemodel.h
 
 FORMS += \
     mainwindow.ui \

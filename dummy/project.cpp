@@ -7,7 +7,6 @@
 #include <QString>
 #include <QTextStream>
 
-#include "misc/treeitem.h"
 #include "misc/maptreemodel.h"
 
 #include "dummy/project.h"
