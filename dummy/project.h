@@ -21,13 +21,25 @@ namespace Dummy {
             return m_fullpath;
         }
 
+        inline bool isModified() const {
+            return m_isModified;
+        }
+
+        Project& setModified(bool isModified) {
+            m_isModified = isModified;
+            return *this;
+        }
+
     private:
         QString m_fullpath;
         QDomDocument m_domDocument;
         Misc::TreeModel* m_mapsModel;
+        bool m_isModified;
+
         static QDomDocument _createXmlProjecTree();
         static void _createXmlProjectFile(const QString&);
         static void _createFolders(const QString&);
+
 
     };
 }

@@ -7,6 +7,8 @@
 #include "dummy/map.h"
 #include "dummy/project.h"
 
+#include "misc/treeitem.h"
+
 #include "chipsetgraphicscene.h"
 #include "mainwindow.h"
 #include "newmapdialog.h"
@@ -114,13 +116,24 @@ void MainWindow::newProject() {
     // Initialize a project into this directory
     _initializeProject(projectDirectory);
 
+    if (nullptr != m_currentProject) {
+        _closeCurrentProject();
+    }
+
     m_currentProject = std::shared_ptr<Dummy::Project>(
         new Dummy::Project(projectDirectory)
     );
 
+    _enableMapCreation();
+
 }
 
 void MainWindow::openProject() {
+
+    if (nullptr != m_currentProject) {
+        _closeCurrentProject();
+    }
+
     QString projectDirectory =
         QFileDialog::getExistingDirectory(
             this, tr("Choose an existing project directory"));
@@ -132,6 +145,8 @@ void MainWindow::openProject() {
     ui->treeViewMaps->setModel(
         static_cast<QAbstractItemModel*>(m_currentProject->mapsModel())
     );
+
+    _enableMapCreation();
 }
 
 
@@ -147,13 +162,32 @@ void MainWindow::_onNewMapAction() {
         ui->treeViewMaps->model()->data(index).toString());
     */
 
+    QModelIndex selectedParentMap = ui->treeViewMaps->currentIndex();
+    qDebug() << selectedParentMap;
+    Misc::TreeItem* parentMap =
+        static_cast<Misc::TreeItem*>(selectedParentMap.internalPointer());
+    qDebug() << parentMap->data();
     NewMapDialog dlg;
     dlg.exec();
 
     if(dlg.result() == QDialog::Accepted) {
+        QString mapName = dlg.getMapName();
         Dummy::Map map(dlg.getWidth(), dlg.getHeight());
-        map.saveToFile(dlg.getMapName() + ".map");
+        map.saveToFile(mapName + ".map");
         QMessageBox::information(
             this, tr("Map saved"), tr("Map saved"));
+
+        Misc::TreeItem* newMap = new Misc::TreeItem(mapName, parentMap);
+        parentMap->appendChild(newMap);
+
+        if(ui->treeViewMaps->model()->insertRow(0, selectedParentMap)) {
+            qDebug() << "row inserted.";
+            QModelIndex newMapIndex = selectedParentMap.child(0, 0);
+            ui->treeViewMaps->model()->setData(newMapIndex, mapName);
+        } else {
+            qDebug() << "Error";
+        }
+
+
     }
 }

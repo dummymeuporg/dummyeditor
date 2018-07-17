@@ -24,6 +24,8 @@ public:
 
 private:
     void _initializeProject(const QString&);
+    void _enableMapCreation();
+    void _closeCurrentProject();
 
     Ui::MainWindow *ui;
     std::shared_ptr<Dummy::Project> m_currentProject;
