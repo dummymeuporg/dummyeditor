@@ -1,6 +1,7 @@
 #ifndef MAPSTREEVIEW_H
 #define MAPSTREEVIEW_H
 
+#include <QMenu>
 #include <QObject>
 #include <QTreeView>
 
@@ -40,11 +41,14 @@ private:
 
 
     std::shared_ptr<Dummy::Project> m_project;
+    QMenu* m_mapMenu;
     QAction* m_newMapAction, *m_propertiesAction;
+    QModelIndex m_selectedModelIndex;
 
 private slots:
     void _onNewMapAction();
     void _onPropertiesAction();
+    void _showContextMenu(const QPoint&);
 };
 
 #endif // MAPSTREEVIEW_H

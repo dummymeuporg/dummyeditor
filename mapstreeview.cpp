@@ -1,5 +1,6 @@
 #include <QAction>
 #include <QDebug>
+#include <QTreeWidgetItem>
 
 #include "dummy/map.h"
 #include "dummy/project.h"
@@ -17,8 +18,15 @@ MapsTreeView::MapsTreeView(QWidget* parent) : QTreeView(parent),
 
 void MapsTreeView::_enableActions() {
     qDebug() << "Enable actions";
+
+
     m_newMapAction = new QAction(tr("Add new map"));
     m_propertiesAction = new QAction(tr("Properties"));
+
+    m_mapMenu = new QMenu();
+    m_mapMenu->addAction(m_newMapAction);
+    m_mapMenu->addAction(m_propertiesAction);
+
     addAction(m_newMapAction);
     addAction(m_propertiesAction);
     QObject::connect(m_newMapAction,
@@ -29,6 +37,22 @@ void MapsTreeView::_enableActions() {
                      SIGNAL(triggered()),
                      this,
                      SLOT(_onPropertiesAction()));
+    connect(this,
+            SIGNAL(customContextMenuRequested(const QPoint&)),
+            SLOT(_showContextMenu(const QPoint&)));
+}
+
+void MapsTreeView::_showContextMenu(const QPoint& point) {
+
+    m_selectedModelIndex = indexAt(point);
+
+    if (m_selectedModelIndex.isValid()) {
+        m_propertiesAction->setEnabled(true);
+    } else {
+        m_propertiesAction->setEnabled(false);
+    }
+
+    m_mapMenu->exec(viewport()->mapToGlobal(point));
 }
 
 void MapsTreeView::_disableActions() {
@@ -47,14 +71,15 @@ void MapsTreeView::_onNewMapAction() {
 
     Misc::MapTreeModel* mapModel = m_project->mapsModel();
 
-    QModelIndex selectedIndex = currentIndex();
     QStandardItem* selectedParentMap = nullptr;
 
-    if (selectedIndex.row() == -1) {
+    if (!m_selectedModelIndex.isValid()) {
         selectedParentMap = mapModel->invisibleRootItem();
+        qDebug() << "-1";
     } else {
         selectedParentMap =
-            mapModel->itemFromIndex(selectedIndex);
+            mapModel->itemFromIndex(m_selectedModelIndex);
+        qDebug() << "parent";
     }
 
     qDebug() << selectedParentMap;
@@ -69,7 +94,7 @@ void MapsTreeView::_onNewMapAction() {
         // Add the new map into the tree.
         QList<QStandardItem*> mapRow { new QStandardItem(mapName) };
         selectedParentMap->appendRow(mapRow);
-        expand(selectedIndex);
+        expand(m_selectedModelIndex);
     }
 }
 
