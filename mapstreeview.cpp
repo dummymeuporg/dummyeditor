@@ -5,7 +5,7 @@
 #include "dummy/map.h"
 #include "dummy/project.h"
 #include "mapstreeview.h"
-#include "newmapdialog.h"
+#include "mapeditdialog.h"
 
 
 MapsTreeView::MapsTreeView(QWidget* parent) : QTreeView(parent),
@@ -66,7 +66,7 @@ void MapsTreeView::_disableActions() {
 }
 
 void MapsTreeView::_onNewMapAction() {
-    NewMapDialog dlg;
+    MapEditDialog dlg;
     dlg.exec();
 
     Misc::MapTreeModel* mapModel = m_project->mapsModel();
@@ -99,5 +99,12 @@ void MapsTreeView::_onNewMapAction() {
 }
 
 void MapsTreeView::_onPropertiesAction() {
+    QStandardItem* item = m_project
+            ->mapsModel()
+            ->itemFromIndex(m_selectedModelIndex);
+    qDebug() << item->text();
+
+    MapEditDialog dlg(m_project->document(item->text()).map());
+    dlg.exec();
 
 }

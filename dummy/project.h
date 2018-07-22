@@ -19,6 +19,8 @@ namespace Dummy {
         static void create(const QString&);
         Misc::MapTreeModel* mapsModel();
 
+        static void cleanMapName(QString& mapName);
+
         inline const QString& fullpath() const {
             return m_fullpath;
         }
@@ -34,13 +36,15 @@ namespace Dummy {
 
         void saveProjectFile();
 
+        Misc::MapDocument& document(const QString& mapName);
+
     private:
         QString m_fullpath;
         QDomDocument m_domDocument;
         Misc::MapTreeModel* m_mapsModel;
         bool m_isModified;
 
-        QMap<QString, std::shared_ptr<Misc::MapDocument>> m_openedMaps;
+        QMap<QString, Misc::MapDocument> m_openedMaps;
 
         static QDomDocument _createXmlProjecTree();
         static void _createXmlProjectFile(const QString&);

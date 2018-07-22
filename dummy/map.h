@@ -8,6 +8,7 @@
 
 #include "dummy/layer.h"
 
+class QDataStream;
 class QFile;
 
 namespace Dummy {
@@ -16,8 +17,12 @@ namespace Dummy {
     {
     public:
         Map();
-        Map(quint16 width = 1, quint16 height = 1);
+        Map(quint16 width, quint16 height);
         virtual ~Map();
+
+        inline const unsigned short version() const {
+            return m_version;
+        }
 
         const QString& name() const {
             return m_name;
@@ -43,6 +48,25 @@ namespace Dummy {
             return m_backgroundPicture;
         }
 
+        Map& setVersion(unsigned short version) {
+            m_version = version;
+            return *this;
+        }
+
+        Map& setName(const QString& name) {
+            m_name = name;
+            return *this;
+        }
+
+        Map& setWidth(quint16 width) {
+            m_width = width;
+            return *this;
+        }
+
+        Map& setHeight(quint16 height) {
+            m_height = height;
+        }
+
         Map& setChipset(const QString& chipset) {
             m_chipset = chipset;
             return *this;
@@ -58,11 +82,42 @@ namespace Dummy {
             return *this;
         }
 
-        static Map&& loadFromFile(const QString& filename);
-        void saveToFile(const QString& filename);
-        void saveToFile(QFile& file);
+        inline const Layer& firstLayer() const {
+            return m_firstLayer;
+        }
+
+        inline const Layer& secondLayer() const {
+            return m_secondLayer;
+        }
+
+        inline const Layer& thirdLayer() const {
+            return m_thirdLayer;
+        }
+
+        static std::shared_ptr<Map> loadFromFile(const QString& filename);
+        static std::shared_ptr<Map> loadFromFile(QFile& file);
+
+        void saveToFile(const QString& filename) const;
+        void saveToFile(QFile& file) const;
+
+        friend QDataStream& operator<<(QDataStream& stream,
+                                       const Dummy::Map& map) {
+            map._writeToStream(stream);
+            return stream;
+        }
+
+        friend QDataStream& operator>>(QDataStream& stream,
+                                       Dummy::Map& map) {
+            map._loadFromStream(stream);
+            return stream;
+        }
+
 
     private:
+
+        void _loadFromStream(QDataStream&);
+        void _writeToStream(QDataStream&) const;
+
         unsigned short m_version;
         QString m_name;
         quint16 m_width, m_height; // Map dimension
