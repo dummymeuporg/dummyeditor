@@ -3,6 +3,10 @@
 
 #include <QDialog>
 
+namespace Dummy {
+    class Map;
+}
+
 namespace Ui {
 class NewMapDialog;
 }
@@ -12,7 +16,7 @@ class NewMapDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit NewMapDialog(QWidget *parent = 0);
+    explicit NewMapDialog(QWidget *parent = 0, const Dummy::Map* = nullptr);
     ~NewMapDialog();
 
     QString getMapName() const;

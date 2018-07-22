@@ -10,6 +10,9 @@
     <height>644</height>
    </rect>
   </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::ActionsContextMenu</enum>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -52,7 +55,10 @@
               <widget class="QGraphicsView" name="graphicsViewChipset"/>
              </item>
              <item>
-              <widget class="QTreeView" name="treeViewMaps">
+              <widget class="MapsTreeView" name="treeViewMaps">
+               <property name="contextMenuPolicy">
+                <enum>Qt::CustomContextMenu</enum>
+               </property>
                <property name="editTriggers">
                 <set>QAbstractItemView::NoEditTriggers</set>
                </property>
@@ -60,7 +66,7 @@
                 <bool>true</bool>
                </property>
                <property name="expandsOnDoubleClick">
-                <bool>true</bool>
+                <bool>false</bool>
                </property>
               </widget>
              </item>
@@ -881,6 +887,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MapsTreeView</class>
+   <extends>QTreeView</extends>
+   <header>mapstreeview.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="icons.qrc"/>
  </resources>

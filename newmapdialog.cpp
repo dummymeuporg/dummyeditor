@@ -1,11 +1,22 @@
 #include "newmapdialog.h"
 #include "ui_newmapdialog.h"
 
-NewMapDialog::NewMapDialog(QWidget *parent) :
+#include "dummy/map.h"
+
+NewMapDialog::NewMapDialog(QWidget *parent,
+                           const Dummy::Map* map) :
     QDialog(parent),
     ui(new Ui::NewMapDialog)
 {
     ui->setupUi(this);
+
+    if (nullptr != map) {
+        ui->lineEditMapName->setText(map->name());
+        ui->lineEditChipset->setText(map->chipset());
+        ui->lineEditMusic->setText(map->music());
+        ui->spinBoxMapHeight->setValue(map->height());
+        ui->spinBoxMapWidth->setValue(map->width());
+    }
 }
 
 NewMapDialog::~NewMapDialog()

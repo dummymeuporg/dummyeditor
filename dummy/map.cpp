@@ -2,25 +2,22 @@
 #include <QDebug>
 #include <QFile>
 
-#include "map.h"
+#include "dummy/layer.h"
+#include "dummy/map.h"
+
 
 Dummy::Map::Map(quint16 width, quint16 height)
     : m_version(0x0001), m_width(width), m_height(height),
-      firstLayer(nullptr), secondLayer(nullptr),
-      thirdLayer(nullptr)
+      m_firstLayer(m_width, m_height),
+      m_secondLayer(m_width, m_height),
+      m_thirdLayer(m_width, m_height)
 {
-    if (m_width < 1 || m_height < 0) {
+    if (m_width < 1 || m_height < 1) {
         // Throw an exception.
     }
-    firstLayer = std::shared_ptr<int>(new int[m_width * m_height * 2]);
-    secondLayer = std::shared_ptr<int>(new int[m_width * m_height * 2]);
-    thirdLayer = std::shared_ptr<int>(new int[m_width * m_height * 2]);
 }
 
 Dummy::Map::~Map() {
-    firstLayer.reset();
-    secondLayer.reset();
-    thirdLayer.reset();
 }
 
 Dummy::Map&&
@@ -38,6 +35,6 @@ void Dummy::Map::saveToFile(const QString& filename) {
 void Dummy::Map::saveToFile(QFile& file) {
     file.open(QIODevice::WriteOnly);
     QDataStream out(&file);
-    out << m_version << m_width << m_height << m_chipset << m_music;
-
+    out << m_version << m_width << m_height << m_chipset << m_music
+        << m_firstLayer << m_secondLayer << m_thirdLayer;
 }

@@ -18,7 +18,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     m_currentProject(nullptr),
-    m_newMapAction(nullptr),
     m_chipsetScene(nullptr)
 {
     ui->setupUi(this);
@@ -66,10 +65,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     ui->tabGeneral->layout()->setMenuBar(tabGeneralToolBar);
-
-    m_newMapAction = new QAction(tr("Add new map"));
-    ui->treeViewMaps->setContextMenuPolicy(Qt::ActionsContextMenu);
-
     m_chipsetScene = new ChipsetGraphicsScene();
     ui->graphicsViewChipset->scale(2.0, 2.0);
     ui->graphicsViewChipset->setScene(m_chipsetScene);
@@ -79,28 +74,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
 }
 
-// XXX: Ugly.
-void MainWindow::_enableMapCreation() {
-    m_newMapAction = new QAction(tr("Add new map"));
-    ui->treeViewMaps->addAction(m_newMapAction);
-    QObject::connect(m_newMapAction,
-                     SIGNAL(triggered()),
-                     this,
-                     SLOT(_onNewMapAction()));
-
-}
-
 void MainWindow::_closeCurrentProject() {
-    ui->treeViewMaps->removeAction(m_newMapAction);
-    QObject::disconnect(m_newMapAction, SIGNAL(triggered()), this,
-                        SLOT(_onNewMapAction()));
-    delete m_newMapAction;
 }
 
 
 MainWindow::~MainWindow()
 {
-    delete m_newMapAction;
     if (m_currentProject != nullptr) {
         m_currentProject.reset();
     }
@@ -124,7 +103,7 @@ void MainWindow::newProject() {
         new Dummy::Project(projectDirectory)
     );
 
-    _enableMapCreation();
+    ui->treeViewMaps->setProject(m_currentProject);
 
 }
 
@@ -146,7 +125,8 @@ void MainWindow::openProject() {
         static_cast<QAbstractItemModel*>(m_currentProject->mapsModel())
     );
 
-    _enableMapCreation();
+    ui->treeViewMaps->setProject(m_currentProject);
+
 }
 
 void MainWindow::saveProject() {
@@ -158,39 +138,6 @@ void MainWindow::saveProject() {
 
 void MainWindow::_initializeProject(const QString& projectDirectory) {
     Dummy::Project::create(projectDirectory);
-}
-
-void MainWindow::_onNewMapAction() {
-
-    NewMapDialog dlg;
-    dlg.exec();
-
-    Misc::MapTreeModel* mapModel = m_currentProject->mapsModel();
-
-    QModelIndex selectedIndex = ui->treeViewMaps->currentIndex();
-    QStandardItem* selectedParentMap = nullptr;
-
-    if (selectedIndex.row() == -1) {
-        selectedParentMap = mapModel->invisibleRootItem();
-    } else {
-        selectedParentMap =
-            mapModel->itemFromIndex(ui->treeViewMaps->currentIndex());
-    }
-
-    qDebug() << selectedParentMap;
-
-    if(dlg.result() == QDialog::Accepted) {
-        QString mapName = dlg.getMapName();
-        Dummy::Map map(dlg.getWidth(), dlg.getHeight());
-        map.setChipset(dlg.getChipset()).setMusic(dlg.getMusic());
-        map.saveToFile(m_currentProject->fullpath() +
-                       "/maps/" + mapName + ".map");
-
-        // Add the new map into the tree.
-        QList<QStandardItem*> mapRow { new QStandardItem(mapName) };
-        selectedParentMap->appendRow(mapRow);
-        ui->treeViewMaps->expand(selectedIndex);
-    }
 }
 
 void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {

@@ -29,14 +29,12 @@ private:
 
     Ui::MainWindow *ui;
     std::shared_ptr<Dummy::Project> m_currentProject;
-    QAction* m_newMapAction;
     QGraphicsScene* m_chipsetScene;
 
 private slots:
     void newProject();
     void openProject();
     void saveProject();
-    void _onNewMapAction();
     void selectCurrentMap(QModelIndex);
 };
 
