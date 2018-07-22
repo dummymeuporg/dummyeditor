@@ -12,7 +12,8 @@ SOURCES += \
     chipsetgraphicsscene.cpp \
     misc/mapdocument.cpp \
     misc/maptreemodel.cpp \
-    mapstreeview.cpp
+    mapstreeview.cpp \
+    dummy/layer.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -22,7 +23,8 @@ HEADERS += \
     chipsetgraphicscene.h \
     misc/mapdocument.h \
     misc/maptreemodel.h \
-    mapstreeview.h
+    mapstreeview.h \
+    dummy/layer.h
 
 FORMS += \
     mainwindow.ui \

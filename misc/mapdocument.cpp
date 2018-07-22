@@ -1,6 +1,6 @@
 #include "mapdocument.h"
 
-MapDocument::MapDocument()
+Misc::MapDocument::MapDocument()
 {
 
 }

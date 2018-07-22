@@ -4,8 +4,10 @@
 #include <memory>
 
 #include <QDomDocument>
+#include <QMap>
 #include <QString>
 
+#include "misc/mapdocument.h"
 #include "misc/maptreemodel.h"
 
 namespace Dummy {
@@ -37,6 +39,8 @@ namespace Dummy {
         QDomDocument m_domDocument;
         Misc::MapTreeModel* m_mapsModel;
         bool m_isModified;
+
+        QMap<QString, std::shared_ptr<Misc::MapDocument>> m_openedMaps;
 
         static QDomDocument _createXmlProjecTree();
         static void _createXmlProjectFile(const QString&);

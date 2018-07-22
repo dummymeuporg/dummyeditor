@@ -1,9 +1,12 @@
 #ifndef _DUMMY_MAP_H
 #define _DUMMY_MAP_H
 
+#include <QVector>
 #include <QString>
 #include <QtGlobal>
 #include <memory>
+
+#include "dummy/layer.h"
 
 class QFile;
 
@@ -66,9 +69,7 @@ namespace Dummy {
         QString m_chipset;
         QString m_music;
         QString m_backgroundPicture;
-        std::shared_ptr<int> firstLayer;
-        std::shared_ptr<int> secondLayer;
-        std::shared_ptr<int> thirdLayer;
+        Layer m_firstLayer, m_secondLayer, m_thirdLayer;
     };
 }
 

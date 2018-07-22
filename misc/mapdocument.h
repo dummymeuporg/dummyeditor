@@ -2,10 +2,12 @@
 #define MAPDOCUMENT_H
 
 
-class MapDocument
-{
-public:
-    MapDocument();
-};
+namespace Misc {
+    class MapDocument
+    {
+    public:
+        MapDocument();
+    };
+}
 
 #endif // MAPDOCUMENT_H
