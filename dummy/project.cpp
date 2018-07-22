@@ -32,6 +32,7 @@ Dummy::Project::Project(const QString& folderPath) :
 }
 
 Dummy::Project::~Project() {
+
     delete m_mapsModel;
 }
 
@@ -108,4 +109,24 @@ void Dummy::Project::_dumpToXmlNode(QDomDocument& doc,
 
         _dumpToXmlNode(doc, mapNode, mapItem);
     }
+}
+
+void Dummy::Project::cleanMapName(QString& mapName) {
+    mapName.replace("/", "");
+    mapName.replace("..", "");
+}
+
+Misc::MapDocument& Dummy::Project::document(const QString& mapName) {
+    QString cleantMapname(mapName);
+    cleanMapName(cleantMapname);
+
+    if (!m_openedMaps.contains(cleantMapname)) {
+
+        std::shared_ptr<Map> map(Dummy::Map::loadFromFile(
+            m_fullpath + "/maps/" + cleantMapname + ".map"));
+        map->setName(cleantMapname);
+
+        m_openedMaps[cleantMapname] = Misc::MapDocument(this, map);
+    }
+    return m_openedMaps[cleantMapname];
 }

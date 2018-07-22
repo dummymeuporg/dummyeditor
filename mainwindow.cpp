@@ -11,7 +11,7 @@
 
 #include "chipsetgraphicscene.h"
 #include "mainwindow.h"
-#include "newmapdialog.h"
+#include "mapeditdialog.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :

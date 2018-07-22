@@ -1,12 +1,28 @@
 #ifndef MAPDOCUMENT_H
 #define MAPDOCUMENT_H
 
+#include "dummy/map.h"
+
+namespace Dummy {
+    class Project;
+}
+
 
 namespace Misc {
-    class MapDocument
-    {
+    class MapDocument {
     public:
-        MapDocument();
+        MapDocument(Dummy::Project* project = nullptr,
+                    std::shared_ptr<Dummy::Map> map = nullptr);
+        MapDocument(const MapDocument&);
+
+        std::shared_ptr<Dummy::Map> map() {
+            return m_map;
+        }
+
+    private:
+        Dummy::Project* m_project;
+        bool m_isModified;
+        std::shared_ptr<Dummy::Map> m_map;
     };
 }
 

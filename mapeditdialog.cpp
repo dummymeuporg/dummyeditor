@@ -1,12 +1,12 @@
-#include "newmapdialog.h"
-#include "ui_newmapdialog.h"
+#include "mapeditdialog.h"
+#include "ui_mapeditdialog.h"
 
 #include "dummy/map.h"
 
-NewMapDialog::NewMapDialog(QWidget *parent,
-                           const Dummy::Map* map) :
+MapEditDialog::MapEditDialog(std::shared_ptr<const Dummy::Map> map,
+                             QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::NewMapDialog)
+    ui(new Ui::MapEditDialog)
 {
     ui->setupUi(this);
 
@@ -19,27 +19,27 @@ NewMapDialog::NewMapDialog(QWidget *parent,
     }
 }
 
-NewMapDialog::~NewMapDialog()
+MapEditDialog::~MapEditDialog()
 {
     delete ui;
 }
 
-QString NewMapDialog::getMapName() const {
+QString MapEditDialog::getMapName() const {
     return ui->lineEditMapName->text();
 }
 
-quint16 NewMapDialog::getWidth() const {
+quint16 MapEditDialog::getWidth() const {
     return ui->spinBoxMapWidth->value();
 }
 
-quint16 NewMapDialog::getHeight() const {
+quint16 MapEditDialog::getHeight() const {
     return ui->spinBoxMapHeight->value();
 }
 
-QString NewMapDialog::getChipset() const {
+QString MapEditDialog::getChipset() const {
     return ui->lineEditChipset->text();
 }
 
-QString NewMapDialog::getMusic() const {
+QString MapEditDialog::getMusic() const {
     return ui->lineEditMusic->text();
 }
