@@ -53,7 +53,11 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEditChipset"/>
+        <widget class="QLineEdit" name="lineEditChipset">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QPushButton" name="pushButtonBrowseChipset">
@@ -87,7 +91,11 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEditMusic"/>
+        <widget class="QLineEdit" name="lineEditMusic">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QPushButton" name="pushButtonBrowseMusic">
@@ -209,11 +217,11 @@
    <sender>pushButtonOK</sender>
    <signal>clicked()</signal>
    <receiver>MapEditDialog</receiver>
-   <slot>accept()</slot>
+   <slot>onOK()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>272</x>
-     <y>101</y>
+     <x>307</x>
+     <y>196</y>
     </hint>
     <hint type="destinationlabel">
      <x>226</x>
@@ -228,8 +236,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>341</x>
-     <y>109</y>
+     <x>388</x>
+     <y>196</y>
     </hint>
     <hint type="destinationlabel">
      <x>292</x>
@@ -237,5 +245,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButtonBrowseChipset</sender>
+   <signal>clicked()</signal>
+   <receiver>MapEditDialog</receiver>
+   <slot>onChipsetBrowse()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>359</x>
+     <y>47</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>212</x>
+     <y>123</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>onChipsetBrowse()</slot>
+  <slot>onOK()</slot>
+ </slots>
 </ui>

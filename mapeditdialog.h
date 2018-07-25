@@ -5,6 +5,8 @@
 
 #include <QDialog>
 
+#include "dummy/project.h"
+
 namespace Dummy {
     class Map;
 }
@@ -18,7 +20,8 @@ class MapEditDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit MapEditDialog(std::shared_ptr<const Dummy::Map> = nullptr,
+    explicit MapEditDialog(std::shared_ptr<const Dummy::Project> project,
+                           std::shared_ptr<const Dummy::Map> = nullptr,
                            QWidget *parent = 0);
     ~MapEditDialog();
 
@@ -30,6 +33,10 @@ public:
 
 private:
     Ui::MapEditDialog *ui;
+    const std::shared_ptr<const Dummy::Project> m_project;
+private slots:
+    void onChipsetBrowse();
+    void onOK();
 };
 
 #endif // NEWMAPDIALOG_H

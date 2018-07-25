@@ -17,18 +17,25 @@ namespace Dummy {
 
         void resizeMap(quint16, quint16);
 
-        friend QDataStream& operator>>(QDataStream& stream, Layer& layer) {
+        friend QDataStream& operator>>(QDataStream& stream,
+                                       Dummy::Layer& layer) {
             layer._loadFromStream(stream);
+            return stream;
+        }
+
+        friend QDataStream& operator<<(QDataStream& stream,
+                                       const Dummy::Layer& layer) {
+            layer._writeToStream(stream);
+            return stream;
         }
 
     private:
+        void _writeToStream(QDataStream&) const;
         void _loadFromStream(QDataStream&);
 
         quint16 m_width, m_height;
     };
 
 }
-
-QDataStream& operator<<(QDataStream& stream, const Dummy::Layer& layer);
 
 #endif // LAYER_H
