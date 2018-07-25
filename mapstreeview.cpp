@@ -66,7 +66,7 @@ void MapsTreeView::_disableActions() {
 }
 
 void MapsTreeView::_onNewMapAction() {
-    MapEditDialog dlg;
+    MapEditDialog dlg(m_project);
     dlg.exec();
 
     Misc::MapTreeModel* mapModel = m_project->mapsModel();
@@ -103,8 +103,13 @@ void MapsTreeView::_onPropertiesAction() {
             ->mapsModel()
             ->itemFromIndex(m_selectedModelIndex);
     qDebug() << item->text();
-
-    MapEditDialog dlg(m_project->document(item->text()).map());
+    std::shared_ptr<Dummy::Map> map(m_project->document(item->text()).map());
+    MapEditDialog dlg(m_project, map);
     dlg.exec();
+    if (dlg.result() == QDialog::Accepted) {
+        map->setChipset(dlg.getChipset()).setMusic(dlg.getMusic());
+        map->saveToFile(m_project->fullpath() +
+                        "/maps/" + map->name() + ".map");
+    }
 
 }

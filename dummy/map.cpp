@@ -56,6 +56,10 @@ void Dummy::Map::_loadFromStream(QDataStream& stream) {
     m_firstLayer.resizeMap(m_width, m_height);
     m_secondLayer.resizeMap(m_width, m_height);
     m_thirdLayer.resizeMap(m_width, m_height);
+
+    stream >> m_firstLayer;
+    stream >> m_secondLayer;
+    stream >> m_thirdLayer;
 }
 
 void Dummy::Map::_writeToStream(QDataStream & stream) const {
