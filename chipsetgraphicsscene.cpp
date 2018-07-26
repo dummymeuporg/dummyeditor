@@ -3,6 +3,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QPointF>
 #include <QRect>
+#include <QtGlobal>
 
 #include "chipsetgraphicsscene.h"
 
@@ -17,15 +18,20 @@ ChipsetGraphicsScene::ChipsetGraphicsScene(QObject* parent) :
 void
 ChipsetGraphicsScene::_drawGrid() {
     QPen pen(Qt::black, 0.5);
-    for (int i = 0; i < 58; i++) {
-        QGraphicsItem* item = addLine(i*16, 0, i*16, 16*16, pen);
+
+    quint16 cellsWidth = m_chipset->boundingRect().width() / 16;
+    quint16 cellsHeight = m_chipset->boundingRect().height() / 16;
+
+    for (int i = 0; i <= cellsWidth; i++) {
+        QGraphicsItem* item = addLine(i*16, 0, i*16, cellsHeight*16, pen);
         item->setZValue(99);
     }
 
-    for (int i = 0; i < 17; i++) {
-        QGraphicsItem* item = addLine(0, i*16, 57*16, i*16, pen);
+    for (int i = 0; i <= cellsHeight; i++) {
+        QGraphicsItem* item = addLine(0, i*16, cellsWidth*16, i*16, pen);
         item->setZValue(99);
     }
+
 }
 
 ChipsetGraphicsScene& ChipsetGraphicsScene::setChipset(const QPixmap& pixmap) {
@@ -50,17 +56,23 @@ ChipsetGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
     if (mouseEvent->buttons() & Qt::LeftButton) {
         QPoint pt = mouseEvent->scenePos().toPoint();
 
-        QGraphicsScene::mousePressEvent(mouseEvent);
+        if (pt.x() < m_chipset->boundingRect().width()
+            && pt.y() < m_chipset->boundingRect().height())
+        {
 
-        if (m_selectionRectItem != nullptr) {
-            this->removeItem(m_selectionRectItem);
+            QGraphicsScene::mousePressEvent(mouseEvent);
+
+            if (m_selectionRectItem != nullptr) {
+                invalidate(m_selectionRectItem->rect());
+                this->removeItem(m_selectionRectItem);
+            }
+
+            // Add a square
+            QPen pen(Qt::red, 2);
+            qreal x = pt.x() - (pt.x() % 16);
+            qreal y = pt.y() - (pt.y() % 16);
+            m_selectionRectItem = addRect(x, y, 16, 16, pen);
         }
-
-        // Add a square
-        QPen pen(Qt::red, 1);
-        qreal x = pt.x() - (pt.x() % 16);
-        qreal y = pt.y() - (pt.y() % 16);
-        m_selectionRectItem = addRect(x, y, 16, 16, pen);
     }
 }
 

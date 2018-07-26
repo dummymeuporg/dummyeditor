@@ -148,4 +148,5 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
         m_currentProject->fullpath() + "/chipsets/" +
         m_currentProject->document(mapName).map()->chipset()
     );
+    ui->graphicsViewChipset->viewport()->update();
 }
