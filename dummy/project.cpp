@@ -12,7 +12,7 @@
 #include "dummy/project.h"
 
 Dummy::Project::Project(const QString& folderPath) :
-    m_mapsModel(nullptr), m_fullpath(folderPath)
+    m_fullpath(folderPath), m_mapsModel(nullptr)
 {
 
     // Try to read the "project.xml" file that should be present in folderPath.

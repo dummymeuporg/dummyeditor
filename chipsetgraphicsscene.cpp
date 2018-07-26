@@ -7,8 +7,15 @@
 #include "chipsetgraphicscene.h"
 
 ChipsetGraphicsScene::ChipsetGraphicsScene(QObject* parent) :
-    QGraphicsScene(parent), m_selectionRectItem(nullptr)
+    QGraphicsScene(parent), m_selectionRectItem(nullptr), m_chipset(nullptr)
 {
+    if (m_chipset) {
+        _drawGrid();
+    }
+}
+
+void
+ChipsetGraphicsScene::_drawGrid() {
     QPen pen(Qt::black, 0.5);
     for (int i = 0; i < 58; i++) {
         QGraphicsItem* item = addLine(i*16, 0, i*16, 16*16, pen);
@@ -19,7 +26,25 @@ ChipsetGraphicsScene::ChipsetGraphicsScene(QObject* parent) :
         QGraphicsItem* item = addLine(0, i*16, 57*16, i*16, pen);
         item->setZValue(99);
     }
+}
 
+ChipsetGraphicsScene& ChipsetGraphicsScene::setChipset(const QPixmap& pixmap) {
+    clear();
+    if(nullptr != m_chipset) {
+
+        removeItem(m_chipset);
+
+    }
+
+    m_chipset = addPixmap(pixmap);
+    _drawGrid();
+    return *this;
+}
+
+ChipsetGraphicsScene&
+ChipsetGraphicsScene::setChipset(const QString& chipsetPath) {
+    qDebug() << chipsetPath;
+    return setChipset(QPixmap(chipsetPath));
 }
 
 void
@@ -30,7 +55,7 @@ ChipsetGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
         QGraphicsScene::mousePressEvent(mouseEvent);
 
         if (m_selectionRectItem != nullptr) {
-            this->removeItem((QGraphicsItem*)m_selectionRectItem);
+            this->removeItem(m_selectionRectItem);
         }
 
         // Add a square

@@ -70,7 +70,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphicsViewChipset->setScene(m_chipsetScene);
 
     // XXX: Test
-    m_chipsetScene->addPixmap(QPixmap("chipset/LhynnBis.png"));
+    m_chipsetScene->setChipset(QPixmap("chipsets/LhynnBis.png"));
 
 }
 
@@ -144,4 +144,8 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
     Misc::MapTreeModel* mapModel = m_currentProject->mapsModel();
     QString mapName(mapModel->itemFromIndex(selectedIndex)->text());
     qDebug() << mapName;
+    m_chipsetScene->setChipset(
+        m_currentProject->fullpath() + "/chipsets/" +
+        m_currentProject->document(mapName).map()->chipset()
+    );
 }
