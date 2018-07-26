@@ -19,7 +19,7 @@ HEADERS += \
     mainwindow.h \
     dummy/project.h \
     dummy/map.h \
-    chipsetgraphicscene.h \
+    chipsetgraphicsscene.h \
     misc/mapdocument.h \
     misc/maptreemodel.h \
     mapstreeview.h \

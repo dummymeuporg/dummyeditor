@@ -9,7 +9,7 @@
 
 #include "misc/maptreemodel.h"
 
-#include "chipsetgraphicscene.h"
+#include "chipsetgraphicsscene.h"
 #include "mainwindow.h"
 #include "mapeditdialog.h"
 #include "ui_mainwindow.h"
@@ -69,8 +69,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphicsViewChipset->scale(2.0, 2.0);
     ui->graphicsViewChipset->setScene(m_chipsetScene);
 
-    // XXX: Test
-    m_chipsetScene->setChipset(QPixmap("chipsets/LhynnBis.png"));
+    QObject::connect(ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
+                     m_chipsetScene, SLOT(changeChipset(QString)));
 
 }
 

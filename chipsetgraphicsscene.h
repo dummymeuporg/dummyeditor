@@ -18,6 +18,9 @@ public:
     ChipsetGraphicsScene& setChipset(const QPixmap& pixmap);
     ChipsetGraphicsScene& setChipset(const QString& chipsetPath);
     void _drawGrid();
+
+public slots:
+    void changeChipset(const QString& chipsetPath);
 private:
     QGraphicsRectItem* m_selectionRectItem;
     QGraphicsPixmapItem* m_chipset;

@@ -4,7 +4,7 @@
 #include <QPointF>
 #include <QRect>
 
-#include "chipsetgraphicscene.h"
+#include "chipsetgraphicsscene.h"
 
 ChipsetGraphicsScene::ChipsetGraphicsScene(QObject* parent) :
     QGraphicsScene(parent), m_selectionRectItem(nullptr), m_chipset(nullptr)
@@ -30,12 +30,6 @@ ChipsetGraphicsScene::_drawGrid() {
 
 ChipsetGraphicsScene& ChipsetGraphicsScene::setChipset(const QPixmap& pixmap) {
     clear();
-    if(nullptr != m_chipset) {
-
-        removeItem(m_chipset);
-
-    }
-
     m_chipset = addPixmap(pixmap);
     _drawGrid();
     return *this;
@@ -45,6 +39,10 @@ ChipsetGraphicsScene&
 ChipsetGraphicsScene::setChipset(const QString& chipsetPath) {
     qDebug() << chipsetPath;
     return setChipset(QPixmap(chipsetPath));
+}
+
+void ChipsetGraphicsScene::changeChipset(const QString& chipsetPath) {
+    setChipset(chipsetPath);
 }
 
 void

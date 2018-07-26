@@ -34,6 +34,9 @@ public:
         return m_project;
     }
 
+signals:
+    void chipsetMapChanged(QString);
+
 private:
 
     void _enableActions();

@@ -107,6 +107,11 @@ void MapsTreeView::_onPropertiesAction() {
     MapEditDialog dlg(m_project, map);
     dlg.exec();
     if (dlg.result() == QDialog::Accepted) {
+        QString dlgChipset = dlg.getChipset();
+        if (dlgChipset != map->chipset()) {
+            emit chipsetMapChanged(m_project->fullpath() + "/chipsets/" +
+                                   dlgChipset);
+        }
         map->setChipset(dlg.getChipset()).setMusic(dlg.getMusic());
         map->saveToFile(m_project->fullpath() +
                         "/maps/" + map->name() + ".map");
