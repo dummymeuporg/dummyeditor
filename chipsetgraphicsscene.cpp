@@ -32,6 +32,8 @@ ChipsetGraphicsScene::_drawGrid() {
         item->setZValue(99);
     }
 
+    m_selectionRectItem = nullptr;
+
 }
 
 ChipsetGraphicsScene& ChipsetGraphicsScene::setChipset(const QPixmap& pixmap) {
