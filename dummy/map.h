@@ -1,5 +1,4 @@
-#ifndef _DUMMY_MAP_H
-#define _DUMMY_MAP_H
+#pragma once
 
 #include <QVector>
 #include <QString>
@@ -20,7 +19,7 @@ namespace Dummy {
         Map(quint16 width, quint16 height);
         virtual ~Map();
 
-        inline const unsigned short version() const {
+        inline unsigned short version() const {
             return m_version;
         }
 
@@ -65,6 +64,7 @@ namespace Dummy {
 
         Map& setHeight(quint16 height) {
             m_height = height;
+            return *this;
         }
 
         Map& setChipset(const QString& chipset) {
@@ -127,5 +127,3 @@ namespace Dummy {
         Layer m_firstLayer, m_secondLayer, m_thirdLayer;
     };
 }
-
-#endif // _DUMMY_MAP_H
