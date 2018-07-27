@@ -12,12 +12,17 @@ class QFile;
 
 namespace Dummy {
 
+    class Project;
+
     class Map
     {
     public:
-        Map();
-        Map(quint16 width, quint16 height);
+        Map(const Project& project, quint16 width = 1, quint16 height = 1);
         virtual ~Map();
+
+        inline const Project& project() const {
+            return m_project;
+        }
 
         inline unsigned short version() const {
             return m_version;
@@ -94,8 +99,9 @@ namespace Dummy {
             return m_thirdLayer;
         }
 
-        static std::shared_ptr<Map> loadFromFile(const QString& filename);
-        static std::shared_ptr<Map> loadFromFile(QFile& file);
+        static std::shared_ptr<Map> loadFromFile(const Project&,
+                                                 const QString& filename);
+        static std::shared_ptr<Map> loadFromFile(const Project&, QFile& file);
 
         void saveToFile(const QString& filename) const;
         void saveToFile(QFile& file) const;
@@ -118,6 +124,7 @@ namespace Dummy {
         void _loadFromStream(QDataStream&);
         void _writeToStream(QDataStream&) const;
 
+        const Project& m_project;
         unsigned short m_version;
         QString m_name;
         quint16 m_width, m_height; // Map dimension

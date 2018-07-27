@@ -5,10 +5,10 @@
 #include "dummy/layer.h"
 #include "dummy/map.h"
 
-Dummy::Map::Map() : Dummy::Map::Map(1, 1) {}
+//Dummy::Map::Map() : Dummy::Map::Map(1, 1) {}
 
-Dummy::Map::Map(quint16 width, quint16 height)
-    : m_version(0x0001), m_width(width), m_height(height),
+Dummy::Map::Map(const Project& project, quint16 width, quint16 height)
+    : m_project(project), m_version(0x0001), m_width(width), m_height(height),
       m_firstLayer(m_width, m_height),
       m_secondLayer(m_width, m_height),
       m_thirdLayer(m_width, m_height)
@@ -22,18 +22,19 @@ Dummy::Map::~Map() {
 }
 
 std::shared_ptr<Dummy::Map>
-Dummy::Map::loadFromFile(const QString& filename) {
+Dummy::Map::loadFromFile(const Dummy::Project& project,
+                         const QString& filename) {
 
     QFile file(filename);
 
-    return loadFromFile(file);
+    return loadFromFile(project, file);
 }
 
 std::shared_ptr<Dummy::Map>
-Dummy::Map::loadFromFile(QFile& file) {
+Dummy::Map::loadFromFile(const Dummy::Project& project, QFile& file) {
     file.open(QIODevice::ReadOnly);
     QDataStream in(&file);
-    std::shared_ptr<Dummy::Map> map(new Map());
+    std::shared_ptr<Dummy::Map> map(new Map(project));
     in >> *map;
     return map;
 }

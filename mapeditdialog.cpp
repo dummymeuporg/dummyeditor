@@ -10,8 +10,9 @@
 MapEditDialog::MapEditDialog(
     const std::shared_ptr<const Dummy::Project> project,
     std::shared_ptr<const Dummy::Map> map,
-    QWidget *parent) : m_project(project), QDialog(parent),
-                       ui(new Ui::MapEditDialog)
+    QWidget *parent) : QDialog(parent),
+                       ui(new Ui::MapEditDialog),
+                       m_project(project)
 {
     ui->setupUi(this);
 

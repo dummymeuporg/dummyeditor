@@ -86,7 +86,7 @@ void MapsTreeView::_onNewMapAction() {
 
     if(dlg.result() == QDialog::Accepted) {
         QString mapName = dlg.getMapName();
-        Dummy::Map map(dlg.getWidth(), dlg.getHeight());
+        Dummy::Map map(*m_project, dlg.getWidth(), dlg.getHeight());
         map.setChipset(dlg.getChipset()).setMusic(dlg.getMusic());
         map.saveToFile(m_project->fullpath() +
                        "/maps/" + mapName + ".map");

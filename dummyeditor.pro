@@ -13,7 +13,8 @@ SOURCES += \
     misc/maptreemodel.cpp \
     mapstreeview.cpp \
     dummy/layer.cpp \
-    mapeditdialog.cpp
+    mapeditdialog.cpp \
+    mapgraphicsscene.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -24,7 +25,8 @@ HEADERS += \
     misc/maptreemodel.h \
     mapstreeview.h \
     dummy/layer.h \
-    mapeditdialog.h
+    mapeditdialog.h \
+    mapgraphicsscene.h
 
 FORMS += \
     mainwindow.ui \

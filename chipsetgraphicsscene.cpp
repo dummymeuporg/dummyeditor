@@ -19,8 +19,10 @@ void
 ChipsetGraphicsScene::_drawGrid() {
     QPen pen(Qt::black, 0.5);
 
-    quint16 cellsWidth = m_chipset->boundingRect().width() / 16;
-    quint16 cellsHeight = m_chipset->boundingRect().height() / 16;
+    quint16 cellsWidth = static_cast<quint16>(
+        m_chipset->boundingRect().width() / 16);
+    quint16 cellsHeight = static_cast<quint16>(
+        m_chipset->boundingRect().height() / 16);
 
     for (int i = 0; i <= cellsWidth; i++) {
         QGraphicsItem* item = addLine(i*16, 0, i*16, cellsHeight*16, pen);
