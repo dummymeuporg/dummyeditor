@@ -10,6 +10,7 @@ namespace Ui {
 class MainWindow;
 }
 
+class MapGraphicsScene;
 class ChipsetGraphicsScene;
 class QTreeView;
 
@@ -30,6 +31,7 @@ private:
     Ui::MainWindow *ui;
     std::shared_ptr<Dummy::Project> m_currentProject;
     ChipsetGraphicsScene* m_chipsetScene;
+    MapGraphicsScene* m_mapScene;
 
 private slots:
     void newProject();

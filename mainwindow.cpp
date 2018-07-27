@@ -10,6 +10,7 @@
 #include "misc/maptreemodel.h"
 
 #include "chipsetgraphicsscene.h"
+#include "mapgraphicsscene.h"
 #include "mainwindow.h"
 #include "mapeditdialog.h"
 #include "ui_mainwindow.h"
@@ -18,7 +19,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     m_currentProject(nullptr),
-    m_chipsetScene(nullptr)
+    m_chipsetScene(nullptr),
+    m_mapScene(nullptr)
 {
     ui->setupUi(this);
 
@@ -66,8 +68,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->tabGeneral->layout()->setMenuBar(tabGeneralToolBar);
     m_chipsetScene = new ChipsetGraphicsScene();
+
     ui->graphicsViewChipset->scale(2.0, 2.0);
     ui->graphicsViewChipset->setScene(m_chipsetScene);
+
+    m_mapScene = new MapGraphicsScene();
+    ui->graphicsViewMap->scale(2.0, 2.0);
+    ui->graphicsViewMap->setScene(m_mapScene);
 
     QObject::connect(ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
                      m_chipsetScene, SLOT(changeChipset(QString)));
@@ -75,6 +82,8 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 void MainWindow::_closeCurrentProject() {
+    delete m_chipsetScene;
+    delete m_mapScene;
 }
 
 
@@ -144,9 +153,10 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
     Misc::MapTreeModel* mapModel = m_currentProject->mapsModel();
     QString mapName(mapModel->itemFromIndex(selectedIndex)->text());
     qDebug() << mapName;
+    std::shared_ptr<Dummy::Map> map(m_currentProject->document(mapName).map());
     m_chipsetScene->setChipset(
-        m_currentProject->fullpath() + "/chipsets/" +
-        m_currentProject->document(mapName).map()->chipset()
+        m_currentProject->fullpath() + "/chipsets/" + map->chipset()
     );
+    m_mapScene->setMap(map);
     ui->graphicsViewChipset->viewport()->update();
 }

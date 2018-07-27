@@ -22,9 +22,11 @@ public:
     }
 
     MapGraphicsScene& setMap(const std::shared_ptr<Dummy::Map>& map);
-
+public slots:
+    void changeMap(const std::shared_ptr<Dummy::Map>& map);
 private:
     void _drawMap();
+    void _drawGrid();
     void _drawLayer(const Dummy::Layer&);
     std::shared_ptr<Dummy::Map> m_map;
     QPixmap m_mapChipset;

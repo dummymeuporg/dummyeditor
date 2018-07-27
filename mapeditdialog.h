@@ -22,7 +22,7 @@ class MapEditDialog : public QDialog
 public:
     explicit MapEditDialog(std::shared_ptr<const Dummy::Project> project,
                            std::shared_ptr<const Dummy::Map> = nullptr,
-                           QWidget *parent = 0);
+                           QWidget *parent = nullptr);
     ~MapEditDialog();
 
     QString getMapName() const;
