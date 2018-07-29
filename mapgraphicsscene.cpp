@@ -85,25 +85,50 @@ void MapGraphicsScene::changeMap(const std::shared_ptr<Dummy::Map>& map) {
 }
 
 void
+MapGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
+    if(m_map != nullptr && m_chipsetSelection.width() != 0 &&
+           m_chipsetSelection.height() != 0 && m_isDrawing)
+    {
+        QPoint pt = mouseEvent->scenePos().toPoint();
+        _setTile(pt.x() - (pt.x() % 16), pt.y() - (pt.y() % 16));
+    }
+}
+
+void
 MapGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
     if (mouseEvent->buttons() & Qt::LeftButton) {
         QPoint pt = mouseEvent->scenePos().toPoint();
+        m_isDrawing = true;
         qDebug() << m_chipsetSelection;
 
         if (m_map != nullptr && m_chipsetSelection.width() != 0 &&
             m_chipsetSelection.height() != 0)
         {
-            qreal x = pt.x() - (pt.x() % 16);
-            qreal y = pt.y() - (pt.y() % 16);
-            QGraphicsPixmapItem* pixmapItem = new
-                QGraphicsPixmapItem(m_mapChipset.copy(m_chipsetSelection));
-            pixmapItem->setPos(x, y);
-            addItem(pixmapItem);
-            m_map->firstLayer().setTile(
-                x / 16, y / 16,
-                m_chipsetSelection.x()/16, m_chipsetSelection.y()/16);
+            _setTile(pt.x() - (pt.x() % 16), pt.y() - (pt.y() % 16));
         }
     }
+}
+
+void
+MapGraphicsScene::_setTile(qreal x, qreal y) {
+
+    if (x >= 0 && y >= 0
+        && x < m_map->width() * 16 && y < m_map->height() * 16)
+    {
+        QGraphicsPixmapItem* pixmapItem = new
+            QGraphicsPixmapItem(m_mapChipset.copy(m_chipsetSelection));
+        pixmapItem->setPos(x, y);
+        addItem(pixmapItem);
+        m_map->firstLayer().setTile(
+            x / 16, y / 16,
+            m_chipsetSelection.x()/16, m_chipsetSelection.y()/16);
+    }
+}
+
+void
+MapGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) {
+    Q_UNUSED(mouseEvent);
+    m_isDrawing = false;
 }
 
 void MapGraphicsScene::changeSelection(const QRect& selection) {
