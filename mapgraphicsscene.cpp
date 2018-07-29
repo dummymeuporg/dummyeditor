@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QGraphicsItem>
 
 #include "dummy/layer.h"
@@ -41,10 +42,16 @@ void MapGraphicsScene::_drawLayer(const Dummy::Layer& layer) {
 
 MapGraphicsScene&
 MapGraphicsScene::setMap(const std::shared_ptr<Dummy::Map>& map) {
+
+    if (m_map != nullptr) {
+        QRect invalidateRegion(0, 0,
+                               m_map->width() * 16, m_map->height() * 16);
+        qDebug() << invalidateRegion;
+        invalidate(invalidateRegion);
+    }
+
     m_map = map;
     const Dummy::Project& project = m_map->project();
-
-    invalidate(m_mapChipset.rect());
 
     m_mapChipset = QPixmap(project.fullpath() + "/chipsets/"
                            + m_map->chipset());
