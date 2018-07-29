@@ -52,7 +52,11 @@
               <number>0</number>
              </property>
              <item>
-              <widget class="QGraphicsView" name="graphicsViewChipset"/>
+              <widget class="QGraphicsView" name="graphicsViewChipset">
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="MapsTreeView" name="treeViewMaps">
@@ -74,7 +78,11 @@
            </widget>
           </item>
           <item>
-           <widget class="QGraphicsView" name="graphicsViewMap"/>
+           <widget class="QGraphicsView" name="graphicsViewMap">
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
