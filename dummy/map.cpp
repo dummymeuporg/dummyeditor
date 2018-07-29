@@ -68,3 +68,10 @@ void Dummy::Map::_writeToStream(QDataStream & stream) const {
            << m_chipset << m_music
            << m_firstLayer << m_secondLayer << m_firstLayer;
 }
+
+Dummy::Layer&
+Dummy::Layer::setTile(quint16 x, quint16 y, qint16 chipsetX, qint16 chipsetY) {
+    quint16 index = y * m_width + x;
+    operator[](index) = std::make_tuple(chipsetX, chipsetY);
+    return *this;
+}

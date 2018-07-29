@@ -48,6 +48,7 @@ ChipsetGraphicsScene& ChipsetGraphicsScene::setChipset(const QPixmap& pixmap) {
 ChipsetGraphicsScene&
 ChipsetGraphicsScene::setChipset(const QString& chipsetPath) {
     qDebug() << chipsetPath;
+    setSelection(QRect(0, 0, 0, 0));
     return setChipset(QPixmap(chipsetPath));
 }
 
@@ -75,13 +76,8 @@ ChipsetGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
             QPen pen(Qt::red, 2);
             qreal x = pt.x() - (pt.x() % 16);
             qreal y = pt.y() - (pt.y() % 16);
-            m_selectionRectItem = addRect(x, y, 16, 16, pen);
+            setSelection(QRect(x, y, 16, 16));
+            m_selectionRectItem = addRect(m_currentSelection, pen);
         }
     }
-}
-
-QRect ChipsetGraphicsScene::selection() const {
-    QPoint top_left = m_selectionRectItem->rect().topLeft().toPoint();
-    QPoint bottom_right = m_selectionRectItem->rect().bottomRight().toPoint();
-    return QRect(top_left / 16, (bottom_right / 16));
 }

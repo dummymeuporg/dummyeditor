@@ -87,15 +87,15 @@ namespace Dummy {
             return *this;
         }
 
-        inline const Layer& firstLayer() const {
+        inline Layer& firstLayer() {
             return m_firstLayer;
         }
 
-        inline const Layer& secondLayer() const {
+        inline Layer& secondLayer() {
             return m_secondLayer;
         }
 
-        inline const Layer& thirdLayer() const {
+        inline Layer& thirdLayer() {
             return m_thirdLayer;
         }
 
@@ -117,7 +117,6 @@ namespace Dummy {
             map._loadFromStream(stream);
             return stream;
         }
-
 
     private:
 

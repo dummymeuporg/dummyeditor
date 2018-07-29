@@ -1,5 +1,6 @@
 #include <QDebug>
 #include <QGraphicsItem>
+#include <QGraphicsSceneMouseEvent>
 
 #include "dummy/layer.h"
 #include "dummy/project.h"
@@ -36,8 +37,24 @@ void MapGraphicsScene::_drawGrid() {
 }
 
 void MapGraphicsScene::_drawLayer(const Dummy::Layer& layer) {
-    // TODO.
-    Q_UNUSED(layer);
+
+    int i = 0;
+    for (auto it = layer.begin(); it != layer.end(); it++, i++) {
+        qint16 x = std::get<0>(*it);
+        qint16 y = std::get<1>(*it);
+
+        if (x >= 0 && y >= 0) {
+            qDebug() << x << y;
+            QRect tile(x * 16, y * 16, 16, 16);
+            QGraphicsPixmapItem* tileItem = new
+                QGraphicsPixmapItem(m_mapChipset.copy(tile));
+
+            qreal posX = (i % m_map->width()) * 16;
+            qreal posY = (i / m_map->height()) * 16;
+            tileItem->setPos(posX, posY);
+            addItem(tileItem);
+        }
+    }
 }
 
 MapGraphicsScene&
@@ -65,4 +82,30 @@ MapGraphicsScene::setMap(const std::shared_ptr<Dummy::Map>& map) {
 
 void MapGraphicsScene::changeMap(const std::shared_ptr<Dummy::Map>& map) {
     setMap(map);
+}
+
+void
+MapGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
+    if (mouseEvent->buttons() & Qt::LeftButton) {
+        QPoint pt = mouseEvent->scenePos().toPoint();
+        qDebug() << m_chipsetSelection;
+
+        if (m_map != nullptr && m_chipsetSelection.width() != 0 &&
+            m_chipsetSelection.height() != 0)
+        {
+            qreal x = pt.x() - (pt.x() % 16);
+            qreal y = pt.y() - (pt.y() % 16);
+            QGraphicsPixmapItem* pixmapItem = new
+                QGraphicsPixmapItem(m_mapChipset.copy(m_chipsetSelection));
+            pixmapItem->setPos(x, y);
+            addItem(pixmapItem);
+            m_map->firstLayer().setTile(
+                x / 16, y / 16,
+                m_chipsetSelection.x()/16, m_chipsetSelection.y()/16);
+        }
+    }
+}
+
+void MapGraphicsScene::changeSelection(const QRect& selection) {
+    m_chipsetSelection = selection;
 }

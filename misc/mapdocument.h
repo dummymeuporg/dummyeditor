@@ -19,6 +19,8 @@ namespace Misc {
             return m_map;
         }
 
+        void save();
+
     private:
         Dummy::Project* m_project;
         bool m_isModified;

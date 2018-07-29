@@ -78,6 +78,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
                      m_chipsetScene, SLOT(changeChipset(QString)));
+    QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
+                     m_mapScene, SLOT(changeSelection(QRect)));
 
 }
 
@@ -141,6 +143,15 @@ void MainWindow::openProject() {
 void MainWindow::saveProject() {
     if (nullptr != m_currentProject) {
         m_currentProject->saveProjectFile();
+        qDebug() << m_currentProject->openedMaps().count();
+        if (m_currentProject->openedMaps().count() > 0) {
+            QMap<QString, Misc::MapDocument>::iterator i;
+
+            for(auto e : m_currentProject->openedMaps().keys()) {
+                qDebug() << e;
+                m_currentProject->document(e).save();
+            }
+        }
     }
 }
 

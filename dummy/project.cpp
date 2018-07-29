@@ -127,7 +127,7 @@ Misc::MapDocument& Dummy::Project::document(const QString& mapName) {
             m_fullpath + "/maps/" + cleantMapname + ".map"));
         map->setName(cleantMapname);
 
-        m_openedMaps[cleantMapname] = Misc::MapDocument(this, map);
+        m_openedMaps.insert(cleantMapname, Misc::MapDocument(this, map));
     }
     return m_openedMaps[cleantMapname];
 }

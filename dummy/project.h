@@ -38,6 +38,10 @@ namespace Dummy {
 
         Misc::MapDocument& document(const QString& mapName);
 
+        inline QMap<QString, Misc::MapDocument> openedMaps() const {
+            return m_openedMaps;
+        }
+
     private:
         QString m_fullpath;
         QDomDocument m_domDocument;
