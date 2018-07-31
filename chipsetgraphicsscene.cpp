@@ -84,7 +84,6 @@ ChipsetGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
         if (pt.x() >= m_selectionStart.x()
             && pt.y() >= m_selectionStart.y())
         {
-            qDebug() << x << y << xEnd << yEnd;
             setSelection(QRect(x, y, xEnd - x, yEnd - y));
             m_selectionRectItem = addRect(m_currentSelection, pen);
         }

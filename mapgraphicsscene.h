@@ -29,13 +29,23 @@ public slots:
     void changeMap(const std::shared_ptr<Dummy::Map>& map);
     void changeSelection(const QRect& selection);
 private:
+    void _cleanLayer(QVector<QGraphicsPixmapItem*>& layer);
     void _drawMap();
     void _drawGrid();
     void _drawLayer(const Dummy::Layer&);
-    void _setTile(qreal x, qreal y);
+    void _setTile(QVector<QGraphicsPixmapItem*>& layer,
+                  qreal x,
+                  qreal y,
+                  quint16 chipsetX,
+                  quint16 chipsetY);
 
     std::shared_ptr<Dummy::Map> m_map;
     QPixmap m_mapChipset;
     QRect m_chipsetSelection;
     bool m_isDrawing;
+
+    QVector<QGraphicsPixmapItem*> m_firstLayerItems;
+    QVector<QGraphicsPixmapItem*> m_secondLayerItems;
+    QVector<QGraphicsPixmapItem*> m_thirdLayerItems;
+
 };

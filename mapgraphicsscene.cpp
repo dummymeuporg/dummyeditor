@@ -44,15 +44,22 @@ void MapGraphicsScene::_drawLayer(const Dummy::Layer& layer) {
         qint16 y = std::get<1>(*it);
 
         if (x >= 0 && y >= 0) {
-            qDebug() << x << y;
             QRect tile(x * 16, y * 16, 16, 16);
-            QGraphicsPixmapItem* tileItem = new
-                QGraphicsPixmapItem(m_mapChipset.copy(tile));
+
+            if(nullptr != m_firstLayerItems[i]) {
+                removeItem(m_firstLayerItems[i]);
+            }
+
+            m_firstLayerItems[i] =
+                new QGraphicsPixmapItem(m_mapChipset.copy(tile))
+            ;
 
             qreal posX = (i % m_map->width()) * 16;
             qreal posY = (i / m_map->height()) * 16;
-            tileItem->setPos(posX, posY);
-            addItem(tileItem);
+            m_firstLayerItems[i]->setPos(posX, posY);
+            //tileItem->setPos(posX, posY);
+            //addItem(tileItem);
+            addItem(m_firstLayerItems[i]);
         }
     }
 }
@@ -73,11 +80,19 @@ MapGraphicsScene::setMap(const std::shared_ptr<Dummy::Map>& map) {
     m_mapChipset = QPixmap(project.fullpath() + "/chipsets/"
                            + m_map->chipset());
     clear();
+    _cleanLayer(m_firstLayerItems);
+    _cleanLayer(m_secondLayerItems);
+    _cleanLayer(m_thirdLayerItems);
 
     _drawLayer(m_map->firstLayer());
     _drawGrid();
 
     return *this;
+}
+
+void MapGraphicsScene::_cleanLayer(QVector<QGraphicsPixmapItem*>& layer) {
+    layer.resize(m_map->width() * m_map->height());
+    layer.fill(nullptr);
 }
 
 void MapGraphicsScene::changeMap(const std::shared_ptr<Dummy::Map>& map) {
@@ -90,7 +105,18 @@ MapGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
            m_chipsetSelection.height() != 0 && m_isDrawing)
     {
         QPoint pt = mouseEvent->scenePos().toPoint();
-        _setTile(pt.x() - (pt.x() % 16), pt.y() - (pt.y() % 16));
+        int tilesWidth = int(m_chipsetSelection.width() / 16);
+        int tilesHeight = int(m_chipsetSelection.height() / 16);
+
+        for (int j = 0; j < tilesHeight; ++j) {
+            for(int i = 0; i < tilesWidth; ++i) {
+                _setTile(m_firstLayerItems,
+                         pt.x() - (pt.x() % 16) + (i * 16),
+                         pt.y() - (pt.y() % 16) + (j * 16),
+                         m_chipsetSelection.x() + (i * 16),
+                         m_chipsetSelection.y() + (j * 16));
+            }
+        }
     }
 }
 
@@ -104,24 +130,44 @@ MapGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
         if (m_map != nullptr && m_chipsetSelection.width() != 0 &&
             m_chipsetSelection.height() != 0)
         {
-            _setTile(pt.x() - (pt.x() % 16), pt.y() - (pt.y() % 16));
+            int tilesWidth = int(m_chipsetSelection.width() / 16);
+            int tilesHeight = int(m_chipsetSelection.height() / 16);
+            qDebug() << tilesWidth << tilesHeight;
+            for (int j = 0; j < tilesHeight; ++j) {
+                for(int i = 0; i < tilesWidth; ++i) {
+                    _setTile(m_firstLayerItems,
+                             pt.x() - (pt.x() % 16) + (i * 16),
+                             pt.y() - (pt.y() % 16) + (j * 16),
+                             m_chipsetSelection.x() + (i * 16),
+                             m_chipsetSelection.y() + (j * 16));
+                }
+            }
         }
     }
 }
 
 void
-MapGraphicsScene::_setTile(qreal x, qreal y) {
-
+MapGraphicsScene::_setTile(QVector<QGraphicsPixmapItem*>& layer,
+                           qreal x,
+                           qreal y,
+                           quint16 chipsetX,
+                           quint16 chipsetY)
+{
     if (x >= 0 && y >= 0
         && x < m_map->width() * 16 && y < m_map->height() * 16)
     {
-        QGraphicsPixmapItem* pixmapItem = new
-            QGraphicsPixmapItem(m_mapChipset.copy(m_chipsetSelection));
-        pixmapItem->setPos(x, y);
-        addItem(pixmapItem);
-        m_map->firstLayer().setTile(
-            x / 16, y / 16,
-            m_chipsetSelection.x()/16, m_chipsetSelection.y()/16);
+        int index = (y/16) * m_map->width() + (x/16);
+
+        if (nullptr != layer[index]) {
+            removeItem(layer[index]);
+        }
+        layer[index] = new
+            QGraphicsPixmapItem(
+                m_mapChipset.copy(QRect(chipsetX, chipsetY, 16, 16)));
+        layer[index]->setPos(x, y);
+        addItem(layer[index]);
+        m_map->firstLayer().setTile(x / 16, y / 16,
+                                    chipsetX / 16, chipsetY / 16);
     }
 }
 
