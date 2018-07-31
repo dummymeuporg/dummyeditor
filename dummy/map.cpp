@@ -66,7 +66,7 @@ void Dummy::Map::_loadFromStream(QDataStream& stream) {
 void Dummy::Map::_writeToStream(QDataStream & stream) const {
     stream << m_version << m_width << m_height
            << m_chipset << m_music
-           << m_firstLayer << m_secondLayer << m_firstLayer;
+           << m_firstLayer << m_secondLayer << m_thirdLayer;
 }
 
 Dummy::Layer&
