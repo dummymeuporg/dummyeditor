@@ -8,7 +8,8 @@
 #include "chipsetgraphicsscene.h"
 
 ChipsetGraphicsScene::ChipsetGraphicsScene(QObject* parent) :
-    QGraphicsScene(parent), m_selectionRectItem(nullptr), m_chipset(nullptr)
+    QGraphicsScene(parent), m_selectionRectItem(nullptr), m_chipset(nullptr),
+    m_isSelecting(false)
 {
     if (m_chipset) {
         _drawGrid();
@@ -57,16 +58,50 @@ void ChipsetGraphicsScene::changeChipset(const QString& chipsetPath) {
 }
 
 void
-ChipsetGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
-    if (mouseEvent->buttons() & Qt::LeftButton) {
+ChipsetGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) {
+    QGraphicsScene::mouseReleaseEvent(mouseEvent);
+    m_isSelecting = false;
+}
+
+void
+ChipsetGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
+    QGraphicsScene::mouseMoveEvent(mouseEvent);
+    if (m_isSelecting) {
         QPoint pt = mouseEvent->scenePos().toPoint();
 
-        if (pt.x() < m_chipset->boundingRect().width()
-            && pt.y() < m_chipset->boundingRect().height())
+        if (m_selectionRectItem != nullptr) {
+            removeItem(m_selectionRectItem);
+            m_selectionRectItem = nullptr;
+        }
+
+        QPen pen(Qt::red, 2);
+
+        qreal x = m_selectionStart.x() - (m_selectionStart.x() % 16);
+        qreal y = m_selectionStart.y() - (m_selectionStart.y() % 16);
+        qreal xEnd = pt.x() + (16 - (pt.x() % 16));
+        qreal yEnd = pt.y() + (16 - (pt.y() % 16));
+
+        if (pt.x() >= m_selectionStart.x()
+            && pt.y() >= m_selectionStart.y())
         {
+            qDebug() << x << y << xEnd << yEnd;
+            setSelection(QRect(x, y, xEnd - x, yEnd - y));
+            m_selectionRectItem = addRect(m_currentSelection, pen);
+        }
 
-            QGraphicsScene::mousePressEvent(mouseEvent);
+    }
+}
 
+void
+ChipsetGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
+    QGraphicsScene::mousePressEvent(mouseEvent);
+    if (mouseEvent->buttons() & Qt::LeftButton) {
+        m_isSelecting = true;
+        m_selectionStart = mouseEvent->scenePos().toPoint();
+
+        if (m_selectionStart.x() < m_chipset->boundingRect().width()
+            && m_selectionStart.y() < m_chipset->boundingRect().height())
+        {
             if (m_selectionRectItem != nullptr) {
                 invalidate(m_selectionRectItem->rect());
                 this->removeItem(m_selectionRectItem);
@@ -74,10 +109,11 @@ ChipsetGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
 
             // Add a square
             QPen pen(Qt::red, 2);
-            qreal x = pt.x() - (pt.x() % 16);
-            qreal y = pt.y() - (pt.y() % 16);
+            qreal x = m_selectionStart.x() - (m_selectionStart.x() % 16);
+            qreal y = m_selectionStart.y() - (m_selectionStart.y() % 16);
             setSelection(QRect(x, y, 16, 16));
             m_selectionRectItem = addRect(m_currentSelection, pen);
         }
+
     }
 }
