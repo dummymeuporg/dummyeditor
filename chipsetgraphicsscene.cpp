@@ -60,13 +60,15 @@ void ChipsetGraphicsScene::changeChipset(const QString& chipsetPath) {
 void
 ChipsetGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) {
     QGraphicsScene::mouseReleaseEvent(mouseEvent);
-    m_isSelecting = false;
+    if (nullptr != m_chipset) {
+        m_isSelecting = false;
+    }
 }
 
 void
 ChipsetGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
     QGraphicsScene::mouseMoveEvent(mouseEvent);
-    if (m_isSelecting) {
+    if (nullptr != m_chipset && m_isSelecting) {
         QPoint pt = mouseEvent->scenePos().toPoint();
 
         if (m_selectionRectItem != nullptr) {
@@ -94,7 +96,7 @@ ChipsetGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
 void
 ChipsetGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
     QGraphicsScene::mousePressEvent(mouseEvent);
-    if (mouseEvent->buttons() & Qt::LeftButton) {
+    if (nullptr != m_chipset && mouseEvent->buttons() & Qt::LeftButton) {
         m_isSelecting = true;
         m_selectionStart = mouseEvent->scenePos().toPoint();
 
