@@ -99,7 +99,9 @@ void MapGraphicsScene::_cleanLayer(QVector<QGraphicsPixmapItem*>& layer) {
     layer.fill(nullptr);
 }
 
-void MapGraphicsScene::changeMapDocument(const std::shared_ptr<Misc::MapDocument>& mapDocument) {
+void MapGraphicsScene::changeMapDocument(
+    const std::shared_ptr<Misc::MapDocument>& mapDocument)
+{
     setMapDocument(mapDocument);
 }
 
