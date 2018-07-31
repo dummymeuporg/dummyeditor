@@ -36,9 +36,11 @@ namespace Dummy {
 
         void saveProjectFile();
 
-        Misc::MapDocument& document(const QString& mapName);
+        std::shared_ptr<Misc::MapDocument>& document(const QString& mapName);
 
-        inline QMap<QString, Misc::MapDocument> openedMaps() const {
+        inline QMap<QString, std::shared_ptr<Misc::MapDocument>>
+        openedMaps() const
+        {
             return m_openedMaps;
         }
 
@@ -48,7 +50,7 @@ namespace Dummy {
         Misc::MapTreeModel* m_mapsModel;
         bool m_isModified;
 
-        QMap<QString, Misc::MapDocument> m_openedMaps;
+        QMap<QString, std::shared_ptr<Misc::MapDocument>> m_openedMaps;
 
         static QDomDocument _createXmlProjecTree();
         static void _createXmlProjectFile(const QString&);

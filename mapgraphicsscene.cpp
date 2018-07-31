@@ -65,16 +65,20 @@ void MapGraphicsScene::_drawLayer(const Dummy::Layer& layer) {
 }
 
 MapGraphicsScene&
-MapGraphicsScene::setMap(const std::shared_ptr<Dummy::Map>& map) {
+MapGraphicsScene::setMapDocument
+(const std::shared_ptr<Misc::MapDocument>& mapDocument)
+{
 
     if (m_map != nullptr) {
         QRect invalidateRegion(0, 0,
                                m_map->width() * 16, m_map->height() * 16);
-        qDebug() << invalidateRegion;
+        qDebug() << "INVALIDATE " << invalidateRegion;
         invalidate(invalidateRegion);
     }
 
-    m_map = map;
+    m_mapDocument = mapDocument;
+    m_map = m_mapDocument->map();
+
     const Dummy::Project& project = m_map->project();
 
     m_mapChipset = QPixmap(project.fullpath() + "/chipsets/"
@@ -95,8 +99,8 @@ void MapGraphicsScene::_cleanLayer(QVector<QGraphicsPixmapItem*>& layer) {
     layer.fill(nullptr);
 }
 
-void MapGraphicsScene::changeMap(const std::shared_ptr<Dummy::Map>& map) {
-    setMap(map);
+void MapGraphicsScene::changeMapDocument(const std::shared_ptr<Misc::MapDocument>& mapDocument) {
+    setMapDocument(mapDocument);
 }
 
 void

@@ -11,9 +11,9 @@ namespace Dummy {
 namespace Misc {
     class MapDocument {
     public:
-        MapDocument(Dummy::Project* project = nullptr,
+        MapDocument(const Dummy::Project& project,
                     std::shared_ptr<Dummy::Map> map = nullptr);
-        MapDocument(const MapDocument&);
+
 
         std::shared_ptr<Dummy::Map> map() {
             return m_map;
@@ -22,7 +22,7 @@ namespace Misc {
         void save();
 
     private:
-        Dummy::Project* m_project;
+        const Dummy::Project& m_project;
         bool m_isModified;
         std::shared_ptr<Dummy::Map> m_map;
     };

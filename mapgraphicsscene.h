@@ -10,6 +10,10 @@ namespace Dummy {
     class Map;
 }
 
+namespace Misc {
+    class MapDocument;
+}
+
 class MapGraphicsScene : public QGraphicsScene
 {
     Q_OBJECT
@@ -20,13 +24,18 @@ public:
         return m_map;
     }
 
-    MapGraphicsScene& setMap(const std::shared_ptr<Dummy::Map>& map);
+    inline const std::shared_ptr<Misc::MapDocument>& mapDocument() const {
+        return m_mapDocument;
+    }
+
+    MapGraphicsScene& setMapDocument(
+        const std::shared_ptr<Misc::MapDocument>& mapDocument);
 
     virtual void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent);
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent);
 public slots:
-    void changeMap(const std::shared_ptr<Dummy::Map>& map);
+    void changeMapDocument(const std::shared_ptr<Misc::MapDocument>& mapDocument);
     void changeSelection(const QRect& selection);
 private:
     void _cleanLayer(QVector<QGraphicsPixmapItem*>& layer);
@@ -39,6 +48,7 @@ private:
                   quint16 chipsetX,
                   quint16 chipsetY);
 
+    std::shared_ptr<Misc::MapDocument> m_mapDocument;
     std::shared_ptr<Dummy::Map> m_map;
     QPixmap m_mapChipset;
     QRect m_chipsetSelection;

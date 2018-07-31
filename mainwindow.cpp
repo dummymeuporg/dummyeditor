@@ -149,7 +149,7 @@ void MainWindow::saveProject() {
 
             for(auto e : m_currentProject->openedMaps().keys()) {
                 qDebug() << e;
-                m_currentProject->document(e).save();
+                m_currentProject->document(e)->save();
             }
         }
     }
@@ -162,12 +162,14 @@ void MainWindow::_initializeProject(const QString& projectDirectory) {
 
 void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
     Misc::MapTreeModel* mapModel = m_currentProject->mapsModel();
+
     QString mapName(mapModel->itemFromIndex(selectedIndex)->text());
     qDebug() << mapName;
-    std::shared_ptr<Dummy::Map> map(m_currentProject->document(mapName).map());
+    std::shared_ptr<Dummy::Map> map(
+        m_currentProject->document(mapName)->map());
     m_chipsetScene->setChipset(
         m_currentProject->fullpath() + "/chipsets/" + map->chipset()
     );
-    m_mapScene->setMap(map);
+    m_mapScene->setMapDocument(m_currentProject->document(mapName));
     ui->graphicsViewChipset->viewport()->update();
 }

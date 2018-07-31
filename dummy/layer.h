@@ -29,9 +29,7 @@ namespace Dummy {
             return stream;
         }
 
-        Layer& Layer::setTile(quint16 x, quint16 y,
-                              qint16 chipsetX,
-                              qint16 chipsetY);
+        Layer& setTile(quint16 x, quint16 y, qint16 chipsetX, qint16 chipsetY);
 
     private:
         void _writeToStream(QDataStream&) const;

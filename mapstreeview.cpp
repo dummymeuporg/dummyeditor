@@ -103,7 +103,7 @@ void MapsTreeView::_onPropertiesAction() {
             ->mapsModel()
             ->itemFromIndex(m_selectedModelIndex);
     qDebug() << item->text();
-    std::shared_ptr<Dummy::Map> map(m_project->document(item->text()).map());
+    std::shared_ptr<Dummy::Map> map(m_project->document(item->text())->map());
     MapEditDialog dlg(m_project, map);
     dlg.exec();
     if (dlg.result() == QDialog::Accepted) {

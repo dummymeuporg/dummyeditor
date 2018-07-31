@@ -116,7 +116,8 @@ void Dummy::Project::cleanMapName(QString& mapName) {
     mapName.replace("..", "");
 }
 
-Misc::MapDocument& Dummy::Project::document(const QString& mapName) {
+std::shared_ptr<Misc::MapDocument>&
+Dummy::Project::document(const QString& mapName) {
     QString cleantMapname(mapName);
     cleanMapName(cleantMapname);
 
@@ -127,7 +128,10 @@ Misc::MapDocument& Dummy::Project::document(const QString& mapName) {
             m_fullpath + "/maps/" + cleantMapname + ".map"));
         map->setName(cleantMapname);
 
-        m_openedMaps.insert(cleantMapname, Misc::MapDocument(this, map));
+        std::shared_ptr<Misc::MapDocument> mapDocument(
+            new Misc::MapDocument(*this, map));
+
+        m_openedMaps.insert(cleantMapname, mapDocument);
     }
     return m_openedMaps[cleantMapname];
 }
