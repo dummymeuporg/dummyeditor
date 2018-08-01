@@ -117,10 +117,10 @@ MapGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
         for (int j = 0; j < tilesHeight; ++j) {
             for(int i = 0; i < tilesWidth; ++i) {
                 _setTile(m_firstLayerItems,
-                         pt.x() - (pt.x() % 16) + (i * 16),
-                         pt.y() - (pt.y() % 16) + (j * 16),
-                         m_chipsetSelection.x() + (i * 16),
-                         m_chipsetSelection.y() + (j * 16));
+                         quint16(pt.x() - (pt.x() % 16) + (i * 16)),
+                         quint16(pt.y() - (pt.y() % 16) + (j * 16)),
+                         qint16(m_chipsetSelection.x() + (i * 16)),
+                         qint16(m_chipsetSelection.y() + (j * 16)));
             }
         }
     }
@@ -142,10 +142,10 @@ MapGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
             for (int j = 0; j < tilesHeight; ++j) {
                 for(int i = 0; i < tilesWidth; ++i) {
                     _setTile(m_firstLayerItems,
-                             pt.x() - (pt.x() % 16) + (i * 16),
-                             pt.y() - (pt.y() % 16) + (j * 16),
-                             m_chipsetSelection.x() + (i * 16),
-                             m_chipsetSelection.y() + (j * 16));
+                             quint16(pt.x() - (pt.x() % 16) + (i * 16)),
+                             quint16(pt.y() - (pt.y() % 16) + (j * 16)),
+                             qint16(m_chipsetSelection.x() + (i * 16)),
+                             qint16(m_chipsetSelection.y() + (j * 16)));
                 }
             }
         }
@@ -154,13 +154,12 @@ MapGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
 
 void
 MapGraphicsScene::_setTile(QVector<QGraphicsPixmapItem*>& layer,
-                           qreal x,
-                           qreal y,
-                           quint16 chipsetX,
-                           quint16 chipsetY)
+                           quint16 x,
+                           quint16 y,
+                           qint16 chipsetX,
+                           qint16 chipsetY)
 {
-    if (x >= 0 && y >= 0
-        && x < m_map->width() * 16 && y < m_map->height() * 16)
+    if (x < m_map->width() * 16 && y < m_map->height() * 16)
     {
         int index = (y/16) * m_map->width() + (x/16);
 
