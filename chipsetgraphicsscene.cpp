@@ -115,8 +115,8 @@ ChipsetGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
 
             // Add a square
             QPen pen(Qt::red, 2);
-            qreal x = m_selectionStart.x() - (m_selectionStart.x() % 16);
-            qreal y = m_selectionStart.y() - (m_selectionStart.y() % 16);
+            int x = m_selectionStart.x() - (m_selectionStart.x() % 16);
+            int y = m_selectionStart.y() - (m_selectionStart.y() % 16);
             setSelection(QRect(x, y, 16, 16));
             m_selectionRectItem = addRect(m_currentSelection, pen);
         }
