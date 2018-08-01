@@ -5,6 +5,8 @@
 #include <QRect>
 #include <QtGlobal>
 
+#include <algorithm>
+
 #include "chipsetgraphicsscene.h"
 
 ChipsetGraphicsScene::ChipsetGraphicsScene(QObject* parent) :
@@ -70,6 +72,9 @@ ChipsetGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
     QGraphicsScene::mouseMoveEvent(mouseEvent);
     if (nullptr != m_chipset && m_isSelecting) {
         QPoint pt = mouseEvent->scenePos().toPoint();
+
+        pt.setX(std::min(pt.x(), m_chipset->pixmap().width() - 16));
+        pt.setY(std::min(pt.y(), m_chipset->pixmap().height() - 16));
 
         if (m_selectionRectItem != nullptr) {
             removeItem(m_selectionRectItem);
