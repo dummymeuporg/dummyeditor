@@ -43,10 +43,10 @@ private:
     void _drawGrid();
     void _drawLayer(const Dummy::Layer&);
     void _setTile(QVector<QGraphicsPixmapItem*>& layer,
-                  qreal x,
-                  qreal y,
-                  quint16 chipsetX,
-                  quint16 chipsetY);
+                  quint16 x,
+                  quint16 y,
+                  qint16 chipsetX,
+                  qint16 chipsetY);
 
     std::shared_ptr<Misc::MapDocument> m_mapDocument;
     std::shared_ptr<Dummy::Map> m_map;
