@@ -35,7 +35,8 @@ public:
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent);
 public slots:
-    void changeMapDocument(const std::shared_ptr<Misc::MapDocument>& mapDocument);
+    void changeMapDocument(
+        const std::shared_ptr<Misc::MapDocument>& mapDocument);
     void changeSelection(const QRect& selection);
 private:
     void _cleanLayer(QVector<QGraphicsPixmapItem*>& layer);
@@ -47,11 +48,14 @@ private:
                   quint16 y,
                   qint16 chipsetX,
                   qint16 chipsetY);
+    void _drawDarkFilter();
 
     std::shared_ptr<Misc::MapDocument> m_mapDocument;
     std::shared_ptr<Dummy::Map> m_map;
+    QGraphicsRectItem* m_darkFilter;
     QPixmap m_mapChipset;
     QRect m_chipsetSelection;
+
     bool m_isDrawing;
 
     QVector<QGraphicsPixmapItem*> m_firstLayerItems;

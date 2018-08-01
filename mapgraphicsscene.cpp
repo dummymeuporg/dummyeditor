@@ -89,6 +89,7 @@ MapGraphicsScene::setMapDocument
     _cleanLayer(m_thirdLayerItems);
 
     _drawLayer(m_map->firstLayer());
+    _drawDarkFilter();
     _drawGrid();
 
     return *this;
@@ -174,6 +175,14 @@ MapGraphicsScene::_setTile(QVector<QGraphicsPixmapItem*>& layer,
         m_map->firstLayer().setTile(x / 16, y / 16,
                                     chipsetX / 16, chipsetY / 16);
     }
+}
+
+void
+MapGraphicsScene::_drawDarkFilter() {
+    QGraphicsRectItem* darkFilter = new QGraphicsRectItem(sceneRect());
+    darkFilter->setBrush(QBrush(QColor(0, 0, 0, 200)));
+    darkFilter->setZValue(2);
+    addItem(darkFilter);
 }
 
 void
