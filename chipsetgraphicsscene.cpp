@@ -83,10 +83,10 @@ ChipsetGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
 
         QPen pen(Qt::red, 2);
 
-        qreal x = m_selectionStart.x() - (m_selectionStart.x() % 16);
-        qreal y = m_selectionStart.y() - (m_selectionStart.y() % 16);
-        qreal xEnd = pt.x() + (16 - (pt.x() % 16));
-        qreal yEnd = pt.y() + (16 - (pt.y() % 16));
+        int x = m_selectionStart.x() - (m_selectionStart.x() % 16);
+        int y = m_selectionStart.y() - (m_selectionStart.y() % 16);
+        int xEnd = pt.x() + (16 - (pt.x() % 16));
+        int yEnd = pt.y() + (16 - (pt.y() % 16));
 
         if (pt.x() >= m_selectionStart.x()
             && pt.y() >= m_selectionStart.y())
