@@ -194,3 +194,15 @@ MapGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) {
 void MapGraphicsScene::changeSelection(const QRect& selection) {
     m_chipsetSelection = selection;
 }
+
+void MapGraphicsScene::showFirstLayer() {
+
+}
+
+void MapGraphicsScene::showSecondLayer() {
+
+}
+
+void MapGraphicsScene::showThirdLayer() {
+
+}

@@ -38,6 +38,9 @@ public slots:
     void changeMapDocument(
         const std::shared_ptr<Misc::MapDocument>& mapDocument);
     void changeSelection(const QRect& selection);
+    void showFirstLayer();
+    void showSecondLayer();
+    void showThirdLayer();
 private:
     void _cleanLayer(QVector<QGraphicsPixmapItem*>& layer);
     void _drawMap();
