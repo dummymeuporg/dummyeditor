@@ -16,6 +16,44 @@ namespace Misc {
 
 class MapGraphicsScene : public QGraphicsScene
 {
+
+    class GraphicLayer {
+
+    public:
+        GraphicLayer(MapGraphicsScene&, Dummy::Layer&,
+                     const QPixmap&, int zValue);
+        virtual ~GraphicLayer();
+        inline const QPixmap& chipsetPixmap() const {
+            return m_chipsetPixmap;
+        }
+
+        inline const Dummy::Layer& layer() const {
+            return m_layer;
+        }
+
+        inline const QVector<QGraphicsPixmapItem*>& layerItems() const {
+            return m_layerItems;
+        }
+
+        GraphicLayer& setTile(quint16 x,
+                              quint16 y,
+                              qint16 chipsetX,
+                              qint16 chipsetY);
+
+        GraphicLayer& setChipsetPixmap(const QPixmap*);
+
+        GraphicLayer& setOpacity(qreal);
+
+    private:
+        MapGraphicsScene& m_mapGraphicsScene;
+        Dummy::Layer& m_layer;
+        const QPixmap& m_chipsetPixmap;
+        QVector<QGraphicsPixmapItem*> m_layerItems;
+        int m_zValue;
+    };
+
+
+
     Q_OBJECT
 public:
     MapGraphicsScene(QObject* parent = nullptr);
@@ -61,8 +99,15 @@ private:
 
     bool m_isDrawing;
 
-    QVector<QGraphicsPixmapItem*> m_firstLayerItems;
-    QVector<QGraphicsPixmapItem*> m_secondLayerItems;
-    QVector<QGraphicsPixmapItem*> m_thirdLayerItems;
+    GraphicLayer* m_firstLayer;
+    GraphicLayer* m_secondLayer;
+    GraphicLayer* m_thirdLayer;
+
+    int m_currentLayer;
+    GraphicLayer* m_activeLayer; // Either 1st, 2nd or 3rd layer.
+
+    QGraphicsRectItem* m_darkFilterOne; // Between 1st and 2nd layer
+    QGraphicsRectItem* m_darkFilterTwo; // Between 2nd and 3rd layer
+
 
 };

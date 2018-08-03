@@ -8,12 +8,10 @@
 #include "mapgraphicsscene.h"
 
 MapGraphicsScene::MapGraphicsScene(QObject* parent)
-    : QGraphicsScene(parent), m_map(nullptr)
+    : QGraphicsScene(parent), m_map(nullptr), m_firstLayer(nullptr),
+      m_secondLayer(nullptr), m_thirdLayer(nullptr), m_currentLayer(1),
+      m_activeLayer(nullptr)
 {
-
-}
-
-void MapGraphicsScene::_drawMap() {
 
 }
 
@@ -36,34 +34,6 @@ void MapGraphicsScene::_drawGrid() {
 
 }
 
-void MapGraphicsScene::_drawLayer(const Dummy::Layer& layer) {
-
-    int i = 0;
-    for (auto it = layer.begin(); it != layer.end(); it++, i++) {
-        qint16 x = std::get<0>(*it);
-        qint16 y = std::get<1>(*it);
-
-        if (x >= 0 && y >= 0) {
-            QRect tile(x * 16, y * 16, 16, 16);
-
-            if(nullptr != m_firstLayerItems[i]) {
-                removeItem(m_firstLayerItems[i]);
-            }
-
-            m_firstLayerItems[i] =
-                new QGraphicsPixmapItem(m_mapChipset.copy(tile))
-            ;
-
-            qreal posX = (i % m_map->width()) * 16;
-            qreal posY = (i / m_map->height()) * 16;
-            m_firstLayerItems[i]->setPos(posX, posY);
-            //tileItem->setPos(posX, posY);
-            //addItem(tileItem);
-            addItem(m_firstLayerItems[i]);
-        }
-    }
-}
-
 MapGraphicsScene&
 MapGraphicsScene::setMapDocument
 (const std::shared_ptr<Misc::MapDocument>& mapDocument)
@@ -74,30 +44,75 @@ MapGraphicsScene::setMapDocument
                                m_map->width() * 16, m_map->height() * 16);
         qDebug() << "INVALIDATE " << invalidateRegion;
         invalidate(invalidateRegion);
+        delete m_firstLayer;
+        delete m_darkFilterOne;
+        delete m_secondLayer;
+        delete m_darkFilterTwo;
+        delete m_thirdLayer;
     }
+    // Remove the grid.
+    clear();
 
     m_mapDocument = mapDocument;
     m_map = m_mapDocument->map();
-
+    QRect mapRect(0, 0, m_map->width()*16, m_map->height()*16);
     const Dummy::Project& project = m_map->project();
-
     m_mapChipset = QPixmap(project.fullpath() + "/chipsets/"
                            + m_map->chipset());
-    clear();
-    _cleanLayer(m_firstLayerItems);
-    _cleanLayer(m_secondLayerItems);
-    _cleanLayer(m_thirdLayerItems);
 
-    _drawLayer(m_map->firstLayer());
-    _drawDarkFilter();
+    qDebug() << "Active layer = " << m_currentLayer;
+    m_firstLayer = new
+        MapGraphicsScene::GraphicLayer(*this,
+                                       m_map->firstLayer(),
+                                       m_mapChipset,
+                                       1);
+    m_darkFilterOne = new QGraphicsRectItem(mapRect);
+    m_darkFilterOne->setBrush(QBrush(QColor(0, 0, 0, 127)));
+
+    m_darkFilterOne->setZValue(2);
+
+
+    m_secondLayer = new
+        MapGraphicsScene::GraphicLayer(*this,
+                                       m_map->secondLayer(),
+                                       m_mapChipset,
+                                       3);
+
+    m_darkFilterTwo = new QGraphicsRectItem(mapRect);
+    m_darkFilterTwo->setBrush(QBrush(QColor(0, 0, 0, 127)));
+
+    m_darkFilterTwo->setZValue(4);
+
+
+    m_thirdLayer = new
+        MapGraphicsScene::GraphicLayer(*this,
+                                       m_map->thirdLayer(),
+                                       m_mapChipset,
+                                       5);
+
+
+    // XXX: Ugly
+    if (m_currentLayer == 1) {
+        m_secondLayer->setOpacity(0.5);
+        m_thirdLayer->setOpacity(0.25);
+    } else if(m_currentLayer == 2) {
+        m_secondLayer->setOpacity(1);
+        m_thirdLayer->setOpacity(0.5);
+    } else if (m_currentLayer == 3) {
+        m_secondLayer->setOpacity(1);
+        m_thirdLayer->setOpacity(1);
+    }
+
+    addItem(m_darkFilterOne);
+    addItem(m_darkFilterTwo);
+
+    m_darkFilterOne->setVisible(m_currentLayer >= 2);
+    m_darkFilterTwo->setVisible(m_currentLayer == 3);
+
+
     _drawGrid();
 
     return *this;
-}
-
-void MapGraphicsScene::_cleanLayer(QVector<QGraphicsPixmapItem*>& layer) {
-    layer.resize(m_map->width() * m_map->height());
-    layer.fill(nullptr);
 }
 
 void MapGraphicsScene::changeMapDocument(
@@ -117,7 +132,7 @@ MapGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
 
         for (int j = 0; j < tilesHeight; ++j) {
             for(int i = 0; i < tilesWidth; ++i) {
-                _setTile(m_firstLayerItems,
+                m_activeLayer->setTile(
                          quint16(pt.x() - (pt.x() % 16) + (i * 16)),
                          quint16(pt.y() - (pt.y() % 16) + (j * 16)),
                          qint16(m_chipsetSelection.x() + (i * 16)),
@@ -142,7 +157,7 @@ MapGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
             qDebug() << tilesWidth << tilesHeight;
             for (int j = 0; j < tilesHeight; ++j) {
                 for(int i = 0; i < tilesWidth; ++i) {
-                    _setTile(m_firstLayerItems,
+                    m_activeLayer->setTile(
                              quint16(pt.x() - (pt.x() % 16) + (i * 16)),
                              quint16(pt.y() - (pt.y() % 16) + (j * 16)),
                              qint16(m_chipsetSelection.x() + (i * 16)),
@@ -151,38 +166,6 @@ MapGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
             }
         }
     }
-}
-
-void
-MapGraphicsScene::_setTile(QVector<QGraphicsPixmapItem*>& layer,
-                           quint16 x,
-                           quint16 y,
-                           qint16 chipsetX,
-                           qint16 chipsetY)
-{
-    if (x < m_map->width() * 16 && y < m_map->height() * 16)
-    {
-        int index = (y/16) * m_map->width() + (x/16);
-
-        if (nullptr != layer[index]) {
-            removeItem(layer[index]);
-        }
-        layer[index] = new
-            QGraphicsPixmapItem(
-                m_mapChipset.copy(QRect(chipsetX, chipsetY, 16, 16)));
-        layer[index]->setPos(x, y);
-        addItem(layer[index]);
-        m_map->firstLayer().setTile(x / 16, y / 16,
-                                    chipsetX / 16, chipsetY / 16);
-    }
-}
-
-void
-MapGraphicsScene::_drawDarkFilter() {
-    QGraphicsRectItem* darkFilter = new QGraphicsRectItem(sceneRect());
-    darkFilter->setBrush(QBrush(QColor(0, 0, 0, 200)));
-    darkFilter->setZValue(2);
-    addItem(darkFilter);
 }
 
 void
@@ -196,13 +179,125 @@ void MapGraphicsScene::changeSelection(const QRect& selection) {
 }
 
 void MapGraphicsScene::showFirstLayer() {
-
+    qDebug() << "First active layer";
+    if (nullptr == m_mapDocument) {
+        return;
+    }
+    m_activeLayer = m_firstLayer;
+    m_currentLayer = 1;
+    m_darkFilterOne->setVisible(false);
+    m_secondLayer->setOpacity(0.5);
+    m_darkFilterTwo->setVisible(false);
+    m_thirdLayer->setOpacity(0.25);
 }
 
 void MapGraphicsScene::showSecondLayer() {
-
+    qDebug() << "Second active layer";
+    if (nullptr == m_mapDocument) {
+        return;
+    }
+    m_activeLayer = m_secondLayer;
+    m_currentLayer = 2;
+    m_darkFilterOne->setVisible(true);
+    m_secondLayer->setOpacity(1);
+    m_darkFilterTwo->setVisible(false);
+    m_thirdLayer->setOpacity(0.5);
 }
 
 void MapGraphicsScene::showThirdLayer() {
+    qDebug() << "Third active layer";
+    if (nullptr == m_mapDocument) {
+        return;
+    }
+    m_activeLayer = m_thirdLayer;
+    m_currentLayer = 3;
+    m_darkFilterOne->setVisible(true);
+    m_darkFilterTwo->setVisible(true);
+    m_secondLayer->setOpacity(1);
+    m_thirdLayer->setOpacity(1);
+}
 
+
+///////////////////////////////////////////////////////////////////////////////
+// MapGraphicsScene
+///////////////////////////////////////////////////////////////////////////////
+MapGraphicsScene::GraphicLayer::GraphicLayer(
+    MapGraphicsScene& mapGraphicsScene,
+    Dummy::Layer& layer,
+    const QPixmap& chipsetPixmap,
+    int zValue) : m_mapGraphicsScene(mapGraphicsScene),
+    m_layer(layer), m_chipsetPixmap(chipsetPixmap),
+    m_layerItems(m_mapGraphicsScene.map()->width() *
+                 m_mapGraphicsScene.map()->height()),
+    m_zValue(zValue)
+{
+    const std::shared_ptr<Dummy::Map> map(m_mapGraphicsScene.map());
+    int index = 0;
+    for (auto it = m_layer.begin();
+         it != m_layer.end();
+         ++it, ++index)
+    {
+        m_layerItems[index] = nullptr;
+        qint16 x = std::get<0>(*it);
+        qint16 y = std::get<1>(*it);
+        if (x >= 0 && y >= 0)
+        {
+            m_layerItems[index] = new QGraphicsPixmapItem(
+                m_chipsetPixmap.copy(QRect(x * 16, y * 16, 16, 16)));
+
+            qreal posX = (index % map->width()) * 16;
+            qreal posY = (index / map->height()) * 16;
+
+            m_layerItems[index]->setPos(posX, posY);
+            m_layerItems[index]->setZValue(m_zValue);
+            m_mapGraphicsScene.addItem(m_layerItems[index]);
+        }
+    }
+}
+
+MapGraphicsScene::GraphicLayer::~GraphicLayer() {
+    for (auto it = m_layerItems.begin(); it != m_layerItems.end(); ++it)
+    {
+        if(*it != nullptr) {
+            m_mapGraphicsScene.removeItem(*it);
+        }
+    }
+}
+
+MapGraphicsScene::GraphicLayer&
+MapGraphicsScene::GraphicLayer::setOpacity(qreal opacity) {
+    for (auto it = m_layerItems.begin(); it != m_layerItems.end(); ++it)
+    {
+        if(*it != nullptr) {
+            reinterpret_cast<QGraphicsItem*>(*it)->setOpacity(opacity);
+        }
+    }
+    return *this;
+}
+
+MapGraphicsScene::GraphicLayer&
+MapGraphicsScene::GraphicLayer::setTile(quint16 x,
+                                        quint16 y,
+                                        qint16 chipsetX,
+                                        qint16 chipsetY)
+{
+    const std::shared_ptr<Dummy::Map> map(m_mapGraphicsScene.map());
+    if (x < m_mapGraphicsScene.map()->width() * 16
+        && y < m_mapGraphicsScene.map()->height() * 16)
+    {
+        int index = (y/16) * map->width() + (x/16);
+
+        if (nullptr != m_layerItems[index]) {
+            m_mapGraphicsScene.removeItem(m_layerItems[index]);
+        }
+        m_layerItems[index] = new
+            QGraphicsPixmapItem(
+                m_chipsetPixmap.copy(QRect(chipsetX, chipsetY, 16, 16)));
+        m_layerItems[index]->setPos(x, y);
+        m_layerItems[index]->setZValue(m_zValue);
+        m_mapGraphicsScene.addItem(m_layerItems[index]);
+        m_layer.setTile(x / 16, y / 16, chipsetX / 16, chipsetY / 16);
+    }
+
+    return *this;
 }

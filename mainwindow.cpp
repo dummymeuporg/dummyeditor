@@ -81,6 +81,13 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
                      m_mapScene, SLOT(changeSelection(QRect)));
 
+    QObject::connect(ui->actionLow_layer_1, SIGNAL(triggered(bool)),
+                     m_mapScene, SLOT(showFirstLayer()));
+    QObject::connect(ui->actionLow_layer_2, SIGNAL(triggered(bool)),
+                     m_mapScene, SLOT(showSecondLayer()));
+    QObject::connect(ui->actionHigh_layer, SIGNAL(triggered(bool)),
+                     m_mapScene, SLOT(showThirdLayer()));
+
 }
 
 void MainWindow::_closeCurrentProject() {
@@ -171,6 +178,11 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
         m_currentProject->fullpath() + "/chipsets/" + map->chipset()
     );
     m_mapScene->setMapDocument(m_currentProject->document(mapName));
-    ui->actionLow_layer_1->setChecked(true);
+
+    if (!ui->actionLow_layer_1->isChecked() &&
+        !ui->actionLow_layer_2->isChecked() &&
+            !ui->actionHigh_layer->isChecked()) {
+        ui->actionLow_layer_1->setChecked(true);
+    }
     ui->graphicsViewChipset->viewport()->update();
 }
