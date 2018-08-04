@@ -60,10 +60,12 @@ GraphicMap::MapGraphicsScene::setMapDocument
     }
     // Remove the grid.
     clear();
-    m_state->sceneCleared();
+
 
     m_mapDocument = mapDocument;
     m_map = m_mapDocument->map();
+
+    m_state->sceneCleared();
 
     const Dummy::Project& project = m_map->project();
     m_mapChipset = QPixmap(project.fullpath() + "/chipsets/"
