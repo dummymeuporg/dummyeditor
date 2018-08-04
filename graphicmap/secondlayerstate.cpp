@@ -13,8 +13,18 @@ GraphicMap::SecondLayerState::SecondLayerState(
     : GraphicMap::PaintingLayerState(mapGraphicsScene)
 {
     qDebug() << "Second layer state.";
-    std::shared_ptr<Dummy::Map> map(m_mapGraphicsScene.mapDocument()->map());
 
+
+    sceneCleared();
+}
+
+GraphicMap::SecondLayerState::~SecondLayerState() {
+    qDebug() << "Remove second layer state";
+     m_mapGraphicsScene.removeItem(m_firstDarkFilter);
+}
+
+void GraphicMap::SecondLayerState::sceneCleared() {
+    std::shared_ptr<Dummy::Map> map(m_mapGraphicsScene.mapDocument()->map());
     m_firstDarkFilter = new QGraphicsRectItem(QRect(0,
                                                     0,
                                                     map->width() * 16,
@@ -25,17 +35,11 @@ GraphicMap::SecondLayerState::SecondLayerState(
     m_mapGraphicsScene.addItem(m_firstDarkFilter);
 }
 
-GraphicMap::SecondLayerState::~SecondLayerState() {
-    qDebug() << "Remove second layer state";
-     m_mapGraphicsScene.removeItem(m_firstDarkFilter);
-}
-
-void GraphicMap::SecondLayerState::paintLayers() {
-    // Paint first layer with 100% opacity, etc.
-}
 
 
 void GraphicMap::SecondLayerState::adjustLayers() {
+    qDebug() << "Second state adjust layers.";
+    m_mapGraphicsScene.secondLayer()->setOpacity(1);
     m_mapGraphicsScene.thirdLayer()->setOpacity(0.5);
 }
 

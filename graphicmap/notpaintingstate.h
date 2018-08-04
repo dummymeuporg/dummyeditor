@@ -8,8 +8,8 @@ namespace GraphicMap {
     {
     public:
         NotPaintingState(MapGraphicsScene&);
-        virtual void paintLayers() override;
         virtual void adjustLayers() override;
         virtual void onNewMap() override;
+        virtual void sceneCleared() override;
     };
 }

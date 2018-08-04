@@ -11,9 +11,9 @@ namespace GraphicMap {
     public:
         SecondLayerState(MapGraphicsScene&);
         virtual ~SecondLayerState();
-        virtual void paintLayers() override;
         virtual void adjustLayers() override;
         virtual void onNewMap() override;
+        virtual void sceneCleared() override;
     private:
         QGraphicsRectItem* m_firstDarkFilter;
     };

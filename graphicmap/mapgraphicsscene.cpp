@@ -60,6 +60,7 @@ GraphicMap::MapGraphicsScene::setMapDocument
     }
     // Remove the grid.
     clear();
+    m_state->sceneCleared();
 
     m_mapDocument = mapDocument;
     m_map = m_mapDocument->map();
@@ -88,7 +89,7 @@ GraphicMap::MapGraphicsScene::setMapDocument
 
     _drawGrid();
     m_state->onNewMap();
-
+    m_state->adjustLayers();
     return *this;
 }
 
@@ -106,6 +107,7 @@ GraphicMap::MapGraphicsScene::setPaitingLayerState(
     delete m_state;
     m_state = state;
     state->onNewMap();
+    state->adjustLayers();
     return *this;
 }
 

@@ -9,8 +9,8 @@ namespace GraphicMap {
     public:
         FirstLayerState(MapGraphicsScene&);
         virtual ~FirstLayerState();
-        virtual void paintLayers() override;
         virtual void adjustLayers() override;
         virtual void onNewMap() override;
+        virtual void sceneCleared() override;
     };
 }
