@@ -20,7 +20,9 @@ SOURCES += \
     graphicmap/notpaintingstate.cpp \
     graphicmap/firstlayerstate.cpp \
     graphicmap/secondlayerstate.cpp \
-    graphicmap/thirdlayerstate.cpp
+    graphicmap/thirdlayerstate.cpp \
+    graphicmap/drawingmapstate.cpp \
+    graphicmap/pendrawingmapstate.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -38,7 +40,9 @@ HEADERS += \
     graphicmap/notpaintingstate.h \
     graphicmap/firstlayerstate.h \
     graphicmap/secondlayerstate.h \
-    graphicmap/thirdlayerstate.h
+    graphicmap/thirdlayerstate.h \
+    graphicmap/drawingmapstate.h \
+    graphicmap/pendrawingmapstate.h
 
 FORMS += \
     mainwindow.ui \
