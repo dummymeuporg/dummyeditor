@@ -9,24 +9,26 @@ SOURCES += \
     dummy/project.cpp \
     dummy/map.cpp \
     chipsetgraphicsscene.cpp \
+    graphicmap/mapgraphicsscene.cpp \
     misc/mapdocument.cpp \
     misc/maptreemodel.cpp \
     mapstreeview.cpp \
     dummy/layer.cpp \
     mapeditdialog.cpp \
-    mapgraphicsscene.cpp
+    graphicmap/graphiclayer.cpp
 
 HEADERS += \
     mainwindow.h \
     dummy/project.h \
     dummy/map.h \
     chipsetgraphicsscene.h \
+    graphicmap/mapgraphicsscene.h \
     misc/mapdocument.h \
     misc/maptreemodel.h \
     mapstreeview.h \
     dummy/layer.h \
     mapeditdialog.h \
-    mapgraphicsscene.h
+    graphicmap/graphiclayer.h
 
 FORMS += \
     mainwindow.ui \

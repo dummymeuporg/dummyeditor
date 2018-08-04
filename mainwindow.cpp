@@ -10,7 +10,7 @@
 #include "misc/maptreemodel.h"
 
 #include "chipsetgraphicsscene.h"
-#include "mapgraphicsscene.h"
+#include "graphicmap/mapgraphicsscene.h"
 #include "mainwindow.h"
 #include "mapeditdialog.h"
 #include "ui_mainwindow.h"
@@ -72,7 +72,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphicsViewChipset->scale(2.0, 2.0);
     ui->graphicsViewChipset->setScene(m_chipsetScene);
 
-    m_mapScene = new MapGraphicsScene();
+    m_mapScene = new GraphicMap::MapGraphicsScene();
     ui->graphicsViewMap->scale(2.0, 2.0);
     ui->graphicsViewMap->setScene(m_mapScene);
 
