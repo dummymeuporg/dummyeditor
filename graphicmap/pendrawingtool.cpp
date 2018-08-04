@@ -5,22 +5,22 @@
 
 #include "graphicmap/graphiclayer.h"
 #include "graphicmap/mapgraphicsscene.h"
-#include "graphicmap/pendrawingmapstate.h"
+#include "graphicmap/pendrawingtool.h"
 
-GraphicMap::PenDrawingMapState::PenDrawingMapState(
+GraphicMap::PenDrawingTool::PenDrawingTool(
     GraphicMap::MapGraphicsScene& mapGraphicScene)
-    : DrawingMapState(mapGraphicScene)
+    : DrawingTool(mapGraphicScene)
 {
 
 }
 
-GraphicMap::PenDrawingMapState::~PenDrawingMapState() {
+GraphicMap::PenDrawingTool::~PenDrawingTool() {
 
 }
 
 
 void
-GraphicMap::PenDrawingMapState::onMousePress(
+GraphicMap::PenDrawingTool::onMousePress(
     QGraphicsSceneMouseEvent* mouseEvent)
 {
     if (mouseEvent->buttons() & Qt::LeftButton) {
@@ -29,7 +29,7 @@ GraphicMap::PenDrawingMapState::onMousePress(
     }
 }
 
-void GraphicMap::PenDrawingMapState::_setTiles(const QPoint& originPoint)
+void GraphicMap::PenDrawingTool::_setTiles(const QPoint& originPoint)
 {
     std::shared_ptr<Dummy::Map> map(
         m_mapGraphicScene.mapDocument()->map());
@@ -58,7 +58,7 @@ void GraphicMap::PenDrawingMapState::_setTiles(const QPoint& originPoint)
 }
 
 void
-GraphicMap::PenDrawingMapState::onMouseMove(
+GraphicMap::PenDrawingTool::onMouseMove(
     QGraphicsSceneMouseEvent* mouseEvent)
 {
     if (mouseEvent->buttons() & Qt::LeftButton) {
@@ -69,7 +69,7 @@ GraphicMap::PenDrawingMapState::onMouseMove(
 }
 
 void
-GraphicMap::PenDrawingMapState::onMouseRelease(
+GraphicMap::PenDrawingTool::onMouseRelease(
     QGraphicsSceneMouseEvent* event)
 {
     Q_UNUSED(event);

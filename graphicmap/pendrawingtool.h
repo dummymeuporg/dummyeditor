@@ -1,6 +1,6 @@
 #pragma once
 
-#include "graphicmap/drawingmapstate.h"
+#include "graphicmap/drawingtool.h"
 
 class QPoint;
 
@@ -8,11 +8,11 @@ namespace GraphicMap {
 
     class MapGraphicsScene;
 
-    class PenDrawingMapState : public DrawingMapState
+    class PenDrawingTool : public DrawingTool
     {
     public:
-        PenDrawingMapState(MapGraphicsScene&);
-        virtual ~PenDrawingMapState();
+        PenDrawingTool(MapGraphicsScene&);
+        virtual ~PenDrawingTool();
         virtual void onMousePress(QGraphicsSceneMouseEvent*) override;
         virtual void onMouseMove(QGraphicsSceneMouseEvent*) override;
         virtual void onMouseRelease(QGraphicsSceneMouseEvent*) override;

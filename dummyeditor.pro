@@ -21,8 +21,8 @@ SOURCES += \
     graphicmap/firstlayerstate.cpp \
     graphicmap/secondlayerstate.cpp \
     graphicmap/thirdlayerstate.cpp \
-    graphicmap/drawingmapstate.cpp \
-    graphicmap/pendrawingmapstate.cpp
+    graphicmap/drawingtool.cpp \
+    graphicmap/pendrawingtool.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -41,8 +41,8 @@ HEADERS += \
     graphicmap/firstlayerstate.h \
     graphicmap/secondlayerstate.h \
     graphicmap/thirdlayerstate.h \
-    graphicmap/drawingmapstate.h \
-    graphicmap/pendrawingmapstate.h
+    graphicmap/drawingtool.h \
+    graphicmap/pendrawingtool.h
 
 FORMS += \
     mainwindow.ui \

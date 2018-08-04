@@ -5,11 +5,11 @@ class QGraphicsSceneMouseEvent;
 namespace GraphicMap {
     class MapGraphicsScene;
 
-    class DrawingMapState
+    class DrawingTool
     {
     public:
-        DrawingMapState(MapGraphicsScene&);
-        virtual ~DrawingMapState();
+        DrawingTool(MapGraphicsScene&);
+        virtual ~DrawingTool();
         virtual void onMousePress(QGraphicsSceneMouseEvent*) = 0;
         virtual void onMouseMove(QGraphicsSceneMouseEvent*) = 0;
         virtual void onMouseRelease(QGraphicsSceneMouseEvent*) = 0;

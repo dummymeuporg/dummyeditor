@@ -17,7 +17,7 @@ namespace Misc {
 
 namespace GraphicMap {
 
-    class DrawingMapState;
+    class DrawingTool;
     class GraphicLayer;
     class PaintingLayerState;
     class MapGraphicsScene : public QGraphicsScene
@@ -101,7 +101,7 @@ namespace GraphicMap {
         GraphicLayer* m_activeLayer; // Either 1st, 2nd or 3rd layer.
 
         PaintingLayerState* m_state;
-        DrawingMapState* m_drawingState;
+        DrawingTool* m_drawingState;
 
 
     };

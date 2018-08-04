@@ -12,7 +12,7 @@
 #include "graphicmap/firstlayerstate.h"
 #include "graphicmap/secondlayerstate.h"
 #include "graphicmap/thirdlayerstate.h"
-#include "graphicmap/pendrawingmapstate.h"
+#include "graphicmap/pendrawingtool.h"
 
 GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
     : QGraphicsScene(parent), m_map(nullptr), m_firstLayer(nullptr),
@@ -20,7 +20,7 @@ GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
       m_activeLayer(nullptr)
 {
     m_state = new GraphicMap::NotPaintingState(*this);
-    m_drawingState = new PenDrawingMapState(*this);
+    m_drawingState = new PenDrawingTool(*this);
 }
 
 GraphicMap::MapGraphicsScene::~MapGraphicsScene() {
