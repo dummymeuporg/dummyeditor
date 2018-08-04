@@ -27,6 +27,7 @@ public:
 
 private:
     void _initializeProject(const QString&);
+    void _initializeScenes();
     void _enableMapCreation();
     void _closeCurrentProject();
     void _loadProject(const QString&);

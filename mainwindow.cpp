@@ -67,13 +67,33 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     ui->tabGeneral->layout()->setMenuBar(tabGeneralToolBar);
-    m_chipsetScene = new ChipsetGraphicsScene();
+    _initializeScenes();
+
+    QObject::connect(ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
+                     m_chipsetScene, SLOT(changeChipset(QString)));
+    QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
+                     m_mapScene, SLOT(changeSelection(QRect)));
+
+    QObject::connect(ui->actionLow_layer_1, SIGNAL(triggered(bool)),
+                     m_mapScene, SLOT(showFirstLayer()));
+    QObject::connect(ui->actionLow_layer_2, SIGNAL(triggered(bool)),
+                     m_mapScene, SLOT(showSecondLayer()));
+    QObject::connect(ui->actionHigh_layer, SIGNAL(triggered(bool)),
+                     m_mapScene, SLOT(showThirdLayer()));
 
     ui->graphicsViewChipset->scale(2.0, 2.0);
+    ui->graphicsViewMap->scale(2.0, 2.0);
+
+}
+
+void MainWindow::_initializeScenes() {
+    m_chipsetScene = new ChipsetGraphicsScene();
+
+
     ui->graphicsViewChipset->setScene(m_chipsetScene);
 
     m_mapScene = new GraphicMap::MapGraphicsScene();
-    ui->graphicsViewMap->scale(2.0, 2.0);
+
     ui->graphicsViewMap->setScene(m_mapScene);
 
     QObject::connect(ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
@@ -91,6 +111,19 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 void MainWindow::_closeCurrentProject() {
+
+    QObject::disconnect(ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
+                        m_chipsetScene, SLOT(changeChipset(QString)));
+    QObject::disconnect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
+                        m_mapScene, SLOT(changeSelection(QRect)));
+
+    QObject::disconnect(ui->actionLow_layer_1, SIGNAL(triggered(bool)),
+                        m_mapScene, SLOT(showFirstLayer()));
+    QObject::disconnect(ui->actionLow_layer_2, SIGNAL(triggered(bool)),
+                        m_mapScene, SLOT(showSecondLayer()));
+    QObject::disconnect(ui->actionHigh_layer, SIGNAL(triggered(bool)),
+                        m_mapScene, SLOT(showThirdLayer()));
+
     delete m_chipsetScene;
     delete m_mapScene;
 }
@@ -144,6 +177,9 @@ void MainWindow::openProject() {
 }
 
 void MainWindow::_loadProject(const QString& projectDirectory) {
+
+    _initializeScenes();
+
     m_currentProject = std::shared_ptr<Dummy::Project>(
         new Dummy::Project(projectDirectory)
     );
@@ -153,6 +189,11 @@ void MainWindow::_loadProject(const QString& projectDirectory) {
     );
 
     ui->treeViewMaps->setProject(m_currentProject);
+
+
+
+    // Enable the first layer drawing by default.
+    ui->actionLow_layer_1->trigger();
 }
 
 void MainWindow::saveProject() {
