@@ -1,6 +1,8 @@
 #include <QDebug>
 
-#include "notpaintingstate.h"
+#include "graphicmap/mapgraphicsscene.h"
+#include "graphicmap/notpaintingstate.h"
+#include "graphicmap/firstlayerstate.h"
 
 GraphicMap::NotPaintingState::NotPaintingState(
     GraphicMap::MapGraphicsScene& mapGraphicsScene)
@@ -19,4 +21,6 @@ void GraphicMap::NotPaintingState::adjustLayers() {
 
 void GraphicMap::NotPaintingState::onNewMap() {
     // Do nothing.
+    m_mapGraphicsScene.setPaitingLayerState(
+        new GraphicMap::FirstLayerState(m_mapGraphicsScene));
 }
