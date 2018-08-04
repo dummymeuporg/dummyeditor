@@ -445,7 +445,7 @@
      <x>0</x>
      <y>0</y>
      <width>874</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -501,6 +501,7 @@
     <addaction name="separator"/>
     <addaction name="actionPen"/>
     <addaction name="actionRectangle"/>
+    <addaction name="actionPath"/>
    </widget>
    <widget class="QMenu" name="menuLayers">
     <property name="title">
@@ -509,6 +510,8 @@
     <addaction name="actionLow_layer_1"/>
     <addaction name="actionLow_layer_2"/>
     <addaction name="actionHigh_layer"/>
+    <addaction name="separator"/>
+    <addaction name="actionBlocking_layer"/>
     <addaction name="separator"/>
     <addaction name="actionEvents_layer"/>
     <addaction name="separator"/>
@@ -546,6 +549,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionNew"/>
+   <addaction name="actionOpen"/>
    <addaction name="actionSave"/>
    <addaction name="actionQuit"/>
    <addaction name="separator"/>
@@ -573,6 +577,10 @@
    </property>
   </action>
   <action name="actionOpen">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/openProject_Icon.png</normaloff>icons/openProject_Icon.png</iconset>
+   </property>
    <property name="text">
     <string>Open</string>
    </property>
@@ -775,7 +783,7 @@
     <string>Events layer</string>
    </property>
    <property name="shortcut">
-    <string>Shift+R</string>
+    <string>Shift+T</string>
    </property>
   </action>
   <action name="actionSelection">
@@ -805,7 +813,7 @@
     <string>Quick go (admin)</string>
    </property>
    <property name="shortcut">
-    <string>Shift+T</string>
+    <string>Shift+Y</string>
    </property>
   </action>
   <action name="actionStarting_point">
@@ -820,7 +828,7 @@
     <string>Starting point</string>
    </property>
    <property name="shortcut">
-    <string>Shift+Y</string>
+    <string>Shift+U</string>
    </property>
   </action>
   <action name="actionRespawn_point">
@@ -835,7 +843,7 @@
     <string>Respawn point</string>
    </property>
    <property name="shortcut">
-    <string>Shift+U</string>
+    <string>Shift+I</string>
    </property>
   </action>
   <action name="actionLaunch_test">
@@ -892,6 +900,36 @@
   <action name="actionDelete_test_character">
    <property name="text">
     <string>Delete test character</string>
+   </property>
+  </action>
+  <action name="actionPath">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/icon_penpath.png</normaloff>icons/icon_penpath.png</iconset>
+   </property>
+   <property name="text">
+    <string>Path</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+F</string>
+   </property>
+  </action>
+  <action name="actionBlocking_layer">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/icon_blocking.png</normaloff>icons/icon_blocking.png</iconset>
+   </property>
+   <property name="text">
+    <string>Blocking layer</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+R</string>
    </property>
   </action>
  </widget>
