@@ -1,6 +1,7 @@
 #pragma once
 
 class QGraphicsSceneMouseEvent;
+class QRect;
 
 namespace GraphicMap {
     class MapGraphicsScene;
@@ -10,7 +11,9 @@ namespace GraphicMap {
     public:
         DrawingTool(MapGraphicsScene&);
         virtual ~DrawingTool();
+        virtual void chipsetSelectionChanged(const QRect&) = 0;
         virtual void onMousePress(QGraphicsSceneMouseEvent*) = 0;
+        virtual void onMouseLeave() = 0;
         virtual void onMouseMove(QGraphicsSceneMouseEvent*) = 0;
         virtual void onMouseRelease(QGraphicsSceneMouseEvent*) = 0;
 

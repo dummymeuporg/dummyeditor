@@ -68,6 +68,8 @@ namespace GraphicMap {
         virtual void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent);
         virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
         virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent);
+
+        virtual bool eventFilter(QObject*, QEvent*) override;
     public slots:
         void changeMapDocument(
             const std::shared_ptr<Misc::MapDocument>& mapDocument);

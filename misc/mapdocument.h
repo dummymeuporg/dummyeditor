@@ -21,6 +21,10 @@ namespace Misc {
 
         void save();
 
+        inline const Dummy::Project& project() const {
+            return m_project;
+        }
+
     private:
         const Dummy::Project& m_project;
         bool m_isModified;

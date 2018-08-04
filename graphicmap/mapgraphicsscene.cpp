@@ -21,6 +21,7 @@ GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
 {
     m_state = new GraphicMap::NotPaintingState(*this);
     m_drawingState = new PenDrawingTool(*this);
+    installEventFilter(this);
 }
 
 GraphicMap::MapGraphicsScene::~MapGraphicsScene() {
@@ -120,7 +121,10 @@ void
 GraphicMap::MapGraphicsScene::mouseMoveEvent(
     QGraphicsSceneMouseEvent* mouseEvent)
 {
-    m_drawingState->onMouseMove(mouseEvent);
+    //QGraphicsScene::mouseMoveEvent(mouseEvent);
+    if (nullptr != m_mapDocument) {
+        m_drawingState->onMouseMove(mouseEvent);
+    }
 }
 
 void
@@ -139,6 +143,10 @@ QGraphicsSceneMouseEvent* mouseEvent)
 
 void GraphicMap::MapGraphicsScene::changeSelection(const QRect& selection) {
     m_chipsetSelection = selection;
+    if (nullptr != m_mapDocument) {
+        m_drawingState->chipsetSelectionChanged(selection);
+    }
+
 }
 
 void GraphicMap::MapGraphicsScene::showFirstLayer() {
@@ -163,5 +171,16 @@ void GraphicMap::MapGraphicsScene::showThirdLayer() {
         return;
     }
     setPaitingLayerState(new ThirdLayerState(*this));
+}
+
+bool GraphicMap::MapGraphicsScene::eventFilter(QObject *watched,
+                                               QEvent *event) {
+    Q_UNUSED(watched);
+    if (event->type() == QEvent::Leave)
+    {
+        qDebug() << "Mouse left the scene";
+        m_drawingState->onMouseLeave();
+    }
+    return false;
 }
 
