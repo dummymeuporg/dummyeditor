@@ -11,16 +11,16 @@ GraphicMap::NotPaintingState::NotPaintingState(
     qDebug() << "Not painting.";
 }
 
-void GraphicMap::NotPaintingState::paintLayers() {
-    // Do nothing.
-}
-
 void GraphicMap::NotPaintingState::adjustLayers() {
     // Do nothing.
 }
 
 void GraphicMap::NotPaintingState::onNewMap() {
-    // Do nothing.
+    // Switch to painting first layer.
     m_mapGraphicsScene.setPaitingLayerState(
         new GraphicMap::FirstLayerState(m_mapGraphicsScene));
+}
+
+void GraphicMap::NotPaintingState::sceneCleared() {
+    // Do nothing.
 }
