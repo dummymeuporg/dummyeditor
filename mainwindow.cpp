@@ -110,6 +110,10 @@ void MainWindow::newProject() {
         QFileDialog::getExistingDirectory(this,
                                           tr("Choose your project directory"));
 
+    if (projectDirectory == "") {
+        return;
+    }
+
     // Initialize a project into this directory
     _initializeProject(projectDirectory);
 
@@ -117,11 +121,7 @@ void MainWindow::newProject() {
         _closeCurrentProject();
     }
 
-    m_currentProject = std::shared_ptr<Dummy::Project>(
-        new Dummy::Project(projectDirectory)
-    );
-
-    ui->treeViewMaps->setProject(m_currentProject);
+    _loadProject(projectDirectory);
 
 }
 
@@ -135,6 +135,15 @@ void MainWindow::openProject() {
         QFileDialog::getExistingDirectory(
             this, tr("Choose an existing project directory"));
 
+    if (projectDirectory == "") {
+        return;
+    }
+
+    _loadProject(projectDirectory);
+
+}
+
+void MainWindow::_loadProject(const QString& projectDirectory) {
     m_currentProject = std::shared_ptr<Dummy::Project>(
         new Dummy::Project(projectDirectory)
     );
@@ -144,7 +153,6 @@ void MainWindow::openProject() {
     );
 
     ui->treeViewMaps->setProject(m_currentProject);
-
 }
 
 void MainWindow::saveProject() {
