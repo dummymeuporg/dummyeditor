@@ -18,11 +18,13 @@ namespace Misc {
 namespace GraphicMap {
 
     class GraphicLayer;
+    class PaintingLayerState;
     class MapGraphicsScene : public QGraphicsScene
     {
         Q_OBJECT
     public:
         MapGraphicsScene(QObject* parent = nullptr);
+        virtual ~MapGraphicsScene();
 
         inline const std::shared_ptr<Dummy::Map>& map() const {
             return m_map;
@@ -32,8 +34,27 @@ namespace GraphicMap {
             return m_mapDocument;
         }
 
+        inline GraphicLayer* firstLayer() const {
+            return m_firstLayer;
+        }
+
+        inline GraphicLayer* secondLayer() const {
+            return m_secondLayer;
+        }
+
+        inline GraphicLayer* thirdLayer() const {
+            return m_thirdLayer;
+        }
+
+        MapGraphicsScene& setPaitingLayerState(PaintingLayerState*);
+
         MapGraphicsScene& setMapDocument(
             const std::shared_ptr<Misc::MapDocument>& mapDocument);
+
+        MapGraphicsScene& setActiveLayer(GraphicLayer* layer) {
+            m_activeLayer = layer;
+            return *this;
+        }
 
         virtual void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent);
         virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
@@ -68,12 +89,9 @@ namespace GraphicMap {
         GraphicLayer* m_firstLayer;
         GraphicLayer* m_secondLayer;
         GraphicLayer* m_thirdLayer;
-
-        int m_currentLayer;
         GraphicLayer* m_activeLayer; // Either 1st, 2nd or 3rd layer.
 
-        QGraphicsRectItem* m_darkFilterOne; // Between 1st and 2nd layer
-        QGraphicsRectItem* m_darkFilterTwo; // Between 2nd and 3rd layer
+        PaintingLayerState* m_state;
 
 
     };

@@ -15,7 +15,12 @@ SOURCES += \
     mapstreeview.cpp \
     dummy/layer.cpp \
     mapeditdialog.cpp \
-    graphicmap/graphiclayer.cpp
+    graphicmap/graphiclayer.cpp \
+    graphicmap/paintinglayerstate.cpp \
+    graphicmap/notpaintingstate.cpp \
+    graphicmap/firstlayerstate.cpp \
+    graphicmap/secondlayerstate.cpp \
+    graphicmap/thirdlayerstate.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -28,7 +33,12 @@ HEADERS += \
     mapstreeview.h \
     dummy/layer.h \
     mapeditdialog.h \
-    graphicmap/graphiclayer.h
+    graphicmap/graphiclayer.h \
+    graphicmap/paintinglayerstate.h \
+    graphicmap/notpaintingstate.h \
+    graphicmap/firstlayerstate.h \
+    graphicmap/secondlayerstate.h \
+    graphicmap/thirdlayerstate.h
 
 FORMS += \
     mainwindow.ui \

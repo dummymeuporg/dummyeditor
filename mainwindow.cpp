@@ -182,7 +182,7 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
     if (!ui->actionLow_layer_1->isChecked() &&
         !ui->actionLow_layer_2->isChecked() &&
             !ui->actionHigh_layer->isChecked()) {
-        ui->actionLow_layer_1->setChecked(true);
+        ui->actionLow_layer_1->trigger();
     }
     ui->graphicsViewChipset->viewport()->update();
 }

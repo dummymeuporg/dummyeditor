@@ -8,12 +8,21 @@
 #include "graphicmap/graphiclayer.h"
 #include "graphicmap/mapgraphicsscene.h"
 
+#include "graphicmap/notpaintingstate.h"
+#include "graphicmap/firstlayerstate.h"
+#include "graphicmap/secondlayerstate.h"
+#include "graphicmap/thirdlayerstate.h"
+
 GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
     : QGraphicsScene(parent), m_map(nullptr), m_firstLayer(nullptr),
-      m_secondLayer(nullptr), m_thirdLayer(nullptr), m_currentLayer(1),
+      m_secondLayer(nullptr), m_thirdLayer(nullptr),
       m_activeLayer(nullptr)
 {
+    m_state = new GraphicMap::NotPaintingState(*this);
+}
 
+GraphicMap::MapGraphicsScene::~MapGraphicsScene() {
+    delete m_state;
 }
 
 void GraphicMap::MapGraphicsScene::_drawGrid() {
@@ -46,9 +55,7 @@ GraphicMap::MapGraphicsScene::setMapDocument
         qDebug() << "INVALIDATE " << invalidateRegion;
         invalidate(invalidateRegion);
         delete m_firstLayer;
-        delete m_darkFilterOne;
         delete m_secondLayer;
-        delete m_darkFilterTwo;
         delete m_thirdLayer;
     }
     // Remove the grid.
@@ -56,22 +63,16 @@ GraphicMap::MapGraphicsScene::setMapDocument
 
     m_mapDocument = mapDocument;
     m_map = m_mapDocument->map();
-    QRect mapRect(0, 0, m_map->width()*16, m_map->height()*16);
+
     const Dummy::Project& project = m_map->project();
     m_mapChipset = QPixmap(project.fullpath() + "/chipsets/"
                            + m_map->chipset());
 
-    qDebug() << "Active layer = " << m_currentLayer;
     m_firstLayer = new
         GraphicMap::GraphicLayer(*this,
                                  m_map->firstLayer(),
                                  m_mapChipset,
                                  1);
-    m_darkFilterOne = new QGraphicsRectItem(mapRect);
-    m_darkFilterOne->setBrush(QBrush(QColor(0, 0, 0, 127)));
-
-    m_darkFilterOne->setZValue(2);
-
 
     m_secondLayer = new
         GraphicMap::GraphicLayer(*this,
@@ -79,39 +80,14 @@ GraphicMap::MapGraphicsScene::setMapDocument
                                  m_mapChipset,
                                  3);
 
-    m_darkFilterTwo = new QGraphicsRectItem(mapRect);
-    m_darkFilterTwo->setBrush(QBrush(QColor(0, 0, 0, 127)));
-
-    m_darkFilterTwo->setZValue(4);
-
-
     m_thirdLayer = new
         GraphicMap::GraphicLayer(*this,
                                  m_map->thirdLayer(),
                                  m_mapChipset,
                                  5);
 
-
-    // XXX: Ugly
-    if (m_currentLayer == 1) {
-        m_secondLayer->setOpacity(0.5);
-        m_thirdLayer->setOpacity(0.25);
-    } else if(m_currentLayer == 2) {
-        m_secondLayer->setOpacity(1);
-        m_thirdLayer->setOpacity(0.5);
-    } else if (m_currentLayer == 3) {
-        m_secondLayer->setOpacity(1);
-        m_thirdLayer->setOpacity(1);
-    }
-
-    addItem(m_darkFilterOne);
-    addItem(m_darkFilterTwo);
-
-    m_darkFilterOne->setVisible(m_currentLayer >= 2);
-    m_darkFilterTwo->setVisible(m_currentLayer == 3);
-
-
     _drawGrid();
+    m_state->onNewMap();
 
     return *this;
 }
@@ -120,6 +96,17 @@ void GraphicMap::MapGraphicsScene::changeMapDocument(
     const std::shared_ptr<Misc::MapDocument>& mapDocument)
 {
     setMapDocument(mapDocument);
+}
+
+GraphicMap::MapGraphicsScene&
+GraphicMap::MapGraphicsScene::setPaitingLayerState(
+    GraphicMap::PaintingLayerState* state
+)
+{
+    delete m_state;
+    m_state = state;
+    state->onNewMap();
+    return *this;
 }
 
 void
@@ -190,12 +177,7 @@ void GraphicMap::MapGraphicsScene::showFirstLayer() {
     if (nullptr == m_mapDocument) {
         return;
     }
-    m_activeLayer = m_firstLayer;
-    m_currentLayer = 1;
-    m_darkFilterOne->setVisible(false);
-    m_secondLayer->setOpacity(0.5);
-    m_darkFilterTwo->setVisible(false);
-    m_thirdLayer->setOpacity(0.25);
+    setPaitingLayerState(new FirstLayerState(*this));
 }
 
 void GraphicMap::MapGraphicsScene::showSecondLayer() {
@@ -203,12 +185,7 @@ void GraphicMap::MapGraphicsScene::showSecondLayer() {
     if (nullptr == m_mapDocument) {
         return;
     }
-    m_activeLayer = m_secondLayer;
-    m_currentLayer = 2;
-    m_darkFilterOne->setVisible(true);
-    m_secondLayer->setOpacity(1);
-    m_darkFilterTwo->setVisible(false);
-    m_thirdLayer->setOpacity(0.5);
+    setPaitingLayerState(new SecondLayerState(*this));
 }
 
 void GraphicMap::MapGraphicsScene::showThirdLayer() {
@@ -216,11 +193,6 @@ void GraphicMap::MapGraphicsScene::showThirdLayer() {
     if (nullptr == m_mapDocument) {
         return;
     }
-    m_activeLayer = m_thirdLayer;
-    m_currentLayer = 3;
-    m_darkFilterOne->setVisible(true);
-    m_darkFilterTwo->setVisible(true);
-    m_secondLayer->setOpacity(1);
-    m_thirdLayer->setOpacity(1);
+    setPaitingLayerState(new ThirdLayerState(*this));
 }
 
