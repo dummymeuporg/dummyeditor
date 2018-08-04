@@ -5,19 +5,27 @@
 #include "dummy/layer.h"
 #include "dummy/project.h"
 
-#include "mapgraphicsscene.h"
+#include "graphicmap/graphiclayer.h"
+#include "graphicmap/mapgraphicsscene.h"
 
-MapGraphicsScene::MapGraphicsScene(QObject* parent)
-    : QGraphicsScene(parent), m_map(nullptr)
+#include "graphicmap/notpaintingstate.h"
+#include "graphicmap/firstlayerstate.h"
+#include "graphicmap/secondlayerstate.h"
+#include "graphicmap/thirdlayerstate.h"
+
+GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
+    : QGraphicsScene(parent), m_map(nullptr), m_firstLayer(nullptr),
+      m_secondLayer(nullptr), m_thirdLayer(nullptr),
+      m_activeLayer(nullptr)
 {
-
+    m_state = new GraphicMap::NotPaintingState(*this);
 }
 
-void MapGraphicsScene::_drawMap() {
-
+GraphicMap::MapGraphicsScene::~MapGraphicsScene() {
+    delete m_state;
 }
 
-void MapGraphicsScene::_drawGrid() {
+void GraphicMap::MapGraphicsScene::_drawGrid() {
 
     QPen pen(Qt::black, 0.5);
 
@@ -36,36 +44,8 @@ void MapGraphicsScene::_drawGrid() {
 
 }
 
-void MapGraphicsScene::_drawLayer(const Dummy::Layer& layer) {
-
-    int i = 0;
-    for (auto it = layer.begin(); it != layer.end(); it++, i++) {
-        qint16 x = std::get<0>(*it);
-        qint16 y = std::get<1>(*it);
-
-        if (x >= 0 && y >= 0) {
-            QRect tile(x * 16, y * 16, 16, 16);
-
-            if(nullptr != m_firstLayerItems[i]) {
-                removeItem(m_firstLayerItems[i]);
-            }
-
-            m_firstLayerItems[i] =
-                new QGraphicsPixmapItem(m_mapChipset.copy(tile))
-            ;
-
-            qreal posX = (i % m_map->width()) * 16;
-            qreal posY = (i / m_map->height()) * 16;
-            m_firstLayerItems[i]->setPos(posX, posY);
-            //tileItem->setPos(posX, posY);
-            //addItem(tileItem);
-            addItem(m_firstLayerItems[i]);
-        }
-    }
-}
-
-MapGraphicsScene&
-MapGraphicsScene::setMapDocument
+GraphicMap::MapGraphicsScene&
+GraphicMap::MapGraphicsScene::setMapDocument
 (const std::shared_ptr<Misc::MapDocument>& mapDocument)
 {
 
@@ -74,39 +54,65 @@ MapGraphicsScene::setMapDocument
                                m_map->width() * 16, m_map->height() * 16);
         qDebug() << "INVALIDATE " << invalidateRegion;
         invalidate(invalidateRegion);
+        delete m_firstLayer;
+        delete m_secondLayer;
+        delete m_thirdLayer;
     }
+    // Remove the grid.
+    clear();
 
     m_mapDocument = mapDocument;
     m_map = m_mapDocument->map();
 
     const Dummy::Project& project = m_map->project();
-
     m_mapChipset = QPixmap(project.fullpath() + "/chipsets/"
                            + m_map->chipset());
-    clear();
-    _cleanLayer(m_firstLayerItems);
-    _cleanLayer(m_secondLayerItems);
-    _cleanLayer(m_thirdLayerItems);
 
-    _drawLayer(m_map->firstLayer());
+    m_firstLayer = new
+        GraphicMap::GraphicLayer(*this,
+                                 m_map->firstLayer(),
+                                 m_mapChipset,
+                                 1);
+
+    m_secondLayer = new
+        GraphicMap::GraphicLayer(*this,
+                                 m_map->secondLayer(),
+                                 m_mapChipset,
+                                 3);
+
+    m_thirdLayer = new
+        GraphicMap::GraphicLayer(*this,
+                                 m_map->thirdLayer(),
+                                 m_mapChipset,
+                                 5);
+
     _drawGrid();
+    m_state->onNewMap();
 
     return *this;
 }
 
-void MapGraphicsScene::_cleanLayer(QVector<QGraphicsPixmapItem*>& layer) {
-    layer.resize(m_map->width() * m_map->height());
-    layer.fill(nullptr);
-}
-
-void MapGraphicsScene::changeMapDocument(
+void GraphicMap::MapGraphicsScene::changeMapDocument(
     const std::shared_ptr<Misc::MapDocument>& mapDocument)
 {
     setMapDocument(mapDocument);
 }
 
+GraphicMap::MapGraphicsScene&
+GraphicMap::MapGraphicsScene::setPaitingLayerState(
+    GraphicMap::PaintingLayerState* state
+)
+{
+    delete m_state;
+    m_state = state;
+    state->onNewMap();
+    return *this;
+}
+
 void
-MapGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
+GraphicMap::MapGraphicsScene::mouseMoveEvent(
+    QGraphicsSceneMouseEvent* mouseEvent)
+{
     if(m_map != nullptr && m_chipsetSelection.width() != 0 &&
            m_chipsetSelection.height() != 0 && m_isDrawing)
     {
@@ -116,7 +122,7 @@ MapGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
 
         for (int j = 0; j < tilesHeight; ++j) {
             for(int i = 0; i < tilesWidth; ++i) {
-                _setTile(m_firstLayerItems,
+                m_activeLayer->setTile(
                          quint16(pt.x() - (pt.x() % 16) + (i * 16)),
                          quint16(pt.y() - (pt.y() % 16) + (j * 16)),
                          qint16(m_chipsetSelection.x() + (i * 16)),
@@ -127,7 +133,9 @@ MapGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
 }
 
 void
-MapGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
+GraphicMap::MapGraphicsScene::mousePressEvent(
+QGraphicsSceneMouseEvent* mouseEvent)
+{
     if (mouseEvent->buttons() & Qt::LeftButton) {
         QPoint pt = mouseEvent->scenePos().toPoint();
         m_isDrawing = true;
@@ -141,7 +149,7 @@ MapGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
             qDebug() << tilesWidth << tilesHeight;
             for (int j = 0; j < tilesHeight; ++j) {
                 for(int i = 0; i < tilesWidth; ++i) {
-                    _setTile(m_firstLayerItems,
+                    m_activeLayer->setTile(
                              quint16(pt.x() - (pt.x() % 16) + (i * 16)),
                              quint16(pt.y() - (pt.y() % 16) + (j * 16)),
                              qint16(m_chipsetSelection.x() + (i * 16)),
@@ -153,35 +161,38 @@ MapGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
 }
 
 void
-MapGraphicsScene::_setTile(QVector<QGraphicsPixmapItem*>& layer,
-                           quint16 x,
-                           quint16 y,
-                           qint16 chipsetX,
-                           qint16 chipsetY)
+GraphicMap::MapGraphicsScene::mouseReleaseEvent(
+QGraphicsSceneMouseEvent* mouseEvent)
 {
-    if (x < m_map->width() * 16 && y < m_map->height() * 16)
-    {
-        int index = (y/16) * m_map->width() + (x/16);
-
-        if (nullptr != layer[index]) {
-            removeItem(layer[index]);
-        }
-        layer[index] = new
-            QGraphicsPixmapItem(
-                m_mapChipset.copy(QRect(chipsetX, chipsetY, 16, 16)));
-        layer[index]->setPos(x, y);
-        addItem(layer[index]);
-        m_map->firstLayer().setTile(x / 16, y / 16,
-                                    chipsetX / 16, chipsetY / 16);
-    }
-}
-
-void
-MapGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) {
     Q_UNUSED(mouseEvent);
     m_isDrawing = false;
 }
 
-void MapGraphicsScene::changeSelection(const QRect& selection) {
+void GraphicMap::MapGraphicsScene::changeSelection(const QRect& selection) {
     m_chipsetSelection = selection;
 }
+
+void GraphicMap::MapGraphicsScene::showFirstLayer() {
+    qDebug() << "First active layer";
+    if (nullptr == m_mapDocument) {
+        return;
+    }
+    setPaitingLayerState(new FirstLayerState(*this));
+}
+
+void GraphicMap::MapGraphicsScene::showSecondLayer() {
+    qDebug() << "Second active layer";
+    if (nullptr == m_mapDocument) {
+        return;
+    }
+    setPaitingLayerState(new SecondLayerState(*this));
+}
+
+void GraphicMap::MapGraphicsScene::showThirdLayer() {
+    qDebug() << "Third active layer";
+    if (nullptr == m_mapDocument) {
+        return;
+    }
+    setPaitingLayerState(new ThirdLayerState(*this));
+}
+

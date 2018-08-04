@@ -10,7 +10,7 @@
 #include "misc/maptreemodel.h"
 
 #include "chipsetgraphicsscene.h"
-#include "mapgraphicsscene.h"
+#include "graphicmap/mapgraphicsscene.h"
 #include "mainwindow.h"
 #include "mapeditdialog.h"
 #include "ui_mainwindow.h"
@@ -72,7 +72,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphicsViewChipset->scale(2.0, 2.0);
     ui->graphicsViewChipset->setScene(m_chipsetScene);
 
-    m_mapScene = new MapGraphicsScene();
+    m_mapScene = new GraphicMap::MapGraphicsScene();
     ui->graphicsViewMap->scale(2.0, 2.0);
     ui->graphicsViewMap->setScene(m_mapScene);
 
@@ -80,6 +80,13 @@ MainWindow::MainWindow(QWidget *parent) :
                      m_chipsetScene, SLOT(changeChipset(QString)));
     QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
                      m_mapScene, SLOT(changeSelection(QRect)));
+
+    QObject::connect(ui->actionLow_layer_1, SIGNAL(triggered(bool)),
+                     m_mapScene, SLOT(showFirstLayer()));
+    QObject::connect(ui->actionLow_layer_2, SIGNAL(triggered(bool)),
+                     m_mapScene, SLOT(showSecondLayer()));
+    QObject::connect(ui->actionHigh_layer, SIGNAL(triggered(bool)),
+                     m_mapScene, SLOT(showThirdLayer()));
 
 }
 
@@ -171,5 +178,11 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
         m_currentProject->fullpath() + "/chipsets/" + map->chipset()
     );
     m_mapScene->setMapDocument(m_currentProject->document(mapName));
+
+    if (!ui->actionLow_layer_1->isChecked() &&
+        !ui->actionLow_layer_2->isChecked() &&
+            !ui->actionHigh_layer->isChecked()) {
+        ui->actionLow_layer_1->trigger();
+    }
     ui->graphicsViewChipset->viewport()->update();
 }
