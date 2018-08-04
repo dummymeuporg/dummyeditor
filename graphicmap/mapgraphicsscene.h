@@ -17,6 +17,7 @@ namespace Misc {
 
 namespace GraphicMap {
 
+    class DrawingTool;
     class GraphicLayer;
     class PaintingLayerState;
     class MapGraphicsScene : public QGraphicsScene
@@ -44,6 +45,14 @@ namespace GraphicMap {
 
         inline GraphicLayer* thirdLayer() const {
             return m_thirdLayer;
+        }
+
+        inline GraphicLayer* activeLayer() const {
+            return m_activeLayer;
+        }
+
+        inline const QRect& chipsetSelection() const {
+            return m_chipsetSelection;
         }
 
         MapGraphicsScene& setPaitingLayerState(PaintingLayerState*);
@@ -92,6 +101,7 @@ namespace GraphicMap {
         GraphicLayer* m_activeLayer; // Either 1st, 2nd or 3rd layer.
 
         PaintingLayerState* m_state;
+        DrawingTool* m_drawingState;
 
 
     };

@@ -12,6 +12,7 @@
 #include "graphicmap/firstlayerstate.h"
 #include "graphicmap/secondlayerstate.h"
 #include "graphicmap/thirdlayerstate.h"
+#include "graphicmap/pendrawingtool.h"
 
 GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
     : QGraphicsScene(parent), m_map(nullptr), m_firstLayer(nullptr),
@@ -19,9 +20,11 @@ GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
       m_activeLayer(nullptr)
 {
     m_state = new GraphicMap::NotPaintingState(*this);
+    m_drawingState = new PenDrawingTool(*this);
 }
 
 GraphicMap::MapGraphicsScene::~MapGraphicsScene() {
+    delete m_drawingState;
     delete m_state;
 }
 
@@ -117,59 +120,21 @@ void
 GraphicMap::MapGraphicsScene::mouseMoveEvent(
     QGraphicsSceneMouseEvent* mouseEvent)
 {
-    if(m_map != nullptr && m_chipsetSelection.width() != 0 &&
-           m_chipsetSelection.height() != 0 && m_isDrawing)
-    {
-        QPoint pt = mouseEvent->scenePos().toPoint();
-        int tilesWidth = int(m_chipsetSelection.width() / 16);
-        int tilesHeight = int(m_chipsetSelection.height() / 16);
-
-        for (int j = 0; j < tilesHeight; ++j) {
-            for(int i = 0; i < tilesWidth; ++i) {
-                m_activeLayer->setTile(
-                         quint16(pt.x() - (pt.x() % 16) + (i * 16)),
-                         quint16(pt.y() - (pt.y() % 16) + (j * 16)),
-                         qint16(m_chipsetSelection.x() + (i * 16)),
-                         qint16(m_chipsetSelection.y() + (j * 16)));
-            }
-        }
-    }
+    m_drawingState->onMouseMove(mouseEvent);
 }
 
 void
 GraphicMap::MapGraphicsScene::mousePressEvent(
 QGraphicsSceneMouseEvent* mouseEvent)
 {
-    if (mouseEvent->buttons() & Qt::LeftButton) {
-        QPoint pt = mouseEvent->scenePos().toPoint();
-        m_isDrawing = true;
-        qDebug() << m_chipsetSelection;
-
-        if (m_map != nullptr && m_chipsetSelection.width() != 0 &&
-            m_chipsetSelection.height() != 0)
-        {
-            int tilesWidth = int(m_chipsetSelection.width() / 16);
-            int tilesHeight = int(m_chipsetSelection.height() / 16);
-            qDebug() << tilesWidth << tilesHeight;
-            for (int j = 0; j < tilesHeight; ++j) {
-                for(int i = 0; i < tilesWidth; ++i) {
-                    m_activeLayer->setTile(
-                             quint16(pt.x() - (pt.x() % 16) + (i * 16)),
-                             quint16(pt.y() - (pt.y() % 16) + (j * 16)),
-                             qint16(m_chipsetSelection.x() + (i * 16)),
-                             qint16(m_chipsetSelection.y() + (j * 16)));
-                }
-            }
-        }
-    }
+    m_drawingState->onMousePress(mouseEvent);
 }
 
 void
 GraphicMap::MapGraphicsScene::mouseReleaseEvent(
 QGraphicsSceneMouseEvent* mouseEvent)
 {
-    Q_UNUSED(mouseEvent);
-    m_isDrawing = false;
+    m_drawingState->onMouseRelease(mouseEvent);
 }
 
 void GraphicMap::MapGraphicsScene::changeSelection(const QRect& selection) {
