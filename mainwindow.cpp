@@ -236,4 +236,8 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
         ui->actionLow_layer_1->trigger();
     }
     ui->graphicsViewChipset->viewport()->update();
+    ui->graphicsViewMap->setSceneRect(QRect(0,
+                                            0,
+                                            map->width()*16,
+                                            map->height()*16));
 }
