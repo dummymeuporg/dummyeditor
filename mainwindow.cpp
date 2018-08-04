@@ -37,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     toolsGroup->addAction(ui->actionSelection);
     toolsGroup->addAction(ui->actionPen);
     toolsGroup->addAction(ui->actionRectangle);
+    toolsGroup->addAction(ui->actionPath);
     tabGeneralToolBar->addActions(toolsGroup->actions());
 
     tabGeneralToolBar->addSeparator();
@@ -47,6 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
     layersGroup->addAction(ui->actionLow_layer_1);
     layersGroup->addAction(ui->actionLow_layer_2);
     layersGroup->addAction(ui->actionHigh_layer);
+    layersGroup->addAction(ui->actionBlocking_layer);
     layersGroup->addAction(ui->actionEvents_layer);
     layersGroup->addAction(ui->actionQuick_go_admin);
     layersGroup->addAction(ui->actionStarting_point);
