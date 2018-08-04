@@ -81,16 +81,19 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->actionHigh_layer, SIGNAL(triggered(bool)),
                      m_mapScene, SLOT(showThirdLayer()));
 
+    ui->graphicsViewChipset->scale(2.0, 2.0);
+    ui->graphicsViewMap->scale(2.0, 2.0);
+
 }
 
 void MainWindow::_initializeScenes() {
     m_chipsetScene = new ChipsetGraphicsScene();
 
-    ui->graphicsViewChipset->scale(2.0, 2.0);
+
     ui->graphicsViewChipset->setScene(m_chipsetScene);
 
     m_mapScene = new GraphicMap::MapGraphicsScene();
-    ui->graphicsViewMap->scale(2.0, 2.0);
+
     ui->graphicsViewMap->setScene(m_mapScene);
 
     QObject::connect(ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
@@ -174,6 +177,9 @@ void MainWindow::openProject() {
 }
 
 void MainWindow::_loadProject(const QString& projectDirectory) {
+
+    _initializeScenes();
+
     m_currentProject = std::shared_ptr<Dummy::Project>(
         new Dummy::Project(projectDirectory)
     );
@@ -183,6 +189,11 @@ void MainWindow::_loadProject(const QString& projectDirectory) {
     );
 
     ui->treeViewMaps->setProject(m_currentProject);
+
+
+
+    // Enable the first layer drawing by default.
+    ui->actionLow_layer_1->trigger();
 }
 
 void MainWindow::saveProject() {

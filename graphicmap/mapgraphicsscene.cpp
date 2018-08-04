@@ -86,6 +86,10 @@ GraphicMap::MapGraphicsScene::setMapDocument
                                  m_mapChipset,
                                  5);
 
+    if(dynamic_cast<GraphicMap::NotPaintingState*>(m_state) != nullptr) {
+        qDebug() << "It was 'not painting'. Now paint.";
+        setPaitingLayerState(new FirstLayerState(*this));
+    }
     _drawGrid();
     m_state->onNewMap();
 
