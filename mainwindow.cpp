@@ -67,6 +67,23 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     ui->tabGeneral->layout()->setMenuBar(tabGeneralToolBar);
+    _initializeScenes();
+
+    QObject::connect(ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
+                     m_chipsetScene, SLOT(changeChipset(QString)));
+    QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
+                     m_mapScene, SLOT(changeSelection(QRect)));
+
+    QObject::connect(ui->actionLow_layer_1, SIGNAL(triggered(bool)),
+                     m_mapScene, SLOT(showFirstLayer()));
+    QObject::connect(ui->actionLow_layer_2, SIGNAL(triggered(bool)),
+                     m_mapScene, SLOT(showSecondLayer()));
+    QObject::connect(ui->actionHigh_layer, SIGNAL(triggered(bool)),
+                     m_mapScene, SLOT(showThirdLayer()));
+
+}
+
+void MainWindow::_initializeScenes() {
     m_chipsetScene = new ChipsetGraphicsScene();
 
     ui->graphicsViewChipset->scale(2.0, 2.0);
@@ -91,6 +108,19 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 void MainWindow::_closeCurrentProject() {
+
+    QObject::disconnect(ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
+                        m_chipsetScene, SLOT(changeChipset(QString)));
+    QObject::disconnect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
+                        m_mapScene, SLOT(changeSelection(QRect)));
+
+    QObject::disconnect(ui->actionLow_layer_1, SIGNAL(triggered(bool)),
+                        m_mapScene, SLOT(showFirstLayer()));
+    QObject::disconnect(ui->actionLow_layer_2, SIGNAL(triggered(bool)),
+                        m_mapScene, SLOT(showSecondLayer()));
+    QObject::disconnect(ui->actionHigh_layer, SIGNAL(triggered(bool)),
+                        m_mapScene, SLOT(showThirdLayer()));
+
     delete m_chipsetScene;
     delete m_mapScene;
 }
