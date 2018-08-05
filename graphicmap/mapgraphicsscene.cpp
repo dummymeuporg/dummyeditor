@@ -23,16 +23,18 @@ GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
       m_activeLayer(nullptr)
 {
     m_state = new GraphicMap::NotPaintingState(*this);
-    m_drawingState = new NoDrawingTool(*this);
+    m_drawingTool = new NoDrawingTool(*this);
     installEventFilter(this);
 }
 
-GraphicMap::MapGraphicsScene::~MapGraphicsScene() {
-    delete m_drawingState;
+GraphicMap::MapGraphicsScene::~MapGraphicsScene()
+{
+    delete m_drawingTool;
     delete m_state;
 }
 
-void GraphicMap::MapGraphicsScene::_drawGrid() {
+void GraphicMap::MapGraphicsScene::_drawGrid()
+{
 
     QPen pen(Qt::black, 0.5);
 
@@ -99,6 +101,9 @@ GraphicMap::MapGraphicsScene::setMapDocument
     _drawGrid();
     m_state->onNewMap();
     m_state->adjustLayers();
+
+    changeSelection(QRect(0,0,0,0));
+
     return *this;
 }
 
@@ -106,6 +111,21 @@ void GraphicMap::MapGraphicsScene::changeMapDocument(
     const std::shared_ptr<Misc::MapDocument>& mapDocument)
 {
     setMapDocument(mapDocument);
+}
+
+GraphicMap::MapGraphicsScene&
+GraphicMap::MapGraphicsScene::setPaitingTool(
+    GraphicMap::DrawingTool* tool
+)
+{
+    delete m_drawingTool;
+    m_drawingTool = tool;
+
+    if (nullptr != m_mapDocument) {
+        m_drawingTool->chipsetSelectionChanged(m_chipsetSelection);
+    }
+
+    return *this;
 }
 
 GraphicMap::MapGraphicsScene&
@@ -126,7 +146,7 @@ GraphicMap::MapGraphicsScene::mouseMoveEvent(
 {
     //QGraphicsScene::mouseMoveEvent(mouseEvent);
     if (nullptr != m_mapDocument) {
-        m_drawingState->onMouseMove(mouseEvent);
+        m_drawingTool->onMouseMove(mouseEvent);
     }
 }
 
@@ -134,20 +154,21 @@ void
 GraphicMap::MapGraphicsScene::mousePressEvent(
 QGraphicsSceneMouseEvent* mouseEvent)
 {
-    m_drawingState->onMousePress(mouseEvent);
+    m_drawingTool->onMousePress(mouseEvent);
 }
 
 void
 GraphicMap::MapGraphicsScene::mouseReleaseEvent(
 QGraphicsSceneMouseEvent* mouseEvent)
 {
-    m_drawingState->onMouseRelease(mouseEvent);
+    m_drawingTool->onMouseRelease(mouseEvent);
 }
 
-void GraphicMap::MapGraphicsScene::changeSelection(const QRect& selection) {
+void GraphicMap::MapGraphicsScene::changeSelection(const QRect& selection)
+{
     m_chipsetSelection = selection;
     if (nullptr != m_mapDocument) {
-        m_drawingState->chipsetSelectionChanged(selection);
+        m_drawingTool->chipsetSelectionChanged(selection);
     }
 
 }
@@ -176,13 +197,25 @@ void GraphicMap::MapGraphicsScene::showThirdLayer() {
     setPaitingLayerState(new ThirdLayerState(*this));
 }
 
+void GraphicMap::MapGraphicsScene::setPenTool()
+{
+    qDebug() << "Pen tool enabled";
+    setPaitingTool(new GraphicMap::PenDrawingTool(*this));
+}
+
+void GraphicMap::MapGraphicsScene::setRectangleTool()
+{
+
+}
+
 bool GraphicMap::MapGraphicsScene::eventFilter(QObject *watched,
-                                               QEvent *event) {
+                                               QEvent *event)
+{
     Q_UNUSED(watched);
     if (event->type() == QEvent::Leave)
     {
         qDebug() << "Mouse left the scene";
-        m_drawingState->onMouseLeave();
+        m_drawingTool->onMouseLeave();
     }
     return false;
 }

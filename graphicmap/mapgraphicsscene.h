@@ -56,6 +56,7 @@ namespace GraphicMap {
         }
 
         MapGraphicsScene& setPaitingLayerState(PaintingLayerState*);
+        MapGraphicsScene& setPaitingTool(DrawingTool*);
 
         MapGraphicsScene& setMapDocument(
             const std::shared_ptr<Misc::MapDocument>& mapDocument);
@@ -77,6 +78,9 @@ namespace GraphicMap {
         void showFirstLayer();
         void showSecondLayer();
         void showThirdLayer();
+
+        void setPenTool();
+        void setRectangleTool();
     private:
         void _cleanLayer(QVector<QGraphicsPixmapItem*>& layer);
         void _drawMap();
@@ -103,7 +107,7 @@ namespace GraphicMap {
         GraphicLayer* m_activeLayer; // Either 1st, 2nd or 3rd layer.
 
         PaintingLayerState* m_state;
-        DrawingTool* m_drawingState;
+        DrawingTool* m_drawingTool;
 
 
     };

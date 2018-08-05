@@ -91,7 +91,6 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::_initializeScenes() {
     m_chipsetScene = new ChipsetGraphicsScene();
 
-
     ui->graphicsViewChipset->setScene(m_chipsetScene);
 
     m_mapScene = new GraphicMap::MapGraphicsScene();
@@ -109,6 +108,8 @@ void MainWindow::_initializeScenes() {
                      m_mapScene, SLOT(showSecondLayer()));
     QObject::connect(ui->actionHigh_layer, SIGNAL(triggered(bool)),
                      m_mapScene, SLOT(showThirdLayer()));
+    QObject::connect(ui->actionPen, SIGNAL(triggered(bool)),
+                     m_mapScene, SLOT(setPenTool()));
 
 }
 
@@ -125,6 +126,8 @@ void MainWindow::_closeCurrentProject() {
                         m_mapScene, SLOT(showSecondLayer()));
     QObject::disconnect(ui->actionHigh_layer, SIGNAL(triggered(bool)),
                         m_mapScene, SLOT(showThirdLayer()));
+    QObject::disconnect(ui->actionPen, SIGNAL(trigerred(bool)),
+                        m_mapScene, SLOT(setPenTool()));
 
     delete m_chipsetScene;
     delete m_mapScene;
@@ -192,8 +195,6 @@ void MainWindow::_loadProject(const QString& projectDirectory) {
 
     ui->treeViewMaps->setProject(m_currentProject);
 
-
-
     // Enable the first layer drawing by default.
     ui->actionLow_layer_1->trigger();
 }
@@ -230,11 +231,13 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
     );
     m_mapScene->setMapDocument(m_currentProject->document(mapName));
 
+    // Select some default layer
     if (!ui->actionLow_layer_1->isChecked() &&
         !ui->actionLow_layer_2->isChecked() &&
             !ui->actionHigh_layer->isChecked()) {
         ui->actionLow_layer_1->trigger();
     }
+
     ui->graphicsViewChipset->viewport()->update();
     ui->graphicsViewMap->setSceneRect(QRect(0,
                                             0,
