@@ -1,5 +1,7 @@
 #pragma once
 
+#include <QPixmap>
+
 #include "graphicmap/drawingtool.h"
 
 class QGraphicsPixmapItem;
@@ -19,6 +21,13 @@ namespace GraphicMap {
         virtual void onMouseLeave() override;
 
     private:
+
+        void _drawChipsetSelectionInRectangle();
+
         QGraphicsPixmapItem* m_selectionItem;
+        bool m_mouseCliked;
+        QPixmap m_pixmapChipsetSelection;
+        QRect m_rectChipsetSelection;
+        QRect m_rectangle;
     };
 }

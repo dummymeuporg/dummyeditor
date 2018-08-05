@@ -88,7 +88,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 }
 
-void MainWindow::_initializeScenes() {
+void MainWindow::_initializeScenes()
+{
     m_chipsetScene = new ChipsetGraphicsScene();
 
     ui->graphicsViewChipset->setScene(m_chipsetScene);
@@ -110,11 +111,15 @@ void MainWindow::_initializeScenes() {
                      m_mapScene, SLOT(showThirdLayer()));
     QObject::connect(ui->actionPen, SIGNAL(triggered(bool)),
                      m_mapScene, SLOT(setPenTool()));
+    QObject::connect(ui->actionRectangle,
+                     SIGNAL(triggered(bool)),
+                     m_mapScene,
+                     SLOT(setRectangleTool()));
 
 }
 
-void MainWindow::_closeCurrentProject() {
-
+void MainWindow::_closeCurrentProject()
+{
     QObject::disconnect(ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
                         m_chipsetScene, SLOT(changeChipset(QString)));
     QObject::disconnect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
@@ -126,6 +131,8 @@ void MainWindow::_closeCurrentProject() {
                         m_mapScene, SLOT(showSecondLayer()));
     QObject::disconnect(ui->actionHigh_layer, SIGNAL(triggered(bool)),
                         m_mapScene, SLOT(showThirdLayer()));
+    QObject::disconnect(ui->actionPen, SIGNAL(trigerred(bool)),
+                        m_mapScene, SLOT(setPenTool()));
     QObject::disconnect(ui->actionPen, SIGNAL(trigerred(bool)),
                         m_mapScene, SLOT(setPenTool()));
 

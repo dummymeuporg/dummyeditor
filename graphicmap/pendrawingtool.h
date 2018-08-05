@@ -1,5 +1,7 @@
 #pragma once
 
+#include <QPixmap>
+
 #include "graphicmap/drawingtool.h"
 
 class QPoint;

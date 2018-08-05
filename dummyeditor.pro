@@ -22,7 +22,9 @@ SOURCES += \
     graphicmap/secondlayerstate.cpp \
     graphicmap/thirdlayerstate.cpp \
     graphicmap/drawingtool.cpp \
-    graphicmap/pendrawingtool.cpp
+    graphicmap/pendrawingtool.cpp \
+    graphicmap/nodrawingtool.cpp \
+    graphicmap/rectangledrawingtool.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -42,7 +44,9 @@ HEADERS += \
     graphicmap/secondlayerstate.h \
     graphicmap/thirdlayerstate.h \
     graphicmap/drawingtool.h \
-    graphicmap/pendrawingtool.h
+    graphicmap/pendrawingtool.h \
+    graphicmap/nodrawingtool.h \
+    graphicmap/rectangledrawingtool.h
 
 FORMS += \
     mainwindow.ui \

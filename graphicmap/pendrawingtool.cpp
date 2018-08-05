@@ -38,6 +38,15 @@ GraphicMap::PenDrawingTool::onMousePress(
 void GraphicMap::PenDrawingTool::chipsetSelectionChanged(
     const QRect& selection)
 {
+    if (selection.size() == QSize(0, 0))
+    {
+        if (nullptr != m_selectionItem)
+        {
+            m_mapGraphicScene.removeItem(m_selectionItem);
+            m_selectionItem = nullptr;
+        }
+        return;
+    }
     std::shared_ptr<Dummy::Map> map(
         m_mapGraphicScene.mapDocument()->map());
 

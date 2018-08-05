@@ -205,7 +205,8 @@ void GraphicMap::MapGraphicsScene::setPenTool()
 
 void GraphicMap::MapGraphicsScene::setRectangleTool()
 {
-
+    qDebug() << "Rectangle tool enabled";
+    setPaitingTool(new GraphicMap::RectangleDrawingTool(*this));
 }
 
 bool GraphicMap::MapGraphicsScene::eventFilter(QObject *watched,
