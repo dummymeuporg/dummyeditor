@@ -100,8 +100,14 @@ void
 GraphicMap::RectangleDrawingTool::onMouseRelease(
     QGraphicsSceneMouseEvent* event)
 {
+    Q_UNUSED(event);
     m_mouseCliked = false;
+    _applyChipsetSelectionInRectangle();
     m_rectangle = QRect(0, 0, 0, 0);
+
+    if (nullptr != m_selectionItem) {
+        m_mapGraphicScene.removeItem(m_selectionItem);
+    }
 }
 
 void GraphicMap::RectangleDrawingTool::onMouseLeave()
@@ -138,4 +144,47 @@ GraphicMap::RectangleDrawingTool::_drawChipsetSelectionInRectangle()
         m_mapGraphicScene.removeItem(m_selectionItem);
     }
     m_selectionItem = new QGraphicsPixmapItem(dstPixmap);
+}
+
+void GraphicMap::RectangleDrawingTool::_applyChipsetSelectionInRectangle()
+{
+    if (m_pixmapChipsetSelection.size() == QSize(0, 0))
+    {
+        return;
+    }
+
+    for (quint16 j = 0;
+         j < m_rectangle.height();
+         j += m_pixmapChipsetSelection.height())
+    {
+        for (quint16 i = 0;
+             i < m_rectangle.width();
+             i += m_pixmapChipsetSelection.width())
+        {
+            _applySelectionToMap(quint16(m_rectangle.x() + i),
+                                 quint16(m_rectangle.y() + j));
+        }
+    }
+}
+
+void
+GraphicMap::RectangleDrawingTool::_applySelectionToMap(quint16 mapX,
+                                                       quint16 mapY)
+{
+    qDebug() << mapX << mapY;
+    qint16 chipsetX = qint16(m_rectChipsetSelection.x()/16);
+    qint16 chipsetY = qint16(m_rectChipsetSelection.y()/16);
+
+    for (quint16 j = 0; j < m_rectChipsetSelection.height()/16; j++)
+    {
+        for (quint16 i = 0; i < m_rectChipsetSelection.width()/16; i++)
+        {
+            qDebug() << "CHIPSET: " << chipsetX + i << chipsetY + j;
+            qDebug() << "TARGET: " << mapX + i << mapY + j;
+            m_mapGraphicScene.activeLayer()->setTile(
+                mapX + i * 16, mapY + j * 16,
+                (chipsetX + i) * 16, (chipsetY + j) * 16
+            );
+        }
+    }
 }
