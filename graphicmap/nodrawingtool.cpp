@@ -55,3 +55,4 @@ void GraphicMap::NoDrawingTool::onMouseLeave()
 {
 
 }
+
