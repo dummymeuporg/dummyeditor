@@ -16,6 +16,7 @@
 #include "graphicmap/nodrawingtool.h"
 #include "graphicmap/pendrawingtool.h"
 #include "graphicmap/rectangledrawingtool.h"
+#include "graphicmap/selectiondrawingtool.h"
 
 GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
     : QGraphicsScene(parent), m_map(nullptr), m_firstLayer(nullptr),
@@ -207,6 +208,12 @@ void GraphicMap::MapGraphicsScene::setRectangleTool()
 {
     qDebug() << "Rectangle tool enabled";
     setPaitingTool(new GraphicMap::RectangleDrawingTool(*this));
+}
+
+void GraphicMap::MapGraphicsScene::setSelectionTool()
+{
+    qDebug() << "Selection tool enabled";
+    setPaitingTool(new GraphicMap::SelectionDrawingTool(*this));
 }
 
 bool GraphicMap::MapGraphicsScene::eventFilter(QObject *watched,

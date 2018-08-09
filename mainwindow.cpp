@@ -115,6 +115,10 @@ void MainWindow::_initializeScenes()
                      SIGNAL(triggered(bool)),
                      m_mapScene,
                      SLOT(setRectangleTool()));
+    QObject::connect(ui->actionSelection,
+                     SIGNAL(triggered(bool)),
+                     m_mapScene,
+                     SLOT(setSelectionTool()));
 
 }
 
@@ -135,6 +139,10 @@ void MainWindow::_closeCurrentProject()
                         m_mapScene, SLOT(setPenTool()));
     QObject::disconnect(ui->actionPen, SIGNAL(trigerred(bool)),
                         m_mapScene, SLOT(setPenTool()));
+    QObject::disconnect(ui->actionSelection,
+                        SIGNAL(triggered(bool)),
+                        m_mapScene,
+                        SLOT(setSelectionTool()));
 
     delete m_chipsetScene;
     delete m_mapScene;
