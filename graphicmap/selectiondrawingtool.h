@@ -19,10 +19,13 @@ namespace GraphicMap {
         virtual void onMouseLeave() override;
         virtual void onMouseMove(QGraphicsSceneMouseEvent*) override;
         virtual void onMouseRelease(QGraphicsSceneMouseEvent*) override;
+        virtual void onKeyPress(QKeyEvent*) override;
+        virtual void onKeyRelease(QKeyEvent*) override;
     private:
         QRect m_activeSelection;
         QPoint m_selectionStart;
         bool m_isSelecting;
+        bool m_ctrlPressed;
         QGraphicsRectItem* m_selectionItem;
     };
 }

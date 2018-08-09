@@ -56,3 +56,13 @@ void GraphicMap::NoDrawingTool::onMouseLeave()
 
 }
 
+void GraphicMap::NoDrawingTool::onKeyPress(QKeyEvent* event)
+{
+    Q_UNUSED(event);
+}
+
+void GraphicMap::NoDrawingTool::onKeyRelease(QKeyEvent* event)
+{
+    Q_UNUSED(event);
+}
+

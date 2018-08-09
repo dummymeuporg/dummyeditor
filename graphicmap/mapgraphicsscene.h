@@ -69,6 +69,8 @@ namespace GraphicMap {
         virtual void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent);
         virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
         virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent);
+        virtual void keyPressEvent(QKeyEvent*);
+        virtual void keyReleaseEvent(QKeyEvent*);
 
         virtual bool eventFilter(QObject*, QEvent*) override;
     public slots:

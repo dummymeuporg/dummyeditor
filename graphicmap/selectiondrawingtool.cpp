@@ -2,6 +2,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsRectItem>
+#include <QKeyEvent>
 #include <QPainter>
 #include <QPen>
 
@@ -19,7 +20,7 @@
 GraphicMap::SelectionDrawingTool::SelectionDrawingTool(
     GraphicMap::MapGraphicsScene& mapGraphicsScene)
     : GraphicMap::DrawingTool(mapGraphicsScene), m_isSelecting(false),
-      m_selectionItem(nullptr)
+      m_ctrlPressed(false), m_selectionItem(nullptr)
 {
 
 }
@@ -94,6 +95,7 @@ GraphicMap::SelectionDrawingTool::onMouseMove(
     }
 }
 
+
 void
 GraphicMap::SelectionDrawingTool::onMouseRelease(
     QGraphicsSceneMouseEvent* event)
@@ -104,4 +106,30 @@ GraphicMap::SelectionDrawingTool::onMouseRelease(
 
 void GraphicMap::SelectionDrawingTool::onMouseLeave()
 {
+}
+
+void GraphicMap::SelectionDrawingTool::onKeyPress(QKeyEvent* event)
+{
+
+    qDebug() << "Pressed" << event->key();
+    if (m_ctrlPressed)
+    {
+        qDebug() << "In ctrl mode";
+    }
+    else
+    {
+        if(event->key() == Qt::Key_Control)
+        {
+            m_ctrlPressed = true;
+            qDebug() << "Ctrl pressed!";
+        }
+    }
+}
+
+void GraphicMap::SelectionDrawingTool::onKeyRelease(QKeyEvent* event)
+{
+    if(event->key() == Qt::Key_Control)
+    {
+        m_ctrlPressed = false;
+    }
 }

@@ -23,6 +23,8 @@ namespace GraphicMap {
         virtual void onMouseMove(QGraphicsSceneMouseEvent*) override;
         virtual void onMouseRelease(QGraphicsSceneMouseEvent*) override;
         virtual void onMouseLeave() override;
+        virtual void onKeyPress(QKeyEvent*) override;
+        virtual void onKeyRelease(QKeyEvent*) override;
 
     private:
 

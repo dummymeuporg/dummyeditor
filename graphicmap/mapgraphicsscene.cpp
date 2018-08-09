@@ -165,6 +165,16 @@ QGraphicsSceneMouseEvent* mouseEvent)
     m_drawingTool->onMouseRelease(mouseEvent);
 }
 
+void GraphicMap::MapGraphicsScene::keyPressEvent(QKeyEvent* keyEvent)
+{
+    m_drawingTool->onKeyPress(keyEvent);
+}
+
+void GraphicMap::MapGraphicsScene::keyReleaseEvent(QKeyEvent* keyEvent)
+{
+    m_drawingTool->onKeyRelease(keyEvent);
+}
+
 void GraphicMap::MapGraphicsScene::changeSelection(const QRect& selection)
 {
     m_chipsetSelection = selection;
