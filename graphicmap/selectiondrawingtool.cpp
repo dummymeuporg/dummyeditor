@@ -20,7 +20,7 @@
 GraphicMap::SelectionDrawingTool::SelectionDrawingTool(
     GraphicMap::MapGraphicsScene& mapGraphicsScene)
     : GraphicMap::DrawingTool(mapGraphicsScene), m_isSelecting(false),
-      m_ctrlPressed(false), m_selectionItem(nullptr)
+      m_selectionItem(nullptr)
 {
 
 }
@@ -111,25 +111,24 @@ void GraphicMap::SelectionDrawingTool::onMouseLeave()
 void GraphicMap::SelectionDrawingTool::onKeyPress(QKeyEvent* event)
 {
 
-    qDebug() << "Pressed" << event->key();
-    if (m_ctrlPressed)
+    if (event->modifiers() && Qt::ControlModifier)
     {
-        qDebug() << "In ctrl mode";
-    }
-    else
-    {
-        if(event->key() == Qt::Key_Control)
+        switch(event->key())
         {
-            m_ctrlPressed = true;
-            qDebug() << "Ctrl pressed!";
+        case Qt::Key_X:
+            qDebug() << "Cut.";
+            break;
+        case Qt::Key_C:
+            qDebug() << "Copy.";
+            break;
+        case Qt::Key_V:
+            qDebug() << "Paste.";
+            break;
         }
     }
 }
 
 void GraphicMap::SelectionDrawingTool::onKeyRelease(QKeyEvent* event)
 {
-    if(event->key() == Qt::Key_Control)
-    {
-        m_ctrlPressed = false;
-    }
+    Q_UNUSED(event);
 }

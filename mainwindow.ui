@@ -645,9 +645,6 @@
    <property name="toolTip">
     <string>Cancel the previous action</string>
    </property>
-   <property name="shortcut">
-    <string>Ctrl+Z</string>
-   </property>
   </action>
   <action name="actionCopy">
    <property name="icon">
@@ -660,9 +657,6 @@
    <property name="toolTip">
     <string>Copy selected evenement(s)/cell(s)</string>
    </property>
-   <property name="shortcut">
-    <string>Ctrl+C</string>
-   </property>
   </action>
   <action name="actionPaste">
    <property name="icon">
@@ -674,9 +668,6 @@
    </property>
    <property name="toolTip">
     <string>Paste event(s)/cell(s) previously copy</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+V</string>
    </property>
   </action>
   <action name="actionClean_project">
