@@ -111,7 +111,7 @@ void GraphicMap::SelectionDrawingTool::onMouseLeave()
 void GraphicMap::SelectionDrawingTool::onKeyPress(QKeyEvent* event)
 {
 
-    if (event->modifiers() && Qt::ControlModifier)
+    if (0 != (event->modifiers() & Qt::ControlModifier))
     {
         switch(event->key())
         {
