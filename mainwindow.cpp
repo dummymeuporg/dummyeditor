@@ -259,3 +259,23 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
                                             map->width()*16,
                                             map->height()*16));
 }
+
+void MainWindow::onCancel()
+{
+    qDebug() << "Cancel.";
+}
+
+void MainWindow::onCut()
+{
+    qDebug() << "Cut.";
+}
+
+void MainWindow::onCopy()
+{
+    qDebug() << "Copy.";
+}
+
+void MainWindow::onPaste()
+{
+    qDebug() << "Paste.";
+}

@@ -941,7 +941,7 @@
     <string>Cut</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+X</string>
+    <string/>
    </property>
   </action>
  </widget>
