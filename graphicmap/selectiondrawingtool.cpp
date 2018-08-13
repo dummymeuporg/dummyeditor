@@ -142,11 +142,14 @@ void GraphicMap::SelectionDrawingTool::_deleteSelection()
 {
     const QPoint& topLeft(m_activeSelection.topLeft());
     const QPoint& bottomRight(m_activeSelection.bottomRight());
-    for (quint16 j = topLeft.y(); j < bottomRight.y(); j += 16)
+    for (int j = topLeft.y(); j < bottomRight.y(); j += 16)
     {
-        for (quint16 i = topLeft.x(); i < bottomRight.x(); i += 16)
+        for (int i = topLeft.x(); i < bottomRight.x(); i += 16)
         {
-            m_mapGraphicScene.activeLayer()->setTile(i, j, -1, -1);
+            m_mapGraphicScene.activeLayer()->setTile(quint16(i),
+                                                     quint16(j),
+                                                     -1,
+                                                     -1);
         }
     }
 }
