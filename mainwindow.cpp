@@ -2,6 +2,7 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QGraphicsScene>
+#include <QKeyEvent>
 #include <QMessageBox>
 
 #include "dummy/map.h"
@@ -268,14 +269,23 @@ void MainWindow::onCancel()
 void MainWindow::onCut()
 {
     qDebug() << "Cut.";
+    QKeyEvent* keyEvent = new QKeyEvent(QEvent::KeyPress, Qt::Key_X,
+                                        Qt::ControlModifier);
+    QCoreApplication::postEvent(m_mapScene, keyEvent);
 }
 
 void MainWindow::onCopy()
 {
     qDebug() << "Copy.";
+    QKeyEvent* keyEvent = new QKeyEvent(QEvent::KeyPress, Qt::Key_C,
+                                        Qt::ControlModifier);
+    QCoreApplication::postEvent(m_mapScene, keyEvent);
 }
 
 void MainWindow::onPaste()
 {
     qDebug() << "Paste.";
+    QKeyEvent* keyEvent = new QKeyEvent(QEvent::KeyPress, Qt::Key_V,
+                                        Qt::ControlModifier);
+    QCoreApplication::postEvent(m_mapScene, keyEvent);
 }

@@ -116,19 +116,37 @@ void GraphicMap::SelectionDrawingTool::onKeyPress(QKeyEvent* event)
         switch(event->key())
         {
         case Qt::Key_X:
-            qDebug() << "Cut.";
+            qDebug() << "Cut in selection tool.";
             break;
         case Qt::Key_C:
-            qDebug() << "Copy.";
+            qDebug() << "Copy in selection tool.";
             break;
         case Qt::Key_V:
-            qDebug() << "Paste.";
+            qDebug() << "Paste in selection tool.";
             break;
         }
+    }
+    else if (event->key() == Qt::Key_Delete)
+    {
+        qDebug() << "Delete.";
+        _deleteSelection();
     }
 }
 
 void GraphicMap::SelectionDrawingTool::onKeyRelease(QKeyEvent* event)
 {
     Q_UNUSED(event);
+}
+
+void GraphicMap::SelectionDrawingTool::_deleteSelection()
+{
+    const QPoint& topLeft(m_activeSelection.topLeft());
+    const QPoint& bottomRight(m_activeSelection.bottomRight());
+    for (quint16 j = topLeft.y(); j < bottomRight.y(); j += 16)
+    {
+        for (quint16 i = topLeft.x(); i < bottomRight.x(); i += 16)
+        {
+            m_mapGraphicScene.activeLayer()->setTile(i, j, -1, -1);
+        }
+    }
 }

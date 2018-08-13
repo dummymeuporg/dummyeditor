@@ -22,6 +22,9 @@ namespace GraphicMap {
         virtual void onKeyPress(QKeyEvent*) override;
         virtual void onKeyRelease(QKeyEvent*) override;
     private:
+
+        void _deleteSelection();
+
         QRect m_activeSelection;
         QPoint m_selectionStart;
         bool m_isSelecting;
