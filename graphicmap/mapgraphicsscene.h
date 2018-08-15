@@ -25,7 +25,7 @@ namespace GraphicMap {
         Q_OBJECT
     public:
         MapGraphicsScene(QObject* parent = nullptr);
-        virtual ~MapGraphicsScene();
+        virtual ~MapGraphicsScene() override;
 
         inline const std::shared_ptr<Dummy::Map>& map() const {
             return m_map;
@@ -87,6 +87,10 @@ namespace GraphicMap {
 
         void adjustLayers() const;
 
+        const PaintingLayerState& paintingLayerState() const {
+            return *m_paintingLayerState;
+        }
+
     private:
         void _cleanLayer(QVector<QGraphicsPixmapItem*>& layer);
         void _drawMap();
@@ -112,7 +116,7 @@ namespace GraphicMap {
         GraphicLayer* m_thirdLayer;
         GraphicLayer* m_activeLayer; // Either 1st, 2nd or 3rd layer.
 
-        PaintingLayerState* m_state;
+        PaintingLayerState* m_paintingLayerState;
         DrawingTool* m_drawingTool;
 
 
