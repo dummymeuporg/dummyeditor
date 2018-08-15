@@ -1,6 +1,7 @@
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsPixmapItem>
+#include <QKeyEvent>
 #include <QPainter>
 
 #include <utility>
@@ -187,4 +188,17 @@ GraphicMap::RectangleDrawingTool::_applySelectionToMap(quint16 mapX,
             );
         }
     }
+}
+
+void GraphicMap::RectangleDrawingTool::onKeyPress(QKeyEvent* event)
+{
+    if(event->key() == Qt::Key_Control)
+    {
+        qDebug() << "Ctrl pressed!";
+    }
+}
+
+void GraphicMap::RectangleDrawingTool::onKeyRelease(QKeyEvent* event)
+{
+    Q_UNUSED(event);
 }

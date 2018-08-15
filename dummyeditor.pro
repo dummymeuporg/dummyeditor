@@ -24,7 +24,9 @@ SOURCES += \
     graphicmap/drawingtool.cpp \
     graphicmap/pendrawingtool.cpp \
     graphicmap/nodrawingtool.cpp \
-    graphicmap/rectangledrawingtool.cpp
+    graphicmap/rectangledrawingtool.cpp \
+    graphicmap/selectiondrawingtool.cpp \
+    graphicmap/selectiondrawingclipboard.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -46,7 +48,9 @@ HEADERS += \
     graphicmap/drawingtool.h \
     graphicmap/pendrawingtool.h \
     graphicmap/nodrawingtool.h \
-    graphicmap/rectangledrawingtool.h
+    graphicmap/rectangledrawingtool.h \
+    graphicmap/selectiondrawingtool.h \
+    graphicmap/selectiondrawingclipboard.h
 
 FORMS += \
     mainwindow.ui \

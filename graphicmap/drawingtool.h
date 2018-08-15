@@ -2,6 +2,7 @@
 
 class QGraphicsSceneMouseEvent;
 class QRect;
+class QKeyEvent;
 
 namespace GraphicMap {
     class MapGraphicsScene;
@@ -16,6 +17,12 @@ namespace GraphicMap {
         virtual void onMouseLeave() = 0;
         virtual void onMouseMove(QGraphicsSceneMouseEvent*) = 0;
         virtual void onMouseRelease(QGraphicsSceneMouseEvent*) = 0;
+        virtual void onKeyPress(QKeyEvent*) = 0;
+        virtual void onKeyRelease(QKeyEvent*) = 0;
+
+        inline const MapGraphicsScene& mapGraphicsScene() const {
+            return m_mapGraphicScene;
+        }
 
     protected:
         MapGraphicsScene& m_mapGraphicScene;

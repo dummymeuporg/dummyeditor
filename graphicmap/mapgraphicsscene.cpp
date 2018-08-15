@@ -16,6 +16,7 @@
 #include "graphicmap/nodrawingtool.h"
 #include "graphicmap/pendrawingtool.h"
 #include "graphicmap/rectangledrawingtool.h"
+#include "graphicmap/selectiondrawingtool.h"
 
 GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
     : QGraphicsScene(parent), m_map(nullptr), m_firstLayer(nullptr),
@@ -164,6 +165,16 @@ QGraphicsSceneMouseEvent* mouseEvent)
     m_drawingTool->onMouseRelease(mouseEvent);
 }
 
+void GraphicMap::MapGraphicsScene::keyPressEvent(QKeyEvent* keyEvent)
+{
+    m_drawingTool->onKeyPress(keyEvent);
+}
+
+void GraphicMap::MapGraphicsScene::keyReleaseEvent(QKeyEvent* keyEvent)
+{
+    m_drawingTool->onKeyRelease(keyEvent);
+}
+
 void GraphicMap::MapGraphicsScene::changeSelection(const QRect& selection)
 {
     m_chipsetSelection = selection;
@@ -209,6 +220,12 @@ void GraphicMap::MapGraphicsScene::setRectangleTool()
     setPaitingTool(new GraphicMap::RectangleDrawingTool(*this));
 }
 
+void GraphicMap::MapGraphicsScene::setSelectionTool()
+{
+    qDebug() << "Selection tool enabled";
+    setPaitingTool(new GraphicMap::SelectionDrawingTool(*this));
+}
+
 bool GraphicMap::MapGraphicsScene::eventFilter(QObject *watched,
                                                QEvent *event)
 {
@@ -221,3 +238,9 @@ bool GraphicMap::MapGraphicsScene::eventFilter(QObject *watched,
     return false;
 }
 
+void GraphicMap::MapGraphicsScene::adjustLayers() const {
+    if (nullptr != m_state)
+    {
+        m_state->adjustLayers();
+    }
+}

@@ -1,6 +1,7 @@
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsPixmapItem>
+#include <QKeyEvent>
 
 #include "dummy/map.h"
 #include "dummy/project.h"
@@ -134,4 +135,17 @@ GraphicMap::PenDrawingTool::_drawCurrentSelection(const QPoint& point) {
 
         m_selectionItem->setPos(x, y);
     }
+}
+
+void GraphicMap::PenDrawingTool::onKeyPress(QKeyEvent* event)
+{
+    if(event->key() == Qt::Key_Control)
+    {
+        qDebug() << "Ctrl pressed!";
+    }
+}
+
+void GraphicMap::PenDrawingTool::onKeyRelease(QKeyEvent* event)
+{
+    Q_UNUSED(event);
 }

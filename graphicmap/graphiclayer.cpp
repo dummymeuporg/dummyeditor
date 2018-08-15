@@ -74,13 +74,27 @@ GraphicMap::GraphicLayer::setTile(quint16 x,
         if (nullptr != m_layerItems[index]) {
             m_mapGraphicsScene.removeItem(m_layerItems[index]);
         }
-        m_layerItems[index] = new
-            QGraphicsPixmapItem(
-                m_chipsetPixmap.copy(QRect(chipsetX, chipsetY, 16, 16)));
-        m_layerItems[index]->setPos(x, y);
-        m_layerItems[index]->setZValue(m_zValue);
-        m_mapGraphicsScene.addItem(m_layerItems[index]);
-        m_layer.setTile(x / 16, y / 16, chipsetX / 16, chipsetY / 16);
+
+        if (chipsetX >= 0 && chipsetY >= 0)
+        {
+            m_layerItems[index] = new
+                QGraphicsPixmapItem(
+                    m_chipsetPixmap.copy(QRect(chipsetX, chipsetY, 16, 16)));
+            m_layerItems[index]->setPos(x, y);
+            m_layerItems[index]->setZValue(m_zValue);
+            m_mapGraphicsScene.addItem(m_layerItems[index]);
+            m_layer.setTile(x / 16, y / 16, chipsetX / 16, chipsetY / 16);
+
+        }
+        else
+        {
+            if (nullptr != m_layerItems[index])
+            {
+                m_mapGraphicsScene.removeItem(m_layerItems[index]);
+                m_layerItems[index] = nullptr;
+                m_layer.setTile(x / 16, y / 16, -1, -1);
+            }
+        }
     }
 
     return *this;

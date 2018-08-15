@@ -2,6 +2,7 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QGraphicsScene>
+#include <QKeyEvent>
 #include <QMessageBox>
 
 #include "dummy/map.h"
@@ -115,6 +116,10 @@ void MainWindow::_initializeScenes()
                      SIGNAL(triggered(bool)),
                      m_mapScene,
                      SLOT(setRectangleTool()));
+    QObject::connect(ui->actionSelection,
+                     SIGNAL(triggered(bool)),
+                     m_mapScene,
+                     SLOT(setSelectionTool()));
 
 }
 
@@ -135,6 +140,10 @@ void MainWindow::_closeCurrentProject()
                         m_mapScene, SLOT(setPenTool()));
     QObject::disconnect(ui->actionPen, SIGNAL(trigerred(bool)),
                         m_mapScene, SLOT(setPenTool()));
+    QObject::disconnect(ui->actionSelection,
+                        SIGNAL(triggered(bool)),
+                        m_mapScene,
+                        SLOT(setSelectionTool()));
 
     delete m_chipsetScene;
     delete m_mapScene;
@@ -250,4 +259,33 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
                                             0,
                                             map->width()*16,
                                             map->height()*16));
+}
+
+void MainWindow::onCancel()
+{
+    qDebug() << "Cancel.";
+}
+
+void MainWindow::onCut()
+{
+    qDebug() << "Cut.";
+    QKeyEvent* keyEvent = new QKeyEvent(QEvent::KeyPress, Qt::Key_X,
+                                        Qt::ControlModifier);
+    QCoreApplication::postEvent(m_mapScene, keyEvent);
+}
+
+void MainWindow::onCopy()
+{
+    qDebug() << "Copy.";
+    QKeyEvent* keyEvent = new QKeyEvent(QEvent::KeyPress, Qt::Key_C,
+                                        Qt::ControlModifier);
+    QCoreApplication::postEvent(m_mapScene, keyEvent);
+}
+
+void MainWindow::onPaste()
+{
+    qDebug() << "Paste.";
+    QKeyEvent* keyEvent = new QKeyEvent(QEvent::KeyPress, Qt::Key_V,
+                                        Qt::ControlModifier);
+    QCoreApplication::postEvent(m_mapScene, keyEvent);
 }

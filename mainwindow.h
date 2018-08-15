@@ -42,6 +42,10 @@ private slots:
     void openProject();
     void saveProject();
     void selectCurrentMap(QModelIndex);
+    void onCancel();
+    void onCut();
+    void onCopy();
+    void onPaste();
 };
 
 #endif // MAINWINDOW_H
