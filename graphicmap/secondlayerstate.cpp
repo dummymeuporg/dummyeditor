@@ -10,7 +10,7 @@
 
 GraphicMap::SecondLayerState::SecondLayerState(
         GraphicMap::MapGraphicsScene& mapGraphicsScene)
-    : GraphicMap::PaintingLayerState(mapGraphicsScene)
+    : GraphicMap::PaintingGraphicLayerState(mapGraphicsScene)
 {
     qDebug() << "Second layer state.";
 

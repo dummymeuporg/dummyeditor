@@ -11,7 +11,7 @@
 
 GraphicMap::ThirdLayerState::ThirdLayerState(
         GraphicMap::MapGraphicsScene& mapGraphicsScene)
-    : GraphicMap::PaintingLayerState(mapGraphicsScene)
+    : GraphicMap::PaintingGraphicLayerState(mapGraphicsScene)
 {
 
     sceneCleared();

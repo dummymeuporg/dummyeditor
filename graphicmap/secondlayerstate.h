@@ -2,11 +2,11 @@
 
 #include <QGraphicsRectItem>
 
-#include "graphicmap/paintinglayerstate.h"
+#include "graphicmap/paintinggraphiclayerstate.h"
 
 namespace GraphicMap {
     class MapGraphicsScene;
-    class SecondLayerState : public PaintingLayerState
+    class SecondLayerState : public PaintingGraphicLayerState
     {
     public:
         SecondLayerState(MapGraphicsScene&);

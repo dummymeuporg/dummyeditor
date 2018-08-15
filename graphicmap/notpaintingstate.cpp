@@ -6,7 +6,7 @@
 
 GraphicMap::NotPaintingState::NotPaintingState(
     GraphicMap::MapGraphicsScene& mapGraphicsScene)
-    : PaintingLayerState(mapGraphicsScene)
+    : GraphicMap::PaintingLayerState(mapGraphicsScene)
 {
     qDebug() << "Not painting.";
 }
@@ -23,4 +23,22 @@ void GraphicMap::NotPaintingState::onNewMap() {
 
 void GraphicMap::NotPaintingState::sceneCleared() {
     // Do nothing.
+}
+
+void GraphicMap::NotPaintingState::drawWithPen(const QPoint& point)
+{
+    // Do nothing.
+    Q_UNUSED(point);
+}
+
+void GraphicMap::NotPaintingState::drawWithRectangle(const QPoint& point)
+{
+    // Do nothing.
+    Q_UNUSED(point);
+}
+
+void GraphicMap::NotPaintingState::drawWithSelection(const QPoint& point)
+{
+    // Do nothing.
+    Q_UNUSED(point);
 }
