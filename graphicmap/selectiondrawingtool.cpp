@@ -28,7 +28,12 @@ GraphicMap::SelectionDrawingTool::SelectionDrawingTool(
 
 GraphicMap::SelectionDrawingTool::~SelectionDrawingTool()
 {
+    if (nullptr != m_selectionItem)
+    {
+        m_mapGraphicScene.removeItem(m_selectionItem);
+        m_selectionItem = nullptr;
 
+    }
 }
 
 void
