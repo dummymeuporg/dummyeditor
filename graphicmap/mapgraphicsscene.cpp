@@ -21,17 +21,20 @@
 GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
     : QGraphicsScene(parent), m_map(nullptr), m_firstLayer(nullptr),
       m_secondLayer(nullptr), m_thirdLayer(nullptr),
-      m_activeLayer(nullptr)
+      m_activeLayer(nullptr),
+      m_paintingLayerState(new GraphicMap::NotPaintingState(*this)),
+      m_drawingTool(new NoDrawingTool(*this))
+
 {
-    m_state = new GraphicMap::NotPaintingState(*this);
-    m_drawingTool = new NoDrawingTool(*this);
+    //m_paintingLayerState = new GraphicMap::NotPaintingState(*this);
+    //m_drawingTool = new NoDrawingTool(*this);
     installEventFilter(this);
 }
 
 GraphicMap::MapGraphicsScene::~MapGraphicsScene()
 {
     delete m_drawingTool;
-    delete m_state;
+    //delete m_paintingLayerState;
 }
 
 void GraphicMap::MapGraphicsScene::_drawGrid()
@@ -75,7 +78,7 @@ GraphicMap::MapGraphicsScene::setMapDocument
     m_mapDocument = mapDocument;
     m_map = m_mapDocument->map();
 
-    m_state->sceneCleared();
+    m_paintingLayerState->sceneCleared();
 
     const Dummy::Project& project = m_map->project();
     m_mapChipset = QPixmap(project.fullpath() + "/chipsets/"
@@ -100,8 +103,8 @@ GraphicMap::MapGraphicsScene::setMapDocument
                                  5);
 
     _drawGrid();
-    m_state->onNewMap();
-    m_state->adjustLayers();
+    m_paintingLayerState->onNewMap();
+    m_paintingLayerState->adjustLayers();
 
     changeSelection(QRect(0,0,0,0));
 
@@ -134,10 +137,10 @@ GraphicMap::MapGraphicsScene::setPaitingLayerState(
     GraphicMap::PaintingLayerState* state
 )
 {
-    delete m_state;
-    m_state = state;
-    state->onNewMap();
-    state->adjustLayers();
+    delete m_paintingLayerState;
+    m_paintingLayerState = state;
+    m_paintingLayerState->onNewMap();
+    m_paintingLayerState->adjustLayers();
     return *this;
 }
 
@@ -239,8 +242,8 @@ bool GraphicMap::MapGraphicsScene::eventFilter(QObject *watched,
 }
 
 void GraphicMap::MapGraphicsScene::adjustLayers() const {
-    if (nullptr != m_state)
+    if (nullptr != m_paintingLayerState)
     {
-        m_state->adjustLayers();
+        m_paintingLayerState->adjustLayers();
     }
 }

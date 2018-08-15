@@ -2,15 +2,15 @@
 
 #include <QGraphicsRectItem>
 
-#include "graphicmap/paintinglayerstate.h"
+#include "graphicmap/paintinggraphiclayerstate.h"
 
 namespace GraphicMap {
     class MapGraphicsScene;
-    class SecondLayerState : public PaintingLayerState
+    class SecondLayerState : public PaintingGraphicLayerState
     {
     public:
         SecondLayerState(MapGraphicsScene&);
-        virtual ~SecondLayerState();
+        virtual ~SecondLayerState() override;
         virtual void adjustLayers() override;
         virtual void onNewMap() override;
         virtual void sceneCleared() override;

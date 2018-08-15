@@ -23,6 +23,10 @@ namespace GraphicMap {
         virtual void onKeyPress(QKeyEvent*) override;
         virtual void onKeyRelease(QKeyEvent*) override;
 
+        const QRect& rectChipsetSelection() const {
+            return m_rectChipsetSelection;
+        }
+
     private:
 
         void _drawChipsetSelectionInRectangle();

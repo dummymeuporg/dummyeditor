@@ -1,16 +1,16 @@
 #pragma once
 
-#include "graphicmap/paintinglayerstate.h"
+#include "graphicmap/paintinggraphiclayerstate.h"
 
 class QGraphicsRectItem;
 
 namespace GraphicMap {
     class MapGraphicsScene;
-    class ThirdLayerState : public PaintingLayerState
+    class ThirdLayerState : public PaintingGraphicLayerState
     {
     public:
         ThirdLayerState(MapGraphicsScene&);
-        virtual ~ThirdLayerState();
+        virtual ~ThirdLayerState() override;
         virtual void adjustLayers() override;
         virtual void onNewMap() override;
         virtual void sceneCleared() override;

@@ -1,14 +1,14 @@
 #pragma once
 
-#include "graphicmap/paintinglayerstate.h"
+#include "graphicmap/paintinggraphiclayerstate.h"
 
 namespace GraphicMap {
     class MapGraphicsScene;
-    class FirstLayerState : public PaintingLayerState
+    class FirstLayerState : public PaintingGraphicLayerState
     {
     public:
         FirstLayerState(MapGraphicsScene&);
-        virtual ~FirstLayerState();
+        virtual ~FirstLayerState() override;
         virtual void adjustLayers() override;
         virtual void onNewMap() override;
         virtual void sceneCleared() override;

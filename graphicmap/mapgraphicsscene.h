@@ -25,7 +25,7 @@ namespace GraphicMap {
         Q_OBJECT
     public:
         MapGraphicsScene(QObject* parent = nullptr);
-        virtual ~MapGraphicsScene();
+        virtual ~MapGraphicsScene() override;
 
         inline const std::shared_ptr<Dummy::Map>& map() const {
             return m_map;
@@ -66,11 +66,14 @@ namespace GraphicMap {
             return *this;
         }
 
-        virtual void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent);
-        virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
-        virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent);
-        virtual void keyPressEvent(QKeyEvent*);
-        virtual void keyReleaseEvent(QKeyEvent*);
+        virtual void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
+            override;
+        virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
+            override;
+        virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
+            override;
+        virtual void keyPressEvent(QKeyEvent*) override;
+        virtual void keyReleaseEvent(QKeyEvent*) override;
 
         virtual bool eventFilter(QObject*, QEvent*) override;
     public slots:
@@ -86,6 +89,10 @@ namespace GraphicMap {
         void setSelectionTool();
 
         void adjustLayers() const;
+
+        const PaintingLayerState& paintingLayerState() const {
+            return *m_paintingLayerState;
+        }
 
     private:
         void _cleanLayer(QVector<QGraphicsPixmapItem*>& layer);
@@ -112,7 +119,7 @@ namespace GraphicMap {
         GraphicLayer* m_thirdLayer;
         GraphicLayer* m_activeLayer; // Either 1st, 2nd or 3rd layer.
 
-        PaintingLayerState* m_state;
+        PaintingLayerState* m_paintingLayerState;
         DrawingTool* m_drawingTool;
 
 

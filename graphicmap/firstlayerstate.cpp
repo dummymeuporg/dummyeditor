@@ -6,7 +6,7 @@
 
 GraphicMap::FirstLayerState::FirstLayerState(
         GraphicMap::MapGraphicsScene& mapGraphicsScene)
-    : GraphicMap::PaintingLayerState(mapGraphicsScene)
+    : GraphicMap::PaintingGraphicLayerState(mapGraphicsScene)
 {
     qDebug() << "First layer state.";
 
