@@ -137,7 +137,7 @@ GraphicMap::MapGraphicsScene::setPaitingLayerState(
     GraphicMap::PaintingLayerState* state
 )
 {
-    //delete m_paintingLayerState;
+    delete m_paintingLayerState;
     m_paintingLayerState = state;
     m_paintingLayerState->onNewMap();
     m_paintingLayerState->adjustLayers();
