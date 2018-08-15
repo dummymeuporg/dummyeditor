@@ -4,6 +4,7 @@
 
 namespace GraphicMap {
     class MapGraphicsScene;
+    class SelectionDrawingClipboard;
     class NotPaintingState : public PaintingLayerState
     {
     public:
@@ -12,8 +13,11 @@ namespace GraphicMap {
         virtual void onNewMap() override;
         virtual void sceneCleared() override;
 
-        virtual void drawWithPen(const QPoint&) override;
-        virtual void drawWithRectangle(const QPoint&) override;
-        virtual void drawWithSelection(const QPoint&) override;
+        virtual void drawWithPen(const QPoint&) const override;
+        virtual void drawWithRectangle(const QPoint&, const QRect&)
+            const override;
+        virtual void drawWithSelection(const QPoint&,
+                                       const SelectionDrawingClipboard&)
+            const override;
     };
 }

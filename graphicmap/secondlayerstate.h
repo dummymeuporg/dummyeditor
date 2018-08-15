@@ -10,7 +10,7 @@ namespace GraphicMap {
     {
     public:
         SecondLayerState(MapGraphicsScene&);
-        virtual ~SecondLayerState();
+        virtual ~SecondLayerState() override;
         virtual void adjustLayers() override;
         virtual void onNewMap() override;
         virtual void sceneCleared() override;
