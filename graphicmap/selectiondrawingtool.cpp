@@ -118,6 +118,10 @@ void GraphicMap::SelectionDrawingTool::onKeyPress(QKeyEvent* event)
         {
         case Qt::Key_X:
             qDebug() << "Cut in selection tool.";
+            m_clipboard = std::make_unique<SelectionDrawingClipboard>(*this);
+            _deleteSelection(m_mapGraphicScene.firstLayer());
+            _deleteSelection(m_mapGraphicScene.secondLayer());
+            _deleteSelection(m_mapGraphicScene.thirdLayer());
             break;
         case Qt::Key_C:
             qDebug() << "Copy in selection tool.";
@@ -135,7 +139,7 @@ void GraphicMap::SelectionDrawingTool::onKeyPress(QKeyEvent* event)
     else if (event->key() == Qt::Key_Delete)
     {
         qDebug() << "Delete.";
-        _deleteSelection();
+        _deleteSelection(m_mapGraphicScene.activeLayer());
     }
 }
 
@@ -144,7 +148,8 @@ void GraphicMap::SelectionDrawingTool::onKeyRelease(QKeyEvent* event)
     Q_UNUSED(event);
 }
 
-void GraphicMap::SelectionDrawingTool::_deleteSelection()
+void GraphicMap::SelectionDrawingTool::_deleteSelection(
+    GraphicMap::GraphicLayer* layer)
 {
     const QPoint& topLeft(m_activeSelection.topLeft());
     const QPoint& bottomRight(m_activeSelection.bottomRight());
@@ -152,10 +157,7 @@ void GraphicMap::SelectionDrawingTool::_deleteSelection()
     {
         for (int i = topLeft.x(); i < bottomRight.x(); i += 16)
         {
-            m_mapGraphicScene.activeLayer()->setTile(quint16(i),
-                                                     quint16(j),
-                                                     -1,
-                                                     -1);
+            layer->setTile(quint16(i), quint16(j), -1, -1);
         }
     }
 }

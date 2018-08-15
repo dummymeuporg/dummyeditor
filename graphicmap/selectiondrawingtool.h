@@ -9,6 +9,7 @@
 class QGraphicsRectItem;
 
 namespace GraphicMap {
+    class GraphicLayer;
     class MapGraphicsScene;
     class SelectionDrawingClipboard;
 
@@ -35,7 +36,7 @@ namespace GraphicMap {
 
     private:
 
-        void _deleteSelection();
+        void _deleteSelection(GraphicLayer*);
         void _applyClipboard();
 
         QRect m_activeSelection;
