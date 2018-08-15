@@ -238,3 +238,9 @@ bool GraphicMap::MapGraphicsScene::eventFilter(QObject *watched,
     return false;
 }
 
+void GraphicMap::MapGraphicsScene::adjustLayers() const {
+    if (nullptr != m_state)
+    {
+        m_state->adjustLayers();
+    }
+}

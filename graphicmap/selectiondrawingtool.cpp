@@ -15,6 +15,7 @@
 #include "graphicmap/graphiclayer.h"
 #include "graphicmap/mapgraphicsscene.h"
 #include "graphicmap/selectiondrawingtool.h"
+#include "graphicmap/selectiondrawingclipboard.h"
 
 
 GraphicMap::SelectionDrawingTool::SelectionDrawingTool(
@@ -120,9 +121,14 @@ void GraphicMap::SelectionDrawingTool::onKeyPress(QKeyEvent* event)
             break;
         case Qt::Key_C:
             qDebug() << "Copy in selection tool.";
+            m_clipboard = std::make_unique<SelectionDrawingClipboard>(*this);
             break;
         case Qt::Key_V:
             qDebug() << "Paste in selection tool.";
+            if (nullptr != m_clipboard)
+            {
+                _applyClipboard();
+            }
             break;
         }
     }
@@ -152,4 +158,54 @@ void GraphicMap::SelectionDrawingTool::_deleteSelection()
                                                      -1);
         }
     }
+}
+
+void GraphicMap::SelectionDrawingTool::_applyClipboard()
+{
+    const QPoint& topLeft(m_activeSelection.topLeft());
+    quint16 tileX(topLeft.x());
+    quint16 tileY(topLeft.y());
+
+    int clipboardIndex = 0;
+    for(int j = 0;
+        j < m_clipboard->selectionClipboard().height();
+        j += 16)
+    {
+        for (int i = 0;
+             i < m_clipboard->selectionClipboard().width();
+             i += 16)
+        {
+            const std::tuple<qint16, qint16>& firstLayerTile(
+                m_clipboard->firstLayerClipboard()[clipboardIndex]);
+            const std::tuple<qint16, qint16>& secondLayerTile(
+                m_clipboard->secondLayerClipboard()[clipboardIndex]);
+            const std::tuple<qint16, qint16>& thirdLayerTile(
+                m_clipboard->thirdLayerClipboard()[clipboardIndex]);
+
+            qDebug() << std::get<0>(firstLayerTile) <<
+                        std::get<1>(firstLayerTile);
+            m_mapGraphicScene.firstLayer()->setTile(
+                quint16(tileX + i),
+                quint16(tileY + j),
+                std::get<0>(firstLayerTile) * 16,
+                std::get<1>(firstLayerTile) * 16);
+
+            m_mapGraphicScene.secondLayer()->setTile(
+                quint16(tileX + i),
+                quint16(tileY + j),
+                std::get<0>(secondLayerTile) * 16,
+                std::get<1>(secondLayerTile) * 16);
+
+            m_mapGraphicScene.thirdLayer()->setTile(
+                quint16(tileX + i),
+                quint16(tileY + j),
+                std::get<0>(thirdLayerTile) * 16,
+                std::get<1>(thirdLayerTile) * 16);
+
+            ++clipboardIndex;
+
+        }
+    }
+
+    m_mapGraphicScene.adjustLayers();
 }

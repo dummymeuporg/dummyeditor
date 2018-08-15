@@ -85,6 +85,8 @@ namespace GraphicMap {
         void setRectangleTool();
         void setSelectionTool();
 
+        void adjustLayers() const;
+
     private:
         void _cleanLayer(QVector<QGraphicsPixmapItem*>& layer);
         void _drawMap();

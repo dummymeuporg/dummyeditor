@@ -20,6 +20,10 @@ namespace GraphicMap {
         virtual void onKeyPress(QKeyEvent*) = 0;
         virtual void onKeyRelease(QKeyEvent*) = 0;
 
+        inline const MapGraphicsScene& mapGraphicsScene() const {
+            return m_mapGraphicScene;
+        }
+
     protected:
         MapGraphicsScene& m_mapGraphicScene;
         bool m_isDrawing;
