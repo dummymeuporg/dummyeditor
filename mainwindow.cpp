@@ -77,13 +77,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
                      m_mapScene, SLOT(changeSelection(QRect)));
 
-    QObject::connect(ui->actionLow_layer_1, SIGNAL(triggered(bool)),
-                     m_mapScene, SLOT(showFirstLayer()));
-    QObject::connect(ui->actionLow_layer_2, SIGNAL(triggered(bool)),
-                     m_mapScene, SLOT(showSecondLayer()));
-    QObject::connect(ui->actionHigh_layer, SIGNAL(triggered(bool)),
-                     m_mapScene, SLOT(showThirdLayer()));
-
     ui->graphicsViewChipset->scale(2.0, 2.0);
     ui->graphicsViewMap->scale(2.0, 2.0);
 
@@ -98,7 +91,10 @@ void MainWindow::_initializeScenes()
     m_mapScene = new GraphicMap::MapGraphicsScene();
 
     ui->graphicsViewMap->setScene(m_mapScene);
+}
 
+void MainWindow::_connectScenes()
+{
     QObject::connect(ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
                      m_chipsetScene, SLOT(changeChipset(QString)));
     QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
@@ -110,6 +106,8 @@ void MainWindow::_initializeScenes()
                      m_mapScene, SLOT(showSecondLayer()));
     QObject::connect(ui->actionHigh_layer, SIGNAL(triggered(bool)),
                      m_mapScene, SLOT(showThirdLayer()));
+    QObject::connect(ui->actionBlocking_layer, SIGNAL(triggered(bool)),
+                     m_mapScene, SLOT(showBlockingLayer()));
     QObject::connect(ui->actionPen, SIGNAL(triggered(bool)),
                      m_mapScene, SLOT(setPenTool()));
     QObject::connect(ui->actionRectangle,
@@ -136,7 +134,9 @@ void MainWindow::_closeCurrentProject()
                         m_mapScene, SLOT(showSecondLayer()));
     QObject::disconnect(ui->actionHigh_layer, SIGNAL(triggered(bool)),
                         m_mapScene, SLOT(showThirdLayer()));
-    QObject::disconnect(ui->actionPen, SIGNAL(trigerred(bool)),
+    QObject::disconnect(ui->actionBlocking_layer, SIGNAL(triggered(bool)),
+                        m_mapScene, SLOT(showBlockingLayer()));
+    QObject::disconnect(ui->actionPen, SIGNAL(triggered(bool)),
                         m_mapScene, SLOT(setPenTool()));
     QObject::disconnect(ui->actionPen, SIGNAL(trigerred(bool)),
                         m_mapScene, SLOT(setPenTool()));
@@ -199,7 +199,7 @@ void MainWindow::openProject() {
 
 void MainWindow::_loadProject(const QString& projectDirectory) {
 
-    _initializeScenes();
+    _connectScenes();
 
     m_currentProject = std::shared_ptr<Dummy::Project>(
         new Dummy::Project(projectDirectory)
