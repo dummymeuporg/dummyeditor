@@ -31,7 +31,8 @@ SOURCES += \
     graphicmap/blockinggraphiclayer.cpp \
     graphicmap/visiblegraphiclayer.cpp \
     graphicmap/graphiclayer.cpp \
-    graphicmap/paintingblockinglayerstate.cpp
+    graphicmap/paintingblockinglayerstate.cpp \
+    graphicmap/blockinglayerstate.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -60,7 +61,8 @@ HEADERS += \
     graphicmap/blockinggraphiclayer.h \
     graphicmap/visiblegraphiclayer.h \
     graphicmap/graphiclayer.h \
-    graphicmap/paintingblockinglayerstate.h
+    graphicmap/paintingblockinglayerstate.h \
+    graphicmap/blockinglayerstate.h
 
 FORMS += \
     mainwindow.ui \
