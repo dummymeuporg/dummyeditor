@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "dummy/layer.h"
+#include "dummy/blockinglayer.h"
 
 class QDataStream;
 class QFile;
@@ -16,6 +17,7 @@ namespace Dummy {
 
     class Map
     {
+        const quint32 MAGIC_WORD = 0xF000BABA;
     public:
         Map(const Project& project, quint16 width = 1, quint16 height = 1);
         virtual ~Map();
@@ -131,5 +133,6 @@ namespace Dummy {
         QString m_music;
         QString m_backgroundPicture;
         Layer m_firstLayer, m_secondLayer, m_thirdLayer;
+        BlockingLayer m_blockingLayer;
     };
 }

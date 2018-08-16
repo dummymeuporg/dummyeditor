@@ -5,7 +5,7 @@
 #include "misc/mapdocument.h"
 
 
-#include "graphicmap/graphiclayer.h"
+#include "graphicmap/visiblegraphiclayer.h"
 #include "graphicmap/thirdlayerstate.h"
 #include "graphicmap/mapgraphicsscene.h"
 

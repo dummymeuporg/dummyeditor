@@ -3,7 +3,7 @@
 
 #include "dummy/map.h"
 #include "misc/mapdocument.h"
-#include "graphicmap/graphiclayer.h"
+#include "graphicmap/visiblegraphiclayer.h"
 #include "graphicmap/mapgraphicsscene.h"
 #include "graphicmap/paintinggraphiclayerstate.h"
 #include "graphicmap/selectiondrawingclipboard.h"
@@ -23,6 +23,8 @@ GraphicMap::PaintingGraphicLayerState::~PaintingGraphicLayerState()
 void
 GraphicMap::PaintingGraphicLayerState::drawWithPen(const QPoint& point) const
 {
+    GraphicMap::VisibleGraphicLayer* layer =
+        static_cast<VisibleGraphicLayer*>(m_mapGraphicsScene.activeLayer());
     std::shared_ptr<Dummy::Map> map(
         m_mapGraphicsScene.mapDocument()->map());
 
@@ -35,7 +37,7 @@ GraphicMap::PaintingGraphicLayerState::drawWithPen(const QPoint& point) const
     {
         for (int j = 0; j < height; ++j) {
             for(int i = 0; i < width; ++i) {
-                m_mapGraphicsScene.activeLayer()->setTile(
+                layer->setTile(
                      quint16(point.x()
                              - (point.x() % 16)
                              + (i * 16)),
@@ -54,7 +56,8 @@ void
 GraphicMap::PaintingGraphicLayerState::drawWithRectangle(
     const QPoint& point, const QRect& rectChipsetSelection) const
 {
-    Q_UNUSED(point);
+    GraphicMap::VisibleGraphicLayer* layer =
+        static_cast<VisibleGraphicLayer*>(m_mapGraphicsScene.activeLayer());
     qint16 chipsetX = qint16(rectChipsetSelection.x()/16);
     qint16 chipsetY = qint16(rectChipsetSelection.y()/16);
 
@@ -64,7 +67,7 @@ GraphicMap::PaintingGraphicLayerState::drawWithRectangle(
         {
             qDebug() << "CHIPSET: " << chipsetX + i << chipsetY + j;
             qDebug() << "TARGET: " << point.x() + i << point.y() + j;
-            m_mapGraphicsScene.activeLayer()->setTile(
+            layer->setTile(
                 point.x() + i * 16, point.y() + j * 16,
                 (chipsetX + i) * 16, (chipsetY + j) * 16
             );

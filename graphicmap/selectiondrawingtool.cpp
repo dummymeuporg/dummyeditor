@@ -12,7 +12,7 @@
 #include "dummy/project.h"
 #include "misc/mapdocument.h"
 
-#include "graphicmap/graphiclayer.h"
+#include "graphicmap/visiblegraphiclayer.h"
 #include "graphicmap/mapgraphicsscene.h"
 #include "graphicmap/paintinglayerstate.h"
 #include "graphicmap/selectiondrawingtool.h"
@@ -163,7 +163,8 @@ void GraphicMap::SelectionDrawingTool::_deleteSelection(
     {
         for (int i = topLeft.x(); i < bottomRight.x(); i += 16)
         {
-            layer->setTile(quint16(i), quint16(j), -1, -1);
+            //layer->setTile(quint16(i), quint16(j), -1, -1);
+            layer->removeTile(quint16(i), quint16(j));
         }
     }
 }

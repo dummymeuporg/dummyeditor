@@ -18,7 +18,11 @@ namespace Misc {
 namespace GraphicMap {
 
     class DrawingTool;
+
     class GraphicLayer;
+    class BlockingGraphicLayer;
+    class VisibleGraphicLayer;
+
     class PaintingLayerState;
     class MapGraphicsScene : public QGraphicsScene
     {
@@ -35,15 +39,15 @@ namespace GraphicMap {
             return m_mapDocument;
         }
 
-        inline GraphicLayer* firstLayer() const {
+        inline VisibleGraphicLayer* firstLayer() const {
             return m_firstLayer;
         }
 
-        inline GraphicLayer* secondLayer() const {
+        inline VisibleGraphicLayer* secondLayer() const {
             return m_secondLayer;
         }
 
-        inline GraphicLayer* thirdLayer() const {
+        inline VisibleGraphicLayer* thirdLayer() const {
             return m_thirdLayer;
         }
 
@@ -83,6 +87,7 @@ namespace GraphicMap {
         void showFirstLayer();
         void showSecondLayer();
         void showThirdLayer();
+        void showBlockingLayer();
 
         void setPenTool();
         void setRectangleTool();
@@ -114,9 +119,10 @@ namespace GraphicMap {
 
         bool m_isDrawing;
 
-        GraphicLayer* m_firstLayer;
-        GraphicLayer* m_secondLayer;
-        GraphicLayer* m_thirdLayer;
+        VisibleGraphicLayer* m_firstLayer;
+        VisibleGraphicLayer* m_secondLayer;
+        VisibleGraphicLayer* m_thirdLayer;
+        BlockingGraphicLayer* m_blockingLayer;
         GraphicLayer* m_activeLayer; // Either 1st, 2nd or 3rd layer.
 
         PaintingLayerState* m_paintingLayerState;

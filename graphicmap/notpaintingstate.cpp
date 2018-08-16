@@ -3,7 +3,7 @@
 #include "graphicmap/mapgraphicsscene.h"
 #include "graphicmap/notpaintingstate.h"
 #include "graphicmap/firstlayerstate.h"
-#include "graphicmap/graphiclayer.h"
+#include "graphicmap/visiblegraphiclayer.h"
 #include "graphicmap/selectiondrawingtool.h"
 #include "graphicmap/selectiondrawingclipboard.h"
 

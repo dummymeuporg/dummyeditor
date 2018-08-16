@@ -5,7 +5,8 @@
 #include "dummy/layer.h"
 #include "dummy/project.h"
 
-#include "graphicmap/graphiclayer.h"
+#include "graphicmap/visiblegraphiclayer.h"
+#include "graphicmap/blockinggraphiclayer.h"
 #include "graphicmap/mapgraphicsscene.h"
 
 #include "graphicmap/notpaintingstate.h"
@@ -21,6 +22,7 @@
 GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
     : QGraphicsScene(parent), m_map(nullptr), m_firstLayer(nullptr),
       m_secondLayer(nullptr), m_thirdLayer(nullptr),
+      m_blockingLayer(nullptr),
       m_activeLayer(nullptr),
       m_paintingLayerState(new GraphicMap::NotPaintingState(*this)),
       m_drawingTool(new NoDrawingTool(*this))
@@ -85,19 +87,19 @@ GraphicMap::MapGraphicsScene::setMapDocument
                            + m_map->chipset());
 
     m_firstLayer = new
-        GraphicMap::GraphicLayer(*this,
+        GraphicMap::VisibleGraphicLayer(*this,
                                  m_map->firstLayer(),
                                  m_mapChipset,
                                  1);
 
     m_secondLayer = new
-        GraphicMap::GraphicLayer(*this,
+        GraphicMap::VisibleGraphicLayer(*this,
                                  m_map->secondLayer(),
                                  m_mapChipset,
                                  3);
 
     m_thirdLayer = new
-        GraphicMap::GraphicLayer(*this,
+        GraphicMap::VisibleGraphicLayer(*this,
                                  m_map->thirdLayer(),
                                  m_mapChipset,
                                  5);
@@ -209,6 +211,16 @@ void GraphicMap::MapGraphicsScene::showThirdLayer() {
         return;
     }
     setPaitingLayerState(new ThirdLayerState(*this));
+}
+
+void GraphicMap::MapGraphicsScene::showBlockingLayer()
+{
+    qDebug() << "Blocking active layer";
+    if (nullptr == m_mapDocument)
+    {
+        return;
+    }
+    //setPaitingLayerState(new BlockingLayerState(*this));
 }
 
 void GraphicMap::MapGraphicsScene::setPenTool()

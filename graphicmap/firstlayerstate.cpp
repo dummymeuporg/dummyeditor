@@ -1,6 +1,6 @@
 #include <QDebug>
 
-#include "graphicmap/graphiclayer.h"
+#include "graphicmap/visiblegraphiclayer.h"
 #include "graphicmap/firstlayerstate.h"
 #include "graphicmap/mapgraphicsscene.h"
 

@@ -2,13 +2,12 @@
 
 #include "graphicmap/paintinglayerstate.h"
 
-namespace GraphicMap
-{
-    class PaintingGraphicLayerState : public PaintingLayerState
+namespace GraphicMap {
+    class PaintingBlockingLayerState : public PaintingLayerState
     {
     public:
-        PaintingGraphicLayerState(MapGraphicsScene&);
-        virtual ~PaintingGraphicLayerState() override;
+        PaintingBlockingLayerState(MapGraphicsScene&);
+        virtual ~PaintingBlockingLayerState() override;
 
         virtual void drawWithPen(const QPoint& point) const override;
         virtual void drawWithRectangle(const QPoint&,

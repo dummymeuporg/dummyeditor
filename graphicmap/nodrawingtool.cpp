@@ -6,7 +6,7 @@
 #include "dummy/project.h"
 #include "misc/mapdocument.h"
 
-#include "graphicmap/graphiclayer.h"
+#include "graphicmap/visiblegraphiclayer.h"
 #include "graphicmap/mapgraphicsscene.h"
 #include "graphicmap/nodrawingtool.h"
 
