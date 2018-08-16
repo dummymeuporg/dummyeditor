@@ -1,6 +1,10 @@
+#include <QDebug>
 #include <QtGlobal>
 
+#include "misc/mapdocument.h"
+#include "graphicmap/blockinggraphiclayer.h"
 #include "graphicmap/blockinglayerstate.h"
+#include "graphicmap/mapgraphicsscene.h"
 
 GraphicMap::BlockingLayerState::BlockingLayerState(
     GraphicMap::MapGraphicsScene& mapGraphicsScene) :
@@ -18,7 +22,18 @@ void
 GraphicMap::BlockingLayerState::drawWithPen(const QPoint& point)
 const
 {
-    Q_UNUSED(point);
+    GraphicMap::BlockingGraphicLayer* layer =
+        static_cast<GraphicMap::BlockingGraphicLayer*>(
+                m_mapGraphicsScene.activeLayer());
+    std::shared_ptr<Dummy::Map> map(
+        m_mapGraphicsScene.mapDocument()->map());
+
+    if (map != nullptr)
+    {
+        QPoint originPoint(point.x() - (point.x() % 16),
+                           point.y() - (point.y() % 16));
+        qDebug() << originPoint;
+    }
 }
 
 void
@@ -36,4 +51,20 @@ GraphicMap::BlockingLayerState::drawWithSelection(
 {
     Q_UNUSED(point);
     Q_UNUSED(clipboard);
+}
+
+void GraphicMap::BlockingLayerState::adjustLayers()
+{
+
+}
+
+
+void GraphicMap::BlockingLayerState::onNewMap()
+{
+
+}
+
+void GraphicMap::BlockingLayerState::sceneCleared()
+{
+
 }

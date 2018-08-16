@@ -10,6 +10,7 @@
 #include "graphicmap/mapgraphicsscene.h"
 
 #include "graphicmap/notpaintingstate.h"
+#include "graphicmap/blockinglayerstate.h"
 #include "graphicmap/firstlayerstate.h"
 #include "graphicmap/secondlayerstate.h"
 #include "graphicmap/thirdlayerstate.h"
@@ -220,7 +221,7 @@ void GraphicMap::MapGraphicsScene::showBlockingLayer()
     {
         return;
     }
-    //setPaitingLayerState(new BlockingLayerState(*this));
+    setPaitingLayerState(new BlockingLayerState(*this));
 }
 
 void GraphicMap::MapGraphicsScene::setPenTool()
