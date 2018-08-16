@@ -25,6 +25,7 @@ const
     GraphicMap::BlockingGraphicLayer* layer =
         static_cast<GraphicMap::BlockingGraphicLayer*>(
                 m_mapGraphicsScene.activeLayer());
+    Q_UNUSED(layer);
     std::shared_ptr<Dummy::Map> map(
         m_mapGraphicsScene.mapDocument()->map());
 
