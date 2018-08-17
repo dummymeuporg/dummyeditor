@@ -70,6 +70,35 @@ void GraphicMap::BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
 
 }
 
+void GraphicMap::BlockingGraphicLayer::setTile(quint16 x,
+                                               quint16 y,
+                                               bool isBlocking)
+{
+    qDebug() << "Set blocking tile." << x << y;
+    if (x < m_mapGraphicsScene.map()->width() * 16
+        && y < m_mapGraphicsScene.map()->height() * 16)
+    {
+        const std::shared_ptr<Dummy::Map> map(m_mapGraphicsScene.map());
+        int index((y/16) * map->width() + (x/16));
+
+        if (nullptr != m_layerItems[index])
+        {
+            m_mapGraphicsScene.removeItem(m_layerItems[index]);
+            m_layerItems[index] = nullptr;
+        }
+
+        if (isBlocking)
+        {
+            _drawCross(index, x, y);
+            m_blockingLayer[index] = true;
+        }
+        else
+        {
+            m_blockingLayer[index] = false;
+        }
+    }
+}
+
 void GraphicMap::BlockingGraphicLayer::_drawCross(int index,
                                                   quint16 x,
                                                   quint16 y)

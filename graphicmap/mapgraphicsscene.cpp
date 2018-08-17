@@ -37,7 +37,7 @@ GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
 GraphicMap::MapGraphicsScene::~MapGraphicsScene()
 {
     delete m_drawingTool;
-    //delete m_paintingLayerState;
+    delete m_paintingLayerState;
 }
 
 void GraphicMap::MapGraphicsScene::_drawGrid()

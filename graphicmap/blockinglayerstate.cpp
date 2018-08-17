@@ -1,10 +1,12 @@
 #include <QDebug>
 #include <QtGlobal>
+#include <QPoint>
 
 #include "misc/mapdocument.h"
 #include "graphicmap/blockinggraphiclayer.h"
 #include "graphicmap/blockinglayerstate.h"
 #include "graphicmap/mapgraphicsscene.h"
+#include "graphicmap/selectiondrawingclipboard.h"
 #include "graphicmap/visiblegraphiclayer.h"
 
 GraphicMap::BlockingLayerState::BlockingLayerState(
@@ -36,7 +38,7 @@ const
         QPoint originPoint(point.x() - (point.x() % 16),
                            point.y() - (point.y() % 16));
         qDebug() << originPoint;
-        layer->toggleTile(point.x(), point.y());
+        layer->toggleTile(quint16(point.x()), quint16(point.y()));
     }
 }
 
@@ -44,8 +46,17 @@ void
 GraphicMap::BlockingLayerState::drawWithRectangle(
     const QPoint& point, const QRect& rectChipsetSelection) const
 {
-    Q_UNUSED(point);
-    Q_UNUSED(rectChipsetSelection);
+    GraphicMap::BlockingGraphicLayer* layer =
+        static_cast<BlockingGraphicLayer*>(m_mapGraphicsScene.activeLayer());
+
+    for (quint16 j = 0; j < rectChipsetSelection.height()/16; j++)
+    {
+        for (quint16 i = 0; i < rectChipsetSelection.width()/16; i++)
+        {
+            layer->toggleTile(quint16(point.x() + i * 16),
+                              quint16(point.y() + j * 16));
+        }
+    }
 }
 
 void
@@ -53,8 +64,23 @@ GraphicMap::BlockingLayerState::drawWithSelection(
     const QPoint& point,
     const SelectionDrawingClipboard& clipboard) const
 {
-    Q_UNUSED(point);
-    Q_UNUSED(clipboard);
+    int clipboardIndex = 0;
+    for(int j = 0;
+        j < clipboard.selectionClipboard().height();
+        j += 16)
+    {
+        for (int i = 0;
+             i < clipboard.selectionClipboard().width();
+             i += 16)
+        {
+            bool isBlocking(
+                clipboard.blockingLayerClipboard()[clipboardIndex]);
+            m_mapGraphicsScene.blockingLayer()->setTile(
+                quint16(point.x() + i * 16),
+                quint16(point.y() + j * 16),
+                isBlocking);
+        }
+    }
 }
 
 void GraphicMap::BlockingLayerState::adjustLayers()
