@@ -31,7 +31,7 @@ namespace GraphicMap {
 
         VisibleGraphicLayer& setChipsetPixmap(const QPixmap*);
 
-        virtual void removeTile(quint16, quint16) override;
+        virtual MapSceneLayer& removeTile(quint16, quint16) override;
 
     private:
         Dummy::Layer& m_layer;

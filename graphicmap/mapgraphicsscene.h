@@ -21,7 +21,9 @@ namespace GraphicMap {
 
     class GraphicLayer;
     class BlockingGraphicLayer;
+    class StartingPointLayer;
     class VisibleGraphicLayer;
+    class MapSceneLayer;
 
     class PaintingLayerState;
     class MapGraphicsScene : public QGraphicsScene
@@ -56,7 +58,7 @@ namespace GraphicMap {
             return m_blockingLayer;
         }
 
-        inline GraphicLayer* activeLayer() const {
+        inline MapSceneLayer* activeLayer() const {
             return m_activeLayer;
         }
 
@@ -70,7 +72,7 @@ namespace GraphicMap {
         MapGraphicsScene& setMapDocument(
             const std::shared_ptr<Misc::MapDocument>& mapDocument);
 
-        MapGraphicsScene& setActiveLayer(GraphicLayer* layer) {
+        MapGraphicsScene& setActiveLayer(MapSceneLayer* layer) {
             m_activeLayer = layer;
             return *this;
         }
@@ -93,6 +95,7 @@ namespace GraphicMap {
         void showSecondLayer();
         void showThirdLayer();
         void showBlockingLayer();
+        void showStartingPointLayer();
 
         void setPenTool();
         void setRectangleTool();
@@ -128,7 +131,8 @@ namespace GraphicMap {
         VisibleGraphicLayer* m_secondLayer;
         VisibleGraphicLayer* m_thirdLayer;
         BlockingGraphicLayer* m_blockingLayer;
-        GraphicLayer* m_activeLayer; // Either 1st, 2nd or 3rd layer.
+        MapSceneLayer* m_activeLayer; // Either 1st, 2nd or 3rd layer.
+        StartingPointLayer* m_startingPointLayer;
 
         PaintingLayerState* m_paintingLayerState;
         DrawingTool* m_drawingTool;

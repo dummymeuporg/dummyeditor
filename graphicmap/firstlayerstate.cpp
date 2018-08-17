@@ -4,6 +4,7 @@
 #include "graphicmap/visiblegraphiclayer.h"
 #include "graphicmap/firstlayerstate.h"
 #include "graphicmap/mapgraphicsscene.h"
+#include "graphicmap/graphiclayer.h"
 
 GraphicMap::FirstLayerState::FirstLayerState(
         GraphicMap::MapGraphicsScene& mapGraphicsScene)

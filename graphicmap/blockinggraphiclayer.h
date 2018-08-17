@@ -17,7 +17,7 @@ namespace GraphicMap {
     public:
         BlockingGraphicLayer(MapGraphicsScene&, Dummy::BlockingLayer&);
         virtual ~BlockingGraphicLayer() override;
-        virtual void removeTile(quint16, quint16) override;
+        virtual MapSceneLayer& removeTile(quint16, quint16) override;
         void toggleTile(quint16, quint16);
         void setTile(quint16, quint16, bool);
     private:

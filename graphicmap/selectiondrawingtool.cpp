@@ -157,7 +157,7 @@ void GraphicMap::SelectionDrawingTool::onKeyRelease(QKeyEvent* event)
 }
 
 void GraphicMap::SelectionDrawingTool::_deleteSelection(
-    GraphicMap::GraphicLayer* layer)
+    GraphicMap::MapSceneLayer* layer)
 {
     const QPoint& topLeft(m_activeSelection.topLeft());
     const QPoint& bottomRight(m_activeSelection.bottomRight());

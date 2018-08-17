@@ -14,6 +14,7 @@
 #include "graphicmap/firstlayerstate.h"
 #include "graphicmap/secondlayerstate.h"
 #include "graphicmap/thirdlayerstate.h"
+#include "graphicmap/startingpointlayerstate.h"
 
 #include "graphicmap/nodrawingtool.h"
 #include "graphicmap/pendrawingtool.h"
@@ -227,6 +228,16 @@ void GraphicMap::MapGraphicsScene::showBlockingLayer()
         return;
     }
     setPaitingLayerState(new BlockingLayerState(*this));
+}
+
+void GraphicMap::MapGraphicsScene::showStartingPointLayer()
+{
+    qDebug() << "Starting Point active layer";
+    if (nullptr == m_mapDocument)
+    {
+        return;
+    }
+    setPaitingLayerState(new StartingPointLayerState(*this));
 }
 
 void GraphicMap::MapGraphicsScene::setPenTool()
