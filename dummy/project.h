@@ -46,8 +46,8 @@ namespace Dummy {
             return m_openedMaps;
         }
 
-        inline const StartingPoint& startingPoint() const {
-            return *m_startingPoint;
+        StartingPoint* startingPoint() const {
+            return m_startingPoint.get();
         }
 
         void setStartingPoint(const StartingPoint&);

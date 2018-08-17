@@ -8,6 +8,7 @@
 namespace Dummy {
     class Layer;
     class Map;
+    class Project;
 }
 
 namespace Misc {
@@ -37,6 +38,10 @@ namespace GraphicMap {
             return m_map;
         }
 
+        Dummy::Project* project() const {
+            return m_project;
+        }
+
         inline const std::shared_ptr<Misc::MapDocument>& mapDocument() const {
             return m_mapDocument;
         }
@@ -56,6 +61,11 @@ namespace GraphicMap {
         inline BlockingGraphicLayer* blockingLayer() const
         {
             return m_blockingLayer;
+        }
+
+        inline StartingPointLayer* startingPointLayer() const
+        {
+            return m_startingPointLayer;
         }
 
         inline MapSceneLayer* activeLayer() const {
@@ -121,6 +131,7 @@ namespace GraphicMap {
 
         std::shared_ptr<Misc::MapDocument> m_mapDocument;
         std::shared_ptr<Dummy::Map> m_map;
+        Dummy::Project* m_project;
         QGraphicsRectItem* m_darkFilter;
         QPixmap m_mapChipset;
         QRect m_chipsetSelection;

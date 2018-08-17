@@ -8,6 +8,7 @@ namespace Dummy {
     {
     public:
         StartingPoint();
+        StartingPoint(const char*, std::uint16_t, std::uint16_t);
 
         inline const char* mapName() const
         {

@@ -2,12 +2,15 @@
 #include <QtGlobal>
 #include <QPoint>
 
+#include "dummy/startingpoint.h"
+#include "dummy/project.h"
 #include "misc/mapdocument.h"
 #include "graphicmap/blockinggraphiclayer.h"
 #include "graphicmap/blockinglayerstate.h"
 #include "graphicmap/mapgraphicsscene.h"
 #include "graphicmap/selectiondrawingclipboard.h"
 #include "graphicmap/visiblegraphiclayer.h"
+#include "graphicmap/startingpointlayer.h"
 #include "graphicmap/startingpointlayerstate.h"
 
 
@@ -27,8 +30,22 @@ void
 GraphicMap::StartingPointLayerState::drawWithPen(const QPoint& point)
 const
 {
-    Q_UNUSED(point);
     qDebug() << "Draw with pen starting point. " << point;
+
+    // Adjust point
+    QPoint adjustedPoint(point.x() - (point.x() % 16),
+                         point.y() - (point.y() % 16));
+
+    GraphicMap::StartingPointLayer* layer =
+        static_cast<StartingPointLayer*>(m_mapGraphicsScene.activeLayer());
+    std::shared_ptr<Dummy::Map> map(m_mapGraphicsScene.mapDocument()->map());
+    layer->setStartingPointItem(adjustedPoint);
+
+    m_mapGraphicsScene.project()->setStartingPoint(
+        Dummy::StartingPoint(map->name().toStdString().c_str(),
+                             quint16(adjustedPoint.x()/16),
+                             quint16(adjustedPoint.y()/16))
+    );
 }
 
 void
@@ -54,12 +71,13 @@ void GraphicMap::StartingPointLayerState::adjustLayers()
     m_mapGraphicsScene.secondLayer()->setOpacity(1);
     m_mapGraphicsScene.thirdLayer()->setOpacity(1);
     m_mapGraphicsScene.blockingLayer()->setOpacity(0);
+    m_mapGraphicsScene.startingPointLayer()->setOpacity(1);
 }
 
 
 void GraphicMap::StartingPointLayerState::onNewMap()
 {
-    //m_mapGraphicsScene.setActiveLayer(m_mapGraphicsScene.blockingLayer());
+    m_mapGraphicsScene.setActiveLayer(m_mapGraphicsScene.startingPointLayer());
 }
 
 void GraphicMap::StartingPointLayerState::sceneCleared()

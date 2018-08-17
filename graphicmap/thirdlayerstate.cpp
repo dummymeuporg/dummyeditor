@@ -6,6 +6,7 @@
 
 #include "graphicmap/blockinggraphiclayer.h"
 #include "graphicmap/visiblegraphiclayer.h"
+#include "graphicmap/startingpointlayer.h"
 #include "graphicmap/thirdlayerstate.h"
 #include "graphicmap/mapgraphicsscene.h"
 
@@ -47,6 +48,7 @@ void GraphicMap::ThirdLayerState::adjustLayers() {
     qDebug() << "Third state adjust layers.";
     m_mapGraphicsScene.thirdLayer()->setOpacity(1);
     m_mapGraphicsScene.blockingLayer()->setOpacity(0);
+    m_mapGraphicsScene.startingPointLayer()->setOpacity(0);
 }
 
 void GraphicMap::ThirdLayerState::onNewMap() {

@@ -1,10 +1,18 @@
-#include "startingpoint.h"
+#include <cstdint>
+#include "dummy/startingpoint.h"
 
 Dummy::StartingPoint::StartingPoint()
 {
 
 }
 
+Dummy::StartingPoint::StartingPoint(const char* mapName,
+                                    std::uint16_t x,
+                                    std::uint16_t y)
+    : m_mapName(mapName), m_x(x), m_y(y)
+{
+
+}
 
 Dummy::StartingPoint& Dummy::StartingPoint::setMapName(const char* mapName)
 {

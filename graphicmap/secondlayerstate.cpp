@@ -6,6 +6,7 @@
 
 #include "graphicmap/blockinggraphiclayer.h"
 #include "graphicmap/mapgraphicsscene.h"
+#include "graphicmap/startingpointlayer.h"
 #include "graphicmap/visiblegraphiclayer.h"
 #include "secondlayerstate.h"
 
@@ -43,6 +44,7 @@ void GraphicMap::SecondLayerState::adjustLayers() {
     m_mapGraphicsScene.secondLayer()->setOpacity(1);
     m_mapGraphicsScene.thirdLayer()->setOpacity(0.5);
     m_mapGraphicsScene.blockingLayer()->setOpacity(0);
+    m_mapGraphicsScene.startingPointLayer()->setOpacity(0);
 }
 
 void GraphicMap::SecondLayerState::onNewMap() {
