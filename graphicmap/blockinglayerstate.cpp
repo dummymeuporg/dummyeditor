@@ -7,6 +7,7 @@
 #include "graphicmap/blockinglayerstate.h"
 #include "graphicmap/mapgraphicsscene.h"
 #include "graphicmap/selectiondrawingclipboard.h"
+#include "graphicmap/startingpointlayer.h"
 #include "graphicmap/visiblegraphiclayer.h"
 
 GraphicMap::BlockingLayerState::BlockingLayerState(
@@ -91,6 +92,7 @@ void GraphicMap::BlockingLayerState::adjustLayers()
     m_mapGraphicsScene.secondLayer()->setOpacity(1);
     m_mapGraphicsScene.thirdLayer()->setOpacity(1);
     m_mapGraphicsScene.blockingLayer()->setOpacity(1);
+    m_mapGraphicsScene.startingPointLayer()->setOpacity(0);
 }
 
 

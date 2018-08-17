@@ -10,6 +10,8 @@
 #include "misc/mapdocument.h"
 #include "misc/maptreemodel.h"
 
+#include "dummy/startingpoint.h"
+
 namespace Dummy {
     class Project
     {
@@ -44,11 +46,18 @@ namespace Dummy {
             return m_openedMaps;
         }
 
+        StartingPoint* startingPoint() const {
+            return m_startingPoint.get();
+        }
+
+        void setStartingPoint(const StartingPoint&);
+
     private:
         QString m_fullpath;
         QDomDocument m_domDocument;
         Misc::MapTreeModel* m_mapsModel;
         bool m_isModified;
+        std::unique_ptr<StartingPoint> m_startingPoint;
 
         QMap<QString, std::shared_ptr<Misc::MapDocument>> m_openedMaps;
 

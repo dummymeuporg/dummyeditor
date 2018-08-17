@@ -64,7 +64,7 @@ void GraphicMap::RectangleDrawingTool::chipsetSelectionChanged(
 
     // XXX: Ugly
     QPixmap chipsetPixmap(
-        m_mapGraphicScene.mapDocument()->project().fullpath() + "/chipsets/" +
+        m_mapGraphicScene.mapDocument()->project()->fullpath() + "/chipsets/" +
         map->chipset());
 
     m_pixmapChipsetSelection = chipsetPixmap.copy(selection);

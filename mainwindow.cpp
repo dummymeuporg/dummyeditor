@@ -108,6 +108,8 @@ void MainWindow::_connectScenes()
                      m_mapScene, SLOT(showThirdLayer()));
     QObject::connect(ui->actionBlocking_layer, SIGNAL(triggered(bool)),
                      m_mapScene, SLOT(showBlockingLayer()));
+    QObject::connect(ui->actionStarting_point, SIGNAL(triggered(bool)),
+                     m_mapScene, SLOT(showStartingPointLayer()));
     QObject::connect(ui->actionPen, SIGNAL(triggered(bool)),
                      m_mapScene, SLOT(setPenTool()));
     QObject::connect(ui->actionRectangle,
@@ -136,6 +138,8 @@ void MainWindow::_closeCurrentProject()
                         m_mapScene, SLOT(showThirdLayer()));
     QObject::disconnect(ui->actionBlocking_layer, SIGNAL(triggered(bool)),
                         m_mapScene, SLOT(showBlockingLayer()));
+    QObject::disconnect(ui->actionStarting_point, SIGNAL(triggered(bool)),
+                        m_mapScene, SLOT(showStartingPointLayer()));
     QObject::disconnect(ui->actionPen, SIGNAL(triggered(bool)),
                         m_mapScene, SLOT(setPenTool()));
     QObject::disconnect(ui->actionPen, SIGNAL(trigerred(bool)),

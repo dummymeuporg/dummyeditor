@@ -8,7 +8,7 @@
 
 GraphicMap::GraphicLayer::GraphicLayer(
     GraphicMap::MapGraphicsScene& mapGraphicsScene)
-    : m_mapGraphicsScene(mapGraphicsScene),
+    : GraphicMap::MapSceneLayer(mapGraphicsScene),
       m_layerItems(m_mapGraphicsScene.map()->width() *
                    m_mapGraphicsScene.map()->height())
 {
@@ -25,7 +25,7 @@ GraphicMap::GraphicLayer::~GraphicLayer()
     }
 }
 
-GraphicMap::GraphicLayer&
+GraphicMap::MapSceneLayer&
 GraphicMap::GraphicLayer::setOpacity(qreal opacity) {
     for (auto it = m_layerItems.begin(); it != m_layerItems.end(); ++it)
     {

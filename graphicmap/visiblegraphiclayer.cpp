@@ -39,9 +39,12 @@ GraphicMap::VisibleGraphicLayer::VisibleGraphicLayer(
 GraphicMap::VisibleGraphicLayer::~VisibleGraphicLayer() {
 }
 
-void GraphicMap::VisibleGraphicLayer::removeTile(quint16 x, quint16 y)
+
+GraphicMap::MapSceneLayer&
+GraphicMap::VisibleGraphicLayer::removeTile(quint16 x, quint16 y)
 {
     setTile(x, y, -1, -1);
+    return *this;
 }
 
 GraphicMap::VisibleGraphicLayer&

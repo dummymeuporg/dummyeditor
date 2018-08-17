@@ -29,6 +29,19 @@ Dummy::Project::Project(const QString& folderPath) :
     } else {
         // TODO: Throw exception?
     }
+
+    QDomNodeList startingPositionNodes = m_domDocument.documentElement()
+        .elementsByTagName("starting_point");
+
+    if (startingPositionNodes.length() > 0)
+    {
+        const QDomNode& startingPositionNode(startingPositionNodes.at(0));
+        const QDomNamedNodeMap& attributes(startingPositionNode.attributes());
+        m_startingPoint = std::make_unique<Dummy::StartingPoint>(
+            attributes.namedItem("map").nodeValue().toStdString().c_str(),
+            attributes.namedItem("x").nodeValue().toUShort(),
+            attributes.namedItem("y").nodeValue().toUShort());
+    }
 }
 
 Dummy::Project::~Project() {
@@ -38,6 +51,12 @@ Dummy::Project::~Project() {
 
 Misc::MapTreeModel* Dummy::Project::mapsModel() {
     return m_mapsModel;
+}
+
+void Dummy::Project::setStartingPoint(
+    const Dummy::StartingPoint& startingPoint)
+{
+    m_startingPoint = std::make_unique<Dummy::StartingPoint>(startingPoint);
 }
 
 void Dummy::Project::create(const QString& folder) {
@@ -84,6 +103,15 @@ void Dummy::Project::saveProjectFile() {
 
     doc.appendChild(projectNode);
     projectNode.appendChild(mapsNode);
+
+    if (nullptr != m_startingPoint)
+    {
+        QDomElement startingPointNode = doc.createElement("starting_point");
+        startingPointNode.setAttribute("map", m_startingPoint->mapName());
+        startingPointNode.setAttribute("x", m_startingPoint->x());
+        startingPointNode.setAttribute("y", m_startingPoint->y());
+        projectNode.appendChild(startingPointNode);
+    }
 
     _dumpToXmlNode(doc, mapsNode, m_mapsModel->invisibleRootItem());
     QString xmlPath(m_fullpath + "/project.xml");

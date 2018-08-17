@@ -32,7 +32,11 @@ SOURCES += \
     graphicmap/visiblegraphiclayer.cpp \
     graphicmap/graphiclayer.cpp \
     graphicmap/blockinglayerstate.cpp \
-    graphicmap/blockingcrossitem.cpp
+    graphicmap/blockingcrossitem.cpp \
+    dummy/startingpoint.cpp \
+    graphicmap/startingpointlayerstate.cpp \
+    graphicmap/startingpointlayer.cpp \
+    graphicmap/mapscenelayer.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -62,7 +66,11 @@ HEADERS += \
     graphicmap/visiblegraphiclayer.h \
     graphicmap/graphiclayer.h \
     graphicmap/blockinglayerstate.h \
-    graphicmap/blockingcrossitem.h
+    graphicmap/blockingcrossitem.h \
+    dummy/startingpoint.h \
+    graphicmap/startingpointlayerstate.h \
+    graphicmap/startingpointlayer.h \
+    graphicmap/mapscenelayer.h
 
 FORMS += \
     mainwindow.ui \

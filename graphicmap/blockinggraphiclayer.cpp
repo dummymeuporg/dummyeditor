@@ -34,7 +34,8 @@ GraphicMap::BlockingGraphicLayer::~BlockingGraphicLayer()
 
 }
 
-void GraphicMap::BlockingGraphicLayer::removeTile(quint16 x, quint16 y)
+GraphicMap::MapSceneLayer&
+GraphicMap::BlockingGraphicLayer::removeTile(quint16 x, quint16 y)
 {
     qDebug() << "Toggle tile." << x << y;
     if (x < m_mapGraphicsScene.map()->width() * 16
@@ -49,6 +50,7 @@ void GraphicMap::BlockingGraphicLayer::removeTile(quint16 x, quint16 y)
             m_layerItems[index] = nullptr;
         }
    }
+    return *this;
 }
 
 void GraphicMap::BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)

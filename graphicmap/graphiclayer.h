@@ -3,29 +3,28 @@
 #include <QtGlobal>
 #include <QVector>
 
+#include "graphicmap/mapscenelayer.h"
+
 class QGraphicsItem;
 
 namespace GraphicMap {
 
     class MapGraphicsScene;
 
-    class GraphicLayer
+    class GraphicLayer : public MapSceneLayer
     {
     public:
         GraphicLayer(MapGraphicsScene&);
-        virtual ~GraphicLayer();
-
-        virtual void removeTile(quint16, quint16) = 0;
+        virtual ~GraphicLayer() override;
 
         inline const QVector<QGraphicsItem*>& layerItems() const {
             return m_layerItems;
         }
 
-        GraphicLayer& setOpacity(qreal);
+        MapSceneLayer& setOpacity(qreal) override;
 
 
     protected:
-        MapGraphicsScene& m_mapGraphicsScene;
         QVector<QGraphicsItem*> m_layerItems;
     };
 }

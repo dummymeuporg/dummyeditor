@@ -8,6 +8,7 @@
 namespace Dummy {
     class Layer;
     class Map;
+    class Project;
 }
 
 namespace Misc {
@@ -21,7 +22,9 @@ namespace GraphicMap {
 
     class GraphicLayer;
     class BlockingGraphicLayer;
+    class StartingPointLayer;
     class VisibleGraphicLayer;
+    class MapSceneLayer;
 
     class PaintingLayerState;
     class MapGraphicsScene : public QGraphicsScene
@@ -33,6 +36,10 @@ namespace GraphicMap {
 
         inline const std::shared_ptr<Dummy::Map>& map() const {
             return m_map;
+        }
+
+        Dummy::Project* project() const {
+            return m_project;
         }
 
         inline const std::shared_ptr<Misc::MapDocument>& mapDocument() const {
@@ -56,7 +63,12 @@ namespace GraphicMap {
             return m_blockingLayer;
         }
 
-        inline GraphicLayer* activeLayer() const {
+        inline StartingPointLayer* startingPointLayer() const
+        {
+            return m_startingPointLayer;
+        }
+
+        inline MapSceneLayer* activeLayer() const {
             return m_activeLayer;
         }
 
@@ -70,7 +82,7 @@ namespace GraphicMap {
         MapGraphicsScene& setMapDocument(
             const std::shared_ptr<Misc::MapDocument>& mapDocument);
 
-        MapGraphicsScene& setActiveLayer(GraphicLayer* layer) {
+        MapGraphicsScene& setActiveLayer(MapSceneLayer* layer) {
             m_activeLayer = layer;
             return *this;
         }
@@ -93,6 +105,7 @@ namespace GraphicMap {
         void showSecondLayer();
         void showThirdLayer();
         void showBlockingLayer();
+        void showStartingPointLayer();
 
         void setPenTool();
         void setRectangleTool();
@@ -118,6 +131,7 @@ namespace GraphicMap {
 
         std::shared_ptr<Misc::MapDocument> m_mapDocument;
         std::shared_ptr<Dummy::Map> m_map;
+        Dummy::Project* m_project;
         QGraphicsRectItem* m_darkFilter;
         QPixmap m_mapChipset;
         QRect m_chipsetSelection;
@@ -128,7 +142,8 @@ namespace GraphicMap {
         VisibleGraphicLayer* m_secondLayer;
         VisibleGraphicLayer* m_thirdLayer;
         BlockingGraphicLayer* m_blockingLayer;
-        GraphicLayer* m_activeLayer; // Either 1st, 2nd or 3rd layer.
+        MapSceneLayer* m_activeLayer; // Either 1st, 2nd or 3rd layer.
+        StartingPointLayer* m_startingPointLayer;
 
         PaintingLayerState* m_paintingLayerState;
         DrawingTool* m_drawingTool;
