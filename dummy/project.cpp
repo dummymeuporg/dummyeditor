@@ -40,6 +40,12 @@ Misc::MapTreeModel* Dummy::Project::mapsModel() {
     return m_mapsModel;
 }
 
+void Dummy::Project::setStartingPoint(
+    const Dummy::StartingPoint& startingPoint)
+{
+    m_startingPoint = std::make_unique<Dummy::StartingPoint>(startingPoint);
+}
+
 void Dummy::Project::create(const QString& folder) {
     Dummy::Project::_createXmlProjectFile(folder);
     Dummy::Project::_createFolders(folder);
