@@ -12,6 +12,7 @@
 #include "dummy/project.h"
 #include "misc/mapdocument.h"
 
+#include "graphicmap/blockinggraphiclayer.h"
 #include "graphicmap/visiblegraphiclayer.h"
 #include "graphicmap/mapgraphicsscene.h"
 #include "graphicmap/paintinglayerstate.h"
@@ -128,6 +129,7 @@ void GraphicMap::SelectionDrawingTool::onKeyPress(QKeyEvent* event)
             _deleteSelection(m_mapGraphicScene.firstLayer());
             _deleteSelection(m_mapGraphicScene.secondLayer());
             _deleteSelection(m_mapGraphicScene.thirdLayer());
+            _deleteSelection(m_mapGraphicScene.blockingLayer());
             break;
         case Qt::Key_C:
             qDebug() << "Copy in selection tool.";

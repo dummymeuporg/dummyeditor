@@ -73,11 +73,13 @@ GraphicMap::BlockingLayerState::drawWithSelection(
              i < clipboard.selectionClipboard().width();
              i += 16)
         {
+
             bool isBlocking(
                 clipboard.blockingLayerClipboard()[clipboardIndex]);
+            qDebug() << "TOTO " << isBlocking;
             m_mapGraphicsScene.blockingLayer()->setTile(
-                quint16(point.x() + i * 16),
-                quint16(point.y() + j * 16),
+                quint16(point.x() + i),
+                quint16(point.y() + j),
                 isBlocking);
         }
     }

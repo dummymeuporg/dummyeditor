@@ -31,7 +31,6 @@ SOURCES += \
     graphicmap/blockinggraphiclayer.cpp \
     graphicmap/visiblegraphiclayer.cpp \
     graphicmap/graphiclayer.cpp \
-    graphicmap/paintingblockinglayerstate.cpp \
     graphicmap/blockinglayerstate.cpp \
     graphicmap/blockingcrossitem.cpp
 
@@ -62,7 +61,6 @@ HEADERS += \
     graphicmap/blockinggraphiclayer.h \
     graphicmap/visiblegraphiclayer.h \
     graphicmap/graphiclayer.h \
-    graphicmap/paintingblockinglayerstate.h \
     graphicmap/blockinglayerstate.h \
     graphicmap/blockingcrossitem.h
 

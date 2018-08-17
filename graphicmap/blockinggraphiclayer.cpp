@@ -36,8 +36,19 @@ GraphicMap::BlockingGraphicLayer::~BlockingGraphicLayer()
 
 void GraphicMap::BlockingGraphicLayer::removeTile(quint16 x, quint16 y)
 {
-    Q_UNUSED(x);
-    Q_UNUSED(y);
+    qDebug() << "Toggle tile." << x << y;
+    if (x < m_mapGraphicsScene.map()->width() * 16
+        && y < m_mapGraphicsScene.map()->height() * 16)
+    {
+        const std::shared_ptr<Dummy::Map> map(m_mapGraphicsScene.map());
+        int index((y/16) * map->width() + (x/16));
+        m_blockingLayer[index] = false;
+        if (nullptr != m_layerItems[index])
+        {
+            m_mapGraphicsScene.removeItem(m_layerItems[index]);
+            m_layerItems[index] = nullptr;
+        }
+   }
 }
 
 void GraphicMap::BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
