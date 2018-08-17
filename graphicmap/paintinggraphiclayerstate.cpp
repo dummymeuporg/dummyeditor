@@ -1,9 +1,10 @@
 #include <QDebug>
+#include <QGraphicsItem>
 #include <QPoint>
 
 #include "dummy/map.h"
 #include "misc/mapdocument.h"
-#include "graphicmap/graphiclayer.h"
+#include "graphicmap/visiblegraphiclayer.h"
 #include "graphicmap/mapgraphicsscene.h"
 #include "graphicmap/paintinggraphiclayerstate.h"
 #include "graphicmap/selectiondrawingclipboard.h"
@@ -20,9 +21,12 @@ GraphicMap::PaintingGraphicLayerState::~PaintingGraphicLayerState()
 
 }
 
+
 void
 GraphicMap::PaintingGraphicLayerState::drawWithPen(const QPoint& point) const
 {
+    GraphicMap::VisibleGraphicLayer* layer =
+        static_cast<VisibleGraphicLayer*>(m_mapGraphicsScene.activeLayer());
     std::shared_ptr<Dummy::Map> map(
         m_mapGraphicsScene.mapDocument()->map());
 
@@ -35,7 +39,7 @@ GraphicMap::PaintingGraphicLayerState::drawWithPen(const QPoint& point) const
     {
         for (int j = 0; j < height; ++j) {
             for(int i = 0; i < width; ++i) {
-                m_mapGraphicsScene.activeLayer()->setTile(
+                layer->setTile(
                      quint16(point.x()
                              - (point.x() % 16)
                              + (i * 16)),
@@ -47,14 +51,14 @@ GraphicMap::PaintingGraphicLayerState::drawWithPen(const QPoint& point) const
             }
         }
     }
-
 }
 
 void
 GraphicMap::PaintingGraphicLayerState::drawWithRectangle(
     const QPoint& point, const QRect& rectChipsetSelection) const
 {
-    Q_UNUSED(point);
+    GraphicMap::VisibleGraphicLayer* layer =
+        static_cast<VisibleGraphicLayer*>(m_mapGraphicsScene.activeLayer());
     qint16 chipsetX = qint16(rectChipsetSelection.x()/16);
     qint16 chipsetY = qint16(rectChipsetSelection.y()/16);
 
@@ -64,8 +68,9 @@ GraphicMap::PaintingGraphicLayerState::drawWithRectangle(
         {
             qDebug() << "CHIPSET: " << chipsetX + i << chipsetY + j;
             qDebug() << "TARGET: " << point.x() + i << point.y() + j;
-            m_mapGraphicsScene.activeLayer()->setTile(
-                point.x() + i * 16, point.y() + j * 16,
+            layer->setTile(
+                quint16(point.x() + i * 16),
+                quint16(point.y() + j * 16),
                 (chipsetX + i) * 16, (chipsetY + j) * 16
             );
         }
@@ -119,4 +124,23 @@ GraphicMap::PaintingGraphicLayerState::drawWithSelection(
     }
 
     m_mapGraphicsScene.adjustLayers();
+}
+
+
+void
+GraphicMap::PaintingGraphicLayerState::drawCurrentSelection(
+    const QPoint& point, QGraphicsItem* selectionItem) const
+{
+    qDebug() << "Draw current selection";
+    if (nullptr != selectionItem) {
+        qDebug() << "Point is " << point;
+
+        selectionItem->setVisible(true);
+
+        // Translate the coordinate to get the top upper corner of the tile.
+        int x = point.x() - (point.x() % 16);
+        int y = point.y() - (point.y() % 16);
+
+        selectionItem->setPos(x, y);
+    }
 }

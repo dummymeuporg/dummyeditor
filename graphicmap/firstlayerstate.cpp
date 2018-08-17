@@ -1,6 +1,7 @@
 #include <QDebug>
 
-#include "graphicmap/graphiclayer.h"
+#include "graphicmap/blockinggraphiclayer.h"
+#include "graphicmap/visiblegraphiclayer.h"
 #include "graphicmap/firstlayerstate.h"
 #include "graphicmap/mapgraphicsscene.h"
 
@@ -20,6 +21,7 @@ void GraphicMap::FirstLayerState::adjustLayers() {
     qDebug() << "First layer: adjust.";
     m_mapGraphicsScene.secondLayer()->setOpacity(0.5);
     m_mapGraphicsScene.thirdLayer()->setOpacity(0.25);
+    m_mapGraphicsScene.blockingLayer()->setOpacity(0);
 }
 
 void GraphicMap::FirstLayerState::onNewMap() {

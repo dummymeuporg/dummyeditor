@@ -3,7 +3,7 @@
 #include "graphicmap/mapgraphicsscene.h"
 #include "graphicmap/notpaintingstate.h"
 #include "graphicmap/firstlayerstate.h"
-#include "graphicmap/graphiclayer.h"
+#include "graphicmap/visiblegraphiclayer.h"
 #include "graphicmap/selectiondrawingtool.h"
 #include "graphicmap/selectiondrawingclipboard.h"
 
@@ -49,4 +49,11 @@ GraphicMap::NotPaintingState::drawWithSelection(
 {
     Q_UNUSED(point);
     Q_UNUSED(clipboard);
+}
+
+void GraphicMap::NotPaintingState::drawCurrentSelection(
+    const QPoint& point, QGraphicsItem* item) const
+{
+    Q_UNUSED(point);
+    Q_UNUSED(item);
 }

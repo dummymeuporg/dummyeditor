@@ -2,6 +2,7 @@
 
 class QPoint;
 class QRect;
+class QGraphicsItem;
 
 namespace GraphicMap {
 
@@ -22,6 +23,8 @@ namespace GraphicMap {
         virtual void drawWithRectangle(const QPoint&, const QRect&) const = 0;
         virtual void drawWithSelection(const QPoint&,
                                        const SelectionDrawingClipboard&)
+            const = 0;
+        virtual void drawCurrentSelection(const QPoint&, QGraphicsItem*)
             const = 0;
 
     protected:

@@ -6,6 +6,7 @@ QT += xml
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    dummy/blockinglayer.cpp \
     dummy/project.cpp \
     dummy/map.cpp \
     chipsetgraphicsscene.cpp \
@@ -15,7 +16,6 @@ SOURCES += \
     mapstreeview.cpp \
     dummy/layer.cpp \
     mapeditdialog.cpp \
-    graphicmap/graphiclayer.cpp \
     graphicmap/paintinglayerstate.cpp \
     graphicmap/notpaintingstate.cpp \
     graphicmap/firstlayerstate.cpp \
@@ -27,10 +27,16 @@ SOURCES += \
     graphicmap/rectangledrawingtool.cpp \
     graphicmap/selectiondrawingtool.cpp \
     graphicmap/selectiondrawingclipboard.cpp \
-    graphicmap/paintinggraphiclayerstate.cpp
+    graphicmap/paintinggraphiclayerstate.cpp \
+    graphicmap/blockinggraphiclayer.cpp \
+    graphicmap/visiblegraphiclayer.cpp \
+    graphicmap/graphiclayer.cpp \
+    graphicmap/blockinglayerstate.cpp \
+    graphicmap/blockingcrossitem.cpp
 
 HEADERS += \
     mainwindow.h \
+    dummy/blockinglayer.h \
     dummy/project.h \
     dummy/map.h \
     chipsetgraphicsscene.h \
@@ -40,7 +46,6 @@ HEADERS += \
     mapstreeview.h \
     dummy/layer.h \
     mapeditdialog.h \
-    graphicmap/graphiclayer.h \
     graphicmap/paintinglayerstate.h \
     graphicmap/notpaintingstate.h \
     graphicmap/firstlayerstate.h \
@@ -52,7 +57,12 @@ HEADERS += \
     graphicmap/rectangledrawingtool.h \
     graphicmap/selectiondrawingtool.h \
     graphicmap/selectiondrawingclipboard.h \
-    graphicmap/paintinggraphiclayerstate.h
+    graphicmap/paintinggraphiclayerstate.h \
+    graphicmap/blockinggraphiclayer.h \
+    graphicmap/visiblegraphiclayer.h \
+    graphicmap/graphiclayer.h \
+    graphicmap/blockinglayerstate.h \
+    graphicmap/blockingcrossitem.h
 
 FORMS += \
     mainwindow.ui \

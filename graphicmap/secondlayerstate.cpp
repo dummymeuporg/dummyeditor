@@ -4,8 +4,9 @@
 #include "dummy/map.h"
 #include "misc/mapdocument.h"
 
+#include "graphicmap/blockinggraphiclayer.h"
 #include "graphicmap/mapgraphicsscene.h"
-#include "graphicmap/graphiclayer.h"
+#include "graphicmap/visiblegraphiclayer.h"
 #include "secondlayerstate.h"
 
 GraphicMap::SecondLayerState::SecondLayerState(
@@ -41,6 +42,7 @@ void GraphicMap::SecondLayerState::adjustLayers() {
     qDebug() << "Second state adjust layers.";
     m_mapGraphicsScene.secondLayer()->setOpacity(1);
     m_mapGraphicsScene.thirdLayer()->setOpacity(0.5);
+    m_mapGraphicsScene.blockingLayer()->setOpacity(0);
 }
 
 void GraphicMap::SecondLayerState::onNewMap() {

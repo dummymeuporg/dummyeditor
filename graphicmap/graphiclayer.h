@@ -1,46 +1,31 @@
 #pragma once
 
-#include <QGraphicsScene>
-#include <QPixmap>
+#include <QtGlobal>
+#include <QVector>
 
-#include "dummy/layer.h"
+class QGraphicsItem;
 
 namespace GraphicMap {
-    // Forward declaration:
+
     class MapGraphicsScene;
 
-    class GraphicLayer {
-
+    class GraphicLayer
+    {
     public:
-        GraphicLayer(MapGraphicsScene&, Dummy::Layer&,
-                     const QPixmap&, int zValue);
+        GraphicLayer(MapGraphicsScene&);
         virtual ~GraphicLayer();
-        inline const QPixmap& chipsetPixmap() const {
-            return m_chipsetPixmap;
-        }
 
-        inline const Dummy::Layer& layer() const {
-            return m_layer;
-        }
+        virtual void removeTile(quint16, quint16) = 0;
 
-        inline const QVector<QGraphicsPixmapItem*>& layerItems() const {
+        inline const QVector<QGraphicsItem*>& layerItems() const {
             return m_layerItems;
         }
 
-        GraphicLayer& setTile(quint16 x,
-                              quint16 y,
-                              qint16 chipsetX,
-                              qint16 chipsetY);
-
-        GraphicLayer& setChipsetPixmap(const QPixmap*);
-
         GraphicLayer& setOpacity(qreal);
 
-    private:
+
+    protected:
         MapGraphicsScene& m_mapGraphicsScene;
-        Dummy::Layer& m_layer;
-        const QPixmap& m_chipsetPixmap;
-        QVector<QGraphicsPixmapItem*> m_layerItems;
-        int m_zValue;
+        QVector<QGraphicsItem*> m_layerItems;
     };
 }

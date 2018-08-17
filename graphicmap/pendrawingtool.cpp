@@ -7,7 +7,7 @@
 #include "dummy/project.h"
 #include "misc/mapdocument.h"
 
-#include "graphicmap/graphiclayer.h"
+#include "graphicmap/visiblegraphiclayer.h"
 #include "graphicmap/mapgraphicsscene.h"
 #include "graphicmap/paintinglayerstate.h"
 #include "graphicmap/pendrawingtool.h"
@@ -78,10 +78,12 @@ GraphicMap::PenDrawingTool::onMouseMove(
     qDebug() << "On mouse move Pen";
     if (mouseEvent->buttons() & Qt::LeftButton) {
         if (m_isDrawing) {
-            _setTiles(mouseEvent->scenePos().toPoint());
+             m_mapGraphicScene.paintingLayerState().drawWithPen(
+                mouseEvent->scenePos().toPoint());
         }
     }
-    _drawCurrentSelection(mouseEvent->scenePos().toPoint());
+    m_mapGraphicScene.paintingLayerState().drawCurrentSelection(
+       mouseEvent->scenePos().toPoint(), m_selectionItem);
 }
 
 void
@@ -99,21 +101,6 @@ void GraphicMap::PenDrawingTool::onMouseLeave()
     }
 }
 
-void
-GraphicMap::PenDrawingTool::_drawCurrentSelection(const QPoint& point) {
-    qDebug() << "Draw current selection";
-    if (nullptr != m_selectionItem) {
-        qDebug() << "Point is " << point;
-
-        m_selectionItem->setVisible(true);
-
-        // Translate the coordinate to get the top upper corner of the tile.
-        int x = point.x() - (point.x() % 16);
-        int y = point.y() - (point.y() % 16);
-
-        m_selectionItem->setPos(x, y);
-    }
-}
 
 void GraphicMap::PenDrawingTool::onKeyPress(QKeyEvent* event)
 {

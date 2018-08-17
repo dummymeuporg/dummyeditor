@@ -21,6 +21,7 @@ GraphicMap::SelectionDrawingClipboard::SelectionDrawingClipboard(
     m_firstLayerClipboard.resize(newSize);
     m_secondLayerClipboard.resize(newSize);
     m_thirdLayerClipboard.resize(newSize);
+    m_blockingLayerClipboard.resize(newSize);
     qDebug() << "Active selection: " << activeSelection;
 
     int clipboardIndex = 0;
@@ -28,14 +29,15 @@ GraphicMap::SelectionDrawingClipboard::SelectionDrawingClipboard(
     {
         for (int i = 0; i < activeSelection.width(); i += 16)
         {
-            quint16 coordX((activeSelection.x() + i) / 16),
-                    coordY((activeSelection.y() + j) / 16);
+            quint16 coordX = quint16((activeSelection.x() + i) / 16),
+                    coordY = quint16((activeSelection.y() + j) / 16);
             quint16 index(coordY * map->width() + coordX);
             qDebug() << "Copy " << index;
             m_firstLayerClipboard[clipboardIndex] = map->firstLayer()[index];
             m_secondLayerClipboard[clipboardIndex] = map->secondLayer()[index];
             m_thirdLayerClipboard[clipboardIndex] = map->thirdLayer()[index];
-
+            m_blockingLayerClipboard[clipboardIndex] =
+                map->blockingLayer()[index];
             ++clipboardIndex;
         }
     }

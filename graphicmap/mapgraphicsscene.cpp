@@ -5,10 +5,12 @@
 #include "dummy/layer.h"
 #include "dummy/project.h"
 
-#include "graphicmap/graphiclayer.h"
+#include "graphicmap/visiblegraphiclayer.h"
+#include "graphicmap/blockinggraphiclayer.h"
 #include "graphicmap/mapgraphicsscene.h"
 
 #include "graphicmap/notpaintingstate.h"
+#include "graphicmap/blockinglayerstate.h"
 #include "graphicmap/firstlayerstate.h"
 #include "graphicmap/secondlayerstate.h"
 #include "graphicmap/thirdlayerstate.h"
@@ -21,6 +23,7 @@
 GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
     : QGraphicsScene(parent), m_map(nullptr), m_firstLayer(nullptr),
       m_secondLayer(nullptr), m_thirdLayer(nullptr),
+      m_blockingLayer(nullptr),
       m_activeLayer(nullptr),
       m_paintingLayerState(new GraphicMap::NotPaintingState(*this)),
       m_drawingTool(new NoDrawingTool(*this))
@@ -34,7 +37,7 @@ GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
 GraphicMap::MapGraphicsScene::~MapGraphicsScene()
 {
     delete m_drawingTool;
-    //delete m_paintingLayerState;
+    delete m_paintingLayerState;
 }
 
 void GraphicMap::MapGraphicsScene::_drawGrid()
@@ -70,6 +73,7 @@ GraphicMap::MapGraphicsScene::setMapDocument
         delete m_firstLayer;
         delete m_secondLayer;
         delete m_thirdLayer;
+        delete m_blockingLayer;
     }
     // Remove the grid.
     clear();
@@ -85,22 +89,26 @@ GraphicMap::MapGraphicsScene::setMapDocument
                            + m_map->chipset());
 
     m_firstLayer = new
-        GraphicMap::GraphicLayer(*this,
+        GraphicMap::VisibleGraphicLayer(*this,
                                  m_map->firstLayer(),
                                  m_mapChipset,
                                  1);
 
     m_secondLayer = new
-        GraphicMap::GraphicLayer(*this,
+        GraphicMap::VisibleGraphicLayer(*this,
                                  m_map->secondLayer(),
                                  m_mapChipset,
                                  3);
 
     m_thirdLayer = new
-        GraphicMap::GraphicLayer(*this,
+        GraphicMap::VisibleGraphicLayer(*this,
                                  m_map->thirdLayer(),
                                  m_mapChipset,
                                  5);
+
+    m_blockingLayer = new
+        GraphicMap::BlockingGraphicLayer(*this,
+                                         m_map->blockingLayer());
 
     _drawGrid();
     m_paintingLayerState->onNewMap();
@@ -209,6 +217,16 @@ void GraphicMap::MapGraphicsScene::showThirdLayer() {
         return;
     }
     setPaitingLayerState(new ThirdLayerState(*this));
+}
+
+void GraphicMap::MapGraphicsScene::showBlockingLayer()
+{
+    qDebug() << "Blocking active layer";
+    if (nullptr == m_mapDocument)
+    {
+        return;
+    }
+    setPaitingLayerState(new BlockingLayerState(*this));
 }
 
 void GraphicMap::MapGraphicsScene::setPenTool()
