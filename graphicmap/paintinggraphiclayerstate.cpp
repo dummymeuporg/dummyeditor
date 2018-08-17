@@ -1,4 +1,5 @@
 #include <QDebug>
+#include <QGraphicsItem>
 #include <QPoint>
 
 #include "dummy/map.h"
@@ -19,6 +20,7 @@ GraphicMap::PaintingGraphicLayerState::~PaintingGraphicLayerState()
 {
 
 }
+
 
 void
 GraphicMap::PaintingGraphicLayerState::drawWithPen(const QPoint& point) const
@@ -49,7 +51,6 @@ GraphicMap::PaintingGraphicLayerState::drawWithPen(const QPoint& point) const
             }
         }
     }
-
 }
 
 void
@@ -68,7 +69,8 @@ GraphicMap::PaintingGraphicLayerState::drawWithRectangle(
             qDebug() << "CHIPSET: " << chipsetX + i << chipsetY + j;
             qDebug() << "TARGET: " << point.x() + i << point.y() + j;
             layer->setTile(
-                point.x() + i * 16, point.y() + j * 16,
+                quint16(point.x() + i * 16),
+                quint16(point.y() + j * 16),
                 (chipsetX + i) * 16, (chipsetY + j) * 16
             );
         }
@@ -122,4 +124,23 @@ GraphicMap::PaintingGraphicLayerState::drawWithSelection(
     }
 
     m_mapGraphicsScene.adjustLayers();
+}
+
+
+void
+GraphicMap::PaintingGraphicLayerState::drawCurrentSelection(
+    const QPoint& point, QGraphicsItem* selectionItem) const
+{
+    qDebug() << "Draw current selection";
+    if (nullptr != selectionItem) {
+        qDebug() << "Point is " << point;
+
+        selectionItem->setVisible(true);
+
+        // Translate the coordinate to get the top upper corner of the tile.
+        int x = point.x() - (point.x() % 16);
+        int y = point.y() - (point.y() % 16);
+
+        selectionItem->setPos(x, y);
+    }
 }

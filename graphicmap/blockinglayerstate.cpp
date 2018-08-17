@@ -22,6 +22,7 @@ void
 GraphicMap::BlockingLayerState::drawWithPen(const QPoint& point)
 const
 {
+    qDebug() << "BlockingLayerState::drawWithPen" << point;
     GraphicMap::BlockingGraphicLayer* layer =
         static_cast<GraphicMap::BlockingGraphicLayer*>(
                 m_mapGraphicsScene.activeLayer());
@@ -68,4 +69,11 @@ void GraphicMap::BlockingLayerState::onNewMap()
 void GraphicMap::BlockingLayerState::sceneCleared()
 {
 
+}
+
+void GraphicMap::BlockingLayerState::drawCurrentSelection(
+    const QPoint& point, QGraphicsItem* selectionItem) const
+{
+    Q_UNUSED(point);
+    Q_UNUSED(selectionItem);
 }

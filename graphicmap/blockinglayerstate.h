@@ -16,6 +16,9 @@ namespace GraphicMap {
             const QPoint&,
             const SelectionDrawingClipboard&) const override;
 
+        virtual void drawCurrentSelection(const QPoint&, QGraphicsItem*)
+            const override;
+
         virtual void adjustLayers() override;
         virtual void onNewMap() override;
         virtual void sceneCleared() override;

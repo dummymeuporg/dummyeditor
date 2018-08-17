@@ -50,3 +50,10 @@ GraphicMap::NotPaintingState::drawWithSelection(
     Q_UNUSED(point);
     Q_UNUSED(clipboard);
 }
+
+void GraphicMap::NotPaintingState::drawCurrentSelection(
+    const QPoint& point, QGraphicsItem* item) const
+{
+    Q_UNUSED(point);
+    Q_UNUSED(item);
+}

@@ -16,5 +16,7 @@ namespace GraphicMap
         virtual void drawWithSelection(
             const QPoint& point,
             const SelectionDrawingClipboard &clipboard) const override;
+        virtual void drawCurrentSelection(const QPoint&, QGraphicsItem*)
+            const override;
     };
 }

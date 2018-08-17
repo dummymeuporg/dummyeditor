@@ -66,9 +66,9 @@ void GraphicMap::VisibleGraphicLayer::removeTile(quint16 x, quint16 y)
 
 GraphicMap::VisibleGraphicLayer&
 GraphicMap::VisibleGraphicLayer::setTile(quint16 x,
-                                  quint16 y,
-                                  qint16 chipsetX,
-                                  qint16 chipsetY)
+                                         quint16 y,
+                                         qint16 chipsetX,
+                                         qint16 chipsetY)
 {
     const std::shared_ptr<Dummy::Map> map(m_mapGraphicsScene.map());
     if (x < m_mapGraphicsScene.map()->width() * 16
