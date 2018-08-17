@@ -24,6 +24,7 @@ void Dummy::Layer::resizeMap(quint16 width, quint16 height) {
 }
 
 void Dummy::Layer::_loadFromStream(QDataStream& stream) {
+    stream.setByteOrder(QDataStream::LittleEndian);
     for (auto it = begin(); it != end(); ++it) {
         quint16 i, j;
         stream >> i >> j;
@@ -32,6 +33,7 @@ void Dummy::Layer::_loadFromStream(QDataStream& stream) {
 }
 
 void Dummy::Layer::_writeToStream(QDataStream& stream) const {
+    stream.setByteOrder(QDataStream::LittleEndian);
     for (auto it = begin(); it != end(); ++it) {
         qDebug() << std::get<0>(*it) << std::get<1>(*it);
         stream << std::get<0>(*it) << std::get<1>(*it);

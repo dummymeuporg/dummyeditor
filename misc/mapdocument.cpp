@@ -4,7 +4,7 @@
 
 #include "mapdocument.h"
 
-Misc::MapDocument::MapDocument(const Dummy::Project& project,
+Misc::MapDocument::MapDocument(Dummy::Project& project,
                                std::shared_ptr<Dummy::Map> map)
     : m_project(project), m_isModified(false), m_map(map)
 {

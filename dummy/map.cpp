@@ -54,6 +54,8 @@ void Dummy::Map::saveToFile(QFile& file) const {
 
 void Dummy::Map::_loadFromStream(QDataStream& stream) {
     quint32 magicWord;
+
+    stream.setByteOrder(QDataStream::LittleEndian);
     stream >> magicWord;
     if (magicWord != Dummy::Map::MAGIC_WORD)
     {
@@ -73,6 +75,7 @@ void Dummy::Map::_loadFromStream(QDataStream& stream) {
 }
 
 void Dummy::Map::_writeToStream(QDataStream& stream) const {
+    stream.setByteOrder(QDataStream::LittleEndian);
     stream << Dummy::Map::MAGIC_WORD << m_version << m_width
            << m_height << m_chipset << m_music
            << m_firstLayer << m_secondLayer << m_thirdLayer
