@@ -101,6 +101,10 @@ namespace Dummy {
             return m_thirdLayer;
         }
 
+        BlockingLayer& blockingLayer() {
+            return m_blockingLayer;
+        }
+
         static std::shared_ptr<Map> loadFromFile(const Project&,
                                                  const QString& filename);
         static std::shared_ptr<Map> loadFromFile(const Project&, QFile& file);

@@ -73,6 +73,7 @@ GraphicMap::MapGraphicsScene::setMapDocument
         delete m_firstLayer;
         delete m_secondLayer;
         delete m_thirdLayer;
+        delete m_blockingLayer;
     }
     // Remove the grid.
     clear();
@@ -104,6 +105,10 @@ GraphicMap::MapGraphicsScene::setMapDocument
                                  m_map->thirdLayer(),
                                  m_mapChipset,
                                  5);
+
+    m_blockingLayer = new
+        GraphicMap::BlockingGraphicLayer(*this,
+                                         m_map->blockingLayer());
 
     _drawGrid();
     m_paintingLayerState->onNewMap();

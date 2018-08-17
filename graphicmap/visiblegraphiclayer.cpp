@@ -10,10 +10,7 @@ GraphicMap::VisibleGraphicLayer::VisibleGraphicLayer(
     Dummy::Layer& layer,
     const QPixmap& chipsetPixmap,
     int zValue) : GraphicMap::GraphicLayer(mapGraphicsScene),
-    m_layer(layer), m_chipsetPixmap(chipsetPixmap),
-    m_layerItems(m_mapGraphicsScene.map()->width() *
-                 m_mapGraphicsScene.map()->height()),
-    m_zValue(zValue)
+    m_layer(layer), m_chipsetPixmap(chipsetPixmap), m_zValue(zValue)
 {
     const std::shared_ptr<Dummy::Map> map(m_mapGraphicsScene.map());
     int index = 0;
@@ -40,23 +37,6 @@ GraphicMap::VisibleGraphicLayer::VisibleGraphicLayer(
 }
 
 GraphicMap::VisibleGraphicLayer::~VisibleGraphicLayer() {
-    for (auto it = m_layerItems.begin(); it != m_layerItems.end(); ++it)
-    {
-        if(*it != nullptr) {
-            m_mapGraphicsScene.removeItem(*it);
-        }
-    }
-}
-
-GraphicMap::VisibleGraphicLayer&
-GraphicMap::VisibleGraphicLayer::setOpacity(qreal opacity) {
-    for (auto it = m_layerItems.begin(); it != m_layerItems.end(); ++it)
-    {
-        if(*it != nullptr) {
-            reinterpret_cast<QGraphicsItem*>(*it)->setOpacity(opacity);
-        }
-    }
-    return *this;
 }
 
 void GraphicMap::VisibleGraphicLayer::removeTile(quint16 x, quint16 y)

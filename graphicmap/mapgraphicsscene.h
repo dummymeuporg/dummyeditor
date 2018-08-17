@@ -51,6 +51,11 @@ namespace GraphicMap {
             return m_thirdLayer;
         }
 
+        inline BlockingGraphicLayer* blockingLayer() const
+        {
+            return m_blockingLayer;
+        }
+
         inline GraphicLayer* activeLayer() const {
             return m_activeLayer;
         }

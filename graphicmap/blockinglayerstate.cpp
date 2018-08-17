@@ -5,6 +5,7 @@
 #include "graphicmap/blockinggraphiclayer.h"
 #include "graphicmap/blockinglayerstate.h"
 #include "graphicmap/mapgraphicsscene.h"
+#include "graphicmap/visiblegraphiclayer.h"
 
 GraphicMap::BlockingLayerState::BlockingLayerState(
     GraphicMap::MapGraphicsScene& mapGraphicsScene) :
@@ -26,7 +27,7 @@ const
     GraphicMap::BlockingGraphicLayer* layer =
         static_cast<GraphicMap::BlockingGraphicLayer*>(
                 m_mapGraphicsScene.activeLayer());
-    Q_UNUSED(layer);
+
     std::shared_ptr<Dummy::Map> map(
         m_mapGraphicsScene.mapDocument()->map());
 
@@ -35,6 +36,7 @@ const
         QPoint originPoint(point.x() - (point.x() % 16),
                            point.y() - (point.y() % 16));
         qDebug() << originPoint;
+        layer->toggleTile(point.x(), point.y());
     }
 }
 
@@ -57,13 +59,16 @@ GraphicMap::BlockingLayerState::drawWithSelection(
 
 void GraphicMap::BlockingLayerState::adjustLayers()
 {
-
+    m_mapGraphicsScene.firstLayer()->setOpacity(1);
+    m_mapGraphicsScene.secondLayer()->setOpacity(1);
+    m_mapGraphicsScene.thirdLayer()->setOpacity(1);
+    m_mapGraphicsScene.blockingLayer()->setOpacity(1);
 }
 
 
 void GraphicMap::BlockingLayerState::onNewMap()
 {
-
+    m_mapGraphicsScene.setActiveLayer(m_mapGraphicsScene.blockingLayer());
 }
 
 void GraphicMap::BlockingLayerState::sceneCleared()

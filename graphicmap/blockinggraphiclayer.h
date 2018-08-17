@@ -20,6 +20,7 @@ namespace GraphicMap {
         virtual void removeTile(quint16, quint16) override;
         void toggleTile(quint16, quint16);
     private:
+        void _drawCross(int, quint16, quint16);
         Dummy::BlockingLayer& m_blockingLayer;
         QVector<BlockingCrossItem*> m_crossItems;
     };

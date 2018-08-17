@@ -24,10 +24,6 @@ namespace GraphicMap {
             return m_layer;
         }
 
-        inline const QVector<QGraphicsPixmapItem*>& layerItems() const {
-            return m_layerItems;
-        }
-
         VisibleGraphicLayer& setTile(quint16 x,
                                      quint16 y,
                                      qint16 chipsetX,
@@ -35,14 +31,11 @@ namespace GraphicMap {
 
         VisibleGraphicLayer& setChipsetPixmap(const QPixmap*);
 
-        VisibleGraphicLayer& setOpacity(qreal);
-
         virtual void removeTile(quint16, quint16) override;
 
     private:
         Dummy::Layer& m_layer;
         const QPixmap& m_chipsetPixmap;
-        QVector<QGraphicsPixmapItem*> m_layerItems;
         int m_zValue;
     };
 }
