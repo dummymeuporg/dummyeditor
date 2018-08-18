@@ -448,7 +448,7 @@
      <x>0</x>
      <y>0</y>
      <width>874</width>
-     <height>20</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -513,7 +513,8 @@
     </property>
     <addaction name="actionLow_layer_1"/>
     <addaction name="actionLow_layer_2"/>
-    <addaction name="actionHigh_layer"/>
+    <addaction name="actionHigh_layer_1"/>
+    <addaction name="actionHigh_layer_2"/>
     <addaction name="separator"/>
     <addaction name="actionBlocking_layer"/>
     <addaction name="separator"/>
@@ -760,7 +761,7 @@
     <string>Shift+Z</string>
    </property>
   </action>
-  <action name="actionHigh_layer">
+  <action name="actionHigh_layer_1">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -769,7 +770,7 @@
      <normaloff>icons/icon_layer2.png</normaloff>icons/icon_layer2.png</iconset>
    </property>
    <property name="text">
-    <string>High layer</string>
+    <string>High layer 1</string>
    </property>
    <property name="shortcut">
     <string>Shift+E</string>
@@ -787,7 +788,7 @@
     <string>Events layer</string>
    </property>
    <property name="shortcut">
-    <string>Shift+T</string>
+    <string>Shift+Y</string>
    </property>
   </action>
   <action name="actionSelection">
@@ -817,7 +818,7 @@
     <string>Quick go (admin)</string>
    </property>
    <property name="shortcut">
-    <string>Shift+Y</string>
+    <string>Shift+U</string>
    </property>
   </action>
   <action name="actionStarting_point">
@@ -832,7 +833,7 @@
     <string>Starting point</string>
    </property>
    <property name="shortcut">
-    <string>Shift+U</string>
+    <string>Shift+I</string>
    </property>
   </action>
   <action name="actionRespawn_point">
@@ -847,7 +848,7 @@
     <string>Respawn point</string>
    </property>
    <property name="shortcut">
-    <string>Shift+I</string>
+    <string>Shift+O</string>
    </property>
   </action>
   <action name="actionLaunch_test">
@@ -933,7 +934,7 @@
     <string>Blocking layer</string>
    </property>
    <property name="shortcut">
-    <string>Shift+R</string>
+    <string>Shift+T</string>
    </property>
   </action>
   <action name="actionCut">
@@ -942,6 +943,21 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionHigh_layer_2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/icon_layer3.png</normaloff>icons/icon_layer3.png</iconset>
+   </property>
+   <property name="text">
+    <string>High layer 2</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+R</string>
    </property>
   </action>
  </widget>

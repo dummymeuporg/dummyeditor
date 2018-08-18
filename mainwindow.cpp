@@ -48,7 +48,8 @@ MainWindow::MainWindow(QWidget *parent) :
     layersGroup->addAction("Working layer");
     layersGroup->addAction(ui->actionLow_layer_1);
     layersGroup->addAction(ui->actionLow_layer_2);
-    layersGroup->addAction(ui->actionHigh_layer);
+    layersGroup->addAction(ui->actionHigh_layer_1);
+    layersGroup->addAction(ui->actionHigh_layer_2);
     layersGroup->addAction(ui->actionBlocking_layer);
     layersGroup->addAction(ui->actionEvents_layer);
     layersGroup->addAction(ui->actionQuick_go_admin);
@@ -104,7 +105,7 @@ void MainWindow::_connectScenes()
                      m_mapScene, SLOT(showFirstLayer()));
     QObject::connect(ui->actionLow_layer_2, SIGNAL(triggered(bool)),
                      m_mapScene, SLOT(showSecondLayer()));
-    QObject::connect(ui->actionHigh_layer, SIGNAL(triggered(bool)),
+    QObject::connect(ui->actionHigh_layer_1, SIGNAL(triggered(bool)),
                      m_mapScene, SLOT(showThirdLayer()));
     QObject::connect(ui->actionBlocking_layer, SIGNAL(triggered(bool)),
                      m_mapScene, SLOT(showBlockingLayer()));
@@ -134,7 +135,7 @@ void MainWindow::_closeCurrentProject()
                         m_mapScene, SLOT(showFirstLayer()));
     QObject::disconnect(ui->actionLow_layer_2, SIGNAL(triggered(bool)),
                         m_mapScene, SLOT(showSecondLayer()));
-    QObject::disconnect(ui->actionHigh_layer, SIGNAL(triggered(bool)),
+    QObject::disconnect(ui->actionHigh_layer_1, SIGNAL(triggered(bool)),
                         m_mapScene, SLOT(showThirdLayer()));
     QObject::disconnect(ui->actionBlocking_layer, SIGNAL(triggered(bool)),
                         m_mapScene, SLOT(showBlockingLayer()));
@@ -254,7 +255,7 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
     // Select some default layer
     if (!ui->actionLow_layer_1->isChecked() &&
         !ui->actionLow_layer_2->isChecked() &&
-            !ui->actionHigh_layer->isChecked()) {
+            !ui->actionHigh_layer_1->isChecked()) {
         ui->actionLow_layer_1->trigger();
     }
 
