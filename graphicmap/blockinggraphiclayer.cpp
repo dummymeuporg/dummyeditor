@@ -117,7 +117,7 @@ void GraphicMap::BlockingGraphicLayer::_drawCross(int index,
                                                   quint16 y)
 {
     m_layerItems[index] = new BlockingCrossItem();
-    m_layerItems[index]->setZValue(7);
+    m_layerItems[index]->setZValue(50);
     m_layerItems[index]->setPos(
         QPointF(x - (x % 16), y - (y % 16)));
     m_mapGraphicsScene.addItem(m_layerItems[index]);

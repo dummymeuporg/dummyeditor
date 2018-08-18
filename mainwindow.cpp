@@ -107,6 +107,8 @@ void MainWindow::_connectScenes()
                      m_mapScene, SLOT(showSecondLayer()));
     QObject::connect(ui->actionHigh_layer_1, SIGNAL(triggered(bool)),
                      m_mapScene, SLOT(showThirdLayer()));
+    QObject::connect(ui->actionHigh_layer_2, SIGNAL(triggered(bool)),
+                     m_mapScene, SLOT(showFourthLayer()));
     QObject::connect(ui->actionBlocking_layer, SIGNAL(triggered(bool)),
                      m_mapScene, SLOT(showBlockingLayer()));
     QObject::connect(ui->actionStarting_point, SIGNAL(triggered(bool)),
@@ -137,6 +139,8 @@ void MainWindow::_closeCurrentProject()
                         m_mapScene, SLOT(showSecondLayer()));
     QObject::disconnect(ui->actionHigh_layer_1, SIGNAL(triggered(bool)),
                         m_mapScene, SLOT(showThirdLayer()));
+    QObject::disconnect(ui->actionHigh_layer_2, SIGNAL(triggered(bool)),
+                        m_mapScene, SLOT(showFourthLayer()));
     QObject::disconnect(ui->actionBlocking_layer, SIGNAL(triggered(bool)),
                         m_mapScene, SLOT(showBlockingLayer()));
     QObject::disconnect(ui->actionStarting_point, SIGNAL(triggered(bool)),

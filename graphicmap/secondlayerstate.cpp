@@ -41,8 +41,10 @@ void GraphicMap::SecondLayerState::sceneCleared() {
 
 void GraphicMap::SecondLayerState::adjustLayers() {
     qDebug() << "Second state adjust layers.";
+    m_mapGraphicsScene.firstLayer()->setOpacity(1);
     m_mapGraphicsScene.secondLayer()->setOpacity(1);
     m_mapGraphicsScene.thirdLayer()->setOpacity(0.5);
+    m_mapGraphicsScene.fourthLayer()->setOpacity(0.25);
     m_mapGraphicsScene.blockingLayer()->setOpacity(0);
     m_mapGraphicsScene.startingPointLayer()->setOpacity(0);
 }

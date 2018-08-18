@@ -101,6 +101,10 @@ namespace Dummy {
             return m_thirdLayer;
         }
 
+        inline Layer& fourthLayer() {
+            return m_fourthLayer;
+        }
+
         BlockingLayer& blockingLayer() {
             return m_blockingLayer;
         }
@@ -136,7 +140,7 @@ namespace Dummy {
         QString m_chipset;
         QString m_music;
         QString m_backgroundPicture;
-        Layer m_firstLayer, m_secondLayer, m_thirdLayer;
+        Layer m_firstLayer, m_secondLayer, m_thirdLayer, m_fourthLayer;
         BlockingLayer m_blockingLayer;
     };
 }

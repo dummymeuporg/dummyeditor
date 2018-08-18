@@ -12,6 +12,7 @@ Dummy::Map::Map(const Project& project, quint16 width, quint16 height)
       m_firstLayer(m_width, m_height),
       m_secondLayer(m_width, m_height),
       m_thirdLayer(m_width, m_height),
+      m_fourthLayer(m_width, m_height),
       m_blockingLayer(m_width, m_height)
 {
     if (m_width < 1 || m_height < 1) {
@@ -66,11 +67,13 @@ void Dummy::Map::_loadFromStream(QDataStream& stream) {
     m_firstLayer.resizeMap(m_width, m_height);
     m_secondLayer.resizeMap(m_width, m_height);
     m_thirdLayer.resizeMap(m_width, m_height);
+    m_fourthLayer.resizeMap(m_width, m_height);
     m_blockingLayer.resizeMap(m_width, m_height);
 
     stream >> m_firstLayer;
     stream >> m_secondLayer;
     stream >> m_thirdLayer;
+    stream >> m_fourthLayer;
     stream >> m_blockingLayer;
 }
 
@@ -78,7 +81,10 @@ void Dummy::Map::_writeToStream(QDataStream& stream) const {
     stream.setByteOrder(QDataStream::LittleEndian);
     stream << Dummy::Map::MAGIC_WORD << m_version << m_width
            << m_height << m_chipset << m_music
-           << m_firstLayer << m_secondLayer << m_thirdLayer
+           << m_firstLayer
+           << m_secondLayer
+           << m_thirdLayer
+           << m_fourthLayer
            << m_blockingLayer;
 }
 

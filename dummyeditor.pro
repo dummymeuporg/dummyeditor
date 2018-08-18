@@ -36,7 +36,8 @@ SOURCES += \
     dummy/startingpoint.cpp \
     graphicmap/startingpointlayerstate.cpp \
     graphicmap/startingpointlayer.cpp \
-    graphicmap/mapscenelayer.cpp
+    graphicmap/mapscenelayer.cpp \
+    graphicmap/fourthlayerstate.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -70,7 +71,8 @@ HEADERS += \
     dummy/startingpoint.h \
     graphicmap/startingpointlayerstate.h \
     graphicmap/startingpointlayer.h \
-    graphicmap/mapscenelayer.h
+    graphicmap/mapscenelayer.h \
+    graphicmap/fourthlayerstate.h
 
 FORMS += \
     mainwindow.ui \
