@@ -238,7 +238,7 @@ void GraphicMap::MapGraphicsScene::showThirdLayer() {
 void GraphicMap::MapGraphicsScene::showFourthLayer()
 {
     qDebug() << "Fourth active layer";
-    if (nullptr != m_mapDocument)
+    if (nullptr == m_mapDocument)
     {
         return;
     }
