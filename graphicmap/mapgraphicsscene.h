@@ -58,6 +58,10 @@ namespace GraphicMap {
             return m_thirdLayer;
         }
 
+        inline VisibleGraphicLayer* fourthLayer() const {
+            return m_fourthLayer;
+        }
+
         inline BlockingGraphicLayer* blockingLayer() const
         {
             return m_blockingLayer;
@@ -104,6 +108,7 @@ namespace GraphicMap {
         void showFirstLayer();
         void showSecondLayer();
         void showThirdLayer();
+        void showFourthLayer();
         void showBlockingLayer();
         void showStartingPointLayer();
 
@@ -141,6 +146,7 @@ namespace GraphicMap {
         VisibleGraphicLayer* m_firstLayer;
         VisibleGraphicLayer* m_secondLayer;
         VisibleGraphicLayer* m_thirdLayer;
+        VisibleGraphicLayer* m_fourthLayer;
         BlockingGraphicLayer* m_blockingLayer;
         MapSceneLayer* m_activeLayer; // Either 1st, 2nd or 3rd layer.
         StartingPointLayer* m_startingPointLayer;

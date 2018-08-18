@@ -12,6 +12,7 @@
 #include "graphicmap/notpaintingstate.h"
 #include "graphicmap/blockinglayerstate.h"
 #include "graphicmap/firstlayerstate.h"
+#include "graphicmap/fourthlayerstate.h"
 #include "graphicmap/secondlayerstate.h"
 #include "graphicmap/thirdlayerstate.h"
 #include "graphicmap/startingpointlayerstate.h"
@@ -26,6 +27,7 @@ GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
     : QGraphicsScene(parent), m_map(nullptr), m_project(nullptr),
       m_firstLayer(nullptr),
       m_secondLayer(nullptr), m_thirdLayer(nullptr),
+      m_fourthLayer(nullptr),
       m_blockingLayer(nullptr),
       m_activeLayer(nullptr),
       m_startingPointLayer(nullptr),
@@ -77,6 +79,7 @@ GraphicMap::MapGraphicsScene::setMapDocument
         delete m_firstLayer;
         delete m_secondLayer;
         delete m_thirdLayer;
+        delete m_fourthLayer;
         delete m_blockingLayer;
         delete m_startingPointLayer;
     }
@@ -111,6 +114,12 @@ GraphicMap::MapGraphicsScene::setMapDocument
                                  m_map->thirdLayer(),
                                  m_mapChipset,
                                  5);
+
+    m_fourthLayer = new
+        GraphicMap::VisibleGraphicLayer(*this,
+                                        m_map->fourthLayer(),
+                                        m_mapChipset,
+                                        7);
 
     m_blockingLayer = new
         GraphicMap::BlockingGraphicLayer(*this,
@@ -224,6 +233,16 @@ void GraphicMap::MapGraphicsScene::showThirdLayer() {
         return;
     }
     setPaitingLayerState(new ThirdLayerState(*this));
+}
+
+void GraphicMap::MapGraphicsScene::showFourthLayer()
+{
+    qDebug() << "Fourth active layer";
+    if (nullptr != m_mapDocument)
+    {
+        return;
+    }
+    setPaitingLayerState(new FourthLayerState(*this));
 }
 
 void GraphicMap::MapGraphicsScene::showBlockingLayer()

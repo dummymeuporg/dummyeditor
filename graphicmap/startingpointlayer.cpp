@@ -64,7 +64,7 @@ void GraphicMap::StartingPointLayer::setStartingPointItem(const QPoint& point)
     m_startingPointItem = new QGraphicsPixmapItem(
         QPixmap::fromImage(QImage(":/icons/icon_prog2.png").scaled(16, 16)));
     m_startingPointItem->setPos(point);
-    m_startingPointItem->setZValue(10);
+    m_startingPointItem->setZValue(50);
     m_mapGraphicsScene.addItem(m_startingPointItem);
 
 }
