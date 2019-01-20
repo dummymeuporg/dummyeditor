@@ -21,7 +21,7 @@
     <item>
      <widget class="QTabWidget" name="tabObjects">
       <property name="currentIndex">
-       <number>0</number>
+       <number>6</number>
       </property>
       <widget class="QWidget" name="tabGeneral">
        <property name="layoutDirection">
@@ -706,8 +706,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/icon_pen.png</normaloff>icons/icon_pen.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icon_pen.png</normaloff>:/icons/icon_pen.png</iconset>
    </property>
    <property name="text">
     <string>Pen</string>
@@ -721,8 +721,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/icon_rect.png</normaloff>icons/icon_rect.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icon_rect.png</normaloff>:/icons/icon_rect.png</iconset>
    </property>
    <property name="text">
     <string>Rectangle</string>
@@ -736,8 +736,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/icon_layer0.png</normaloff>icons/icon_layer0.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icon_layer0.png</normaloff>:/icons/icon_layer0.png</iconset>
    </property>
    <property name="text">
     <string>Low layer 1</string>
@@ -751,8 +751,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/icon_layer1.png</normaloff>icons/icon_layer1.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icon_layer1.png</normaloff>:/icons/icon_layer1.png</iconset>
    </property>
    <property name="text">
     <string>Low layer 2</string>
@@ -766,8 +766,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/icon_layer2.png</normaloff>icons/icon_layer2.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icon_layer2.png</normaloff>:/icons/icon_layer2.png</iconset>
    </property>
    <property name="text">
     <string>High layer 1</string>
@@ -781,8 +781,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/icon_layerEvent.png</normaloff>icons/icon_layerEvent.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icon_layerEvent.png</normaloff>:/icons/icon_layerEvent.png</iconset>
    </property>
    <property name="text">
     <string>Events layer</string>
@@ -796,8 +796,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/icon_selection.png</normaloff>icons/icon_selection.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icon_selection.png</normaloff>:/icons/icon_selection.png</iconset>
    </property>
    <property name="text">
     <string>Selection</string>
@@ -811,8 +811,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/icon_prog1.png</normaloff>icons/icon_prog1.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icon_prog1.png</normaloff>:/icons/icon_prog1.png</iconset>
    </property>
    <property name="text">
     <string>Quick go (admin)</string>
@@ -826,8 +826,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/icon_prog2.png</normaloff>icons/icon_prog2.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icon_prog2.png</normaloff>:/icons/icon_prog2.png</iconset>
    </property>
    <property name="text">
     <string>Starting point</string>
@@ -841,8 +841,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/icon_prog3.png</normaloff>icons/icon_prog3.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icon_prog3.png</normaloff>:/icons/icon_prog3.png</iconset>
    </property>
    <property name="text">
     <string>Respawn point</string>
@@ -856,8 +856,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/icon_launch.png</normaloff>icons/icon_launch.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icon_launch.png</normaloff>:/icons/icon_launch.png</iconset>
    </property>
    <property name="text">
     <string>Launch test</string>
@@ -871,8 +871,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/icon_fullscreen.png</normaloff>icons/icon_fullscreen.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icon_fullscreen.png</normaloff>:/icons/icon_fullscreen.png</iconset>
    </property>
    <property name="text">
     <string>Activate fullscreen</string>
@@ -883,8 +883,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/icon_music.png</normaloff>icons/icon_music.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icon_music.png</normaloff>:/icons/icon_music.png</iconset>
    </property>
    <property name="text">
     <string>Activate music</string>
@@ -895,8 +895,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/icon_prog4.png</normaloff>icons/icon_prog4.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icon_prog4.png</normaloff>:/icons/icon_prog4.png</iconset>
    </property>
    <property name="text">
     <string>Activate character setting</string>
@@ -950,8 +950,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/icon_layer3.png</normaloff>icons/icon_layer3.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icon_layer3.png</normaloff>:/icons/icon_layer3.png</iconset>
    </property>
    <property name="text">
     <string>High layer 2</string>
