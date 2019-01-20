@@ -583,8 +583,8 @@
   </action>
   <action name="actionOpen">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/openProject_Icon.png</normaloff>icons/openProject_Icon.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/openProject_Icon.png</normaloff>:/icons/openProject_Icon.png</iconset>
    </property>
    <property name="text">
     <string>Open</string>
@@ -598,8 +598,8 @@
   </action>
   <action name="actionSave">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/save_Icon.png</normaloff>icons/save_Icon.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/save_Icon.png</normaloff>:/icons/save_Icon.png</iconset>
    </property>
    <property name="text">
     <string>Save</string>
@@ -638,8 +638,8 @@
   </action>
   <action name="actionCancel">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/cancel_Icon.png</normaloff>icons/cancel_Icon.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/cancel_Icon.png</normaloff>:/icons/cancel_Icon.png</iconset>
    </property>
    <property name="text">
     <string>Cancel</string>
@@ -653,8 +653,8 @@
   </action>
   <action name="actionCopy">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/copy_Icon.png</normaloff>icons/copy_Icon.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/copy_Icon.png</normaloff>:/icons/copy_Icon.png</iconset>
    </property>
    <property name="text">
     <string>Copy</string>
@@ -668,8 +668,8 @@
   </action>
   <action name="actionPaste">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/past_Icon.png</normaloff>icons/past_Icon.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/past_Icon.png</normaloff>:/icons/past_Icon.png</iconset>
    </property>
    <property name="text">
     <string>Paste</string>
