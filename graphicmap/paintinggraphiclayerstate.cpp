@@ -11,7 +11,8 @@
 
 GraphicMap::PaintingGraphicLayerState::PaintingGraphicLayerState(
     GraphicMap::MapGraphicsScene& mapGraphicsScene) :
-    GraphicMap::PaintingLayerState(mapGraphicsScene)
+    GraphicMap::PaintingLayerState(mapGraphicsScene,
+                                   QPair<int, int>(16, 16))
 {
 
 }

@@ -12,7 +12,7 @@
 
 GraphicMap::BlockingLayerState::BlockingLayerState(
     GraphicMap::MapGraphicsScene& mapGraphicsScene) :
-    GraphicMap::PaintingLayerState(mapGraphicsScene)
+    GraphicMap::PaintingLayerState(mapGraphicsScene, QPair<int, int>(8, 8))
 {
 
 }
@@ -109,6 +109,6 @@ void GraphicMap::BlockingLayerState::sceneCleared()
 void GraphicMap::BlockingLayerState::drawCurrentSelection(
     const QPoint& point, QGraphicsItem* selectionItem) const
 {
-    Q_UNUSED(point);
-    Q_UNUSED(selectionItem);
+    Q_UNUSED(point)
+    Q_UNUSED(selectionItem)
 }

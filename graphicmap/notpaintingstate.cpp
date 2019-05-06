@@ -9,7 +9,8 @@
 
 GraphicMap::NotPaintingState::NotPaintingState(
     GraphicMap::MapGraphicsScene& mapGraphicsScene)
-    : GraphicMap::PaintingLayerState(mapGraphicsScene)
+    : GraphicMap::PaintingLayerState(mapGraphicsScene,
+                                     QPair<int, int>(16, 16))
 {
     qDebug() << "Not painting.";
 }

@@ -126,9 +126,10 @@ GraphicMap::MapGraphicsScene::setMapDocument
                                          m_map->blockingLayer());
 
     m_startingPointLayer = new GraphicMap::StartingPointLayer(*this);
-    _drawGrid();
+
     m_paintingLayerState->onNewMap();
     m_paintingLayerState->adjustLayers();
+    m_paintingLayerState->drawGrid();
 
     changeSelection(QRect(0,0,0,0));
 
@@ -165,6 +166,7 @@ GraphicMap::MapGraphicsScene::setPaitingLayerState(
     m_paintingLayerState = state;
     m_paintingLayerState->onNewMap();
     m_paintingLayerState->adjustLayers();
+    m_paintingLayerState->drawGrid();
     return *this;
 }
 
