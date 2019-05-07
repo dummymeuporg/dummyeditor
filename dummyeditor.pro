@@ -4,6 +4,7 @@ QT += gui
 QT += xml
 
 SOURCES += \
+    graphicmap/blockingsquareitem.cpp \
     main.cpp \
     mainwindow.cpp \
     dummy/blockinglayer.cpp \
@@ -40,6 +41,7 @@ SOURCES += \
     graphicmap/fourthlayerstate.cpp
 
 HEADERS += \
+    graphicmap/blockingsquareitem.h \
     mainwindow.h \
     dummy/blockinglayer.h \
     dummy/project.h \

@@ -151,9 +151,10 @@ Dummy::Project::document(const QString& mapName) {
 
     if (!m_openedMaps.contains(cleantMapname)) {
 
-        std::shared_ptr<Map> map(Dummy::Map::loadFromFile(
+        std::shared_ptr<Map> map(Dummy::Map::loadMap(
             *this,
-            m_fullpath + "/maps/" + cleantMapname + ".map"));
+            cleantMapname
+        ));
         map->setName(cleantMapname);
 
         std::shared_ptr<Misc::MapDocument> mapDocument(

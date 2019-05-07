@@ -36,8 +36,8 @@ const
 
     if (map != nullptr)
     {
-        QPoint originPoint(point.x() - (point.x() % 16),
-                           point.y() - (point.y() % 16));
+        QPoint originPoint(point.x() - (point.x() % 8),
+                           point.y() - (point.y() % 8));
         qDebug() << originPoint;
         layer->toggleTile(quint16(point.x()), quint16(point.y()));
     }
@@ -50,12 +50,12 @@ GraphicMap::BlockingLayerState::drawWithRectangle(
     GraphicMap::BlockingGraphicLayer* layer =
         static_cast<BlockingGraphicLayer*>(m_mapGraphicsScene.activeLayer());
 
-    for (quint16 j = 0; j < rectChipsetSelection.height()/16; j++)
+    for (quint16 j = 0; j < rectChipsetSelection.height()/8; j++)
     {
-        for (quint16 i = 0; i < rectChipsetSelection.width()/16; i++)
+        for (quint16 i = 0; i < rectChipsetSelection.width()/8; i++)
         {
-            layer->toggleTile(quint16(point.x() + i * 16),
-                              quint16(point.y() + j * 16));
+            layer->toggleTile(quint16(point.x() + i * 8),
+                              quint16(point.y() + j * 8));
         }
     }
 }
@@ -68,11 +68,11 @@ GraphicMap::BlockingLayerState::drawWithSelection(
     int clipboardIndex = 0;
     for(int j = 0;
         j < clipboard.selectionClipboard().height();
-        j += 16)
+        j += 8)
     {
         for (int i = 0;
              i < clipboard.selectionClipboard().width();
-             i += 16)
+             i += 8)
         {
 
             bool isBlocking(

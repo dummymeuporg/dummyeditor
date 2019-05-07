@@ -1,5 +1,7 @@
 #pragma once
 
+#include <exception>
+
 #include <QVector>
 #include <QString>
 #include <QtGlobal>
@@ -15,9 +17,21 @@ namespace Dummy {
 
     class Project;
 
+    class MapError : public std::exception {
+    };
+
+    class WrongMagicNumber : public MapError
+    {
+    public:
+        const char* what() const noexcept {
+            return "the magic number is invalid";
+        }
+    };
+
     class Map
     {
-        const quint32 MAGIC_WORD = 0xF000BABA;
+        const quint32 GRAPHIC_MAGIC_WORD = 0xF000BABA;
+        const quint32 BLOCKING_MAGIC_WORD = 0xDEADDAAD;
     public:
         Map(const Project& project, quint16 width = 1, quint16 height = 1);
         virtual ~Map();
@@ -109,16 +123,20 @@ namespace Dummy {
             return m_blockingLayer;
         }
 
-        static std::shared_ptr<Map> loadFromFile(const Project&,
-                                                 const QString& filename);
-        static std::shared_ptr<Map> loadFromFile(const Project&, QFile& file);
+        static std::shared_ptr<Map> loadMap(const Project&, const QString&);
+        static std::shared_ptr<Map> loadGraphicLayersFromFile(
+            const Project&,
+                QFile& file
+        );
+        void _loadBlokingLayerFromFile(QFile&);
 
+        void save() const;
         void saveToFile(const QString& filename) const;
         void saveToFile(QFile& file) const;
 
         friend QDataStream& operator<<(QDataStream& stream,
                                        const Dummy::Map& map) {
-            map._writeToStream(stream);
+            map._writeGraphicLayersToStream(stream);
             return stream;
         }
 
@@ -131,7 +149,7 @@ namespace Dummy {
     private:
 
         void _loadFromStream(QDataStream&);
-        void _writeToStream(QDataStream&) const;
+        void _writeGraphicLayersToStream(QDataStream&) const;
 
         const Project& m_project;
         unsigned short m_version;

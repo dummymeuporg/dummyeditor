@@ -88,8 +88,8 @@ void MapsTreeView::_onNewMapAction() {
         QString mapName = dlg.getMapName();
         Dummy::Map map(*m_project, dlg.getWidth(), dlg.getHeight());
         map.setChipset(dlg.getChipset()).setMusic(dlg.getMusic());
-        map.saveToFile(m_project->fullpath() +
-                       "/maps/" + mapName + ".map");
+        map.setName(mapName);
+        map.save();
 
         // Add the new map into the tree.
         QList<QStandardItem*> mapRow { new QStandardItem(mapName) };

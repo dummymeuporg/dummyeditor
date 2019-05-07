@@ -1,6 +1,6 @@
 #include <QDebug>
 
-#include "graphicmap/blockingcrossitem.h"
+#include "graphicmap/blockingsquareitem.h"
 #include "graphicmap/blockinggraphiclayer.h"
 #include "graphicmap/mapgraphicsscene.h"
 #include "dummy/blockinglayer.h"
@@ -12,6 +12,9 @@ GraphicMap::BlockingGraphicLayer::BlockingGraphicLayer(
     : GraphicMap::GraphicLayer(mapGraphicsScene),
       m_blockingLayer(blockingLayer)
 {
+    // XXX: Find a better way to resize?
+    m_layerItems.resize(m_layerItems.size() * 4);
+
     const std::shared_ptr<Dummy::Map> map(m_mapGraphicsScene.map());
     int index = 0;
     for (auto it = m_blockingLayer.begin(); it != m_blockingLayer.end();
@@ -22,9 +25,9 @@ GraphicMap::BlockingGraphicLayer::BlockingGraphicLayer(
         if (m_blockingLayer[index])
         {
             qDebug() << "TRUE!";
-            qreal posX((index % map->width()) * 16);
-            qreal posY((index / map->height()) * 16);
-            _drawCross(index, quint16(posX), quint16(posY));
+            qreal posX((index % (map->width()*2)) * 8);
+            qreal posY((index / (map->height()*2)) * 8);
+            _draw(index, quint16(posX), quint16(posY));
         }
     }
 }
@@ -42,7 +45,7 @@ GraphicMap::BlockingGraphicLayer::removeTile(quint16 x, quint16 y)
         && y < m_mapGraphicsScene.map()->height() * 16)
     {
         const std::shared_ptr<Dummy::Map> map(m_mapGraphicsScene.map());
-        int index((y/16) * map->width() + (x/16));
+        int index((y/8) * map->width() * 2 + (x/8));
         m_blockingLayer[index] = false;
         if (nullptr != m_layerItems[index])
         {
@@ -60,7 +63,7 @@ void GraphicMap::BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
         && y < m_mapGraphicsScene.map()->height() * 16)
     {
         const std::shared_ptr<Dummy::Map> map(m_mapGraphicsScene.map());
-        int index((y/16) * map->width() + (x/16));
+        int index((y/8) * map->width() * 2 + (x/8));
         qDebug() << "Index: " << index;
         if (m_blockingLayer[index])
         {
@@ -76,7 +79,7 @@ void GraphicMap::BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
         {
             qDebug() << "False!";
             qDebug() << x << y;
-            _drawCross(index, x, y);
+            _draw(index, x, y);
             m_blockingLayer[index] = true;
         }
     }
@@ -92,7 +95,7 @@ void GraphicMap::BlockingGraphicLayer::setTile(quint16 x,
         && y < m_mapGraphicsScene.map()->height() * 16)
     {
         const std::shared_ptr<Dummy::Map> map(m_mapGraphicsScene.map());
-        int index((y/16) * map->width() + (x/16));
+        int index((y/8) * map->width() * 2 + (x/8));
 
         if (nullptr != m_layerItems[index])
         {
@@ -102,7 +105,7 @@ void GraphicMap::BlockingGraphicLayer::setTile(quint16 x,
 
         if (isBlocking)
         {
-            _drawCross(index, x, y);
+            _draw(index, x, y);
             m_blockingLayer[index] = true;
         }
         else
@@ -112,13 +115,12 @@ void GraphicMap::BlockingGraphicLayer::setTile(quint16 x,
     }
 }
 
-void GraphicMap::BlockingGraphicLayer::_drawCross(int index,
-                                                  quint16 x,
-                                                  quint16 y)
+void
+GraphicMap::BlockingGraphicLayer::_draw(int index, quint16 x, quint16 y)
 {
-    m_layerItems[index] = new BlockingCrossItem();
+    m_layerItems[index] = new BlockingSquareItem();
     m_layerItems[index]->setZValue(50);
     m_layerItems[index]->setPos(
-        QPointF(x - (x % 16), y - (y % 16)));
+        QPointF(x - (x % 8), y - (y % 8)));
     m_mapGraphicsScene.addItem(m_layerItems[index]);
 }

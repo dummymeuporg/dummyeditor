@@ -81,8 +81,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphicsViewChipset->scale(2.0, 2.0);
     ui->graphicsViewMap->scale(2.0, 2.0);
 
-    qDebug() << "Coucou Christine !!!";
-
 }
 
 void MainWindow::_initializeScenes()

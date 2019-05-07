@@ -10,7 +10,7 @@ namespace Dummy {
 }
 
 namespace GraphicMap {
-    class BlockingCrossItem;
+    class BlockingSquareItem;
     class MapGraphicsScene;
     class BlockingGraphicLayer : public GraphicLayer
     {
@@ -21,8 +21,8 @@ namespace GraphicMap {
         void toggleTile(quint16, quint16);
         void setTile(quint16, quint16, bool);
     private:
-        void _drawCross(int, quint16, quint16);
+        void _draw(int, quint16, quint16);
         Dummy::BlockingLayer& m_blockingLayer;
-        QVector<BlockingCrossItem*> m_crossItems;
+        QVector<BlockingSquareItem*> m_crossItems;
     };
 }

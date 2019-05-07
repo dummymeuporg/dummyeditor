@@ -13,6 +13,5 @@ Misc::MapDocument::MapDocument(Dummy::Project& project,
 
 void Misc::MapDocument::save() {
     qDebug() << "Save " << m_map->name();
-    m_map->saveToFile(m_map->project().fullpath() + "/maps/" +
-                      m_map->name() + ".map");
+    m_map->save();
 }

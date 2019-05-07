@@ -18,12 +18,12 @@ void GraphicMap::BlockingCrossItem::paint(
     const QStyleOptionGraphicsItem* option,
     QWidget* widget)
 {
-    Q_UNUSED(option);
-    Q_UNUSED(widget);
+    Q_UNUSED(option)
+    Q_UNUSED(widget)
 
     QBrush brush(Qt::black);
 
     painter->setBrush(brush);
-    painter->drawLine(0, 0, 16, 16);
-    painter->drawLine(0, 16, 16, 0);
+    painter->drawLine(0, 0, 8, 8);
+    painter->drawLine(0, 8, 8, 0);
 }

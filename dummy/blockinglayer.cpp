@@ -33,6 +33,7 @@ void Dummy::BlockingLayer::_loadFromStream(QDataStream& stream)
         stream >> isBlocking;
         *it = isBlocking;
     }
+    qDebug() << "read done.";
 }
 
 void Dummy::BlockingLayer::_writeToStream(QDataStream& stream) const
