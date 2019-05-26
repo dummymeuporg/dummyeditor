@@ -1,3 +1,5 @@
+CONFIG += c++17
+
 QT += widgets
 QT += core
 QT += gui

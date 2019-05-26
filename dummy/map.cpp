@@ -97,7 +97,29 @@ void Dummy::Map::_loadFromStream(QDataStream& stream) {
     {
         throw WrongMagicNumber();
     }
-    stream >> m_version >> m_width >> m_height >> m_chipset >> m_music;
+    stream >> m_version >> m_width >> m_height;
+
+    // read chipset and music from standard strings
+    quint32 size;
+    std::string name;
+
+    stream >> size;
+    if (0 != size) {
+        name.resize(size);
+        stream.readRawData(name.data(), static_cast<int>(size));
+        m_chipset = QString::fromStdString(name);
+    } else {
+        m_chipset = "";
+    }
+
+    stream >> size;
+    if (0 != size) {
+        name.resize(size);
+        stream.readRawData(name.data(), static_cast<int>(size));
+        m_music = QString::fromStdString(name);
+    } else {
+        m_music = "";
+    }
 
     m_firstLayer.resizeMap(m_width, m_height);
     m_secondLayer.resizeMap(m_width, m_height);
@@ -115,8 +137,27 @@ void Dummy::Map::_loadFromStream(QDataStream& stream) {
 void Dummy::Map::_writeGraphicLayersToStream(QDataStream& stream) const {
     stream.setByteOrder(QDataStream::LittleEndian);
     stream << Dummy::Map::GRAPHIC_MAGIC_WORD << m_version << m_width
-           << m_height << m_chipset << m_music
-           << m_firstLayer
+           << m_height;
+
+
+    // Write standard strings for chipset and music.
+    std::string name = m_chipset.toStdString();
+
+    /*
+    quint32 size = static_cast<quint32>(name.size());
+    stream << size;
+    */
+
+    // Apparently, the data() method returns the string size plus its content.
+    stream.writeBytes(name.data(), static_cast<quint32>(name.size()));
+
+    name = m_music.toStdString();
+    //size = static_cast<quint32>(name.size());
+
+    //stream << size;
+    stream.writeBytes(name.data(), static_cast<quint32>(name.size()));
+
+    stream << m_firstLayer
            << m_secondLayer
            << m_thirdLayer
            << m_fourthLayer;
