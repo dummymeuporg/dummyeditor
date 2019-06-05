@@ -1,6 +1,8 @@
 #ifndef LAYER_H
 #define LAYER_H
 
+#include <cstdint>
+
 #include <QDataStream>
 #include <QtGlobal>
 #include <QVector>
@@ -8,7 +10,7 @@
 #include <tuple>
 
 namespace Dummy {
-    class Layer : public QVector<std::tuple<qint16, qint16>>
+    class Layer : public QVector<std::tuple<std::int8_t, std::int8_t>>
     {
     public:
         Layer(quint16, quint16);
@@ -29,7 +31,8 @@ namespace Dummy {
             return stream;
         }
 
-        Layer& setTile(quint16 x, quint16 y, qint16 chipsetX, qint16 chipsetY);
+        Layer& setTile(quint16 x, quint16 y,
+                       std::int8_t chipsetX, std::int8_t chipsetY);
 
     private:
         void _writeToStream(QDataStream&) const;

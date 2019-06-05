@@ -186,7 +186,8 @@ void Dummy::Map::save() const {
 }
 
 Dummy::Layer&
-Dummy::Layer::setTile(quint16 x, quint16 y, qint16 chipsetX, qint16 chipsetY)
+Dummy::Layer::setTile(quint16 x, quint16 y,
+                      std::int8_t chipsetX, std::int8_t chipsetY)
 {
     quint16 index = y * m_width + x;
     operator[](index) = std::make_tuple(chipsetX, chipsetY);
