@@ -912,8 +912,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/icon_penpath.png</normaloff>icons/icon_penpath.png</iconset>
+    <iconset resource="../icons.qrc">
+     <normaloff>:/icons/icon_penpath.png</normaloff>:/icons/icon_penpath.png</iconset>
    </property>
    <property name="text">
     <string>Path</string>
@@ -927,8 +927,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/icon_blocking.png</normaloff>icons/icon_blocking.png</iconset>
+    <iconset resource="../icons.qrc">
+     <normaloff>:/icons/icon_blocking.png</normaloff>:/icons/icon_blocking.png</iconset>
    </property>
    <property name="text">
     <string>Blocking layer</string>

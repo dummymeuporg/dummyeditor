@@ -23,5 +23,7 @@
         <file>icons/icon_prog4.png</file>
         <file>icons/icon_rect.png</file>
         <file>icons/icon_selection.png</file>
+        <file>icons/icon_blocking.png</file>
+        <file>icons/icon_penpath.png</file>
     </qresource>
 </RCC>
