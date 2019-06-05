@@ -1,6 +1,6 @@
 #pragma once
 
-#include "graphicmap/paintinggraphiclayerstate.h"
+#include "graphicmap/paintinggraphiclayerstate.hpp"
 
 namespace GraphicMap {
     class MapGraphicsScene;

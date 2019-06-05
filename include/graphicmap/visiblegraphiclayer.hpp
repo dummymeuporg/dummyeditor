@@ -3,8 +3,8 @@
 #include <QGraphicsScene>
 #include <QPixmap>
 
-#include "dummy/layer.h"
-#include "graphicmap/graphiclayer.h"
+#include "dummy/layer.hpp"
+#include "graphicmap/graphiclayer.hpp"
 
 namespace GraphicMap {
     // Forward declaration:

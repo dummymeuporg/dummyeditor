@@ -5,7 +5,7 @@
 
 #include <QDialog>
 
-#include "dummy/project.h"
+#include "dummy/project.hpp"
 
 namespace Dummy {
     class Map;

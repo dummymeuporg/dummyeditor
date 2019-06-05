@@ -7,7 +7,7 @@
 
 #include <algorithm>
 
-#include "chipsetgraphicsscene.h"
+#include "chipsetgraphicsscene.hpp"
 
 ChipsetGraphicsScene::ChipsetGraphicsScene(QObject* parent) :
     QGraphicsScene(parent), m_selectionRectItem(nullptr), m_chipset(nullptr),

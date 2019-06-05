@@ -8,7 +8,7 @@
 #include "graphicmap/mapgraphicsscene.hpp"
 #include "graphicmap/startingpointlayer.hpp"
 #include "graphicmap/visiblegraphiclayer.hpp"
-#include "secondlayerstate.hpp"
+#include "graphicmap/secondlayerstate.hpp"
 
 GraphicMap::SecondLayerState::SecondLayerState(
         GraphicMap::MapGraphicsScene& mapGraphicsScene)

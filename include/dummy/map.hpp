@@ -7,8 +7,8 @@
 #include <QtGlobal>
 #include <memory>
 
-#include "dummy/layer.h"
-#include "dummy/blockinglayer.h"
+#include "dummy/layer.hpp"
+#include "dummy/blockinglayer.hpp"
 
 class QDataStream;
 class QFile;

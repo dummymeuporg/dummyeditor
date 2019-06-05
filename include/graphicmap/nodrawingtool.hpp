@@ -1,6 +1,6 @@
 #pragma once
 
-#include "graphicmap/drawingtool.h"
+#include "graphicmap/drawingtool.hpp"
 
 class QPoint;
 

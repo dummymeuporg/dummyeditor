@@ -15,6 +15,7 @@ find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Xml REQUIRED)
 find_package(Qt5Widgets REQUIRED)
+find_package(Boost 1.69.0 REQUIRED)
 
 macro(GroupSources curdir)
     file(
@@ -35,8 +36,8 @@ macro(GroupSources curdir)
     endforeach()
 endmacro()
 
-file(GLOB_RECURSE SOURCES "src/*.cpp" "ui/*.ui")
-file(GLOB_RECURSE HEADERS "include/*.cpp")
+file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.ui")
+file(GLOB_RECURSE HEADERS "include/*.hpp")
 
 GroupSources(include)
 GroupSources(src)
@@ -50,4 +51,7 @@ target_link_libraries(dummyeditor
     Qt5::Xml
     Qt5::Widgets
     dummy
+    ${Boost_LIBRARIES}
 )
+
+target_include_directories(dummyeditor PUBLIC ${Boost_INCLUDE_DIR})

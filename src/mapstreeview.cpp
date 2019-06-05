@@ -2,10 +2,10 @@
 #include <QDebug>
 #include <QTreeWidgetItem>
 
-#include "dummy/map.h"
-#include "dummy/project.h"
-#include "mapstreeview.h"
-#include "mapeditdialog.h"
+#include "dummy/map.hpp"
+#include "dummy/project.hpp"
+#include "mapstreeview.hpp"
+#include "mapeditdialog.hpp"
 
 
 MapsTreeView::MapsTreeView(QWidget* parent) : QTreeView(parent),

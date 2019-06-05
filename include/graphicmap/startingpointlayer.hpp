@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "graphicmap/mapscenelayer.h"
+#include "graphicmap/mapscenelayer.hpp"
 
 class QGraphicsPixmapItem;
 class QPoint;

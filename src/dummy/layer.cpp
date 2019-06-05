@@ -2,7 +2,7 @@
 #include <QDataStream>
 #include <QtGlobal>
 
-#include "layer.hpp"
+#include "dummy/layer.hpp"
 
 Dummy::Layer::Layer(quint16 width, quint16 height) :
     QVector<std::tuple<qint16, qint16>>(width * height),

@@ -3,7 +3,7 @@
 #include <QtGlobal>
 #include <QVector>
 
-#include "graphicmap/mapscenelayer.h"
+#include "graphicmap/mapscenelayer.hpp"
 
 class QGraphicsItem;
 

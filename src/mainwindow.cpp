@@ -5,15 +5,15 @@
 #include <QKeyEvent>
 #include <QMessageBox>
 
-#include "dummy/map.h"
-#include "dummy/project.h"
+#include "dummy/map.hpp"
+#include "dummy/project.hpp"
 
-#include "misc/maptreemodel.h"
+#include "misc/maptreemodel.hpp"
 
-#include "chipsetgraphicsscene.h"
-#include "graphicmap/mapgraphicsscene.h"
-#include "mainwindow.h"
-#include "mapeditdialog.h"
+#include "chipsetgraphicsscene.hpp"
+#include "graphicmap/mapgraphicsscene.hpp"
+#include "mainwindow.hpp"
+#include "mapeditdialog.hpp"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :

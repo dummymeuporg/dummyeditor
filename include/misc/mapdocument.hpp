@@ -1,7 +1,7 @@
 #ifndef MAPDOCUMENT_H
 #define MAPDOCUMENT_H
 
-#include "dummy/map.h"
+#include "dummy/map.hpp"
 
 namespace Dummy {
     class Project;

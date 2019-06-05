@@ -1,4 +1,4 @@
-#include "maptreemodel.hpp"
+#include "misc/maptreemodel.hpp"
 
 #include <QDomNode>
 

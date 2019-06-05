@@ -4,7 +4,7 @@
 #include <QAction>
 #include <QMainWindow>
 
-#include "dummy/project.h"
+#include "dummy/project.hpp"
 
 namespace Ui {
 class MainWindow;

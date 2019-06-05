@@ -2,7 +2,7 @@
 
 #include "dummy/project.hpp"
 
-#include "mapdocument.hpp"
+#include "misc/mapdocument.hpp"
 
 Misc::MapDocument::MapDocument(Dummy::Project& project,
                                std::shared_ptr<Dummy::Map> map)

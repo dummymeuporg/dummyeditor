@@ -2,10 +2,10 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
-#include "mapeditdialog.h"
+#include "mapeditdialog.hpp"
 #include "ui_mapeditdialog.h"
 
-#include "dummy/map.h"
+#include "dummy/map.hpp"
 
 MapEditDialog::MapEditDialog(
     const std::shared_ptr<const Dummy::Project> project,

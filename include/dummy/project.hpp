@@ -7,10 +7,10 @@
 #include <QMap>
 #include <QString>
 
-#include "misc/mapdocument.h"
-#include "misc/maptreemodel.h"
+#include "misc/mapdocument.hpp"
+#include "misc/maptreemodel.hpp"
 
-#include "dummy/startingpoint.h"
+#include "dummy/startingpoint.hpp"
 
 namespace Dummy {
     class Project

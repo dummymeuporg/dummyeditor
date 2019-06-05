@@ -3,7 +3,7 @@
 #include <QPixmap>
 #include <QtGlobal>
 
-#include "graphicmap/drawingtool.h"
+#include "graphicmap/drawingtool.hpp"
 
 class QGraphicsPixmapItem;
 namespace GraphicMap {
