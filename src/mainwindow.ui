@@ -965,7 +965,7 @@
   <customwidget>
    <class>MapsTreeView</class>
    <extends>QTreeView</extends>
-   <header>mapstreeview.h</header>
+   <header>mapstreeview.hpp</header>
   </customwidget>
  </customwidgets>
  <resources>
