@@ -43,7 +43,7 @@ GroupSources(include)
 GroupSources(src)
 GroupSources(ui)
 
-add_executable(dummyeditor ${SOURCES} ${HEADERS})
+add_executable(dummyeditor ${SOURCES} ${HEADERS} icons.qrc)
 
 target_link_libraries(dummyeditor
     Qt5::Core
