@@ -1,15 +1,13 @@
 cmake_minimum_required(VERSION 3.10.0)
 project(dummyeditor)
 include_directories(
-    dummy
-    graphicmap
-    misc
+    include
     vendor/libdummy/include
 )
 
-set (CMAKE_CXX_STANDARD 17)
-
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -Wall")
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_CXX_STANDARD 17)
 
 add_subdirectory("vendor/libdummy")
 
@@ -18,9 +16,31 @@ find_package(Qt5Gui REQUIRED)
 find_package(Qt5Xml REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
-file(GLOB_RECURSE SOURCES "dummy/*.cpp")
-file(GLOB_RECURSE HEADERS "graphicmap/*.cpp")
-file(GLOB_RECURSE HEADERS "misc/*.cpp")
+macro(GroupSources curdir)
+    file(
+        GLOB children RELATIVE ${PROJECT_SOURCE_DIR}/${curdir}
+        ${PROJECT_SOURCE_DIR}/${curdir}/*
+    )
+    foreach(child ${children})
+        if(IS_DIRECTORY ${PROJECT_SOURCE_DIR}/${curdir}/${child})
+            GroupSources(${curdir}/${child})
+        else()
+            string(REPLACE "/" "\\" groupname ${curdir})
+            source_group(
+                ${groupname}
+                FILES
+                ${PROJECT_SOURCE_DIR}/${curdir}/${child}
+            )
+        endif()
+    endforeach()
+endmacro()
+
+file(GLOB_RECURSE SOURCES "src/*.cpp" "ui/*.ui")
+file(GLOB_RECURSE HEADERS "include/*.cpp")
+
+GroupSources(include)
+GroupSources(src)
+GroupSources(ui)
 
 add_executable(dummyeditor ${SOURCES} ${HEADERS})
 
