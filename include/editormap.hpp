@@ -29,4 +29,11 @@ public:
     void setChipset(const std::string&);
     void setMusic(const std::string&);
     void reset(std::uint16_t, std::uint16_t);
+
+    void save();
+private:
+    void _saveBlockingLayer();
+    void _saveGraphicLayers();
+    static void _writeStdString(std::ofstream&, const std::string&);
+
 };

@@ -98,17 +98,12 @@ void MapsTreeView::_onNewMapAction() {
         auto mapDocument = std::make_shared<Misc::MapDocument>(
             *m_project, mapName, map
         );
-        /*
-        //Dummy::Core::GraphicMap map(*m_project, dlg.getWidth(), dlg.getHeight());
-        map.setChipset(dlg.getChipset()).setMusic(dlg.getMusic());
-        map.setName(mapName);
-        map.save();
 
+        map->save();
         // Add the new map into the tree.
         QList<QStandardItem*> mapRow { new QStandardItem(mapName) };
         selectedParentMap->appendRow(mapRow);
         expand(m_selectedModelIndex);
-        */
     }
 }
 
