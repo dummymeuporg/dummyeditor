@@ -103,26 +103,32 @@ GraphicMap::MapGraphicsScene::setMapDocument
             ).string().c_str())
     );
 
-    m_firstLayer = new VisibleGraphicLayer(*this,
-                                 m_map->firstLayer(),
-                                 m_mapChipset,
-                                 1);
+    m_firstLayer = new VisibleGraphicLayer(
+        *this,
+        m_map->firstLayer(),
+        m_mapChipset,
+        1
+    );
 
-    m_secondLayer = new VisibleGraphicLayer(*this,
-                                 m_map->secondLayer(),
-                                 m_mapChipset,
-                                 3);
+    m_secondLayer = new VisibleGraphicLayer(
+        *this,
+        m_map->secondLayer(),
+        m_mapChipset,
+        3
+    );
 
-    m_thirdLayer = new VisibleGraphicLayer(*this,
-                                 m_map->thirdLayer(),
-                                 m_mapChipset,
-                                 5);
+    m_thirdLayer = new VisibleGraphicLayer(
+        *this,
+        m_map->thirdLayer(),
+        m_mapChipset,
+        5
+    );
 
     m_fourthLayer = new VisibleGraphicLayer(
-            *this,
-            m_map->fourthLayer(),
-            m_mapChipset,
-            7
+        *this,
+        m_map->fourthLayer(),
+        m_mapChipset,
+        7
     );
 
     m_blockingLayer = new BlockingGraphicLayer(*this, m_map->blockingLayer());

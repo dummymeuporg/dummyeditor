@@ -14,6 +14,17 @@
 class EditorStartingPoint;
 
 
+class EditorProjectError : public std::exception {
+
+};
+
+class NoStartingPoint : public EditorProjectError {
+public:
+    const char* what() const noexcept override {
+        return "the project has no starting point";
+    }
+};
+
 class EditorProject
 {
 public:
@@ -54,6 +65,9 @@ public:
     }
 
     const EditorStartingPoint& startingPoint() const {
+        if (m_startingPoint == nullptr) {
+            throw NoStartingPoint();
+        }
         return *m_startingPoint;
     }
 

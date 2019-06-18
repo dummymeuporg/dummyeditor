@@ -21,13 +21,18 @@ GraphicMap::StartingPointLayer::StartingPointLayer(
     std::shared_ptr<Dummy::Core::GraphicMap> map(
         m_mapGraphicsScene.mapDocument()->map());
     const EditorProject& project(m_mapGraphicsScene.mapDocument()->project());
-    const EditorStartingPoint* startingPoint = project.startingPoint();
 
-    if (nullptr != startingPoint && startingPoint->mapName() == mapDocument->name())
-    {
-        qDebug() << "SAME MAP! Set Item.";
-        setStartingPointItem(QPoint(startingPoint->x()*16,
-                                    startingPoint->y()*16));
+    try {
+        const EditorStartingPoint& startingPoint = project.startingPoint();
+
+        if (startingPoint.mapName() == mapDocument->mapName())
+        {
+            qDebug() << "SAME MAP! Set Item.";
+            setStartingPointItem(QPoint(startingPoint.x()*16,
+                                        startingPoint.y()*16));
+        }
+    } catch(const ::NoStartingPoint& e) {
+        qDebug() << "StartingPointLayer: " << e.what();
     }
 
 }

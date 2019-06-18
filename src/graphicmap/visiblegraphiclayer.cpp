@@ -1,18 +1,20 @@
 #include <QGraphicsPixmapItem>
 
-#include "dummy/map.hpp"
+#include "core/graphic_map.hpp"
 
 #include "graphicmap/mapgraphicsscene.hpp"
 #include "graphicmap/visiblegraphiclayer.hpp"
 
 GraphicMap::VisibleGraphicLayer::VisibleGraphicLayer(
     GraphicMap::MapGraphicsScene& mapGraphicsScene,
-    Dummy::Layer& layer,
+    Dummy::Core::GraphicLayer& layer,
     const QPixmap& chipsetPixmap,
     int zValue) : GraphicMap::GraphicLayer(mapGraphicsScene),
     m_layer(layer), m_chipsetPixmap(chipsetPixmap), m_zValue(zValue)
 {
-    const std::shared_ptr<Dummy::Map> map(m_mapGraphicsScene.map());
+    const std::shared_ptr<Dummy::Core::GraphicMap> map(
+        m_mapGraphicsScene.map()
+    );
     int index = 0;
     for (auto it = m_layer.begin();
          it != m_layer.end();
@@ -53,7 +55,9 @@ GraphicMap::VisibleGraphicLayer::setTile(quint16 x,
                                          qint16 chipsetX,
                                          qint16 chipsetY)
 {
-    const std::shared_ptr<Dummy::Map> map(m_mapGraphicsScene.map());
+    const std::shared_ptr<Dummy::Core::GraphicMap> map(
+        m_mapGraphicsScene.map()
+    );
     if (x < m_mapGraphicsScene.map()->width() * 16
         && y < m_mapGraphicsScene.map()->height() * 16)
     {

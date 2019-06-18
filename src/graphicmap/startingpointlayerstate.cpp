@@ -2,8 +2,8 @@
 #include <QtGlobal>
 #include <QPoint>
 
-#include "dummy/startingpoint.hpp"
-#include "dummy/project.hpp"
+#include "editorstartingpoint.hpp"
+#include "editorproject.hpp"
 #include "misc/mapdocument.hpp"
 #include "graphicmap/blockinggraphiclayer.hpp"
 #include "graphicmap/blockinglayerstate.hpp"
@@ -39,14 +39,19 @@ const
 
     GraphicMap::StartingPointLayer* layer =
         static_cast<StartingPointLayer*>(m_mapGraphicsScene.activeLayer());
-    std::shared_ptr<Dummy::Map> map(m_mapGraphicsScene.mapDocument()->map());
+    std::shared_ptr<Dummy::Core::GraphicMap> map(
+        m_mapGraphicsScene.mapDocument()->map()
+    );
     layer->setStartingPointItem(adjustedPoint);
 
+    // XXX: Fix this
+    /*
     m_mapGraphicsScene.project()->setStartingPoint(
-        Dummy::StartingPoint(map->name().toStdString().c_str(),
+        EditorStartingPoint(map->name().toStdString().c_str(),
                              quint16(adjustedPoint.x()/16),
                              quint16(adjustedPoint.y()/16))
     );
+    */
 }
 
 void
