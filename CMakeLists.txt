@@ -37,6 +37,8 @@ macro(GroupSources curdir)
     endforeach()
 endmacro()
 
+link_directories(${Boost_LIBRARY_DIRS})
+
 file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.ui")
 file(GLOB_RECURSE HEADERS "include/*.hpp")
 
