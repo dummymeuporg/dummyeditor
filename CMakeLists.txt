@@ -11,6 +11,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 
 add_subdirectory("vendor/libdummy")
+include_directories(include vendor/libdummy/include)
 
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)

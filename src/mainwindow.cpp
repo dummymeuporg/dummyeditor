@@ -210,15 +210,15 @@ void MainWindow::_loadProject(const QString& projectDirectory) {
 
     _connectScenes();
 
-    m_currentProject = std::shared_ptr<Dummy::Project>(
-        new Dummy::Project(projectDirectory)
+    m_currentProject = std::make_shared<EditorProject>(
+        projectDirectory
     );
 
     ui->treeViewMaps->setModel(
         static_cast<QAbstractItemModel*>(m_currentProject->mapsModel())
     );
 
-    ui->treeViewMaps->setProject(m_currentProject);
+    ui->treeViewMaps->setProject(m_currentProject.get());
 
     // Enable the first layer drawing by default.
     ui->actionLow_layer_1->trigger();

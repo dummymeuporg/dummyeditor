@@ -3,7 +3,6 @@
 #include <QGraphicsScene>
 #include <QPixmap>
 
-#include "dummy/layer.hpp"
 #include "graphicmap/graphiclayer.hpp"
 
 namespace GraphicMap {

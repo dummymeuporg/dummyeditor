@@ -1,7 +1,6 @@
 #include <QDebug>
 #include <QGraphicsRectItem>
 
-#include "dummy/map.hpp"
 #include "misc/mapdocument.hpp"
 
 #include "graphicmap/blockinggraphiclayer.hpp"

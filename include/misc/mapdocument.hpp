@@ -1,35 +1,35 @@
-#ifndef MAPDOCUMENT_H
-#define MAPDOCUMENT_H
+#pragma once
 
-#include "dummy/map.hpp"
+#include <memory>
 
 namespace Dummy {
-    class Project;
-}
+namespace Core {
+class GraphicMap;
+} // namespace Core
+} // namespace Dummy
 
+class EditorProject;
 
 namespace Misc {
-    class MapDocument {
-    public:
-        MapDocument(Dummy::Project& project,
-                    std::shared_ptr<Dummy::Map> map = nullptr);
+class MapDocument {
+public:
+    MapDocument(EditorProject&,
+                std::unique_ptr<Dummy::Core::GraphicMap>);
 
 
-        std::shared_ptr<Dummy::Map> map() {
-            return m_map;
-        }
+    Dummy::Core::GraphicMap& map() {
+        return *m_map;
+    }
 
-        void save();
+    void save();
 
-        inline Dummy::Project* project() {
-            return &m_project;
-        }
+    EditorProject& project() {
+        return m_editorProject;
+    }
 
-    private:
-        Dummy::Project& m_project;
-        bool m_isModified;
-        std::shared_ptr<Dummy::Map> m_map;
-    };
-}
-
-#endif // MAPDOCUMENT_H
+private:
+    EditorProject& m_editorProject;
+    bool m_isModified;
+    std::unique_ptr<Dummy::Core::GraphicMap> m_map;
+};
+} // namespace Misc
