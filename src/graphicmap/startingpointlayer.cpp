@@ -1,7 +1,7 @@
 #include <QDebug>
 #include <QGraphicsPixmapItem>
 
-#include "core/graphic_map.hpp"
+#include "editormap.hpp"
 #include "editorproject.hpp"
 #include "misc/mapdocument.hpp"
 #include "editorstartingpoint.hpp"
@@ -18,7 +18,7 @@ GraphicMap::StartingPointLayer::StartingPointLayer(
     std::shared_ptr<Misc::MapDocument> mapDocument(
         m_mapGraphicsScene.mapDocument()
     );
-    std::shared_ptr<Dummy::Core::GraphicMap> map(
+    std::shared_ptr<EditorMap> map(
         m_mapGraphicsScene.mapDocument()->map());
     const EditorProject& project(m_mapGraphicsScene.mapDocument()->project());
 

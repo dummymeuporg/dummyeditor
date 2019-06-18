@@ -1,7 +1,6 @@
 #include <QDebug>
 
-#include "core/map.hpp"
-#include "core/graphic_map.hpp"
+#include "editormap.hpp"
 
 #include "graphicmap/blockingsquareitem.hpp"
 #include "graphicmap/blockinggraphiclayer.hpp"
@@ -16,7 +15,7 @@ GraphicMap::BlockingGraphicLayer::BlockingGraphicLayer(
     // XXX: Find a better way to resize?
     m_layerItems.resize(m_layerItems.size() * 4);
 
-    const std::shared_ptr<Dummy::Core::GraphicMap> map(
+    const std::shared_ptr<EditorMap> map(
         m_mapGraphicsScene.map()
     );
     int index = 0;

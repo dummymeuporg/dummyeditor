@@ -3,7 +3,7 @@
 #include <QGraphicsPixmapItem>
 #include <QKeyEvent>
 
-#include "core/graphic_map.hpp"
+#include "editormap.hpp"
 #include "editorproject.hpp"
 #include "misc/mapdocument.hpp"
 
@@ -49,7 +49,7 @@ void GraphicMap::PenDrawingTool::chipsetSelectionChanged(
         }
         return;
     }
-    std::shared_ptr<Dummy::Core::GraphicMap> map(
+    std::shared_ptr<EditorMap> map(
         m_mapGraphicScene.mapDocument()->map());
 
     // XXX: Ugly

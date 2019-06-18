@@ -1,6 +1,6 @@
 #include <QDebug>
 
-#include "core/graphic_map.hpp"
+#include "editormap.hpp"
 
 #include "editorproject.hpp"
 
@@ -9,7 +9,7 @@
 Misc::MapDocument::MapDocument(
     EditorProject& project,
     const QString& name,
-    std::shared_ptr<Dummy::Core::GraphicMap> map
+    std::shared_ptr<EditorMap> map
 )
     : m_editorProject(project),
       m_isModified(false),

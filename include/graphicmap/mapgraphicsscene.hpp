@@ -21,6 +21,8 @@ namespace Misc {
     class MapDocument;
 }
 
+class EditorMap;
+
 
 namespace GraphicMap {
 
@@ -40,7 +42,7 @@ public:
     MapGraphicsScene(QObject* parent = nullptr);
     virtual ~MapGraphicsScene() override;
 
-    inline const std::shared_ptr<Dummy::Core::GraphicMap> map() const {
+    inline const std::shared_ptr<EditorMap> map() const {
         return m_map;
     }
 
@@ -137,7 +139,7 @@ private:
     void _drawDarkFilter();
 
     std::shared_ptr<Misc::MapDocument> m_mapDocument;
-    std::shared_ptr<Dummy::Core::GraphicMap> m_map;
+    std::shared_ptr<EditorMap> m_map;
     QGraphicsRectItem* m_darkFilter;
     QPixmap m_mapChipset;
     QRect m_chipsetSelection;

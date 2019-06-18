@@ -1,7 +1,7 @@
 #include <QDebug>
 #include <QGraphicsRectItem>
 
-#include "core/graphic_map.hpp"
+#include "editormap.hpp"
 #include "misc/mapdocument.hpp"
 
 #include "graphicmap/blockinggraphiclayer.hpp"
@@ -25,7 +25,7 @@ GraphicMap::ThirdLayerState::~ThirdLayerState() {
 }
 
 void GraphicMap::ThirdLayerState::sceneCleared() {
-    std::shared_ptr<Dummy::Core::GraphicMap> map(
+    std::shared_ptr<EditorMap> map(
         m_mapGraphicsScene.mapDocument()->map()
     );
     m_firstDarkFilter = new QGraphicsRectItem(QRect(0,

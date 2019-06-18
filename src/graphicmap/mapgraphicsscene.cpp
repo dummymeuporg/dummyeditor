@@ -2,7 +2,7 @@
 #include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
 
-#include "core/graphic_map.hpp"
+#include "editormap.hpp"
 #include "editorproject.hpp"
 
 #include "graphicmap/visiblegraphiclayer.hpp"

@@ -10,6 +10,7 @@ class GraphicMap;
 } // namespace Core
 } // namespace Dummy
 
+class EditorMap;
 class EditorProject;
 
 namespace Misc {
@@ -17,10 +18,10 @@ class MapDocument {
 public:
     MapDocument(EditorProject&,
                 const QString&,
-                std::unique_ptr<Dummy::Core::GraphicMap>);
+                std::shared_ptr<EditorMap>);
 
 
-    std::shared_ptr<Dummy::Core::GraphicMap> map() {
+    std::shared_ptr<EditorMap> map() {
         return m_map;
     }
 
@@ -38,6 +39,6 @@ private:
     EditorProject& m_editorProject;
     bool m_isModified;
     QString m_mapName;
-    std::shared_ptr<Dummy::Core::GraphicMap> m_map;
+    std::shared_ptr<EditorMap> m_map;
 };
 } // namespace Misc

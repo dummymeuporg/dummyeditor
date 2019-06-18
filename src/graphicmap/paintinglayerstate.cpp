@@ -2,7 +2,7 @@
 #include <QGraphicsLineItem>
 #include <QPen>
 
-#include "core/graphic_map.hpp"
+#include "editormap.hpp"
 
 #include "graphicmap/mapgraphicsscene.hpp"
 #include "graphicmap/paintinglayerstate.hpp"
@@ -24,7 +24,7 @@ void GraphicMap::PaintingLayerState::drawGrid()
     QPen pen(Qt::black, 0.5);
 
     // Map should not be null.
-    const std::shared_ptr<Dummy::Core::GraphicMap> map(
+    const std::shared_ptr<EditorMap> map(
         m_mapGraphicsScene.map()
     );
 

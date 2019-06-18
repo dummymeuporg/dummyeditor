@@ -1,6 +1,6 @@
 #include <QGraphicsPixmapItem>
 
-#include "core/graphic_map.hpp"
+#include "editormap.hpp"
 
 #include "graphicmap/mapgraphicsscene.hpp"
 #include "graphicmap/visiblegraphiclayer.hpp"
@@ -12,7 +12,7 @@ GraphicMap::VisibleGraphicLayer::VisibleGraphicLayer(
     int zValue) : GraphicMap::GraphicLayer(mapGraphicsScene),
     m_layer(layer), m_chipsetPixmap(chipsetPixmap), m_zValue(zValue)
 {
-    const std::shared_ptr<Dummy::Core::GraphicMap> map(
+    const std::shared_ptr<EditorMap> map(
         m_mapGraphicsScene.map()
     );
     int index = 0;
@@ -61,7 +61,7 @@ GraphicMap::VisibleGraphicLayer::setTile(quint16 x,
     if (x < m_mapGraphicsScene.map()->width() * 16
         && y < m_mapGraphicsScene.map()->height() * 16)
     {
-        int index = (y/16) * map->width() + (x/16);
+        unsigned long index = (y/16) * map->width() + (x/16);
 
         if (nullptr != m_layerItems[index]) {
             m_mapGraphicsScene.removeItem(m_layerItems[index]);
@@ -75,7 +75,12 @@ GraphicMap::VisibleGraphicLayer::setTile(quint16 x,
             m_layerItems[index]->setPos(x, y);
             m_layerItems[index]->setZValue(m_zValue);
             m_mapGraphicsScene.addItem(m_layerItems[index]);
-            m_layer.setTile(x / 16, y / 16, chipsetX / 16, chipsetY / 16);
+
+            m_layer[index] = std::pair<std::int8_t, std::int8_t>(
+                 chipsetX / 16, chipsetY / 16
+            );
+
+            //m_layer.setTile(x / 16, y / 16, chipsetX / 16, chipsetY / 16);
 
         }
         else
@@ -84,7 +89,8 @@ GraphicMap::VisibleGraphicLayer::setTile(quint16 x,
             {
                 m_mapGraphicsScene.removeItem(m_layerItems[index]);
                 m_layerItems[index] = nullptr;
-                m_layer.setTile(x / 16, y / 16, -1, -1);
+                //m_layer.setTile(x / 16, y / 16, -1, -1);
+                m_layer[index] = std::pair<std::int8_t, std::int8_t>(-1, -1);
             }
         }
     }

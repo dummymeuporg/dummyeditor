@@ -39,7 +39,7 @@ const
 
     GraphicMap::StartingPointLayer* layer =
         static_cast<StartingPointLayer*>(m_mapGraphicsScene.activeLayer());
-    std::shared_ptr<Dummy::Core::GraphicMap> map(
+    std::shared_ptr<EditorMap> map(
         m_mapGraphicsScene.mapDocument()->map()
     );
     layer->setStartingPointItem(adjustedPoint);

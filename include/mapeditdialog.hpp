@@ -20,7 +20,7 @@ class MapEditDialog : public QDialog
 public:
     explicit MapEditDialog(
         std::shared_ptr<const EditorProject> project,
-        std::shared_ptr<const Dummy::Core::GraphicMap> = nullptr,
+        std::shared_ptr<Misc::MapDocument> = nullptr,
         QWidget *parent = nullptr);
     ~MapEditDialog() override;
 

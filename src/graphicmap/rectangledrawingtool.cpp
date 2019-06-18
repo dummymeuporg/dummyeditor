@@ -6,7 +6,7 @@
 
 #include <utility>
 
-#include "core/graphic_map.hpp"
+#include "editormap.hpp"
 #include "editorproject.hpp"
 #include "misc/mapdocument.hpp"
 
@@ -59,7 +59,7 @@ void GraphicMap::RectangleDrawingTool::chipsetSelectionChanged(
     const QRect& selection)
 {
     m_rectChipsetSelection = selection;
-    std::shared_ptr<Dummy::Core::GraphicMap> map(
+    std::shared_ptr<EditorMap> map(
         m_mapGraphicScene.mapDocument()->map());
 
     // XXX: Ugly

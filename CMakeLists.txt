@@ -47,15 +47,25 @@ GroupSources(include)
 GroupSources(src)
 GroupSources(ui)
 
-add_executable(dummyeditor ${SOURCES} ${HEADERS} icons.qrc)
-
-target_link_libraries(dummyeditor
+set(DUMMYEDITOR_LINK_LIBRARIES
     Qt5::Core
     Qt5::Gui
     Qt5::Xml
     Qt5::Widgets
     dummy
-    ${Boost_LIBRARIES}
+    ${Boost_LIBRARIES})
+
+if (UNIX)
+    set(DUMMYEDITOR_LINK_LIBRARIES
+        ${DUMMYEDITOR_LINK_LIBRARIES}
+        stdc++fs
+    )
+endif (UNIX)
+
+add_executable(dummyeditor ${SOURCES} ${HEADERS} icons.qrc)
+
+target_link_libraries(dummyeditor
+    ${DUMMYEDITOR_LINK_LIBRARIES}
 )
 
 target_include_directories(dummyeditor PUBLIC ${Boost_INCLUDE_DIR})

@@ -28,7 +28,7 @@ public:
 class EditorProject
 {
 public:
-    EditorProject(const std::string& projectFolder);
+    EditorProject(const std::string&);
     virtual ~EditorProject();
     static void create(const QString&);
     Misc::MapTreeModel* mapsModel();
@@ -56,7 +56,7 @@ public:
 
     void saveProjectFile();
 
-    std::shared_ptr<Misc::MapDocument>& document(const QString& mapName);
+    std::shared_ptr<Misc::MapDocument> document(const QString& mapName);
 
     inline QMap<QString, std::shared_ptr<Misc::MapDocument>>
     openedMaps() const
