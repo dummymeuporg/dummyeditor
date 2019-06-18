@@ -6,8 +6,8 @@
 
 #include <utility>
 
-#include "dummy/map.hpp"
-#include "dummy/project.hpp"
+#include "core/graphic_map.hpp"
+#include "editorproject.hpp"
 #include "misc/mapdocument.hpp"
 
 #include "graphicmap/visiblegraphiclayer.hpp"

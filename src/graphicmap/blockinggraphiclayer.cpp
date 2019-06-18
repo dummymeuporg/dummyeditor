@@ -1,21 +1,24 @@
 #include <QDebug>
 
+#include "core/map.hpp"
+#include "core/graphic_map.hpp"
+
 #include "graphicmap/blockingsquareitem.hpp"
 #include "graphicmap/blockinggraphiclayer.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
-#include "dummy/blockinglayer.hpp"
-#include "dummy/map.hpp"
 
 GraphicMap::BlockingGraphicLayer::BlockingGraphicLayer(
     GraphicMap::MapGraphicsScene& mapGraphicsScene,
-    Dummy::BlockingLayer& blockingLayer)
+    Dummy::Core::BlockingLayer& blockingLayer)
     : GraphicMap::GraphicLayer(mapGraphicsScene),
       m_blockingLayer(blockingLayer)
 {
     // XXX: Find a better way to resize?
     m_layerItems.resize(m_layerItems.size() * 4);
 
-    const std::shared_ptr<Dummy::Map> map(m_mapGraphicsScene.map());
+    const std::shared_ptr<Dummy::Core::GraphicMap> map(
+        m_mapGraphicsScene.map()
+    );
     int index = 0;
     for (auto it = m_blockingLayer.begin(); it != m_blockingLayer.end();
          ++it, ++index)
@@ -44,7 +47,9 @@ GraphicMap::BlockingGraphicLayer::removeTile(quint16 x, quint16 y)
     if (x < m_mapGraphicsScene.map()->width() * 16
         && y < m_mapGraphicsScene.map()->height() * 16)
     {
-        const std::shared_ptr<Dummy::Map> map(m_mapGraphicsScene.map());
+        const std::shared_ptr<Dummy::Core::GraphicMap> map(
+            m_mapGraphicsScene.map()
+        );
         int index((y/8) * map->width() * 2 + (x/8));
         m_blockingLayer[index] = false;
         if (nullptr != m_layerItems[index])
@@ -62,7 +67,9 @@ void GraphicMap::BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
     if (x < m_mapGraphicsScene.map()->width() * 16
         && y < m_mapGraphicsScene.map()->height() * 16)
     {
-        const std::shared_ptr<Dummy::Map> map(m_mapGraphicsScene.map());
+        const std::shared_ptr<Dummy::Core::GraphicMap> map(
+            m_mapGraphicsScene.map()
+        );
         int index((y/8) * map->width() * 2 + (x/8));
         qDebug() << "Index: " << index;
         if (m_blockingLayer[index])
@@ -94,7 +101,9 @@ void GraphicMap::BlockingGraphicLayer::setTile(quint16 x,
     if (x < m_mapGraphicsScene.map()->width() * 16
         && y < m_mapGraphicsScene.map()->height() * 16)
     {
-        const std::shared_ptr<Dummy::Map> map(m_mapGraphicsScene.map());
+        const std::shared_ptr<Dummy::Core::GraphicMap> map(
+            m_mapGraphicsScene.map()
+        );
         int index((y/8) * map->width() * 2 + (x/8));
 
         if (nullptr != m_layerItems[index])

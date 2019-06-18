@@ -31,16 +31,21 @@ const
         static_cast<GraphicMap::BlockingGraphicLayer*>(
                 m_mapGraphicsScene.activeLayer());
 
-    std::shared_ptr<Dummy::Map> map(
-        m_mapGraphicsScene.mapDocument()->map());
-
+    /*
+    std::shared_ptr<Dummy::Core::GraphicMap> map =
+        m_mapGraphicsScene.mapDocument()->map();
+    */
+    /*
     if (map != nullptr)
     {
-        QPoint originPoint(point.x() - (point.x() % 8),
-                           point.y() - (point.y() % 8));
-        qDebug() << originPoint;
-        layer->toggleTile(quint16(point.x()), quint16(point.y()));
+    */
+    QPoint originPoint(point.x() - (point.x() % 8),
+                       point.y() - (point.y() % 8));
+    qDebug() << originPoint;
+    layer->toggleTile(quint16(point.x()), quint16(point.y()));
+    /*
     }
+    */
 }
 
 void

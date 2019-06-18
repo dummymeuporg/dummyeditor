@@ -1,10 +1,10 @@
 #include <QDebug>
 #include <QGraphicsPixmapItem>
 
-#include "dummy/map.hpp"
-#include "dummy/project.hpp"
+#include "core/graphic_map.hpp"
+#include "editorproject.hpp"
 #include "misc/mapdocument.hpp"
-#include "dummy/startingpoint.hpp"
+#include "editorstartingpoint.hpp"
 
 #include "graphicmap/mapgraphicsscene.hpp"
 #include "graphicmap/mapscenelayer.hpp"
@@ -15,12 +15,15 @@ GraphicMap::StartingPointLayer::StartingPointLayer(
     : GraphicMap::MapSceneLayer(mapGraphicsScene),
       m_startingPointItem(nullptr)
 {
-    std::shared_ptr<Dummy::Map> map(
+    std::shared_ptr<Misc::MapDocument> mapDocument(
+        m_mapGraphicsScene.mapDocument()
+    );
+    std::shared_ptr<Dummy::Core::GraphicMap> map(
         m_mapGraphicsScene.mapDocument()->map());
-    const Dummy::Project& project(map->project());
-    const Dummy::StartingPoint* startingPoint = project.startingPoint();
+    const EditorProject& project(m_mapGraphicsScene.mapDocument()->project());
+    const EditorStartingPoint* startingPoint = project.startingPoint();
 
-    if (nullptr != startingPoint && startingPoint->mapName() == map->name())
+    if (nullptr != startingPoint && startingPoint->mapName() == mapDocument->name())
     {
         qDebug() << "SAME MAP! Set Item.";
         setStartingPointItem(QPoint(startingPoint->x()*16,

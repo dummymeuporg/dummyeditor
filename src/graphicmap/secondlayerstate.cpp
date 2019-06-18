@@ -1,7 +1,7 @@
 #include <QDebug>
 #include <QRect>
 
-#include "dummy/map.hpp"
+#include "core/graphic_map.hpp"
 #include "misc/mapdocument.hpp"
 
 #include "graphicmap/blockinggraphiclayer.hpp"
@@ -26,7 +26,9 @@ GraphicMap::SecondLayerState::~SecondLayerState() {
 }
 
 void GraphicMap::SecondLayerState::sceneCleared() {
-    std::shared_ptr<Dummy::Map> map(m_mapGraphicsScene.mapDocument()->map());
+    std::shared_ptr<Dummy::Core::GraphicMap> map(
+        m_mapGraphicsScene.mapDocument()->map()
+    );
     m_firstDarkFilter = new QGraphicsRectItem(QRect(0,
                                                     0,
                                                     map->width() * 16,

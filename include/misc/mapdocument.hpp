@@ -2,6 +2,8 @@
 
 #include <memory>
 
+#include <QString>
+
 namespace Dummy {
 namespace Core {
 class GraphicMap;
@@ -14,11 +16,12 @@ namespace Misc {
 class MapDocument {
 public:
     MapDocument(EditorProject&,
+                const QString&,
                 std::unique_ptr<Dummy::Core::GraphicMap>);
 
 
-    Dummy::Core::GraphicMap& map() {
-        return *m_map;
+    std::shared_ptr<Dummy::Core::GraphicMap> map() {
+        return m_map;
     }
 
     void save();
@@ -27,9 +30,14 @@ public:
         return m_editorProject;
     }
 
+    inline const QString mapName() const {
+        return m_mapName;
+    }
+
 private:
     EditorProject& m_editorProject;
     bool m_isModified;
-    std::unique_ptr<Dummy::Core::GraphicMap> m_map;
+    QString m_mapName;
+    std::shared_ptr<Dummy::Core::GraphicMap> m_map;
 };
 } // namespace Misc
