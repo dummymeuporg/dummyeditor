@@ -21,5 +21,5 @@ Misc::MapDocument::MapDocument(
 
 void Misc::MapDocument::save() {
     qDebug() << "Save " << m_mapName;
-    //m_map->save();
+    m_map->save();
 }

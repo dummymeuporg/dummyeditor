@@ -78,14 +78,30 @@ void EditorMap::_saveGraphicLayers() {
     _writeStdString(ofs, m_music);
 
     // write the layers
-    ofs.write(reinterpret_cast<const char*>(m_firstLayer.data()),
-              static_cast<std::streamsize>(m_firstLayer.size()));
-    ofs.write(reinterpret_cast<const char*>(m_secondLayer.data()),
-              static_cast<std::streamsize>(m_secondLayer.size()));
-    ofs.write(reinterpret_cast<const char*>(m_thirdLayer.data()),
-              static_cast<std::streamsize>(m_thirdLayer.size()));
-    ofs.write(reinterpret_cast<const char*>(m_fourthLayer.data()),
-              static_cast<std::streamsize>(m_fourthLayer.size()));
+    ofs.write(
+        reinterpret_cast<const char*>(m_firstLayer.data()),
+        static_cast<std::streamsize>(
+            m_firstLayer.size() * sizeof(std::pair<std::int8_t, std::int8_t>)
+        )
+    );
+    ofs.write(
+        reinterpret_cast<const char*>(m_secondLayer.data()),
+        static_cast<std::streamsize>(
+            m_secondLayer.size() * sizeof(std::pair<std::int8_t, std::int8_t>)
+        )
+    );
+    ofs.write(
+        reinterpret_cast<const char*>(m_thirdLayer.data()),
+        static_cast<std::streamsize>(
+            m_thirdLayer.size() * sizeof(std::pair<std::int8_t, std::int8_t>)
+        )
+    );
+    ofs.write(
+        reinterpret_cast<const char*>(m_fourthLayer.data()),
+        static_cast<std::streamsize>(
+            m_fourthLayer.size() * sizeof(std::pair<std::int8_t, std::int8_t>)
+        )
+    );
 }
 
 void EditorMap::_writeStdString(std::ofstream& ofs,
