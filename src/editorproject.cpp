@@ -7,16 +7,21 @@
 #include <QString>
 #include <QTextStream>
 
+#include "editormap.hpp"
 #include "misc/maptreemodel.hpp"
 
-#include "dummy/project.hpp"
+#include "editorproject.hpp"
+#include "editorstartingpoint.hpp"
 
-Dummy::Project::Project(const QString& folderPath) :
-    m_fullpath(folderPath), m_mapsModel(nullptr)
+EditorProject::EditorProject(const std::string& projectFolder)
+    : m_coreProject(fs::path(projectFolder)),
+      m_mapsModel(nullptr)
 {
 
     // Try to read the "project.xml" file that should be present in folderPath.
-    QFile xmlProjectFile(folderPath + "/project.xml");
+    QFile xmlProjectFile(
+        (m_coreProject.projectPath() / "project.xml").string().c_str()
+    );
     m_domDocument.setContent(&xmlProjectFile);
     xmlProjectFile.close();
 
@@ -27,7 +32,7 @@ Dummy::Project::Project(const QString& folderPath) :
     if (mapsNodes.length() > 0) {
         m_mapsModel = new Misc::MapTreeModel(mapsNodes.at(0));
     } else {
-        // TODO: Throw exception?
+        // XXX: Throw exception?
     }
 
     QDomNodeList startingPositionNodes = m_domDocument.documentElement()
@@ -37,43 +42,43 @@ Dummy::Project::Project(const QString& folderPath) :
     {
         const QDomNode& startingPositionNode(startingPositionNodes.at(0));
         const QDomNamedNodeMap& attributes(startingPositionNode.attributes());
-        m_startingPoint = std::make_unique<Dummy::StartingPoint>(
+        m_startingPoint = std::make_unique<EditorStartingPoint>(
             attributes.namedItem("map").nodeValue().toStdString().c_str(),
             attributes.namedItem("x").nodeValue().toUShort(),
             attributes.namedItem("y").nodeValue().toUShort());
     }
 }
 
-Dummy::Project::~Project() {
+EditorProject::~EditorProject() {
 
     delete m_mapsModel;
 }
 
-Misc::MapTreeModel* Dummy::Project::mapsModel() {
+Misc::MapTreeModel* EditorProject::mapsModel() {
     return m_mapsModel;
 }
 
-void Dummy::Project::setStartingPoint(
-    const Dummy::StartingPoint& startingPoint)
+void EditorProject::setStartingPoint(
+    const EditorStartingPoint& startingPoint)
 {
-    m_startingPoint = std::make_unique<Dummy::StartingPoint>(startingPoint);
+    m_startingPoint = std::make_unique<EditorStartingPoint>(startingPoint);
 }
 
-void Dummy::Project::create(const QString& folder) {
-    Dummy::Project::_createXmlProjectFile(folder);
-    Dummy::Project::_createFolders(folder);
+void EditorProject::create(const QString& folder) {
+    _createXmlProjectFile(folder);
+    _createFolders(folder);
 
 }
 
-void Dummy::Project::_createXmlProjectFile(const QString& folder) {
+void EditorProject::_createXmlProjectFile(const QString& folder) {
     QFile projectFile(folder + "/" + "project.xml");
     projectFile.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream out(&projectFile);
-    out << Project::_createXmlProjecTree().toString(4);
+    out << _createXmlProjectTree().toString(4);
     projectFile.close();
 }
 
-QDomDocument Dummy::Project::_createXmlProjecTree() {
+QDomDocument EditorProject::_createXmlProjectTree() {
     QDomDocument doc;
     QDomElement project = doc.createElement("project");
     QDomElement maps = doc.createElement("maps");
@@ -84,7 +89,7 @@ QDomDocument Dummy::Project::_createXmlProjecTree() {
     return doc;
 }
 
-void Dummy::Project::_createFolders(const QString& baseFolder) {
+void EditorProject::_createFolders(const QString& baseFolder) {
     std::vector<QString> folders{"maps", "chipsets", "sounds"};
     std::for_each(folders.begin(), folders.end(),
                   [&baseFolder](const QString& folder) {
@@ -96,7 +101,7 @@ void Dummy::Project::_createFolders(const QString& baseFolder) {
     });
 }
 
-void Dummy::Project::saveProjectFile() {
+void EditorProject::saveProjectFile() {
     QDomDocument doc;
     QDomElement projectNode = doc.createElement("project");
     QDomElement mapsNode = doc.createElement("maps");
@@ -114,7 +119,9 @@ void Dummy::Project::saveProjectFile() {
     }
 
     _dumpToXmlNode(doc, mapsNode, m_mapsModel->invisibleRootItem());
-    QString xmlPath(m_fullpath + "/project.xml");
+    QString xmlPath(
+        (m_coreProject.projectPath() / "project.xml").string().c_str()
+    );
 
     // XXX: Handle errors eventually.
     QFile file(xmlPath);
@@ -123,9 +130,9 @@ void Dummy::Project::saveProjectFile() {
     doc.save(stream, 4);
 }
 
-void Dummy::Project::_dumpToXmlNode(QDomDocument& doc,
-                                    QDomElement& xmlNode,
-                                    QStandardItem* modelItem) {
+void EditorProject::_dumpToXmlNode(QDomDocument& doc,
+                                   QDomElement& xmlNode,
+                                   QStandardItem* modelItem) {
 
     for(int i = 0; i < modelItem->rowCount(); ++i) {
         QStandardItem* mapItem = modelItem->child(i);
@@ -139,26 +146,25 @@ void Dummy::Project::_dumpToXmlNode(QDomDocument& doc,
     }
 }
 
-void Dummy::Project::cleanMapName(QString& mapName) {
+void EditorProject::cleanMapName(QString& mapName) {
     mapName.replace("/", "");
     mapName.replace("..", "");
 }
 
-std::shared_ptr<Misc::MapDocument>&
-Dummy::Project::document(const QString& mapName) {
+std::shared_ptr<Misc::MapDocument>
+EditorProject::document(const QString& mapName) {
     QString cleantMapname(mapName);
     cleanMapName(cleantMapname);
 
     if (!m_openedMaps.contains(cleantMapname)) {
+        auto map = std::make_shared<EditorMap>(
+            m_coreProject, cleantMapname.toStdString()
+        );
+        map->load();
 
-        std::shared_ptr<Map> map(Dummy::Map::loadMap(
-            *this,
-            cleantMapname
-        ));
-        map->setName(cleantMapname);
-
-        std::shared_ptr<Misc::MapDocument> mapDocument(
-            new Misc::MapDocument(*this, map));
+        auto mapDocument = std::make_shared<Misc::MapDocument>(
+            *this, cleantMapname, map
+        );
 
         m_openedMaps.insert(cleantMapname, mapDocument);
     }

@@ -1,25 +1,26 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QString>
 
 #include "mapeditdialog.hpp"
 #include "ui_mapeditdialog.h"
 
-#include "dummy/map.hpp"
+#include "editormap.hpp"
 
 MapEditDialog::MapEditDialog(
-    const std::shared_ptr<const Dummy::Project> project,
-    std::shared_ptr<const Dummy::Map> map,
+    const std::shared_ptr<const EditorProject> project,
+    std::shared_ptr<Misc::MapDocument> mapDocument,
     QWidget *parent) : QDialog(parent),
                        ui(new Ui::MapEditDialog),
                        m_project(project)
 {
     ui->setupUi(this);
-
+    auto map(mapDocument->map());
     if (nullptr != map) {
-        ui->lineEditMapName->setText(map->name());
-        ui->lineEditChipset->setText(map->chipset());
-        ui->lineEditMusic->setText(map->music());
+        ui->lineEditMapName->setText(mapDocument->mapName());
+        ui->lineEditChipset->setText(QString(map->chipset().c_str()));
+        ui->lineEditMusic->setText(QString(map->music().c_str()));
         ui->spinBoxMapHeight->setValue(map->height());
         ui->spinBoxMapWidth->setValue(map->width());
     }
@@ -51,7 +52,9 @@ QString MapEditDialog::getMusic() const {
 }
 
 void MapEditDialog::onChipsetBrowse() {
-    QString chipsetPath(m_project->fullpath() + "/chipsets/");
+    QString chipsetPath(
+        (m_project->coreProject().projectPath() / "chipsets").string().c_str()
+    );
     QFileDialog dlg(this, tr("Choose the chipset file for your map."),
                     chipsetPath, "PNG files (*.png)");
     dlg.exec();

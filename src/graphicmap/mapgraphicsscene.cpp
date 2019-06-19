@@ -2,8 +2,8 @@
 #include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
 
-#include "dummy/layer.hpp"
-#include "dummy/project.hpp"
+#include "editormap.hpp"
+#include "editorproject.hpp"
 
 #include "graphicmap/visiblegraphiclayer.hpp"
 #include "graphicmap/blockinggraphiclayer.hpp"
@@ -24,7 +24,8 @@
 #include "graphicmap/startingpointlayer.hpp"
 
 GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
-    : QGraphicsScene(parent), m_map(nullptr), m_project(nullptr),
+    : QGraphicsScene(parent),
+      m_map(nullptr),
       m_firstLayer(nullptr),
       m_secondLayer(nullptr), m_thirdLayer(nullptr),
       m_fourthLayer(nullptr),
@@ -89,41 +90,48 @@ GraphicMap::MapGraphicsScene::setMapDocument
 
     m_mapDocument = mapDocument;
     m_map = m_mapDocument->map();
-    m_project = m_mapDocument->project();
+    //m_project = m_mapDocument->project();
 
     m_paintingLayerState->sceneCleared();
 
-    const Dummy::Project& project = m_map->project();
-    m_mapChipset = QPixmap(project.fullpath() + "/chipsets/"
-                           + m_map->chipset());
+    const EditorProject& project = m_mapDocument->project();
+    m_mapChipset = QPixmap(
+        QString(
+            (project.coreProject().projectPath()
+             / "chipsets"
+             / m_map->chipset()
+            ).string().c_str())
+    );
 
-    m_firstLayer = new
-        GraphicMap::VisibleGraphicLayer(*this,
-                                 m_map->firstLayer(),
-                                 m_mapChipset,
-                                 1);
+    m_firstLayer = new VisibleGraphicLayer(
+        *this,
+        m_map->firstLayer(),
+        m_mapChipset,
+        1
+    );
 
-    m_secondLayer = new
-        GraphicMap::VisibleGraphicLayer(*this,
-                                 m_map->secondLayer(),
-                                 m_mapChipset,
-                                 3);
+    m_secondLayer = new VisibleGraphicLayer(
+        *this,
+        m_map->secondLayer(),
+        m_mapChipset,
+        3
+    );
 
-    m_thirdLayer = new
-        GraphicMap::VisibleGraphicLayer(*this,
-                                 m_map->thirdLayer(),
-                                 m_mapChipset,
-                                 5);
+    m_thirdLayer = new VisibleGraphicLayer(
+        *this,
+        m_map->thirdLayer(),
+        m_mapChipset,
+        5
+    );
 
-    m_fourthLayer = new
-        GraphicMap::VisibleGraphicLayer(*this,
-                                        m_map->fourthLayer(),
-                                        m_mapChipset,
-                                        7);
+    m_fourthLayer = new VisibleGraphicLayer(
+        *this,
+        m_map->fourthLayer(),
+        m_mapChipset,
+        7
+    );
 
-    m_blockingLayer = new
-        GraphicMap::BlockingGraphicLayer(*this,
-                                         m_map->blockingLayer());
+    m_blockingLayer = new BlockingGraphicLayer(*this, m_map->blockingLayer());
 
     m_startingPointLayer = new GraphicMap::StartingPointLayer(*this);
 

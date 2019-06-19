@@ -2,7 +2,7 @@
 #include <QGraphicsItem>
 #include <QPoint>
 
-#include "dummy/map.hpp"
+#include "editormap.hpp"
 #include "misc/mapdocument.hpp"
 #include "graphicmap/visiblegraphiclayer.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
@@ -28,7 +28,7 @@ GraphicMap::PaintingGraphicLayerState::drawWithPen(const QPoint& point) const
 {
     GraphicMap::VisibleGraphicLayer* layer =
         static_cast<VisibleGraphicLayer*>(m_mapGraphicsScene.activeLayer());
-    std::shared_ptr<Dummy::Map> map(
+    std::shared_ptr<EditorMap> map(
         m_mapGraphicsScene.mapDocument()->map());
 
     const QRect& chipsetSelection = m_mapGraphicsScene.chipsetSelection();

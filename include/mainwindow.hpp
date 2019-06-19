@@ -4,7 +4,7 @@
 #include <QAction>
 #include <QMainWindow>
 
-#include "dummy/project.hpp"
+#include "editorproject.hpp"
 
 namespace Ui {
 class MainWindow;
@@ -34,7 +34,7 @@ private:
     void _loadProject(const QString&);
 
     Ui::MainWindow *ui;
-    std::shared_ptr<Dummy::Project> m_currentProject;
+    std::shared_ptr<EditorProject> m_currentProject;
     ChipsetGraphicsScene* m_chipsetScene;
     GraphicMap::MapGraphicsScene* m_mapScene;
 

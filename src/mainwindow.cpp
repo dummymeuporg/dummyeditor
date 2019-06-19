@@ -5,8 +5,8 @@
 #include <QKeyEvent>
 #include <QMessageBox>
 
-#include "dummy/map.hpp"
-#include "dummy/project.hpp"
+#include "editormap.hpp"
+#include "editorproject.hpp"
 
 #include "misc/maptreemodel.hpp"
 
@@ -210,8 +210,8 @@ void MainWindow::_loadProject(const QString& projectDirectory) {
 
     _connectScenes();
 
-    m_currentProject = std::shared_ptr<Dummy::Project>(
-        new Dummy::Project(projectDirectory)
+    m_currentProject = std::make_shared<EditorProject>(
+        projectDirectory.toStdString()
     );
 
     ui->treeViewMaps->setModel(
@@ -241,7 +241,7 @@ void MainWindow::saveProject() {
 
 
 void MainWindow::_initializeProject(const QString& projectDirectory) {
-    Dummy::Project::create(projectDirectory);
+    EditorProject::create(projectDirectory);
 }
 
 void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
@@ -249,10 +249,11 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
 
     QString mapName(mapModel->itemFromIndex(selectedIndex)->text());
     qDebug() << mapName;
-    std::shared_ptr<Dummy::Map> map(
+    std::shared_ptr<EditorMap> map(
         m_currentProject->document(mapName)->map());
     m_chipsetScene->setChipset(
-        m_currentProject->fullpath() + "/chipsets/" + map->chipset()
+        (m_currentProject->coreProject().projectPath()
+         / "chipsets" / map->chipset()).string().c_str()
     );
     m_mapScene->setMapDocument(m_currentProject->document(mapName));
 

@@ -3,8 +3,8 @@
 #include <QGraphicsPixmapItem>
 #include <QKeyEvent>
 
-#include "dummy/map.hpp"
-#include "dummy/project.hpp"
+#include "editormap.hpp"
+#include "editorproject.hpp"
 #include "misc/mapdocument.hpp"
 
 #include "graphicmap/visiblegraphiclayer.hpp"
@@ -49,13 +49,17 @@ void GraphicMap::PenDrawingTool::chipsetSelectionChanged(
         }
         return;
     }
-    std::shared_ptr<Dummy::Map> map(
+    std::shared_ptr<EditorMap> map(
         m_mapGraphicScene.mapDocument()->map());
 
     // XXX: Ugly
     QPixmap chipsetPixmap(
-        m_mapGraphicScene.mapDocument()->project()->fullpath() + "/chipsets/" +
-        map->chipset());
+        (m_mapGraphicScene.mapDocument()
+            ->project()
+            .coreProject()
+            .projectPath() / "chipsets" /
+        map->chipset()).string().c_str()
+    );
 
     m_selectionItem = new QGraphicsPixmapItem(
         chipsetPixmap.copy(selection));

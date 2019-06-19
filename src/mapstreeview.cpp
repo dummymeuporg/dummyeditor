@@ -2,8 +2,8 @@
 #include <QDebug>
 #include <QTreeWidgetItem>
 
-#include "dummy/map.hpp"
-#include "dummy/project.hpp"
+#include "editormap.hpp"
+#include "editorproject.hpp"
 #include "mapstreeview.hpp"
 #include "mapeditdialog.hpp"
 
@@ -86,11 +86,20 @@ void MapsTreeView::_onNewMapAction() {
 
     if(dlg.result() == QDialog::Accepted) {
         QString mapName = dlg.getMapName();
-        Dummy::Map map(*m_project, dlg.getWidth(), dlg.getHeight());
-        map.setChipset(dlg.getChipset()).setMusic(dlg.getMusic());
-        map.setName(mapName);
-        map.save();
+        // XXX: Create (or edit) map
 
+        auto map = std::make_shared<EditorMap>(
+            m_project->coreProject(), mapName.toStdString()
+        );
+        map->setChipset(dlg.getChipset().toStdString());
+        map->setMusic(dlg.getMusic().toStdString());
+        map->reset(dlg.getWidth(), dlg.getHeight());
+
+        auto mapDocument = std::make_shared<Misc::MapDocument>(
+            *m_project, mapName, map
+        );
+
+        map->save();
         // Add the new map into the tree.
         QList<QStandardItem*> mapRow { new QStandardItem(mapName) };
         selectedParentMap->appendRow(mapRow);
@@ -103,7 +112,11 @@ void MapsTreeView::_onPropertiesAction() {
             ->mapsModel()
             ->itemFromIndex(m_selectedModelIndex);
     qDebug() << item->text();
-    std::shared_ptr<Dummy::Map> map(m_project->document(item->text())->map());
+    std::shared_ptr<Dummy::Core::GraphicMap> map(
+        m_project->document(item->text())->map()
+    );
+    //XXX fix this:
+    /*
     MapEditDialog dlg(m_project, map);
     dlg.exec();
     if (dlg.result() == QDialog::Accepted) {
@@ -116,5 +129,5 @@ void MapsTreeView::_onPropertiesAction() {
         map->saveToFile(m_project->fullpath() +
                         "/maps/" + map->name() + ".map");
     }
-
+    */
 }

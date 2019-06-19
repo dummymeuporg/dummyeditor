@@ -6,8 +6,10 @@
 #include "graphicmap/graphiclayer.hpp"
 
 namespace Dummy {
-    class BlockingLayer;
-}
+namespace Core {
+using BlockingLayer = std::vector<std::uint8_t>;
+} // namespace Core
+} // namespace Dummy
 
 namespace GraphicMap {
     class BlockingSquareItem;
@@ -16,14 +18,15 @@ namespace GraphicMap {
     class BlockingGraphicLayer : public GraphicLayer
     {
     public:
-        BlockingGraphicLayer(MapGraphicsScene&, Dummy::BlockingLayer&);
+        BlockingGraphicLayer(MapGraphicsScene&,
+                             Dummy::Core::BlockingLayer&);
         virtual ~BlockingGraphicLayer() override;
         virtual MapSceneLayer& removeTile(quint16, quint16);
         void toggleTile(quint16, quint16);
         void setTile(quint16, quint16, bool);
     private:
         void _draw(int, quint16, quint16);
-        Dummy::BlockingLayer& m_blockingLayer;
+        Dummy::Core::BlockingLayer& m_blockingLayer;
         QVector<BlockingSquareItem*> m_crossItems;
     };
 }
