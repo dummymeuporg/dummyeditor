@@ -16,8 +16,9 @@ MapEditDialog::MapEditDialog(
                        m_project(project)
 {
     ui->setupUi(this);
-    auto map(mapDocument->map());
-    if (nullptr != map) {
+
+    if (nullptr != mapDocument) {
+        auto map(mapDocument->map());
         ui->lineEditMapName->setText(mapDocument->mapName());
         ui->lineEditChipset->setText(QString(map->chipset().c_str()));
         ui->lineEditMusic->setText(QString(map->music().c_str()));
@@ -70,7 +71,7 @@ void MapEditDialog::onChipsetBrowse() {
                 tr("Please select a chipset inside the 'chipset' folder."));
         } else {
             ui->lineEditChipset->setText(
-                selectedChipset.mid(index + chipsetPath.size()));
+                selectedChipset.mid(index + 1 + chipsetPath.size()));
         }
     }
 }

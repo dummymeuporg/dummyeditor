@@ -1,3 +1,4 @@
+#include <QDebug>
 #include "core/project.hpp"
 
 #include "editormap.hpp"
@@ -33,6 +34,55 @@ void EditorMap::save() {
     // Save the blocking layer, then the graphic info.
     _saveBlockingLayer();
     _saveGraphicLayers();
+}
+
+void
+EditorMap::_resizeGraphicLayer(
+    Dummy::Core::GraphicLayer& graphicLayer,
+    std::uint16_t width,
+    std::uint16_t height)
+{
+    Dummy::Core::GraphicLayer newGraphicLayer(width * height);
+
+    for (std::uint16_t y = 0; y < height; ++y) {
+        for (std::uint16_t x = 0; x < width; ++x) {
+            if (x < m_width && y < m_height) {
+                newGraphicLayer[y * width + x] = graphicLayer[y * m_width + x];
+            } else {
+                newGraphicLayer[y * width + x] =
+                    std::pair<std::int8_t, std::int8_t>(-1, -1);
+            }
+        }
+    }
+    graphicLayer = std::move(newGraphicLayer);
+}
+
+void EditorMap::_resizeBlockingLayer(std::uint16_t width, std::uint16_t height)
+{
+    Dummy::Core::BlockingLayer newBlockingLayer(width * height);
+
+    for (std::uint16_t y = 0; y < height; ++y) {
+        for (std::uint16_t x = 0; x < width; ++x) {
+            if (x < m_width && y < m_height) {
+                newBlockingLayer[y * width + x] =
+                    m_blockingLayer[y * m_width + x];
+            } else {
+                newBlockingLayer[y * width + x] = 0;
+            }
+        }
+    }
+    m_blockingLayer = std::move(newBlockingLayer);
+}
+
+void EditorMap::resize(std::uint16_t width, std::uint16_t height) {
+    _resizeBlockingLayer(width, height);
+    _resizeGraphicLayer(m_firstLayer, width, height);
+    _resizeGraphicLayer(m_secondLayer, width, height);
+    _resizeGraphicLayer(m_thirdLayer, width, height);
+    _resizeGraphicLayer(m_fourthLayer, width, height);
+    m_width = width;
+    m_height = height;
+
 }
 
 void EditorMap::_saveBlockingLayer() {

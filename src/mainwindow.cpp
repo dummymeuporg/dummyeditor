@@ -1,3 +1,5 @@
+#include <filesystem>
+
 #include <QDebug>
 #include <QFile>
 #include <QFileDialog>
@@ -211,7 +213,7 @@ void MainWindow::_loadProject(const QString& projectDirectory) {
     _connectScenes();
 
     m_currentProject = std::make_shared<EditorProject>(
-        projectDirectory.toStdString()
+        std::filesystem::path(projectDirectory.toStdString())
     );
 
     ui->treeViewMaps->setModel(

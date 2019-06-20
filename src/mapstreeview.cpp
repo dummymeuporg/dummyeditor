@@ -112,22 +112,34 @@ void MapsTreeView::_onPropertiesAction() {
             ->mapsModel()
             ->itemFromIndex(m_selectedModelIndex);
     qDebug() << item->text();
-    std::shared_ptr<Dummy::Core::GraphicMap> map(
-        m_project->document(item->text())->map()
+    std::shared_ptr<Misc::MapDocument> mapDocument(
+        m_project->document(item->text())
     );
+    auto map(mapDocument->map());
     //XXX fix this:
-    /*
-    MapEditDialog dlg(m_project, map);
+
+    MapEditDialog dlg(m_project, mapDocument);
     dlg.exec();
     if (dlg.result() == QDialog::Accepted) {
         QString dlgChipset = dlg.getChipset();
-        if (dlgChipset != map->chipset()) {
-            emit chipsetMapChanged(m_project->fullpath() + "/chipsets/" +
-                                   dlgChipset);
+        if (dlgChipset.toStdString() != map->chipset()) {
+            emit chipsetMapChanged(
+                QString((m_project->coreProject().projectPath()
+                / "chipsets"
+                / dlgChipset.toStdString()).string().c_str())
+            );
         }
-        map->setChipset(dlg.getChipset()).setMusic(dlg.getMusic());
-        map->saveToFile(m_project->fullpath() +
-                        "/maps/" + map->name() + ".map");
+        map->setChipset(dlg.getChipset().toStdString());
+        map->setMusic(dlg.getMusic().toStdString());
+
+        quint16 width = dlg.getWidth();
+        quint16 height = dlg.getHeight();
+
+        if (width != map->width() || height != map->height()) {
+            qDebug() << "Resize to " << width << ", " << height;
+            map->resize(width, height);
+        }
+
+        map->save();
     }
-    */
 }

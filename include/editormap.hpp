@@ -31,9 +31,18 @@ public:
     void reset(std::uint16_t, std::uint16_t);
 
     void save();
+    void resize(std::uint16_t, std::uint16_t);
 private:
     void _saveBlockingLayer();
     void _saveGraphicLayers();
+
+    void _resizeBlockingLayer(std::uint16_t, std::uint16_t);
+    void _resizeGraphicLayer(
+        Dummy::Core::GraphicLayer&,
+        std::uint16_t,
+        std::uint16_t
+    );
+
     static void _writeStdString(std::ofstream&, const std::string&);
 
 };
