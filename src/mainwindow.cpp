@@ -213,7 +213,7 @@ void MainWindow::_loadProject(const QString& projectDirectory) {
     _connectScenes();
 
     m_currentProject = std::make_shared<EditorProject>(
-        std::filesystem::path(projectDirectory.toStdString())
+        std::filesystem::path(projectDirectory.toStdString()).string()
     );
 
     ui->treeViewMaps->setModel(

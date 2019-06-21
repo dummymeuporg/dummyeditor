@@ -56,6 +56,8 @@ void MapEditDialog::onChipsetBrowse() {
     QString chipsetPath(
         (m_project->coreProject().projectPath() / "chipsets").string().c_str()
     );
+    // On Windows, fs::pash puts some backslashes. That sucks.
+    chipsetPath.replace("\\", "/");
     QFileDialog dlg(this, tr("Choose the chipset file for your map."),
                     chipsetPath, "PNG files (*.png)");
     dlg.exec();

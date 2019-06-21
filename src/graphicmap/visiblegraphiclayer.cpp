@@ -29,7 +29,7 @@ GraphicMap::VisibleGraphicLayer::VisibleGraphicLayer(
                 m_chipsetPixmap.copy(QRect(x * 16, y * 16, 16, 16)));
 
             qreal posX = (index % map->width()) * 16;
-            qreal posY = (index / map->height()) * 16;
+            qreal posY = (index / map->width()) * 16;
 
             m_layerItems[index]->setPos(posX, posY);
             m_layerItems[index]->setZValue(m_zValue);
