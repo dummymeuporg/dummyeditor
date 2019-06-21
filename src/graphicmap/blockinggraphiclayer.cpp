@@ -28,7 +28,7 @@ GraphicMap::BlockingGraphicLayer::BlockingGraphicLayer(
         {
             qDebug() << "TRUE!";
             qreal posX((index % (map->width()*2)) * 8);
-            qreal posY((index / (map->height()*2)) * 8);
+            qreal posY((index / (map->width()*2)) * 8);
             _draw(index, quint16(posX), quint16(posY));
         }
     }

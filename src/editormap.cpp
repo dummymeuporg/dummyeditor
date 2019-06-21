@@ -47,7 +47,6 @@ EditorMap::_resizeGraphicLayer(
     for (std::uint16_t y = 0; y < height; ++y) {
         for (std::uint16_t x = 0; x < width; ++x) {
             if (x < m_width && y < m_height) {
-                qDebug() << y * m_width + x << " -> " << y * width + x;
                 newGraphicLayer[y * width + x] = graphicLayer[y * m_width + x];
             } else {
                 newGraphicLayer[y * width + x] =
