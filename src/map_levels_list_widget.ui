@@ -16,17 +16,17 @@
   <widget class="QWidget" name="dockWidgetContents">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QTreeView" name="treeView"/>
+     <widget class="QTreeView" name="treeViewLevels"/>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="pushButtonNewLayer">
       <property name="text">
        <string>PushButton</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QPushButton" name="pushButtonNewLevel">
       <property name="text">
        <string>PushButton</string>
       </property>

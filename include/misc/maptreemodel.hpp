@@ -1,5 +1,4 @@
-#ifndef _MISC_MAPTREEMODEL_H
-#define _MISC_MAPTREEMODEL_H
+#pragma once
 
 #include <QStandardItemModel>
 #include <QVariant>
@@ -20,5 +19,3 @@ namespace Misc {
         void setupModelData(const QDomNode& mapsNode, QStandardItem* parent);
     };
 }
-
-#endif // MAPTREEMODEL_H
