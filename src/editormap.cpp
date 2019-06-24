@@ -116,7 +116,7 @@ void EditorMap::_saveBlockingLayers() {
 
 void EditorMap::_saveGraphicLayers() {
     std::uint32_t magicNumber = MAP_MAGIC_WORD;
-    std::uint16_t version = 1; // XXX for now.
+    std::uint16_t version = 2; // XXX for now.
     std::int8_t levelsCount = 1; // XXX for now.
     std::string filename(m_name + ".map");
     std::ofstream ofs(m_project.projectPath() / "maps" / filename,
