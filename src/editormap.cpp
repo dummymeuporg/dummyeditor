@@ -32,7 +32,7 @@ void EditorMap::reset(std::uint16_t width, std::uint16_t height) {
 
 void EditorMap::save() {
     // Save the blocking layer, then the graphic info.
-    _saveBlockingLayer();
+    _saveBlockingLayers();
     _saveGraphicLayers();
 }
 
@@ -85,8 +85,9 @@ void EditorMap::resize(std::uint16_t width, std::uint16_t height) {
 
 }
 
-void EditorMap::_saveBlockingLayer() {
+void EditorMap::_saveBlockingLayers() {
     std::uint32_t magicNumber = BLK_MAGIC_WORD;
+    std::uint16_t version = 2;
     std::string filename(m_name + ".blk");
     std::ofstream ofs(m_project.projectPath() / "maps" / filename,
                       std::ios::binary);
@@ -95,9 +96,19 @@ void EditorMap::_saveBlockingLayer() {
     ofs.write(reinterpret_cast<const char*>(&magicNumber),
               sizeof(std::uint32_t));
 
-    // Write the blocking layer
-    ofs.write(reinterpret_cast<const char*>(m_blockingLayer.data()),
-              m_blockingLayer.size() * sizeof(std::int8_t));
+    // Write the version number
+    ofs.write(reinterpret_cast<const char*>(&version),
+              sizeof(std::uint16_t));
+
+    // Write the blocking layers
+    for (const auto& blockingLayer: m_blockingLevels) {
+        ofs.write(
+            reinterpret_cast<const char*>(blockingLayer.data()),
+            static_cast<std::streamsize>(
+                blockingLayer.size() * sizeof(std::int8_t)
+            )
+        );
+    }
 
     ofs.close();
 }
@@ -105,6 +116,7 @@ void EditorMap::_saveBlockingLayer() {
 void EditorMap::_saveGraphicLayers() {
     std::uint32_t magicNumber = MAP_MAGIC_WORD;
     std::uint16_t version = 1; // XXX for now.
+    std::int8_t levelsCount = 1; // XXX for now.
     std::string filename(m_name + ".map");
     std::ofstream ofs(m_project.projectPath() / "maps" / filename,
                       std::ios::binary);
@@ -129,7 +141,15 @@ void EditorMap::_saveGraphicLayers() {
     // write the music
     _writeStdString(ofs, m_music);
 
+    // Write the levels count
+    ofs.write(reinterpret_cast<char*>(&levelsCount), sizeof(levelsCount));
+
     // write the layers
+    for(unsigned long long i = 0; i < m_mapLevels.size(); ++i) {
+        for (const auto& [position, layer]: m_mapLevels.at(i).layers()) {
+
+        }
+    }
     ofs.write(
         reinterpret_cast<const char*>(m_firstLayer.data()),
         static_cast<std::streamsize>(

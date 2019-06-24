@@ -33,7 +33,7 @@ public:
     void save();
     void resize(std::uint16_t, std::uint16_t);
 private:
-    void _saveBlockingLayer();
+    void _saveBlockingLayers();
     void _saveGraphicLayers();
 
     void _resizeBlockingLayer(std::uint16_t, std::uint16_t);
