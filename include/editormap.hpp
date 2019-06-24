@@ -11,19 +11,23 @@ public:
     virtual ~EditorMap();
 
     Dummy::Core::GraphicLayer& firstLayer() {
-        return m_firstLayer;
+        //return m_firstLayer;
+        return m_mapLevels[0].layers().at(-1);
     }
 
     Dummy::Core::GraphicLayer& secondLayer() {
-        return m_secondLayer;
+        //return m_secondLayer;
+        return m_mapLevels[0].layers().at(0);
     }
 
     Dummy::Core::GraphicLayer& thirdLayer() {
-        return m_thirdLayer;
+        //return m_thirdLayer;
+        return m_mapLevels[0].layers().at(1);
     }
 
     Dummy::Core::GraphicLayer& fourthLayer() {
-        return m_fourthLayer;
+        //return m_fourthLayer;
+        return m_mapLevels[0].layers().at(2);
     }
 
     void setChipset(const std::string&);
@@ -44,5 +48,6 @@ private:
     );
 
     static void _writeStdString(std::ofstream&, const std::string&);
+    void _writeLevel(std::ofstream&, const Dummy::Core::MapLevel&);
 
 };

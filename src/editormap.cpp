@@ -1,4 +1,5 @@
 #include <QDebug>
+#include "core/map_level.hpp"
 #include "core/project.hpp"
 
 #include "editormap.hpp"
@@ -145,11 +146,10 @@ void EditorMap::_saveGraphicLayers() {
     ofs.write(reinterpret_cast<char*>(&levelsCount), sizeof(levelsCount));
 
     // write the layers
-    for(unsigned long long i = 0; i < m_mapLevels.size(); ++i) {
-        for (const auto& [position, layer]: m_mapLevels.at(i).layers()) {
-
-        }
+    for(const auto& mapLevel: m_mapLevels) {
+        _writeLevel(ofs, mapLevel);
     }
+    /*
     ofs.write(
         reinterpret_cast<const char*>(m_firstLayer.data()),
         static_cast<std::streamsize>(
@@ -174,6 +174,7 @@ void EditorMap::_saveGraphicLayers() {
             m_fourthLayer.size() * sizeof(std::pair<std::int8_t, std::int8_t>)
         )
     );
+    */
 }
 
 void EditorMap::_writeStdString(std::ofstream& ofs,
@@ -183,5 +184,31 @@ void EditorMap::_writeStdString(std::ofstream& ofs,
               sizeof(std::uint32_t));
     if (size > 0) {
         ofs.write(str.c_str(), static_cast<std::streamsize>(str.size()));
+    }
+}
+
+void
+EditorMap::_writeLevel(
+    std::ofstream& ofs,
+    const Dummy::Core::MapLevel& levelMap
+) {
+    // Write the layers count.
+    std::uint8_t layersCount = levelMap.layers().size();
+    ofs.write(
+        reinterpret_cast<char*>(&layersCount),
+        sizeof(std::uint8_t)
+    );
+
+    for (const auto& [position, layer]: levelMap.layers()) {
+        ofs.write(
+            reinterpret_cast<const char*>(&position),
+            sizeof(std::int8_t)
+        );
+        ofs.write(
+            reinterpret_cast<const char*>(layer.data()),
+            static_cast<std::streamsize>(
+                layer.size() * sizeof(std::pair<std::int8_t, std::int8_t>)
+            )
+        );
     }
 }
