@@ -7,4 +7,12 @@ MapLevelTreeModel::MapLevelTreeModel(std::shared_ptr<EditorMap> editorMap)
     // XXX: setup hierarchy.
 }
 
+QVariant MapLevelTreeModel::headerData(
+    int section,
+    Qt::Orientation orientation,
+    int role
+) const {
+    return QVariant();
+}
+
 } // namespace Misc

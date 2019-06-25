@@ -448,7 +448,7 @@
      <x>0</x>
      <y>0</y>
      <width>874</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -562,6 +562,12 @@
    <addaction name="actionCopy"/>
    <addaction name="actionPaste"/>
    <addaction name="separator"/>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget">
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="MapLevelsList" name="widgetMapLevelsList"/>
   </widget>
   <action name="actionNew">
    <property name="icon">
@@ -966,6 +972,12 @@
    <class>MapsTreeView</class>
    <extends>QTreeView</extends>
    <header>mapstreeview.hpp</header>
+  </customwidget>
+  <customwidget>
+   <class>MapLevelsList</class>
+   <extends>QWidget</extends>
+   <header>maplevelslist.hpp</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>
