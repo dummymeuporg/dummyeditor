@@ -136,6 +136,9 @@ void EditorMap::_saveGraphicLayers() {
     ofs.write(reinterpret_cast<const char*>(&m_height),
               sizeof(std::uint16_t));
 
+    // write the levels count
+    ofs.write(reinterpret_cast<char*>(&m_levelsCount), sizeof(std::uint8_t));
+
     // write the chipset
     _writeStdString(ofs, m_chipset);
 
@@ -143,7 +146,7 @@ void EditorMap::_saveGraphicLayers() {
     _writeStdString(ofs, m_music);
 
     // Write the levels count
-    ofs.write(reinterpret_cast<char*>(&levelsCount), sizeof(levelsCount));
+    //ofs.write(reinterpret_cast<char*>(&levelsCount), sizeof(levelsCount));
 
     // write the layers
     for(const auto& mapLevel: m_mapLevels) {
