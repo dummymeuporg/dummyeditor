@@ -16,10 +16,10 @@ public:
         Qt::Orientation orientation,
         int role = Qt::DisplayRole
     ) const override;
-    /*
+
     QVariant data(const QModelIndex &index, int role) const override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
-    */
+
 private:
     std::shared_ptr<EditorMap> m_editorMap;
 };
