@@ -36,6 +36,11 @@ public:
 
     void save();
     void resize(std::uint16_t, std::uint16_t);
+
+    std::uint8_t levelsCount() const {
+        return m_levelsCount;
+    }
+
 private:
     void _saveBlockingLayers();
     void _saveGraphicLayers();

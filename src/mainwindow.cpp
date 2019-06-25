@@ -16,6 +16,7 @@
 #include "graphicmap/mapgraphicsscene.hpp"
 #include "mainwindow.hpp"
 #include "mapeditdialog.hpp"
+#include "maplevelslist.hpp"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -271,6 +272,9 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
                                             0,
                                             map->width()*16,
                                             map->height()*16));
+
+    reinterpret_cast<MapLevelsList*>(ui->dockWidgetMapLevelsList->widget())
+        ->setEditorMap(map);
 }
 
 void MainWindow::onCancel()
