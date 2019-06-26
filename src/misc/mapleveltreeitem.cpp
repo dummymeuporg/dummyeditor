@@ -1,11 +1,12 @@
 #include "misc/mapleveltreeitem.hpp"
 
 namespace Misc {
-MapLevelTreeItem::MapLevelTreeItem(const QString& content, bool checked)
-    : m_content(content), m_checked(checked)
+MapLevelTreeItem::MapLevelTreeItem(EditorLevel& level)
+    : m_editorLevel(level)
 {}
 
-void MapLevelTreeItem::setChecked(bool checked) {
-    m_checked = checked;
+QVariant MapLevelTreeItem::data(int role) const {
+    return QString("Level");
 }
+
 } // namespace Misc

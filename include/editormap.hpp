@@ -1,9 +1,15 @@
 #pragma once
 
 #include <cstdint>
+#include <memory>
 #include <string>
 
 #include "core/graphic_map.hpp"
+
+#include "editorlayer.hpp"
+#include "editorlevel.hpp"
+
+using EditorLevels = std::vector<std::unique_ptr<EditorLevel>>;
 
 class EditorMap : public Dummy::Core::GraphicMap {
 public:
@@ -41,6 +47,10 @@ public:
         return m_levelsCount;
     }
 
+    EditorLayer& editorLayerAt(std::uint8_t level, std::int8_t position) {
+        return m_editorLevels[level].layerAt(position);
+    }
+
 private:
     void _saveBlockingLayers();
     void _saveGraphicLayers();
@@ -54,5 +64,7 @@ private:
 
     static void _writeStdString(std::ofstream&, const std::string&);
     void _writeLevel(std::ofstream&, const Dummy::Core::MapLevel&);
+    std::vector<EditorLevel> m_editorLevels;
+
 
 };

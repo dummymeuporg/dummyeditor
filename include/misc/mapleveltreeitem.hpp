@@ -2,19 +2,15 @@
 
 #include <QStandardItem>
 
+class EditorLevel;
+class EditorMap;
+
 namespace Misc {
 class MapLevelTreeItem : public QStandardItem {
 public:
-    MapLevelTreeItem(const QString&, bool = true);
-    bool checked() const {
-        return m_checked;
-    }
-    void setChecked(bool);
-    const QString& content() const {
-        return m_content;
-    }
+    MapLevelTreeItem(EditorLevel&);
+    QVariant data(int role = Qt::UserRole + 1) const override;
 private:
-    QString m_content;
-    bool m_checked;
+    EditorLevel& m_editorLevel;
 };
 } // namespace Misc

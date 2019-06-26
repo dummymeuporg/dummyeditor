@@ -6,7 +6,11 @@
 
 EditorMap::EditorMap(const Dummy::Core::Project& project,
                      const std::string& name)
-    : Dummy::Core::GraphicMap(project, name) {}
+    : Dummy::Core::GraphicMap(project, name) {
+    for (const auto& level: m_mapLevels) {
+        m_editorLevels.push_back(EditorLevel(level));
+    }
+}
 
 EditorMap::~EditorMap() {}
 
@@ -117,7 +121,6 @@ void EditorMap::_saveBlockingLayers() {
 void EditorMap::_saveGraphicLayers() {
     std::uint32_t magicNumber = MAP_MAGIC_WORD;
     std::uint16_t version = 2; // XXX for now.
-    std::int8_t levelsCount = 1; // XXX for now.
     std::string filename(m_name + ".map");
     std::ofstream ofs(m_project.projectPath() / "maps" / filename,
                       std::ios::binary);
