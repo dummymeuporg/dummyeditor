@@ -9,14 +9,6 @@
 #include "graphicmap/blockinggraphiclayer.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
 
-#include "graphicmap/notpaintingstate.hpp"
-#include "graphicmap/blockinglayerstate.hpp"
-#include "graphicmap/firstlayerstate.hpp"
-#include "graphicmap/fourthlayerstate.hpp"
-#include "graphicmap/secondlayerstate.hpp"
-#include "graphicmap/thirdlayerstate.hpp"
-#include "graphicmap/startingpointlayerstate.hpp"
-
 #include "graphicmap/nodrawingtool.hpp"
 #include "graphicmap/pendrawingtool.hpp"
 #include "graphicmap/rectangledrawingtool.hpp"
@@ -32,7 +24,7 @@ GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
       m_blockingLayer(nullptr),
       m_activeLayer(nullptr),
       m_startingPointLayer(nullptr),
-      m_paintingLayerState(new GraphicMap::NotPaintingState(*this)),
+      //m_paintingLayerState(new GraphicMap::NotPaintingState(*this)),
       m_drawingTool(new NoDrawingTool(*this))
 
 {
@@ -44,7 +36,7 @@ GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
 GraphicMap::MapGraphicsScene::~MapGraphicsScene()
 {
     delete m_drawingTool;
-    delete m_paintingLayerState;
+    //delete m_paintingLayerState;
 }
 
 void GraphicMap::MapGraphicsScene::_drawGrid()
@@ -92,7 +84,7 @@ GraphicMap::MapGraphicsScene::setMapDocument
     m_map = m_mapDocument->map();
     //m_project = m_mapDocument->project();
 
-    m_paintingLayerState->sceneCleared();
+    //m_paintingLayerState->sceneCleared();
 
     const EditorProject& project = m_mapDocument->project();
     m_mapChipset = QPixmap(
@@ -103,6 +95,7 @@ GraphicMap::MapGraphicsScene::setMapDocument
             ).string().c_str())
     );
 
+    /*
     m_firstLayer = new VisibleGraphicLayer(
         *this,
         m_map->firstLayer(),
@@ -131,13 +124,17 @@ GraphicMap::MapGraphicsScene::setMapDocument
         7
     );
 
+
     m_blockingLayer = new BlockingGraphicLayer(*this, m_map->blockingLayer());
 
     m_startingPointLayer = new GraphicMap::StartingPointLayer(*this);
+    */
 
+    /*
     m_paintingLayerState->onNewMap();
     m_paintingLayerState->adjustLayers();
     m_paintingLayerState->drawGrid();
+    */
 
     changeSelection(QRect(0,0,0,0));
 
@@ -162,19 +159,6 @@ GraphicMap::MapGraphicsScene::setPaitingTool(
         m_drawingTool->chipsetSelectionChanged(m_chipsetSelection);
     }
 
-    return *this;
-}
-
-GraphicMap::MapGraphicsScene&
-GraphicMap::MapGraphicsScene::setPaitingLayerState(
-    GraphicMap::PaintingLayerState* state
-)
-{
-    delete m_paintingLayerState;
-    m_paintingLayerState = state;
-    m_paintingLayerState->onNewMap();
-    m_paintingLayerState->adjustLayers();
-    m_paintingLayerState->drawGrid();
     return *this;
 }
 
@@ -221,60 +205,6 @@ void GraphicMap::MapGraphicsScene::changeSelection(const QRect& selection)
 
 }
 
-void GraphicMap::MapGraphicsScene::showFirstLayer() {
-    qDebug() << "First active layer";
-    if (nullptr == m_mapDocument) {
-        return;
-    }
-    setPaitingLayerState(new FirstLayerState(*this));
-}
-
-void GraphicMap::MapGraphicsScene::showSecondLayer() {
-    qDebug() << "Second active layer";
-    if (nullptr == m_mapDocument) {
-        return;
-    }
-    setPaitingLayerState(new SecondLayerState(*this));
-}
-
-void GraphicMap::MapGraphicsScene::showThirdLayer() {
-    qDebug() << "Third active layer";
-    if (nullptr == m_mapDocument) {
-        return;
-    }
-    setPaitingLayerState(new ThirdLayerState(*this));
-}
-
-void GraphicMap::MapGraphicsScene::showFourthLayer()
-{
-    qDebug() << "Fourth active layer";
-    if (nullptr == m_mapDocument)
-    {
-        return;
-    }
-    setPaitingLayerState(new FourthLayerState(*this));
-}
-
-void GraphicMap::MapGraphicsScene::showBlockingLayer()
-{
-    qDebug() << "Blocking active layer";
-    if (nullptr == m_mapDocument)
-    {
-        return;
-    }
-    setPaitingLayerState(new BlockingLayerState(*this));
-}
-
-void GraphicMap::MapGraphicsScene::showStartingPointLayer()
-{
-    qDebug() << "Starting Point active layer";
-    if (nullptr == m_mapDocument)
-    {
-        return;
-    }
-    setPaitingLayerState(new StartingPointLayerState(*this));
-}
-
 void GraphicMap::MapGraphicsScene::setPenTool()
 {
     qDebug() << "Pen tool enabled";
@@ -306,8 +236,10 @@ bool GraphicMap::MapGraphicsScene::eventFilter(QObject *watched,
 }
 
 void GraphicMap::MapGraphicsScene::adjustLayers() const {
+    /*
     if (nullptr != m_paintingLayerState)
     {
         m_paintingLayerState->adjustLayers();
     }
+    */
 }

@@ -34,7 +34,6 @@ class StartingPointLayer;
 class VisibleGraphicLayer;
 class MapSceneLayer;
 
-class PaintingLayerState;
 class MapGraphicsScene : public QGraphicsScene
 {
     Q_OBJECT
@@ -84,7 +83,6 @@ public:
         return m_chipsetSelection;
     }
 
-    MapGraphicsScene& setPaitingLayerState(PaintingLayerState*);
     MapGraphicsScene& setPaitingTool(DrawingTool*);
 
     MapGraphicsScene& setMapDocument(
@@ -109,22 +107,17 @@ public slots:
     void changeMapDocument(
         const std::shared_ptr<Misc::MapDocument>& mapDocument);
     void changeSelection(const QRect& selection);
-    void showFirstLayer();
-    void showSecondLayer();
-    void showThirdLayer();
-    void showFourthLayer();
-    void showBlockingLayer();
-    void showStartingPointLayer();
-
     void setPenTool();
     void setRectangleTool();
     void setSelectionTool();
 
     void adjustLayers() const;
 
+    /*
     const PaintingLayerState& paintingLayerState() const {
         return *m_paintingLayerState;
     }
+    */
 
 private:
     void _cleanLayer(QVector<QGraphicsPixmapItem*>& layer);
@@ -154,7 +147,7 @@ private:
     MapSceneLayer* m_activeLayer; // Either 1st, 2nd or 3rd layer.
     StartingPointLayer* m_startingPointLayer;
 
-    PaintingLayerState* m_paintingLayerState;
+    //PaintingLayerState* m_paintingLayerState;
     DrawingTool* m_drawingTool;
 
 

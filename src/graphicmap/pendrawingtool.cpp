@@ -9,7 +9,6 @@
 
 #include "graphicmap/visiblegraphiclayer.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
-#include "graphicmap/paintinglayerstate.hpp"
 #include "graphicmap/pendrawingtool.hpp"
 
 GraphicMap::PenDrawingTool::PenDrawingTool(
@@ -72,13 +71,14 @@ void GraphicMap::PenDrawingTool::chipsetSelectionChanged(
 
 void GraphicMap::PenDrawingTool::_setTiles(const QPoint& originPoint)
 {
-    m_mapGraphicScene.paintingLayerState().drawWithPen(originPoint);
+    //m_mapGraphicScene.paintingLayerState().drawWithPen(originPoint);
 }
 
 void
 GraphicMap::PenDrawingTool::onMouseMove(
     QGraphicsSceneMouseEvent* mouseEvent)
 {
+    /*
     qDebug() << "On mouse move Pen";
     if (mouseEvent->buttons() & Qt::LeftButton) {
         if (m_isDrawing) {
@@ -88,6 +88,7 @@ GraphicMap::PenDrawingTool::onMouseMove(
     }
     m_mapGraphicScene.paintingLayerState().drawCurrentSelection(
        mouseEvent->scenePos().toPoint(), m_selectionItem);
+    */
 }
 
 void

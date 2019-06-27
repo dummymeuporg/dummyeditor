@@ -104,18 +104,6 @@ void MainWindow::_connectScenes()
     QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
                      m_mapScene, SLOT(changeSelection(QRect)));
 
-    QObject::connect(ui->actionLow_layer_1, SIGNAL(triggered(bool)),
-                     m_mapScene, SLOT(showFirstLayer()));
-    QObject::connect(ui->actionLow_layer_2, SIGNAL(triggered(bool)),
-                     m_mapScene, SLOT(showSecondLayer()));
-    QObject::connect(ui->actionHigh_layer_1, SIGNAL(triggered(bool)),
-                     m_mapScene, SLOT(showThirdLayer()));
-    QObject::connect(ui->actionHigh_layer_2, SIGNAL(triggered(bool)),
-                     m_mapScene, SLOT(showFourthLayer()));
-    QObject::connect(ui->actionBlocking_layer, SIGNAL(triggered(bool)),
-                     m_mapScene, SLOT(showBlockingLayer()));
-    QObject::connect(ui->actionStarting_point, SIGNAL(triggered(bool)),
-                     m_mapScene, SLOT(showStartingPointLayer()));
     QObject::connect(ui->actionPen, SIGNAL(triggered(bool)),
                      m_mapScene, SLOT(setPenTool()));
     QObject::connect(ui->actionRectangle,

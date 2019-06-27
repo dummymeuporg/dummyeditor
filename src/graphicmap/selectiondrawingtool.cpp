@@ -15,7 +15,6 @@
 #include "graphicmap/blockinggraphiclayer.hpp"
 #include "graphicmap/visiblegraphiclayer.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
-#include "graphicmap/paintinglayerstate.hpp"
 #include "graphicmap/selectiondrawingtool.hpp"
 #include "graphicmap/selectiondrawingclipboard.hpp"
 
@@ -173,7 +172,9 @@ void GraphicMap::SelectionDrawingTool::_deleteSelection(
 
 void GraphicMap::SelectionDrawingTool::_applyClipboard()
 {
+    /*
     const QPoint& topLeft(m_activeSelection.topLeft());
     m_mapGraphicScene.paintingLayerState().drawWithSelection(topLeft,
                                                              *m_clipboard);
+    */
 }

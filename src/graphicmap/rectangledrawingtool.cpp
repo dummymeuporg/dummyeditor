@@ -12,7 +12,6 @@
 
 #include "graphicmap/visiblegraphiclayer.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
-#include "graphicmap/paintinglayerstate.hpp"
 #include "graphicmap/rectangledrawingtool.hpp"
 
 
@@ -174,12 +173,14 @@ void
 GraphicMap::RectangleDrawingTool::_applySelectionToMap(quint16 mapX,
                                                        quint16 mapY)
 {
+    /*
     qDebug() << mapX << mapY;
 
     QPoint point(mapX, mapY);
 
     m_mapGraphicScene.paintingLayerState().drawWithRectangle(
         point, m_rectChipsetSelection);
+    */
 }
 
 void GraphicMap::RectangleDrawingTool::onKeyPress(QKeyEvent* event)
