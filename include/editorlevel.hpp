@@ -14,6 +14,10 @@ public:
     const EditorLayers& editorLayers() const {
         return m_editorLayers;
     }
+    bool visible() const {
+        return m_visible;
+    }
+    void setVisible(bool);
 private:
     bool m_visible;
     const Dummy::Core::MapLevel& m_mapLevel;

@@ -1,4 +1,5 @@
 #include <QDebug>
+#include "misc/abstractmapleveltreeitem.hpp"
 #include "misc/mapleveltreemodel.hpp"
 
 #include "maplevelslist.hpp"
@@ -30,5 +31,6 @@ void MapLevelsList::reset() {
 
 void MapLevelsList::toggleLayerVisibleState(QModelIndex selectedIndex) {
     qDebug() << "selectedIndex: " << selectedIndex;
+   m_mapLevelTreeModel->mapTreeItemFromIndex(selectedIndex)->toggle();
 
 }

@@ -1,5 +1,6 @@
 #include <algorithm>
 #include "editormap.hpp"
+#include "misc/abstractmapleveltreeitem.hpp"
 #include "misc/mapleveltreeitem.hpp"
 #include "misc/mapleveltreemodel.hpp"
 
@@ -14,6 +15,12 @@ MapLevelTreeModel::MapLevelTreeModel(std::shared_ptr<EditorMap> editorMap)
         };
         appendRow(levelItem);
     }
+}
+
+AbstractMapLevelTreeItem*
+MapLevelTreeModel::mapTreeItemFromIndex(const QModelIndex& index) const
+{
+    return reinterpret_cast<AbstractMapLevelTreeItem*>(itemFromIndex(index));
 }
 
 } // namespace Misc

@@ -2,16 +2,17 @@
 
 #include "abstractmapleveltreeitem.hpp"
 
-class EditorLevel;
+class EditorLayer;
 class EditorMap;
 
 namespace Misc {
-class MapLevelTreeItem : public AbstractMapLevelTreeItem {
+class MapLayerTreeItem : public AbstractMapLevelTreeItem {
 public:
-    MapLevelTreeItem(EditorLevel&);
+    MapLayerTreeItem(std::int8_t, EditorLayer&);
     QVariant data(int role = Qt::UserRole + 1) const override;
     virtual void toggle() override;
 private:
-    EditorLevel& m_editorLevel;
+    EditorLayer& m_editorLayer;
+    std::int8_t m_position;
 };
 } // namespace Misc

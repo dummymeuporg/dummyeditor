@@ -16,3 +16,7 @@ EditorLevel::setLayer(
 ) {
     m_editorLayers[position] = std::move(editorLayer);
 }
+
+void EditorLevel::setVisible(bool visible) {
+    m_visible = visible;
+}

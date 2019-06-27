@@ -1,20 +1,22 @@
 #include "editorlevel.hpp"
 
+#include "misc/maplayertreeitem.hpp"
 #include "misc/mapleveltreeitem.hpp"
 
 namespace Misc {
 MapLevelTreeItem::MapLevelTreeItem(EditorLevel& level)
     : m_editorLevel(level)
 {
-    setIcon(QIcon(":/icons/icon_eye.png"));
+    if (m_editorLevel.visible()) {
+        setIcon(QIcon(":/icons/icon_eye.png"));
+    } else {
+        setIcon(QIcon(":/icons/icon_eye_crossed.png"));
+    }
     for(auto it = level.editorLayers().rbegin();
         it != level.editorLayers().rend(); ++it)
     {
         QList<QStandardItem*> row {
-            new QStandardItem(
-                QIcon(":/icons/icon_eye.png"),
-                QStringLiteral("Layer %1").arg(it->first)
-            )
+            new MapLayerTreeItem(it->first, *(it->second))
         };
         appendRow(row);
     }
@@ -25,6 +27,15 @@ QVariant MapLevelTreeItem::data(int role) const {
         return QStringLiteral("Level");
     }
     return QStandardItem::data(role);
+}
+
+void MapLevelTreeItem::toggle() {
+    m_editorLevel.setVisible(!m_editorLevel.visible());
+    if (m_editorLevel.visible()) {
+        setIcon(QIcon(":/icons/icon_eye.png"));
+    } else {
+        setIcon(QIcon(":/icons/icon_eye_crossed.png"));
+    }
 }
 
 } // namespace Misc
