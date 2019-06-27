@@ -18,6 +18,8 @@ class MapLevelsList : public QWidget {
 public:
     MapLevelsList(QWidget* parent = nullptr);
     void setEditorMap(std::shared_ptr<EditorMap>);
+public slots:
+    void toggleLayerVisibleState(QModelIndex);
 private:
     void reset();
     Ui::MapLevelsList* ui;

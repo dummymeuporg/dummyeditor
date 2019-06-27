@@ -25,5 +25,7 @@
         <file>icons/icon_selection.png</file>
         <file>icons/icon_blocking.png</file>
         <file>icons/icon_penpath.png</file>
+        <file>icons/icon_eye.png</file>
+        <file>icons/icon_eye_crossed.png</file>
     </qresource>
 </RCC>

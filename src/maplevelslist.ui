@@ -41,5 +41,25 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>treeViewLevels</sender>
+   <signal>doubleClicked(QModelIndex)</signal>
+   <receiver>MapLevelsList</receiver>
+   <slot>toggleLayerVisibleState(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>114</x>
+     <y>172</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>191</x>
+     <y>309</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>toggleLayerVisibleState(QModelIndex)</slot>
+ </slots>
 </ui>
