@@ -10,7 +10,7 @@ MapLevelTreeModel::MapLevelTreeModel(std::shared_ptr<EditorMap> editorMap)
 
     for (int i = m_editorMap->levelsCount() - 1; i >= 0; --i) {
         QList<QStandardItem*> levelItem {
-            new QStandardItem("Level")
+            new MapLevelTreeItem(m_editorMap->levelAt(i))
         };
         appendRow(levelItem);
     }

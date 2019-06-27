@@ -7,12 +7,17 @@
 EditorMap::EditorMap(const Dummy::Core::Project& project,
                      const std::string& name)
     : Dummy::Core::GraphicMap(project, name) {
-    for (const auto& level: m_mapLevels) {
-        m_editorLevels.push_back(EditorLevel(level));
-    }
+
 }
 
 EditorMap::~EditorMap() {}
+
+void EditorMap::load() {
+    GraphicMap::load();
+    for (const auto& level: m_mapLevels) {
+        m_editorLevels.push_back(std::make_unique<EditorLevel>(level));
+    }
+}
 
 void EditorMap::setChipset(const std::string& chipset) {
     m_chipset = chipset;

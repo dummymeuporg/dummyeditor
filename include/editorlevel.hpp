@@ -11,6 +11,9 @@ public:
     EditorLevel(const Dummy::Core::MapLevel&);
     EditorLayer& layerAt(std::int8_t position);
     void setLayer(std::int8_t, std::unique_ptr<EditorLayer>);
+    const EditorLayers& editorLayers() const {
+        return m_editorLayers;
+    }
 private:
     bool m_visible;
     const Dummy::Core::MapLevel& m_mapLevel;

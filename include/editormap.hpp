@@ -47,9 +47,15 @@ public:
         return m_levelsCount;
     }
 
-    EditorLayer& editorLayerAt(std::uint8_t level, std::int8_t position) {
-        return m_editorLevels[level].layerAt(position);
+    EditorLevel& levelAt(std::uint8_t index) {
+        return *m_editorLevels[index];
     }
+
+    EditorLayer& editorLayerAt(std::uint8_t level, std::int8_t position) {
+        return m_editorLevels[level]->layerAt(position);
+    }
+
+    void load();
 
 private:
     void _saveBlockingLayers();
@@ -64,7 +70,7 @@ private:
 
     static void _writeStdString(std::ofstream&, const std::string&);
     void _writeLevel(std::ofstream&, const Dummy::Core::MapLevel&);
-    std::vector<EditorLevel> m_editorLevels;
+    EditorLevels m_editorLevels;
 
 
 };
