@@ -13,17 +13,10 @@
 #include "graphicmap/pendrawingtool.hpp"
 #include "graphicmap/rectangledrawingtool.hpp"
 #include "graphicmap/selectiondrawingtool.hpp"
-#include "graphicmap/startingpointlayer.hpp"
 
 GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
     : QGraphicsScene(parent),
       m_map(nullptr),
-      m_firstLayer(nullptr),
-      m_secondLayer(nullptr), m_thirdLayer(nullptr),
-      m_fourthLayer(nullptr),
-      m_blockingLayer(nullptr),
-      m_activeLayer(nullptr),
-      m_startingPointLayer(nullptr),
       //m_paintingLayerState(new GraphicMap::NotPaintingState(*this)),
       m_drawingTool(new NoDrawingTool(*this))
 
@@ -69,12 +62,6 @@ GraphicMap::MapGraphicsScene::setMapDocument
                                m_map->width() * 16, m_map->height() * 16);
         qDebug() << "INVALIDATE " << invalidateRegion;
         invalidate(invalidateRegion);
-        delete m_firstLayer;
-        delete m_secondLayer;
-        delete m_thirdLayer;
-        delete m_fourthLayer;
-        delete m_blockingLayer;
-        delete m_startingPointLayer;
     }
     // Remove the grid.
     clear();

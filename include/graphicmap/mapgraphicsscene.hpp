@@ -49,36 +49,6 @@ public:
         return m_mapDocument;
     }
 
-    inline VisibleGraphicLayer* firstLayer() const {
-        return m_firstLayer;
-    }
-
-    inline VisibleGraphicLayer* secondLayer() const {
-        return m_secondLayer;
-    }
-
-    inline VisibleGraphicLayer* thirdLayer() const {
-        return m_thirdLayer;
-    }
-
-    inline VisibleGraphicLayer* fourthLayer() const {
-        return m_fourthLayer;
-    }
-
-    inline BlockingGraphicLayer* blockingLayer() const
-    {
-        return m_blockingLayer;
-    }
-
-    inline StartingPointLayer* startingPointLayer() const
-    {
-        return m_startingPointLayer;
-    }
-
-    inline MapSceneLayer* activeLayer() const {
-        return m_activeLayer;
-    }
-
     inline const QRect& chipsetSelection() const {
         return m_chipsetSelection;
     }
@@ -87,11 +57,6 @@ public:
 
     MapGraphicsScene& setMapDocument(
         const std::shared_ptr<Misc::MapDocument>& mapDocument);
-
-    MapGraphicsScene& setActiveLayer(MapSceneLayer* layer) {
-        m_activeLayer = layer;
-        return *this;
-    }
 
     virtual void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
         override;
@@ -138,14 +103,6 @@ private:
     QRect m_chipsetSelection;
 
     bool m_isDrawing;
-
-    VisibleGraphicLayer* m_firstLayer;
-    VisibleGraphicLayer* m_secondLayer;
-    VisibleGraphicLayer* m_thirdLayer;
-    VisibleGraphicLayer* m_fourthLayer;
-    BlockingGraphicLayer* m_blockingLayer;
-    MapSceneLayer* m_activeLayer; // Either 1st, 2nd or 3rd layer.
-    StartingPointLayer* m_startingPointLayer;
 
     //PaintingLayerState* m_paintingLayerState;
     DrawingTool* m_drawingTool;

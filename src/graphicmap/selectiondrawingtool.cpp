@@ -125,10 +125,12 @@ void GraphicMap::SelectionDrawingTool::onKeyPress(QKeyEvent* event)
         case Qt::Key_X:
             qDebug() << "Cut in selection tool.";
             m_clipboard = std::make_unique<SelectionDrawingClipboard>(*this);
+            /*
             _deleteSelection(m_mapGraphicScene.firstLayer());
             _deleteSelection(m_mapGraphicScene.secondLayer());
             _deleteSelection(m_mapGraphicScene.thirdLayer());
             _deleteSelection(m_mapGraphicScene.blockingLayer());
+            */
             break;
         case Qt::Key_C:
             qDebug() << "Copy in selection tool.";
@@ -146,7 +148,7 @@ void GraphicMap::SelectionDrawingTool::onKeyPress(QKeyEvent* event)
     else if (event->key() == Qt::Key_Delete)
     {
         qDebug() << "Delete.";
-        _deleteSelection(m_mapGraphicScene.activeLayer());
+        //_deleteSelection(m_mapGraphicScene.activeLayer());
     }
 }
 
