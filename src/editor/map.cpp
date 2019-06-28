@@ -2,6 +2,8 @@
 #include "core/map_level.hpp"
 #include "core/project.hpp"
 
+#include "editor/graphic_layer.hpp"
+#include "editor/level.hpp"
 #include "editor/map.hpp"
 
 namespace Editor {

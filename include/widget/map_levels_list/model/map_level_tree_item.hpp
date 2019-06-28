@@ -1,14 +1,16 @@
 #pragma once
 
-#include "abstractmapleveltreeitem.hpp"
+#include "widget/map_levels_list/model/map_tree_item.hpp"
 
 namespace Editor {
 class Level;
 class Map;
 } // namespace Editor
 
-namespace Misc {
-class MapLevelTreeItem : public AbstractMapLevelTreeItem {
+namespace Widget {
+namespace MapLevelsList {
+namespace Model {
+class MapLevelTreeItem : public MapTreeItem {
 public:
     MapLevelTreeItem(Editor::Level&);
     QVariant data(int role = Qt::UserRole + 1) const override;
@@ -16,4 +18,6 @@ public:
 private:
     Editor::Level& m_editorLevel;
 };
-} // namespace Misc
+} // namespace Model
+} // namespace MapLevelsList
+} // namespace Widget

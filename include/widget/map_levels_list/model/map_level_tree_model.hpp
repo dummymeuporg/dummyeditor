@@ -9,7 +9,9 @@ namespace Editor {
 class Map;
 } // namespace Editor
 
-namespace Misc {
+namespace Widget {
+namespace MapLevelsList {
+namespace Model {
 class AbstractMapLevelTreeItem;
 class MapLevelTreeModel : public QStandardItemModel {
 public:
@@ -18,4 +20,6 @@ public:
 private:
     std::shared_ptr<Editor::Map> m_editorMap;
 };
-} // namespace Misc
+} // namespace Model
+} // namespace MapLevelsList
+} // namespace Widget

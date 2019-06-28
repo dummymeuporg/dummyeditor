@@ -11,20 +11,25 @@ namespace Misc {
 class MapLevelTreeModel;
 }
 
+namespace Widget {
+namespace MapLevelsList {
 namespace Ui {
-class MapLevelsList;
-}
+class Widget;
+} // namespace Ui
 
-class MapLevelsList : public QWidget {
+class Widget : public QWidget {
     Q_OBJECT
 public:
-    MapLevelsList(QWidget* parent = nullptr);
+    Widget(QWidget* parent = nullptr);
     void setEditorMap(std::shared_ptr<Editor::Map>);
 public slots:
     void toggleLayerVisibleState(QModelIndex);
 private:
     void reset();
-    Ui::MapLevelsList* ui;
+    Ui::Widget* ui;
     std::shared_ptr<Editor::Map> m_editorMap;
     Misc::MapLevelTreeModel* m_mapLevelTreeModel;
 };
+
+} // namespace MapLevelsList
+} // namespace Widget

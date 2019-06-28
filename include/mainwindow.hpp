@@ -1,5 +1,5 @@
 #pragma once
-
+#include <memory>
 #include <QAction>
 #include <QModelIndex>
 #include <QMainWindow>

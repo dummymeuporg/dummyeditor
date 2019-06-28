@@ -2,12 +2,12 @@
 #include "misc/abstractmapleveltreeitem.hpp"
 #include "misc/mapleveltreemodel.hpp"
 
-#include "maplevelslist.hpp"
-#include "ui_maplevelslist.h"
+#include "widget/map_levels_list/widget.hpp"
+#include "widget/map_levels_list/ui_widget.hpp"
 
-MapLevelsList::MapLevelsList(QWidget* parent)
+Widget::Widget(QWidget* parent)
     : QWidget(parent),
-      ui(new Ui::MapLevelsList),
+      ui(new Ui::Widget),
       m_editorMap(nullptr),
       m_mapLevelTreeModel(nullptr)
 {

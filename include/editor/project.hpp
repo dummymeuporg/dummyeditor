@@ -9,7 +9,7 @@
 #include "core/project.hpp"
 
 #include "misc/mapdocument.hpp"
-#include "misc/maptreemodel.hpp"
+#include "misc/map_tree_model.hpp"
 
 namespace Editor {
 

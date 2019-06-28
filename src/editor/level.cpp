@@ -1,21 +1,21 @@
-#include "editor/layer.hpp"
 #include "editor/level.hpp"
+#include "editor/graphic_layer.hpp"
 
 namespace Editor {
 Level::Level(const Dummy::Core::MapLevel& mapLevel)
     : m_visible(true), m_mapLevel(mapLevel)
 {
     for (const auto& [position, layer]: m_mapLevel.layers()) {
-        m_editorLayers[position] = std::make_unique<Layer>(layer);
+        m_graphicLayers[position] = std::make_unique<GraphicLayer>(layer);
     }
 }
 
 void
-Level::setLayer(
+Level::setGraphicLayer(
     std::int8_t position,
-    std::unique_ptr<Layer> layer
-) {
-    m_editorLayers[position] = std::move(layer);
+    std::unique_ptr<GraphicLayer> layer)
+{
+    m_graphicLayers[position] = std::move(layer);
 }
 
 void Level::setVisible(bool visible) {

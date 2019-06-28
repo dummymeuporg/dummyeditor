@@ -53,8 +53,8 @@ public:
         return *m_editorLevels[index];
     }
 
-    Layer& editorLayerAt(std::uint8_t level, std::int8_t position) {
-        return m_editorLevels[level]->layerAt(position);
+    GraphicLayer& graphicLayerAt(std::uint8_t level, std::int8_t position) {
+        return m_editorLevels[level]->graphicLayerAt(position);
     }
 
     void load();

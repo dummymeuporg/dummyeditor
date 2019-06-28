@@ -8,7 +8,7 @@
 #include <QTextStream>
 
 #include "editor/map.hpp"
-#include "misc/maptreemodel.hpp"
+#include "misc/map_tree_model.hpp"
 
 #include "editor/project.hpp"
 #include "editor/starting_point.hpp"

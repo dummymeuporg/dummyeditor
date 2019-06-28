@@ -10,13 +10,13 @@
 #include "editor/map.hpp"
 #include "editor/project.hpp"
 
-#include "misc/maptreemodel.hpp"
+#include "misc/map_tree_model.hpp"
 
 #include "chipsetgraphicsscene.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
 #include "mainwindow.hpp"
 #include "mapeditdialog.hpp"
-#include "maplevelslist.hpp"
+#include "widget/map_levels_list/widget.hpp"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -261,8 +261,9 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
                                             map->width()*16,
                                             map->height()*16));
 
-    reinterpret_cast<MapLevelsList*>(ui->dockWidgetMapLevelsList->widget())
-        ->setEditorMap(map);
+    reinterpret_cast<Widget::MapLevelsList::Widget*>(
+        ui->dockWidgetMapLevelsList->widget()
+    )->setEditorMap(map);
 }
 
 void MainWindow::onCancel()

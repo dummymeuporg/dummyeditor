@@ -1,9 +1,13 @@
+#include <QIcon>
+
 #include "editor/level.hpp"
 
-#include "misc/maplayertreeitem.hpp"
-#include "misc/mapleveltreeitem.hpp"
+#include "widget/map_levels_list/model/map_layer_tree_item.hpp"
+#include "widget/map_levels_list/model/map_level_tree_item.hpp"
 
-namespace Misc {
+namespace Widget {
+namespace MapLevelsList {
+namespace Model {
 MapLevelTreeItem::MapLevelTreeItem(Editor::Level& level)
     : m_editorLevel(level)
 {
@@ -12,8 +16,8 @@ MapLevelTreeItem::MapLevelTreeItem(Editor::Level& level)
     } else {
         setIcon(QIcon(":/icons/icon_eye_crossed.png"));
     }
-    for(auto it = level.editorLayers().rbegin();
-        it != level.editorLayers().rend(); ++it)
+    for(auto it = level.graphicLayers().rbegin();
+        it != level.graphicLayers().rend(); ++it)
     {
         QList<QStandardItem*> row {
             new MapLayerTreeItem(it->first, *(it->second))
@@ -37,5 +41,6 @@ void MapLevelTreeItem::toggle() {
         setIcon(QIcon(":/icons/icon_eye_crossed.png"));
     }
 }
-
-} // namespace Misc
+} // namespace Model
+} // namespace MapLevelsList
+} // namespace Widget

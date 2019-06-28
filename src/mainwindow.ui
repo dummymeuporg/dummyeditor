@@ -567,7 +567,7 @@
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
-   <widget class="MapLevelsList" name="widgetMapLevelsList"/>
+   <widget class="Widget::MapLevelsList::Widget" name="widgetMapLevelsList"/>
   </widget>
   <action name="actionNew">
    <property name="icon">
@@ -992,9 +992,9 @@
    <header>mapstreeview.hpp</header>
   </customwidget>
   <customwidget>
-   <class>MapLevelsList</class>
+   <class>Widget::MapLevelsList::Widget</class>
    <extends>QWidget</extends>
-   <header>maplevelslist.hpp</header>
+   <header>widget/map_levels_list/widget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
