@@ -6,15 +6,17 @@
 
 #include "core/graphic_map.hpp"
 
-#include "editorlayer.hpp"
-#include "editorlevel.hpp"
+#include "editor/layer.hpp"
+#include "editor/level.hpp"
 
-using EditorLevels = std::vector<std::unique_ptr<EditorLevel>>;
+namespace Editor {
+class Level;
+using Levels = std::vector<std::unique_ptr<Level>>;
 
-class EditorMap : public Dummy::Core::GraphicMap {
+class Map : public Dummy::Core::GraphicMap {
 public:
-    EditorMap(const Dummy::Core::Project&, const std::string&);
-    virtual ~EditorMap();
+    Map(const Dummy::Core::Project&, const std::string&);
+    virtual ~Map();
 
     Dummy::Core::GraphicLayer& firstLayer() {
         //return m_firstLayer;
@@ -47,11 +49,11 @@ public:
         return m_levelsCount;
     }
 
-    EditorLevel& levelAt(std::uint8_t index) {
+    Level& levelAt(std::uint8_t index) {
         return *m_editorLevels[index];
     }
 
-    EditorLayer& editorLayerAt(std::uint8_t level, std::int8_t position) {
+    Layer& editorLayerAt(std::uint8_t level, std::int8_t position) {
         return m_editorLevels[level]->layerAt(position);
     }
 
@@ -70,7 +72,6 @@ private:
 
     static void _writeStdString(std::ofstream&, const std::string&);
     void _writeLevel(std::ofstream&, const Dummy::Core::MapLevel&);
-    EditorLevels m_editorLevels;
-
-
+    Levels m_editorLevels;
 };
+} // namespace Editor

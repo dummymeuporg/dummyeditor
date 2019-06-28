@@ -3,7 +3,7 @@
 
 #include <QDialog>
 
-#include "editorproject.hpp"
+#include "editor/project.hpp"
 
 namespace Dummy {
     class Map;
@@ -19,7 +19,7 @@ class MapEditDialog : public QDialog
 
 public:
     explicit MapEditDialog(
-        std::shared_ptr<const EditorProject> project,
+        std::shared_ptr<const Editor::Project> project,
         std::shared_ptr<Misc::MapDocument> = nullptr,
         QWidget *parent = nullptr);
     ~MapEditDialog() override;
@@ -32,7 +32,7 @@ public:
 
 private:
     Ui::MapEditDialog *ui;
-    const std::shared_ptr<const EditorProject> m_project;
+    const std::shared_ptr<const Editor::Project> m_project;
 private slots:
     void onChipsetBrowse();
     void onOK();

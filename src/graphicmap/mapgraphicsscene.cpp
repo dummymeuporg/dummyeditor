@@ -2,8 +2,8 @@
 #include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
 
-#include "editormap.hpp"
-#include "editorproject.hpp"
+#include "editor/map.hpp"
+#include "editor/project.hpp"
 
 #include "graphicmap/visiblegraphiclayer.hpp"
 #include "graphicmap/blockinggraphiclayer.hpp"
@@ -73,7 +73,7 @@ GraphicMap::MapGraphicsScene::setMapDocument
 
     //m_paintingLayerState->sceneCleared();
 
-    const EditorProject& project = m_mapDocument->project();
+    const Editor::Project& project = m_mapDocument->project();
     m_mapChipset = QPixmap(
         QString(
             (project.coreProject().projectPath()

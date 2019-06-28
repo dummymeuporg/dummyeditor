@@ -1,9 +1,9 @@
-#include "editorlayer.hpp"
+#include "editor/layer.hpp"
 
 #include "misc/maplayertreeitem.hpp"
 
 namespace Misc {
-MapLayerTreeItem::MapLayerTreeItem(std::int8_t position, EditorLayer& layer)
+MapLayerTreeItem::MapLayerTreeItem(std::int8_t position, Editor::Layer& layer)
     : m_editorLayer(layer), m_position(position)
 {
     if (m_editorLayer.visible()) {

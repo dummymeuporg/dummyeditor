@@ -7,8 +7,8 @@
 #include <QKeyEvent>
 #include <QMessageBox>
 
-#include "editormap.hpp"
-#include "editorproject.hpp"
+#include "editor/map.hpp"
+#include "editor/project.hpp"
 
 #include "misc/maptreemodel.hpp"
 
@@ -201,7 +201,7 @@ void MainWindow::_loadProject(const QString& projectDirectory) {
 
     _connectScenes();
 
-    m_currentProject = std::make_shared<EditorProject>(
+    m_currentProject = std::make_shared<Editor::Project>(
         std::filesystem::path(projectDirectory.toStdString()).string()
     );
 
@@ -232,7 +232,7 @@ void MainWindow::saveProject() {
 
 
 void MainWindow::_initializeProject(const QString& projectDirectory) {
-    EditorProject::create(projectDirectory);
+    Editor::Project::create(projectDirectory);
 }
 
 void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
@@ -240,7 +240,7 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
 
     QString mapName(mapModel->itemFromIndex(selectedIndex)->text());
     qDebug() << mapName;
-    std::shared_ptr<EditorMap> map(
+    std::shared_ptr<Editor::Map> map(
         m_currentProject->document(mapName)->map());
     m_chipsetScene->setChipset(
         (m_currentProject->coreProject().projectPath()

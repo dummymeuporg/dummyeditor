@@ -1,6 +1,6 @@
 #include <QGraphicsPixmapItem>
 
-#include "editormap.hpp"
+#include "editor/map.hpp"
 
 #include "graphicmap/mapgraphicsscene.hpp"
 #include "graphicmap/visiblegraphiclayer.hpp"
@@ -12,7 +12,7 @@ GraphicMap::VisibleGraphicLayer::VisibleGraphicLayer(
     int zValue) : GraphicMap::GraphicLayer(mapGraphicsScene),
     m_layer(layer), m_chipsetPixmap(chipsetPixmap), m_zValue(zValue)
 {
-    const std::shared_ptr<EditorMap> map(
+    const std::shared_ptr<Editor::Map> map(
         m_mapGraphicsScene.map()
     );
     int index = 0;

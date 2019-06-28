@@ -1,6 +1,6 @@
 #include <QDebug>
 
-#include "editormap.hpp"
+#include "editor/map.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
 #include "graphicmap/selectiondrawingtool.hpp"
 #include "graphicmap/selectiondrawingclipboard.hpp"
@@ -12,7 +12,7 @@ GraphicMap::SelectionDrawingClipboard::SelectionDrawingClipboard(
 {
 
     const QRect& activeSelection(m_selectionDrawingTool.activeSelection());
-    const std::shared_ptr<EditorMap> map(
+    const std::shared_ptr<Editor::Map> map(
         m_selectionDrawingTool.mapGraphicsScene().map());
     int width = activeSelection.width() / 16;
     int height = activeSelection.height() / 16;

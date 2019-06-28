@@ -1,10 +1,12 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
 #include <QAction>
+#include <QModelIndex>
 #include <QMainWindow>
 
-#include "editorproject.hpp"
+namespace Editor {
+class Project;
+} // namespace Editor
 
 namespace Ui {
 class MainWindow;
@@ -34,7 +36,7 @@ private:
     void _loadProject(const QString&);
 
     Ui::MainWindow *ui;
-    std::shared_ptr<EditorProject> m_currentProject;
+    std::shared_ptr<Editor::Project> m_currentProject;
     ChipsetGraphicsScene* m_chipsetScene;
     GraphicMap::MapGraphicsScene* m_mapScene;
 
@@ -48,5 +50,3 @@ private slots:
     void onCopy();
     void onPaste();
 };
-
-#endif // MAINWINDOW_H

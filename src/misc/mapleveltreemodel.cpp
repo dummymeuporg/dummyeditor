@@ -1,11 +1,11 @@
 #include <algorithm>
-#include "editormap.hpp"
+#include "editor/map.hpp"
 #include "misc/abstractmapleveltreeitem.hpp"
 #include "misc/mapleveltreeitem.hpp"
 #include "misc/mapleveltreemodel.hpp"
 
 namespace Misc {
-MapLevelTreeModel::MapLevelTreeModel(std::shared_ptr<EditorMap> editorMap)
+MapLevelTreeModel::MapLevelTreeModel(std::shared_ptr<Editor::Map> editorMap)
     : m_editorMap(editorMap)
 {
 

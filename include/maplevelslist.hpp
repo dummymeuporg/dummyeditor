@@ -3,7 +3,9 @@
 
 #include <QWidget>
 
-class EditorMap;
+namespace Editor {
+class Map;
+} // namespace Editor
 
 namespace Misc {
 class MapLevelTreeModel;
@@ -17,12 +19,12 @@ class MapLevelsList : public QWidget {
     Q_OBJECT
 public:
     MapLevelsList(QWidget* parent = nullptr);
-    void setEditorMap(std::shared_ptr<EditorMap>);
+    void setEditorMap(std::shared_ptr<Editor::Map>);
 public slots:
     void toggleLayerVisibleState(QModelIndex);
 private:
     void reset();
     Ui::MapLevelsList* ui;
-    std::shared_ptr<EditorMap> m_editorMap;
+    std::shared_ptr<Editor::Map> m_editorMap;
     Misc::MapLevelTreeModel* m_mapLevelTreeModel;
 };

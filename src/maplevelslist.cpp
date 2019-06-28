@@ -14,7 +14,7 @@ MapLevelsList::MapLevelsList(QWidget* parent)
     ui->setupUi(this);
 }
 
-void MapLevelsList::setEditorMap(std::shared_ptr<EditorMap> editorMap) {
+void MapLevelsList::setEditorMap(std::shared_ptr<Editor::Map> editorMap) {
     m_editorMap = editorMap;
     reset();
     m_mapLevelTreeModel = new Misc::MapLevelTreeModel(m_editorMap);

@@ -11,25 +11,28 @@
 #include "misc/mapdocument.hpp"
 #include "misc/maptreemodel.hpp"
 
-class EditorStartingPoint;
+namespace Editor {
 
 
-class EditorProjectError : public std::exception {
+class StartingPoint;
+
+
+class ProjectError : public std::exception {
 
 };
 
-class NoStartingPoint : public EditorProjectError {
+class NoStartingPoint : public ProjectError {
 public:
     const char* what() const noexcept override {
         return "the project has no starting point";
     }
 };
 
-class EditorProject
+class Project
 {
 public:
-    EditorProject(const std::string&);
-    virtual ~EditorProject();
+    Project(const std::string&);
+    virtual ~Project();
     static void create(const QString&);
     Misc::MapTreeModel* mapsModel();
 
@@ -49,7 +52,7 @@ public:
         return m_isModified;
     }
 
-    EditorProject& setModified(bool isModified) {
+    Project& setModified(bool isModified) {
         m_isModified = isModified;
         return *this;
     }
@@ -64,21 +67,21 @@ public:
         return m_openedMaps;
     }
 
-    const EditorStartingPoint& startingPoint() const {
+    const StartingPoint& startingPoint() const {
         if (m_startingPoint == nullptr) {
             throw NoStartingPoint();
         }
         return *m_startingPoint;
     }
 
-    void setStartingPoint(const EditorStartingPoint&);
+    void setStartingPoint(const StartingPoint&);
 
 private:
     Dummy::Core::Project m_coreProject;
     QDomDocument m_domDocument;
     Misc::MapTreeModel* m_mapsModel;
     bool m_isModified;
-    std::unique_ptr<EditorStartingPoint> m_startingPoint;
+    std::unique_ptr<StartingPoint> m_startingPoint;
 
     QMap<QString, std::shared_ptr<Misc::MapDocument>> m_openedMaps;
 
@@ -88,6 +91,6 @@ private:
     void _dumpToXmlNode(QDomDocument& document,
                         QDomElement& xmlNode,
                         QStandardItem* modelItem);
-
-
 };
+
+} // namespace Editor

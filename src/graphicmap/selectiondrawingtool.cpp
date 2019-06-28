@@ -9,7 +9,7 @@
 #include <utility>
 
 #include "core/graphic_map.hpp"
-#include "editorproject.hpp"
+#include "editor/project.hpp"
 #include "misc/mapdocument.hpp"
 
 #include "graphicmap/blockinggraphiclayer.hpp"

@@ -1,5 +1,4 @@
-#ifndef MAPSTREEVIEW_H
-#define MAPSTREEVIEW_H
+#pragma once
 
 #include <QMenu>
 #include <QObject>
@@ -8,7 +7,7 @@
 #include <exception>
 #include <memory>
 
-#include "editorproject.hpp"
+#include "editor/project.hpp"
 
 namespace Dummy {
     class Project;
@@ -35,7 +34,7 @@ class MapsTreeView : public QTreeView
 public:
     MapsTreeView(QWidget* parent=nullptr);
 
-    void setProject(std::shared_ptr<EditorProject> project) {
+    void setProject(std::shared_ptr<Editor::Project> project) {
         m_project = project;
 
         if (nullptr != project) {
@@ -45,7 +44,7 @@ public:
         }
     }
 
-    const EditorProject& project() const {
+    const Editor::Project& project() const {
         return *m_project;
     }
 
@@ -58,7 +57,7 @@ private:
     void _disableActions();
 
 
-    std::shared_ptr<EditorProject> m_project;
+    std::shared_ptr<Editor::Project> m_project;
     QMenu* m_mapMenu;
     QAction* m_newMapAction, *m_propertiesAction;
     QModelIndex m_selectedModelIndex;
@@ -68,5 +67,3 @@ private slots:
     void _onPropertiesAction();
     void _showContextMenu(const QPoint&);
 };
-
-#endif // MAPSTREEVIEW_H

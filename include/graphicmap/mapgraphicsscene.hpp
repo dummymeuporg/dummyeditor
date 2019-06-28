@@ -7,7 +7,10 @@
 #include <memory>
 #include <vector>
 
-class EditorProject;
+namespace Editor {
+class Project;
+class Map;
+} // namespace Editor
 
 namespace Dummy {
 namespace Core {
@@ -21,13 +24,9 @@ namespace Misc {
     class MapDocument;
 }
 
-class EditorMap;
-
-
 namespace GraphicMap {
 
 class DrawingTool;
-
 class GraphicLayer;
 class BlockingGraphicLayer;
 class StartingPointLayer;
@@ -41,7 +40,7 @@ public:
     MapGraphicsScene(QObject* parent = nullptr);
     virtual ~MapGraphicsScene() override;
 
-    inline const std::shared_ptr<EditorMap> map() const {
+    inline const std::shared_ptr<Editor::Map> map() const {
         return m_map;
     }
 
@@ -97,7 +96,7 @@ private:
     void _drawDarkFilter();
 
     std::shared_ptr<Misc::MapDocument> m_mapDocument;
-    std::shared_ptr<EditorMap> m_map;
+    std::shared_ptr<Editor::Map> m_map;
     QGraphicsRectItem* m_darkFilter;
     QPixmap m_mapChipset;
     QRect m_chipsetSelection;

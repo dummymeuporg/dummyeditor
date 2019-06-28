@@ -2,8 +2,8 @@
 #include <QDebug>
 #include <QTreeWidgetItem>
 
-#include "editormap.hpp"
-#include "editorproject.hpp"
+#include "editor/map.hpp"
+#include "editor/project.hpp"
 #include "mapstreeview.hpp"
 #include "mapeditdialog.hpp"
 
@@ -88,7 +88,7 @@ void MapsTreeView::_onNewMapAction() {
         QString mapName = dlg.getMapName();
         // XXX: Create (or edit) map
 
-        auto map = std::make_shared<EditorMap>(
+        auto map = std::make_shared<Editor::Map>(
             m_project->coreProject(), mapName.toStdString()
         );
         map->setChipset(dlg.getChipset().toStdString());

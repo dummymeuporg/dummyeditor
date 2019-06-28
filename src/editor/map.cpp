@@ -2,31 +2,32 @@
 #include "core/map_level.hpp"
 #include "core/project.hpp"
 
-#include "editormap.hpp"
+#include "editor/map.hpp"
 
-EditorMap::EditorMap(const Dummy::Core::Project& project,
+namespace Editor {
+Map::Map(const Dummy::Core::Project& project,
                      const std::string& name)
     : Dummy::Core::GraphicMap(project, name) {
 
 }
 
-EditorMap::~EditorMap() {}
+Map::~Map() {}
 
-void EditorMap::load() {
+void Map::load() {
     GraphicMap::load();
     for (const auto& level: m_mapLevels) {
-        m_editorLevels.push_back(std::make_unique<EditorLevel>(level));
+        m_editorLevels.push_back(std::make_unique<Level>(level));
     }
 }
 
-void EditorMap::setChipset(const std::string& chipset) {
+void Map::setChipset(const std::string& chipset) {
     m_chipset = chipset;
 }
-void EditorMap::setMusic(const std::string& music) {
+void Map::setMusic(const std::string& music) {
     m_music = music;
 }
 
-void EditorMap::reset(std::uint16_t width, std::uint16_t height) {
+void Map::reset(std::uint16_t width, std::uint16_t height) {
     m_width = width;
     m_height = height;
 
@@ -40,14 +41,14 @@ void EditorMap::reset(std::uint16_t width, std::uint16_t height) {
     m_fourthLayer.resize(m_width * m_height, reset);
 }
 
-void EditorMap::save() {
+void Map::save() {
     // Save the blocking layer, then the graphic info.
     _saveBlockingLayers();
     _saveGraphicLayers();
 }
 
 void
-EditorMap::_resizeGraphicLayer(
+Map::_resizeGraphicLayer(
     Dummy::Core::GraphicLayer& graphicLayer,
     std::uint16_t width,
     std::uint16_t height)
@@ -67,7 +68,7 @@ EditorMap::_resizeGraphicLayer(
     graphicLayer = std::move(newGraphicLayer);
 }
 
-void EditorMap::_resizeBlockingLayer(std::uint16_t width, std::uint16_t height)
+void Map::_resizeBlockingLayer(std::uint16_t width, std::uint16_t height)
 {
     Dummy::Core::BlockingLayer newBlockingLayer(width * height);
 
@@ -84,7 +85,7 @@ void EditorMap::_resizeBlockingLayer(std::uint16_t width, std::uint16_t height)
     m_blockingLayer = std::move(newBlockingLayer);
 }
 
-void EditorMap::resize(std::uint16_t width, std::uint16_t height) {
+void Map::resize(std::uint16_t width, std::uint16_t height) {
     _resizeBlockingLayer(width, height);
     _resizeGraphicLayer(m_firstLayer, width, height);
     _resizeGraphicLayer(m_secondLayer, width, height);
@@ -95,7 +96,7 @@ void EditorMap::resize(std::uint16_t width, std::uint16_t height) {
 
 }
 
-void EditorMap::_saveBlockingLayers() {
+void Map::_saveBlockingLayers() {
     std::uint32_t magicNumber = BLK_MAGIC_WORD;
     std::uint16_t version = 2;
     std::string filename(m_name + ".blk");
@@ -123,7 +124,7 @@ void EditorMap::_saveBlockingLayers() {
     ofs.close();
 }
 
-void EditorMap::_saveGraphicLayers() {
+void Map::_saveGraphicLayers() {
     std::uint32_t magicNumber = MAP_MAGIC_WORD;
     std::uint16_t version = 2; // XXX for now.
     std::string filename(m_name + ".map");
@@ -188,7 +189,7 @@ void EditorMap::_saveGraphicLayers() {
     */
 }
 
-void EditorMap::_writeStdString(std::ofstream& ofs,
+void Map::_writeStdString(std::ofstream& ofs,
                                 const std::string& str) {
     std::uint32_t size = static_cast<std::uint32_t>(str.size());
     ofs.write(reinterpret_cast<const char*>(&size),
@@ -199,7 +200,7 @@ void EditorMap::_writeStdString(std::ofstream& ofs,
 }
 
 void
-EditorMap::_writeLevel(
+Map::_writeLevel(
     std::ofstream& ofs,
     const Dummy::Core::MapLevel& levelMap
 ) {
@@ -223,3 +224,4 @@ EditorMap::_writeLevel(
         );
     }
 }
+} // namespace Editor

@@ -7,13 +7,14 @@
 #include <QString>
 #include <QTextStream>
 
-#include "editormap.hpp"
+#include "editor/map.hpp"
 #include "misc/maptreemodel.hpp"
 
-#include "editorproject.hpp"
-#include "editorstartingpoint.hpp"
+#include "editor/project.hpp"
+#include "editor/starting_point.hpp"
 
-EditorProject::EditorProject(const std::string& projectFolder)
+namespace Editor {
+Project::Project(const std::string& projectFolder)
     : m_coreProject(fs::path(projectFolder)),
       m_mapsModel(nullptr)
 {
@@ -42,35 +43,35 @@ EditorProject::EditorProject(const std::string& projectFolder)
     {
         const QDomNode& startingPositionNode(startingPositionNodes.at(0));
         const QDomNamedNodeMap& attributes(startingPositionNode.attributes());
-        m_startingPoint = std::make_unique<EditorStartingPoint>(
+        m_startingPoint = std::make_unique<StartingPoint>(
             attributes.namedItem("map").nodeValue().toStdString().c_str(),
             attributes.namedItem("x").nodeValue().toUShort(),
             attributes.namedItem("y").nodeValue().toUShort());
     }
 }
 
-EditorProject::~EditorProject() {
+Project::~Project() {
 
     delete m_mapsModel;
 }
 
-Misc::MapTreeModel* EditorProject::mapsModel() {
+Misc::MapTreeModel* Project::mapsModel() {
     return m_mapsModel;
 }
 
-void EditorProject::setStartingPoint(
-    const EditorStartingPoint& startingPoint)
+void Project::setStartingPoint(
+    const StartingPoint& startingPoint)
 {
-    m_startingPoint = std::make_unique<EditorStartingPoint>(startingPoint);
+    m_startingPoint = std::make_unique<StartingPoint>(startingPoint);
 }
 
-void EditorProject::create(const QString& folder) {
+void Project::create(const QString& folder) {
     _createXmlProjectFile(folder);
     _createFolders(folder);
 
 }
 
-void EditorProject::_createXmlProjectFile(const QString& folder) {
+void Project::_createXmlProjectFile(const QString& folder) {
     QFile projectFile(folder + "/" + "project.xml");
     projectFile.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream out(&projectFile);
@@ -78,7 +79,7 @@ void EditorProject::_createXmlProjectFile(const QString& folder) {
     projectFile.close();
 }
 
-QDomDocument EditorProject::_createXmlProjectTree() {
+QDomDocument Project::_createXmlProjectTree() {
     QDomDocument doc;
     QDomElement project = doc.createElement("project");
     QDomElement maps = doc.createElement("maps");
@@ -89,7 +90,7 @@ QDomDocument EditorProject::_createXmlProjectTree() {
     return doc;
 }
 
-void EditorProject::_createFolders(const QString& baseFolder) {
+void Project::_createFolders(const QString& baseFolder) {
     std::vector<QString> folders{"maps", "chipsets", "sounds"};
     std::for_each(folders.begin(), folders.end(),
                   [&baseFolder](const QString& folder) {
@@ -101,7 +102,7 @@ void EditorProject::_createFolders(const QString& baseFolder) {
     });
 }
 
-void EditorProject::saveProjectFile() {
+void Project::saveProjectFile() {
     QDomDocument doc;
     QDomElement projectNode = doc.createElement("project");
     QDomElement mapsNode = doc.createElement("maps");
@@ -130,9 +131,9 @@ void EditorProject::saveProjectFile() {
     doc.save(stream, 4);
 }
 
-void EditorProject::_dumpToXmlNode(QDomDocument& doc,
-                                   QDomElement& xmlNode,
-                                   QStandardItem* modelItem) {
+void Project::_dumpToXmlNode(QDomDocument& doc,
+                             QDomElement& xmlNode,
+                             QStandardItem* modelItem) {
 
     for(int i = 0; i < modelItem->rowCount(); ++i) {
         QStandardItem* mapItem = modelItem->child(i);
@@ -146,18 +147,18 @@ void EditorProject::_dumpToXmlNode(QDomDocument& doc,
     }
 }
 
-void EditorProject::cleanMapName(QString& mapName) {
+void Project::cleanMapName(QString& mapName) {
     mapName.replace("/", "");
     mapName.replace("..", "");
 }
 
 std::shared_ptr<Misc::MapDocument>
-EditorProject::document(const QString& mapName) {
+Project::document(const QString& mapName) {
     QString cleantMapname(mapName);
     cleanMapName(cleantMapname);
 
     if (!m_openedMaps.contains(cleantMapname)) {
-        auto map = std::make_shared<EditorMap>(
+        auto map = std::make_shared<Editor::Map>(
             m_coreProject, cleantMapname.toStdString()
         );
         map->load();
@@ -170,3 +171,4 @@ EditorProject::document(const QString& mapName) {
     }
     return m_openedMaps[cleantMapname];
 }
+} // namespace Editor

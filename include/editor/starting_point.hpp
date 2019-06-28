@@ -4,11 +4,12 @@
 #include <cstdint>
 
 
-class EditorStartingPoint
+namespace Editor {
+class StartingPoint
 {
 public:
-    EditorStartingPoint();
-    EditorStartingPoint(const char*, std::uint16_t, std::uint16_t);
+    StartingPoint();
+    StartingPoint(const char*, std::uint16_t, std::uint16_t);
 
     inline const char* mapName() const
     {
@@ -25,12 +26,12 @@ public:
         return m_y;
     }
 
-    EditorStartingPoint& setMapName(const char* mapName);
-    EditorStartingPoint& setX(std::uint16_t x);
-    EditorStartingPoint& setY(std::uint16_t y);
+    StartingPoint& setMapName(const char* mapName);
+    StartingPoint& setX(std::uint16_t x);
+    StartingPoint& setY(std::uint16_t y);
 
 private:
     std::string m_mapName;
     std::uint16_t m_x, m_y;
 };
-
+} // namespace Editor

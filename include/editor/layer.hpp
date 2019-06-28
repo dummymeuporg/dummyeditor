@@ -9,9 +9,10 @@ using GraphicLayer = std::vector<std::pair<std::int8_t, std::int8_t>>;
 } // namespace Core
 } // namespace Dummy
 
-class EditorLayer {
+namespace Editor {
+class Layer {
 public:
-    EditorLayer(const Dummy::Core::GraphicLayer&);
+    Layer(const Dummy::Core::GraphicLayer&);
     bool visible() {
         return m_visible;
     }
@@ -20,3 +21,4 @@ private:
     bool m_visible;
     const Dummy::Core::GraphicLayer& m_layer;
 };
+}

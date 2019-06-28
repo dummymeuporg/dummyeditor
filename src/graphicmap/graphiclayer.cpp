@@ -1,6 +1,6 @@
 #include <QGraphicsItem>
 
-#include "editormap.hpp"
+#include "editor/map.hpp"
 
 #include "graphicmap/graphiclayer.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"

@@ -1,10 +1,10 @@
-#include "editorlevel.hpp"
+#include "editor/level.hpp"
 
 #include "misc/maplayertreeitem.hpp"
 #include "misc/mapleveltreeitem.hpp"
 
 namespace Misc {
-MapLevelTreeItem::MapLevelTreeItem(EditorLevel& level)
+MapLevelTreeItem::MapLevelTreeItem(Editor::Level& level)
     : m_editorLevel(level)
 {
     if (m_editorLevel.visible()) {

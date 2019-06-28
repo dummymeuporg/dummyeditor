@@ -1,15 +1,14 @@
 #include <QDebug>
 
-#include "editormap.hpp"
-
-#include "editorproject.hpp"
+#include "editor/map.hpp"
+#include "editor/project.hpp"
 
 #include "misc/mapdocument.hpp"
 
 Misc::MapDocument::MapDocument(
-    EditorProject& project,
+    Editor::Project& project,
     const QString& name,
-    std::shared_ptr<EditorMap> map
+    std::shared_ptr<Editor::Map> map
 )
     : m_editorProject(project),
       m_isModified(false),

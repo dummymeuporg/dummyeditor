@@ -3,8 +3,8 @@
 #include <QGraphicsPixmapItem>
 #include <QKeyEvent>
 
-#include "editormap.hpp"
-#include "editorproject.hpp"
+#include "editor/map.hpp"
+#include "editor/project.hpp"
 #include "misc/mapdocument.hpp"
 
 #include "graphicmap/visiblegraphiclayer.hpp"
@@ -48,7 +48,7 @@ void GraphicMap::PenDrawingTool::chipsetSelectionChanged(
         }
         return;
     }
-    std::shared_ptr<EditorMap> map(
+    std::shared_ptr<Editor::Map> map(
         m_mapGraphicScene.mapDocument()->map());
 
     // XXX: Ugly
