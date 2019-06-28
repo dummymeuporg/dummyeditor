@@ -15,7 +15,6 @@ namespace Model {
 class MapLayerTreeItem : public MapTreeItem {
 public:
     MapLayerTreeItem(std::int8_t);
-    virtual void toggle() = 0;
 private:
     std::int8_t m_position;
 };
