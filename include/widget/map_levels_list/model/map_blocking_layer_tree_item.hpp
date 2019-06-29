@@ -5,19 +5,19 @@
 #include "widget/map_levels_list/model/map_layer_tree_item.hpp"
 
 namespace Editor {
-class GraphicLayer;
+class BlockingLayer;
 class Map;
 } // namespace Editor
 
 namespace Widget {
 namespace MapLevelsList {
 namespace Model {
-class MapGraphicLayerTreeItem : public MapLayerTreeItem {
+class MapBlockingLayerTreeItem : public MapLayerTreeItem {
 public:
-    MapGraphicLayerTreeItem(std::int8_t);
-    void toggle() override;
+    MapBlockingLayerTreeItem(Editor::BlockingLayer&);
+    Editor::Layer& layer() override;
 private:
-    std::int8_t m_position;
+    Editor::BlockingLayer& m_blockingLayer;
 };
 } // namespace Model
 } // namespace MapLevelsList

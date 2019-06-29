@@ -49,12 +49,12 @@
    <slot>toggleLayerVisibleState(QModelIndex)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>114</x>
-     <y>172</y>
+     <x>84</x>
+     <y>134</y>
     </hint>
     <hint type="destinationlabel">
-     <x>191</x>
-     <y>309</y>
+     <x>193</x>
+     <y>353</y>
     </hint>
    </hints>
   </connection>
