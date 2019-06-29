@@ -5,8 +5,7 @@
 #include "widget/map_levels_list/model/map_tree_item.hpp"
 
 namespace Editor {
-class GraphicLayer;
-class Map;
+class Layer;
 } // namespace Editor
 
 namespace Widget {
@@ -14,9 +13,8 @@ namespace MapLevelsList {
 namespace Model {
 class MapLayerTreeItem : public MapTreeItem {
 public:
-    MapLayerTreeItem(std::int8_t);
-private:
-    std::int8_t m_position;
+    void toggle() override;
+    virtual Editor::Layer& layer() = 0;
 };
 } // namespace Model
 } // namespace MapLevelsList

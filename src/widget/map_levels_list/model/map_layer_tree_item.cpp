@@ -5,8 +5,16 @@
 namespace Widget {
 namespace MapLevelsList {
 namespace Model {
-MapLayerTreeItem::MapLayerTreeItem(std::int8_t position) : m_position(position)
-{
+
+
+
+void MapLayerTreeItem::toggle() {
+    layer().setVisible(!layer().visible());
+    if (layer().visible()) {
+        setIcon(QIcon(":/icons/icon_eye.png"));
+    } else {
+        setIcon(QIcon(":/icons/icon_eye_crossed.png"));
+    }
 }
 } // namespace Model
 } // namespace MapLevelsList

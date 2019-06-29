@@ -8,7 +8,6 @@ namespace Model {
 
 class MapTreeItem : public QStandardItem {
 public:
-    MapTreeItem();
     virtual void toggle() = 0;
 };
 

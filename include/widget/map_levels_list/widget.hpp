@@ -7,28 +7,30 @@ namespace Editor {
 class Map;
 } // namespace Editor
 
-namespace Misc {
-class MapLevelTreeModel;
-}
+namespace Ui {
+class MapLevelsList;
+} // namespace Ui
+
 
 namespace Widget {
 namespace MapLevelsList {
-namespace Ui {
-class Widget;
-} // namespace Ui
 
-class Widget : public QWidget {
+namespace Model {
+class MapLevelTreeModel;
+} // namespace Model
+
+class Widget : public ::QWidget {
     Q_OBJECT
 public:
-    Widget(QWidget* parent = nullptr);
+    Widget(::QWidget* parent = nullptr);
     void setEditorMap(std::shared_ptr<Editor::Map>);
 public slots:
-    void toggleLayerVisibleState(QModelIndex);
+    void toggleLayerVisibleState(::QModelIndex);
 private:
     void reset();
-    Ui::Widget* ui;
+    Ui::MapLevelsList* ui;
     std::shared_ptr<Editor::Map> m_editorMap;
-    Misc::MapLevelTreeModel* m_mapLevelTreeModel;
+    Model::MapLevelTreeModel* m_mapLevelTreeModel;
 };
 
 } // namespace MapLevelsList

@@ -1,10 +1,11 @@
 #include <algorithm>
 #include "editor/map.hpp"
-#include "misc/abstractmapleveltreeitem.hpp"
-#include "misc/mapleveltreeitem.hpp"
-#include "misc/mapleveltreemodel.hpp"
+#include "widget/map_levels_list/model/map_level_tree_model.hpp"
+#include "widget/map_levels_list/model/map_level_tree_item.hpp"
 
-namespace Misc {
+namespace Widget {
+namespace MapLevelsList {
+namespace Model {
 MapLevelTreeModel::MapLevelTreeModel(std::shared_ptr<Editor::Map> editorMap)
     : m_editorMap(editorMap)
 {
@@ -17,10 +18,12 @@ MapLevelTreeModel::MapLevelTreeModel(std::shared_ptr<Editor::Map> editorMap)
     }
 }
 
-AbstractMapLevelTreeItem*
+MapTreeItem*
 MapLevelTreeModel::mapTreeItemFromIndex(const QModelIndex& index) const
 {
-    return reinterpret_cast<AbstractMapLevelTreeItem*>(itemFromIndex(index));
+    return reinterpret_cast<MapTreeItem*>(itemFromIndex(index));
 }
 
-} // namespace Misc
+} // namespace Model
+} // namespace MapLevelsList
+} // namespace Widget

@@ -12,11 +12,11 @@ class Map;
 namespace Widget {
 namespace MapLevelsList {
 namespace Model {
-class AbstractMapLevelTreeItem;
+class MapTreeItem;
 class MapLevelTreeModel : public QStandardItemModel {
 public:
     MapLevelTreeModel(std::shared_ptr<Editor::Map>);
-    AbstractMapLevelTreeItem* mapTreeItemFromIndex(const QModelIndex&) const;
+    MapTreeItem* mapTreeItemFromIndex(const QModelIndex&) const;
 private:
     std::shared_ptr<Editor::Map> m_editorMap;
 };

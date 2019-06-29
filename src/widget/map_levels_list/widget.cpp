@@ -1,27 +1,29 @@
 #include <QDebug>
-#include "misc/abstractmapleveltreeitem.hpp"
-#include "misc/mapleveltreemodel.hpp"
+#include "widget/map_levels_list/model/map_level_tree_item.hpp"
+#include "widget/map_levels_list/model/map_level_tree_model.hpp"
 
 #include "widget/map_levels_list/widget.hpp"
-#include "widget/map_levels_list/ui_widget.hpp"
+#include "widget/map_levels_list/ui_widget.h"
 
+namespace Widget {
+namespace MapLevelsList {
 Widget::Widget(QWidget* parent)
     : QWidget(parent),
-      ui(new Ui::Widget),
+      ui(new Ui::MapLevelsList),
       m_editorMap(nullptr),
       m_mapLevelTreeModel(nullptr)
 {
     ui->setupUi(this);
 }
 
-void MapLevelsList::setEditorMap(std::shared_ptr<Editor::Map> editorMap) {
+void Widget::setEditorMap(std::shared_ptr<Editor::Map> editorMap) {
     m_editorMap = editorMap;
     reset();
-    m_mapLevelTreeModel = new Misc::MapLevelTreeModel(m_editorMap);
+    m_mapLevelTreeModel = new Model::MapLevelTreeModel(m_editorMap);
     ui->treeViewLevels->setModel(m_mapLevelTreeModel);
 }
 
-void MapLevelsList::reset() {
+void Widget::reset() {
     if (m_mapLevelTreeModel != nullptr) {
         delete m_mapLevelTreeModel;
         m_mapLevelTreeModel = nullptr;
@@ -29,8 +31,10 @@ void MapLevelsList::reset() {
     ui->treeViewLevels->reset();
 }
 
-void MapLevelsList::toggleLayerVisibleState(QModelIndex selectedIndex) {
+void Widget::toggleLayerVisibleState(QModelIndex selectedIndex) {
     qDebug() << "selectedIndex: " << selectedIndex;
    m_mapLevelTreeModel->mapTreeItemFromIndex(selectedIndex)->toggle();
 
 }
+} // namespace MapLevelsList
+} // namespace Widget
