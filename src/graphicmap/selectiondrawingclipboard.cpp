@@ -33,11 +33,6 @@ GraphicMap::SelectionDrawingClipboard::SelectionDrawingClipboard(
                     coordY = quint16((activeSelection.y() + j) / 16);
             quint16 index(coordY * map->width() + coordX);
             qDebug() << "Copy " << index;
-            m_firstLayerClipboard[clipboardIndex] = map->firstLayer()[index];
-            m_secondLayerClipboard[clipboardIndex] = map->secondLayer()[index];
-            m_thirdLayerClipboard[clipboardIndex] = map->thirdLayer()[index];
-            m_blockingLayerClipboard[clipboardIndex] =
-                map->blockingLayer()[index];
             ++clipboardIndex;
         }
     }

@@ -2,6 +2,7 @@
 
 #include "editor/level.hpp"
 
+#include "widget/map_levels_list/model/map_blocking_layer_tree_item.hpp"
 #include "widget/map_levels_list/model/map_graphic_layer_tree_item.hpp"
 #include "widget/map_levels_list/model/map_level_tree_item.hpp"
 
@@ -16,13 +17,14 @@ MapLevelTreeItem::MapLevelTreeItem(Editor::Level& level)
     } else {
         setIcon(QIcon(":/icons/icon_eye_crossed.png"));
     }
+
+    // Put blocking layer at the top.
+    appendRow(new MapBlockingLayerTreeItem(level.blockingLayer()));
+
     for(auto it = level.graphicLayers().rbegin();
         it != level.graphicLayers().rend(); ++it)
     {
-        QList<QStandardItem*> row {
-            new MapGraphicLayerTreeItem(it->first, *(it->second))
-        };
-        appendRow(row);
+        appendRow(new MapGraphicLayerTreeItem(it->first, *(it->second)));
     }
 }
 

@@ -16,6 +16,7 @@ class MapBlockingLayerTreeItem : public MapLayerTreeItem {
 public:
     MapBlockingLayerTreeItem(Editor::BlockingLayer&);
     Editor::Layer& layer() override;
+    QVariant data(int role = Qt::UserRole + 1) const override;
 private:
     Editor::BlockingLayer& m_blockingLayer;
 };

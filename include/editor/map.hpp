@@ -18,26 +18,6 @@ public:
     Map(const Dummy::Core::Project&, const std::string&);
     virtual ~Map();
 
-    Dummy::Core::GraphicLayer& firstLayer() {
-        //return m_firstLayer;
-        return m_mapLevels[0].layers().at(-1);
-    }
-
-    Dummy::Core::GraphicLayer& secondLayer() {
-        //return m_secondLayer;
-        return m_mapLevels[0].layers().at(0);
-    }
-
-    Dummy::Core::GraphicLayer& thirdLayer() {
-        //return m_thirdLayer;
-        return m_mapLevels[0].layers().at(1);
-    }
-
-    Dummy::Core::GraphicLayer& fourthLayer() {
-        //return m_fourthLayer;
-        return m_mapLevels[0].layers().at(2);
-    }
-
     void setChipset(const std::string&);
     void setMusic(const std::string&);
     void reset(std::uint16_t, std::uint16_t);
