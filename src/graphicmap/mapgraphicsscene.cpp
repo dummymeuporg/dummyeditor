@@ -84,12 +84,18 @@ GraphicMap::MapGraphicsScene::setMapDocument
             ).string().c_str())
     );
 
+
+    for (auto& graphicLayer: m_graphicLayers) {
+        delete graphicLayer;
+    }
     m_graphicLayers.clear();
+    clear();
+
     int zindex = 0;
     for (const auto& level: m_map->levels()) {
         for (const auto& [position, layer]: level->graphicLayers()) {
             m_graphicLayers.push_back(
-                std::make_unique<VisibleGraphicLayer>(
+                new VisibleGraphicLayer(
                     *this,
                     *layer,
                     m_mapChipset,
@@ -110,46 +116,6 @@ GraphicMap::MapGraphicsScene::setMapDocument
         */
     }
 
-    /*
-    m_firstLayer = new VisibleGraphicLayer(
-        *this,
-        m_map->firstLayer(),
-        m_mapChipset,
-        1
-    );
-
-    m_secondLayer = new VisibleGraphicLayer(
-        *this,
-        m_map->secondLayer(),
-        m_mapChipset,
-        3
-    );
-
-    m_thirdLayer = new VisibleGraphicLayer(
-        *this,
-        m_map->thirdLayer(),
-        m_mapChipset,
-        5
-    );
-
-    m_fourthLayer = new VisibleGraphicLayer(
-        *this,
-        m_map->fourthLayer(),
-        m_mapChipset,
-        7
-    );
-
-
-    m_blockingLayer = new BlockingGraphicLayer(*this, m_map->blockingLayer());
-
-    m_startingPointLayer = new GraphicMap::StartingPointLayer(*this);
-    */
-
-    /*
-    m_paintingLayerState->onNewMap();
-    m_paintingLayerState->adjustLayers();
-    m_paintingLayerState->drawGrid();
-    */
 
     changeSelection(QRect(0,0,0,0));
 

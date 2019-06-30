@@ -27,7 +27,7 @@ public:
                         Editor::GraphicLayer&,
                         const QPixmap&,
                         int zValue);
-    virtual ~VisibleGraphicLayer() override;
+    ~VisibleGraphicLayer() override;
     inline const QPixmap& chipsetPixmap() const {
         return m_chipsetPixmap;
     }

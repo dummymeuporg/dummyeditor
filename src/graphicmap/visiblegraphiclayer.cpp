@@ -1,3 +1,6 @@
+#include <iostream>
+
+#include <QDebug>
 #include <QGraphicsPixmapItem>
 
 #include "core/graphic_layer.hpp"
@@ -15,6 +18,9 @@ GraphicMap::VisibleGraphicLayer::VisibleGraphicLayer(
     int zValue) : GraphicMap::GraphicLayer(mapGraphicsScene),
     m_layer(layer), m_chipsetPixmap(chipsetPixmap), m_zValue(zValue)
 {
+    qDebug() << "VisibleGraphicLayer(): " << this;
+    qDebug() << "mapGraphicsScene:" << &m_mapGraphicsScene;
+
     const std::shared_ptr<Editor::Map> map(
         m_mapGraphicsScene.map()
     );
@@ -30,6 +36,7 @@ GraphicMap::VisibleGraphicLayer::VisibleGraphicLayer(
         {
             m_layerItems[index] = new QGraphicsPixmapItem(
                 m_chipsetPixmap.copy(QRect(x * 16, y * 16, 16, 16)));
+            std::cerr << "New layer item" << m_layerItems[index] << std::endl;
 
             qreal posX = (index % map->width()) * 16;
             qreal posY = (index / map->width()) * 16;
@@ -68,6 +75,7 @@ GraphicMap::VisibleGraphicLayer::setTile(quint16 x,
 
         if (nullptr != m_layerItems[index]) {
             m_mapGraphicsScene.removeItem(m_layerItems[index]);
+            m_layerItems[index] = nullptr;
         }
 
         if (chipsetX >= 0 && chipsetY >= 0)

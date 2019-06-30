@@ -1,3 +1,6 @@
+#include <iostream>
+
+#include <QDebug>
 #include <QGraphicsItem>
 
 #include "editor/map.hpp"
@@ -15,14 +18,18 @@ GraphicMap::GraphicLayer::GraphicLayer(
 
 }
 
-GraphicMap::GraphicLayer::~GraphicLayer()
-{
-    for (auto it = m_layerItems.begin(); it != m_layerItems.end(); ++it)
+GraphicMap::GraphicLayer::~GraphicLayer() {
+    /*
+    std::cerr << "~VisibleGraphicLayer()" << std::endl;
+    for (auto layerItem: m_layerItems)
     {
-        if(*it != nullptr) {
-            m_mapGraphicsScene.removeItem(*it);
+        std::cerr << "Revome layer item " << layerItem << std::endl;
+        if (layerItem != nullptr) {
+            m_mapGraphicsScene.removeItem(layerItem);
+            layerItem = nullptr;
         }
     }
+    */
 }
 
 GraphicMap::MapSceneLayer&

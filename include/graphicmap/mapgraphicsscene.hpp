@@ -33,7 +33,7 @@ class StartingPointLayer;
 class VisibleGraphicLayer;
 class MapSceneLayer;
 
-using GraphicLayers = std::vector<std::unique_ptr<GraphicLayer>>;
+using GraphicLayers = std::vector<GraphicLayer*>;
 
 class MapGraphicsScene : public QGraphicsScene
 {
