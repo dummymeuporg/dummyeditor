@@ -1,6 +1,12 @@
 #pragma once
+#include <map>
 #include <memory>
-#include "core/map_level.hpp"
+
+namespace Dummy {
+namespace Local {
+class Level;
+} // namespace Local
+} // namespace Dummy
 
 namespace Editor {
 class BlockingLayer;
@@ -10,7 +16,7 @@ using GraphicLayers = std::map<std::int8_t, std::unique_ptr<GraphicLayer>>;
 
 class Level {
 public:
-    Level(const Dummy::Core::MapLevel&);
+    Level(const Dummy::Local::Level&);
     GraphicLayer& graphicLayerAt(std::int8_t position);
     void setGraphicLayer(std::int8_t, std::unique_ptr<GraphicLayer>);
     const GraphicLayers& graphicLayers() const {
@@ -26,7 +32,7 @@ public:
     }
 private:
     bool m_visible;
-    const Dummy::Core::MapLevel& m_mapLevel;
+    const Dummy::Local::Level& m_level;
     std::unique_ptr<BlockingLayer> m_blockingLayer;
     GraphicLayers m_graphicLayers;
 };

@@ -6,7 +6,7 @@
 #include <QMap>
 #include <QString>
 
-#include "core/project.hpp"
+#include "local/project.hpp"
 
 #include "misc/mapdocument.hpp"
 #include "misc/map_tree_model.hpp"
@@ -44,7 +44,7 @@ public:
     }
     */
 
-    const Dummy::Core::Project& coreProject() const {
+    const Dummy::Local::Project& coreProject() const {
         return m_coreProject;
     }
 
@@ -77,7 +77,7 @@ public:
     void setStartingPoint(const StartingPoint&);
 
 private:
-    Dummy::Core::Project m_coreProject;
+    Dummy::Local::Project m_coreProject;
     QDomDocument m_domDocument;
     Misc::MapTreeModel* m_mapsModel;
     bool m_isModified;

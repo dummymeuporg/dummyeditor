@@ -82,6 +82,9 @@ GraphicMap::MapGraphicsScene::setMapDocument
             ).string().c_str())
     );
 
+    int zindex = 0;
+    //for (const auto& mapLevel: m_map->le)
+
     /*
     m_firstLayer = new VisibleGraphicLayer(
         *this,

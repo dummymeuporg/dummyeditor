@@ -1,6 +1,6 @@
 #include <QDebug>
-#include "core/map_level.hpp"
-#include "core/project.hpp"
+#include "local/level.hpp"
+#include "local/project.hpp"
 
 #include "editor/blocking_layer.hpp"
 #include "editor/graphic_layer.hpp"
@@ -8,17 +8,14 @@
 #include "editor/map.hpp"
 
 namespace Editor {
-Map::Map(const Dummy::Core::Project& project,
-                     const std::string& name)
-    : Dummy::Core::GraphicMap(project, name) {
-
-}
+Map::Map(const Dummy::Local::Project& project, const std::string& name)
+    : Dummy::Local::Map(project, name) {}
 
 Map::~Map() {}
 
 void Map::load() {
-    GraphicMap::load();
-    for (const auto& level: m_mapLevels) {
+    Dummy::Local::Map::load();
+    for (const auto& level: m_levels) {
         m_editorLevels.push_back(std::make_unique<Level>(level));
     }
 }
@@ -66,6 +63,8 @@ void Map::_resizeBlockingLayer(std::uint16_t width, std::uint16_t height)
 {
     Dummy::Core::BlockingLayer newBlockingLayer(width * height);
 
+    // XXX: Fix this.
+    /*
     for (std::uint16_t y = 0; y < height; ++y) {
         for (std::uint16_t x = 0; x < width; ++x) {
             if (x < m_width && y < m_height) {
@@ -77,6 +76,7 @@ void Map::_resizeBlockingLayer(std::uint16_t width, std::uint16_t height)
         }
     }
     m_blockingLayer = std::move(newBlockingLayer);
+    */
 }
 
 void Map::resize(std::uint16_t width, std::uint16_t height) {
@@ -102,11 +102,11 @@ void Map::_saveBlockingLayers() {
               sizeof(std::uint16_t));
 
     // Write the blocking layers
-    for (const auto& blockingLayer: m_blockingLevels) {
+    for (const auto& level: m_levels) {
         ofs.write(
-            reinterpret_cast<const char*>(blockingLayer.data()),
+            reinterpret_cast<const char*>(level.blockingLayer().data()),
             static_cast<std::streamsize>(
-                blockingLayer.size() * sizeof(std::int8_t)
+                level.blockingLayer().size() * sizeof(std::int8_t)
             )
         );
     }
@@ -144,12 +144,9 @@ void Map::_saveGraphicLayers() {
     // write the music
     _writeStdString(ofs, m_music);
 
-    // Write the levels count
-    //ofs.write(reinterpret_cast<char*>(&levelsCount), sizeof(levelsCount));
-
-    // write the layers
-    for(const auto& mapLevel: m_mapLevels) {
-        _writeLevel(ofs, mapLevel);
+    // write the levels
+    for(const auto& level: m_levels) {
+        _writeLevel(ofs, level);
     }
 }
 
@@ -166,16 +163,16 @@ void Map::_writeStdString(std::ofstream& ofs,
 void
 Map::_writeLevel(
     std::ofstream& ofs,
-    const Dummy::Core::MapLevel& levelMap
+    const Dummy::Local::Level& level
 ) {
     // Write the layers count.
-    std::uint8_t layersCount = levelMap.graphicLayers().size();
+    std::uint8_t layersCount = level.graphicLayers().size();
     ofs.write(
         reinterpret_cast<char*>(&layersCount),
         sizeof(std::uint8_t)
     );
 
-    for (const auto& [position, layer]: levelMap.graphicLayers()) {
+    for (const auto& [position, layer]: level.graphicLayers()) {
         ofs.write(
             reinterpret_cast<const char*>(&position),
             sizeof(std::int8_t)

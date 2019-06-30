@@ -8,7 +8,7 @@
 
 #include <utility>
 
-#include "core/graphic_map.hpp"
+#include "editor/map.hpp"
 #include "editor/project.hpp"
 #include "misc/mapdocument.hpp"
 
@@ -72,7 +72,7 @@ GraphicMap::SelectionDrawingTool::onMousePress(
 void GraphicMap::SelectionDrawingTool::chipsetSelectionChanged(
     const QRect& selection)
 {
-    Q_UNUSED(selection);
+    Q_UNUSED(selection)
 }
 
 void
@@ -107,7 +107,7 @@ void
 GraphicMap::SelectionDrawingTool::onMouseRelease(
     QGraphicsSceneMouseEvent* event)
 {
-    Q_UNUSED(event);
+    Q_UNUSED(event)
     m_isSelecting = false;
 }
 
@@ -154,7 +154,7 @@ void GraphicMap::SelectionDrawingTool::onKeyPress(QKeyEvent* event)
 
 void GraphicMap::SelectionDrawingTool::onKeyRelease(QKeyEvent* event)
 {
-    Q_UNUSED(event);
+    Q_UNUSED(event)
 }
 
 void GraphicMap::SelectionDrawingTool::_deleteSelection(

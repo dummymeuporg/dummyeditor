@@ -2,7 +2,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsPixmapItem>
 
-#include "core/graphic_map.hpp"
+#include "local/map.hpp"
 #include "editor/project.hpp"
 #include "misc/mapdocument.hpp"
 
@@ -26,14 +26,14 @@ void
 GraphicMap::NoDrawingTool::onMousePress(
     QGraphicsSceneMouseEvent* mouseEvent)
 {
-    Q_UNUSED(mouseEvent);
+    Q_UNUSED(mouseEvent)
 
 }
 
 void GraphicMap::NoDrawingTool::chipsetSelectionChanged(
     const QRect& selection)
 {
-    Q_UNUSED(selection);
+    Q_UNUSED(selection)
 }
 
 
@@ -41,14 +41,14 @@ void
 GraphicMap::NoDrawingTool::onMouseMove(
     QGraphicsSceneMouseEvent* mouseEvent)
 {
-    Q_UNUSED(mouseEvent);
+    Q_UNUSED(mouseEvent)
 }
 
 void
 GraphicMap::NoDrawingTool::onMouseRelease(
     QGraphicsSceneMouseEvent* event)
 {
-    Q_UNUSED(event);
+    Q_UNUSED(event)
 }
 
 void GraphicMap::NoDrawingTool::onMouseLeave()

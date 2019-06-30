@@ -55,7 +55,7 @@ GraphicMap::VisibleGraphicLayer::setTile(quint16 x,
                                          qint16 chipsetX,
                                          qint16 chipsetY)
 {
-    const std::shared_ptr<Dummy::Core::GraphicMap> map(
+    const std::shared_ptr<Editor::Map> map(
         m_mapGraphicsScene.map()
     );
     if (x < m_mapGraphicsScene.map()->width() * 16
