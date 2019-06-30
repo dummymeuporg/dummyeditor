@@ -19,11 +19,11 @@ Map::~Map() {}
 
 void Map::load() {
     Dummy::Local::Map::load();
-    /*
-    for (const auto& level: m_levels) {
-        m_editorLevels.push_back(std::make_unique<Level>(*this));
+
+    for (auto& level: m_levels) {
+        m_editorLevels.push_back(std::make_unique<Level>(level));
     }
-    */
+
 }
 
 void Map::setChipset(const std::string& chipset) {
