@@ -44,6 +44,7 @@ GraphicMap::VisibleGraphicLayer::VisibleGraphicLayer(
 
             m_layerItems[index]->setPos(posX, posY);
             m_layerItems[index]->setZValue(m_zIndex);
+            m_layerItems[index]->setOpacity(m_layer.visible() * 1);
             m_mapGraphicsScene.addItem(m_layerItems[index]);
         }
     }

@@ -21,7 +21,7 @@ public:
         return m_layerItems;
     }
 
-    MapSceneLayer& setOpacity(qreal) override;
+    void setVisibility(bool);
 
 
 protected:

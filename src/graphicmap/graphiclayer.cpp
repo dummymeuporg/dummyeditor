@@ -8,38 +8,24 @@
 #include "graphicmap/graphiclayer.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
 
-
-GraphicMap::GraphicLayer::GraphicLayer(
-    GraphicMap::MapGraphicsScene& mapGraphicsScene,
-    int zIndex
-) : GraphicMap::MapSceneLayer(mapGraphicsScene, zIndex),
+namespace GraphicMap {
+GraphicLayer::GraphicLayer(MapGraphicsScene& mapGraphicsScene, int zIndex)
+    : MapSceneLayer(mapGraphicsScene, zIndex),
     m_layerItems(m_mapGraphicsScene.map()->width() *
                  m_mapGraphicsScene.map()->height())
 {
 
 }
 
-GraphicMap::GraphicLayer::~GraphicLayer() {
-    /*
-    std::cerr << "~VisibleGraphicLayer()" << std::endl;
-    for (auto layerItem: m_layerItems)
-    {
-        std::cerr << "Revome layer item " << layerItem << std::endl;
-        if (layerItem != nullptr) {
-            m_mapGraphicsScene.removeItem(layerItem);
-            layerItem = nullptr;
-        }
-    }
-    */
-}
+GraphicLayer::~GraphicLayer() {}
 
-GraphicMap::MapSceneLayer&
-GraphicMap::GraphicLayer::setOpacity(qreal opacity) {
+
+void GraphicLayer::setVisibility(bool visible) {
     for (auto it = m_layerItems.begin(); it != m_layerItems.end(); ++it)
     {
         if(*it != nullptr) {
-            (*it)->setOpacity(opacity);
+            (*it)->setOpacity(visible * 1);
         }
     }
-    return *this;
 }
+} // namespace GraphicMap
