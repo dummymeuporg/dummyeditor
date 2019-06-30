@@ -26,7 +26,7 @@ public:
     VisibleGraphicLayer(MapGraphicsScene&,
                         Editor::GraphicLayer&,
                         const QPixmap&,
-                        int zValue);
+                        int);
     ~VisibleGraphicLayer() override;
     inline const QPixmap& chipsetPixmap() const {
         return m_chipsetPixmap;
@@ -48,6 +48,5 @@ public:
 private:
     Editor::GraphicLayer& m_layer;
     const QPixmap& m_chipsetPixmap;
-    int m_zValue;
 };
 } // namespace GraphicMap

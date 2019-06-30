@@ -1,5 +1,6 @@
 #include <QDebug>
 
+#include "editor/blocking_layer.hpp"
 #include "editor/map.hpp"
 
 #include "graphicmap/blockingsquareitem.hpp"
@@ -8,25 +9,23 @@
 
 GraphicMap::BlockingGraphicLayer::BlockingGraphicLayer(
     GraphicMap::MapGraphicsScene& mapGraphicsScene,
-    Dummy::Core::BlockingLayer& blockingLayer)
-    : GraphicMap::GraphicLayer(mapGraphicsScene),
-      m_blockingLayer(blockingLayer)
+    Editor::BlockingLayer& blockingLayer,
+    int zIndex
+) : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex),
+    m_blockingLayer(blockingLayer)
 {
     // XXX: Find a better way to resize?
     m_layerItems.resize(m_layerItems.size() * 4);
 
-    const std::shared_ptr<Editor::Map> map(
-        m_mapGraphicsScene.map()
-    );
+    const std::shared_ptr<Editor::Map> map(m_mapGraphicsScene.map());
     int index = 0;
-    for (auto it = m_blockingLayer.begin(); it != m_blockingLayer.end();
+    for (auto it = m_blockingLayer.layer().begin();
+         it != m_blockingLayer.layer().end();
          ++it, ++index)
     {
         m_layerItems[index] = nullptr;
-        qDebug() << "VALUE:" << m_blockingLayer[index];
         if (m_blockingLayer[index])
         {
-            qDebug() << "TRUE!";
             qreal posX((index % (map->width()*2)) * 8);
             qreal posY((index / (map->width()*2)) * 8);
             _draw(index, quint16(posX), quint16(posY));
@@ -126,7 +125,7 @@ void
 GraphicMap::BlockingGraphicLayer::_draw(int index, quint16 x, quint16 y)
 {
     m_layerItems[index] = new BlockingSquareItem();
-    m_layerItems[index]->setZValue(50);
+    m_layerItems[index]->setZValue(m_zIndex);
     m_layerItems[index]->setPos(
         QPointF(x - (x % 8), y - (y % 8)));
     m_mapGraphicsScene.addItem(m_layerItems[index]);

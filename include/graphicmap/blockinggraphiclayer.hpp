@@ -5,11 +5,9 @@
 
 #include "graphicmap/graphiclayer.hpp"
 
-namespace Dummy {
-namespace Core {
+namespace Editor {
 class BlockingLayer;
-} // namespace Core
-} // namespace Dummy
+} // namespace Editor
 
 namespace GraphicMap {
     class BlockingSquareItem;
@@ -19,14 +17,15 @@ namespace GraphicMap {
     {
     public:
         BlockingGraphicLayer(MapGraphicsScene&,
-                             Dummy::Core::BlockingLayer&);
+                             Editor::BlockingLayer&,
+                             int zValue);
         virtual ~BlockingGraphicLayer() override;
         virtual MapSceneLayer& removeTile(quint16, quint16);
         void toggleTile(quint16, quint16);
         void setTile(quint16, quint16, bool);
     private:
         void _draw(int, quint16, quint16);
-        Dummy::Core::BlockingLayer& m_blockingLayer;
+        Editor::BlockingLayer& m_blockingLayer;
         QVector<BlockingSquareItem*> m_crossItems;
     };
 }

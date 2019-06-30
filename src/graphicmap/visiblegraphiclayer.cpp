@@ -15,8 +15,10 @@ GraphicMap::VisibleGraphicLayer::VisibleGraphicLayer(
     GraphicMap::MapGraphicsScene& mapGraphicsScene,
     Editor::GraphicLayer& layer,
     const QPixmap& chipsetPixmap,
-    int zValue) : GraphicMap::GraphicLayer(mapGraphicsScene),
-    m_layer(layer), m_chipsetPixmap(chipsetPixmap), m_zValue(zValue)
+    int zIndex)
+    : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex),
+    m_layer(layer),
+    m_chipsetPixmap(chipsetPixmap)
 {
     qDebug() << "VisibleGraphicLayer(): " << this;
     qDebug() << "mapGraphicsScene:" << &m_mapGraphicsScene;
@@ -36,13 +38,12 @@ GraphicMap::VisibleGraphicLayer::VisibleGraphicLayer(
         {
             m_layerItems[index] = new QGraphicsPixmapItem(
                 m_chipsetPixmap.copy(QRect(x * 16, y * 16, 16, 16)));
-            std::cerr << "New layer item" << m_layerItems[index] << std::endl;
 
             qreal posX = (index % map->width()) * 16;
             qreal posY = (index / map->width()) * 16;
 
             m_layerItems[index]->setPos(posX, posY);
-            m_layerItems[index]->setZValue(m_zValue);
+            m_layerItems[index]->setZValue(m_zIndex);
             m_mapGraphicsScene.addItem(m_layerItems[index]);
         }
     }
@@ -84,7 +85,7 @@ GraphicMap::VisibleGraphicLayer::setTile(quint16 x,
                 QGraphicsPixmapItem(
                     m_chipsetPixmap.copy(QRect(chipsetX, chipsetY, 16, 16)));
             m_layerItems[index]->setPos(x, y);
-            m_layerItems[index]->setZValue(m_zValue);
+            m_layerItems[index]->setZValue(m_zIndex);
             m_mapGraphicsScene.addItem(m_layerItems[index]);
 
             m_layer[index] = std::pair<std::int8_t, std::int8_t>(

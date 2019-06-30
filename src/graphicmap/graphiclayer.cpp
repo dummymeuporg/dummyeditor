@@ -10,10 +10,11 @@
 
 
 GraphicMap::GraphicLayer::GraphicLayer(
-    GraphicMap::MapGraphicsScene& mapGraphicsScene)
-    : GraphicMap::MapSceneLayer(mapGraphicsScene),
-      m_layerItems(m_mapGraphicsScene.map()->width() *
-                   m_mapGraphicsScene.map()->height())
+    GraphicMap::MapGraphicsScene& mapGraphicsScene,
+    int zIndex
+) : GraphicMap::MapSceneLayer(mapGraphicsScene, zIndex),
+    m_layerItems(m_mapGraphicsScene.map()->width() *
+                 m_mapGraphicsScene.map()->height())
 {
 
 }

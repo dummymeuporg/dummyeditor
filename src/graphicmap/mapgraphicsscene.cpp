@@ -84,7 +84,6 @@ GraphicMap::MapGraphicsScene::setMapDocument
             ).string().c_str())
     );
 
-
     for (auto& graphicLayer: m_graphicLayers) {
         delete graphicLayer;
     }
@@ -94,6 +93,7 @@ GraphicMap::MapGraphicsScene::setMapDocument
     int zindex = 0;
     for (const auto& level: m_map->levels()) {
         for (const auto& [position, layer]: level->graphicLayers()) {
+            qDebug() << "Position: " << position;
             m_graphicLayers.push_back(
                 new VisibleGraphicLayer(
                     *this,
@@ -105,17 +105,14 @@ GraphicMap::MapGraphicsScene::setMapDocument
         }
 
         // Add blocking layer
-        /*
         m_graphicLayers.push_back(
-            std::make_unique<BlockingGraphicLayer>(
+            new BlockingGraphicLayer(
                 *this,
                 level->blockingLayer(),
                 ++zindex
             )
         );
-        */
     }
-
 
     changeSelection(QRect(0,0,0,0));
 

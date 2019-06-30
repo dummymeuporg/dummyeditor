@@ -9,22 +9,22 @@ class QGraphicsItem;
 
 namespace GraphicMap {
 
-    class MapGraphicsScene;
+class MapGraphicsScene;
 
-    class GraphicLayer : public MapSceneLayer
-    {
-    public:
-        GraphicLayer(MapGraphicsScene&);
-        virtual ~GraphicLayer() override;
+class GraphicLayer : public MapSceneLayer
+{
+public:
+    GraphicLayer(MapGraphicsScene&, int);
+    virtual ~GraphicLayer() override;
 
-        inline const QVector<QGraphicsItem*>& layerItems() const {
-            return m_layerItems;
-        }
+    inline const QVector<QGraphicsItem*>& layerItems() const {
+        return m_layerItems;
+    }
 
-        MapSceneLayer& setOpacity(qreal) override;
+    MapSceneLayer& setOpacity(qreal) override;
 
 
-    protected:
-        QVector<QGraphicsItem*> m_layerItems;
-    };
-}
+protected:
+    QVector<QGraphicsItem*> m_layerItems;
+};
+} // namespace GraphicMap

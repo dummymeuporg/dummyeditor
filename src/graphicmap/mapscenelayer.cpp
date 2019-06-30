@@ -1,8 +1,9 @@
 #include "graphicmap/mapscenelayer.hpp"
 
 GraphicMap::MapSceneLayer::MapSceneLayer(
-    GraphicMap::MapGraphicsScene& mapGraphicsScene)
-    : m_mapGraphicsScene(mapGraphicsScene)
+    GraphicMap::MapGraphicsScene& mapGraphicsScene,
+    int zIndex
+) : m_mapGraphicsScene(mapGraphicsScene), m_zIndex(zIndex)
 {
 
 }
