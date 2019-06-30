@@ -1,13 +1,16 @@
 #include <QGraphicsPixmapItem>
 
+#include "core/graphic_layer.hpp"
+
 #include "editor/map.hpp"
+#include "editor/graphic_layer.hpp"
 
 #include "graphicmap/mapgraphicsscene.hpp"
 #include "graphicmap/visiblegraphiclayer.hpp"
 
 GraphicMap::VisibleGraphicLayer::VisibleGraphicLayer(
     GraphicMap::MapGraphicsScene& mapGraphicsScene,
-    Dummy::Core::GraphicLayer& layer,
+    Editor::GraphicLayer& layer,
     const QPixmap& chipsetPixmap,
     int zValue) : GraphicMap::GraphicLayer(mapGraphicsScene),
     m_layer(layer), m_chipsetPixmap(chipsetPixmap), m_zValue(zValue)
@@ -16,8 +19,8 @@ GraphicMap::VisibleGraphicLayer::VisibleGraphicLayer(
         m_mapGraphicsScene.map()
     );
     int index = 0;
-    for (auto it = m_layer.begin();
-         it != m_layer.end();
+    for (auto it = m_layer.layer().begin();
+         it != m_layer.layer().end();
          ++it, ++index)
     {
         m_layerItems[index] = nullptr;
@@ -90,7 +93,8 @@ GraphicMap::VisibleGraphicLayer::setTile(quint16 x,
                 m_mapGraphicsScene.removeItem(m_layerItems[index]);
                 m_layerItems[index] = nullptr;
                 //m_layer.setTile(x / 16, y / 16, -1, -1);
-                m_layer[index] = std::pair<std::int8_t, std::int8_t>(-1, -1);
+                m_layer[index] =
+                    std::pair<std::int8_t, std::int8_t>(-1, -1);
             }
         }
     }

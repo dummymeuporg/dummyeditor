@@ -5,11 +5,16 @@
 
 #include "graphicmap/graphiclayer.hpp"
 
+namespace Editor {
+class GraphicLayer;
+} // namespace Editor
+
 namespace Dummy {
 namespace Core {
-using GraphicLayer = std::vector<std::pair<std::int8_t, std::int8_t>>;
+class GraphicLayer;
 } // namespace Core
 } // namespace Dummy
+
 
 namespace GraphicMap {
 // Forward declaration:
@@ -19,7 +24,7 @@ class VisibleGraphicLayer : public GraphicLayer {
 
 public:
     VisibleGraphicLayer(MapGraphicsScene&,
-                        Dummy::Core::GraphicLayer&,
+                        Editor::GraphicLayer&,
                         const QPixmap&,
                         int zValue);
     virtual ~VisibleGraphicLayer() override;
@@ -27,7 +32,7 @@ public:
         return m_chipsetPixmap;
     }
 
-    inline const Dummy::Core::GraphicLayer& layer() const {
+    inline const Editor::GraphicLayer& layer() const {
         return m_layer;
     }
 
@@ -41,7 +46,7 @@ public:
     virtual MapSceneLayer& removeTile(quint16, quint16) override;
 
 private:
-    Dummy::Core::GraphicLayer& m_layer;
+    Editor::GraphicLayer& m_layer;
     const QPixmap& m_chipsetPixmap;
     int m_zValue;
 };

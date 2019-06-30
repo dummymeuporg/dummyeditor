@@ -1,4 +1,8 @@
 #include <QDebug>
+
+#include "core/blocking_layer.hpp"
+#include "core/graphic_layer.hpp"
+
 #include "local/level.hpp"
 #include "local/project.hpp"
 
@@ -15,9 +19,11 @@ Map::~Map() {}
 
 void Map::load() {
     Dummy::Local::Map::load();
+    /*
     for (const auto& level: m_levels) {
-        m_editorLevels.push_back(std::make_unique<Level>(level));
+        m_editorLevels.push_back(std::make_unique<Level>(*this));
     }
+    */
 }
 
 void Map::setChipset(const std::string& chipset) {
@@ -44,6 +50,8 @@ Map::_resizeGraphicLayer(
     std::uint16_t width,
     std::uint16_t height)
 {
+    // XXX: fix this
+    /*
     Dummy::Core::GraphicLayer newGraphicLayer(width * height);
 
     for (std::uint16_t y = 0; y < height; ++y) {
@@ -57,11 +65,12 @@ Map::_resizeGraphicLayer(
         }
     }
     graphicLayer = std::move(newGraphicLayer);
+    */
 }
 
 void Map::_resizeBlockingLayer(std::uint16_t width, std::uint16_t height)
 {
-    Dummy::Core::BlockingLayer newBlockingLayer(width * height);
+    Dummy::Core::BlockingLayer newBlockingLayer(width, height);
 
     // XXX: Fix this.
     /*
@@ -102,7 +111,7 @@ void Map::_saveBlockingLayers() {
               sizeof(std::uint16_t));
 
     // Write the blocking layers
-    for (const auto& level: m_levels) {
+    for (auto& level: m_levels) {
         ofs.write(
             reinterpret_cast<const char*>(level.blockingLayer().data()),
             static_cast<std::streamsize>(
@@ -145,8 +154,8 @@ void Map::_saveGraphicLayers() {
     _writeStdString(ofs, m_music);
 
     // write the levels
-    for(const auto& level: m_levels) {
-        _writeLevel(ofs, level);
+    for(auto& level: m_levels) {
+        writeLevel(ofs, level);
     }
 }
 
@@ -161,10 +170,10 @@ void Map::_writeStdString(std::ofstream& ofs,
 }
 
 void
-Map::_writeLevel(
+Map::writeLevel(
     std::ofstream& ofs,
     const Dummy::Local::Level& level
-) {
+) const {
     // Write the layers count.
     std::uint8_t layersCount = level.graphicLayers().size();
     ofs.write(
@@ -178,9 +187,9 @@ Map::_writeLevel(
             sizeof(std::int8_t)
         );
         ofs.write(
-            reinterpret_cast<const char*>(layer.data()),
+            reinterpret_cast<const char*>(layer->data()),
             static_cast<std::streamsize>(
-                layer.size() * sizeof(std::pair<std::int8_t, std::int8_t>)
+                layer->size() * sizeof(std::pair<std::int8_t, std::int8_t>)
             )
         );
     }

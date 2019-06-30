@@ -2,6 +2,8 @@
 #include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
 
+#include "core/graphic_layer.hpp"
+
 #include "editor/map.hpp"
 #include "editor/project.hpp"
 
@@ -82,8 +84,31 @@ GraphicMap::MapGraphicsScene::setMapDocument
             ).string().c_str())
     );
 
+    m_graphicLayers.clear();
     int zindex = 0;
-    //for (const auto& mapLevel: m_map->le)
+    for (const auto& level: m_map->levels()) {
+        for (const auto& [position, layer]: level->graphicLayers()) {
+            m_graphicLayers.push_back(
+                std::make_unique<VisibleGraphicLayer>(
+                    *this,
+                    *layer,
+                    m_mapChipset,
+                    zindex++
+                )
+            );
+        }
+
+        // Add blocking layer
+        /*
+        m_graphicLayers.push_back(
+            std::make_unique<BlockingGraphicLayer>(
+                *this,
+                level->blockingLayer(),
+                ++zindex
+            )
+        );
+        */
+    }
 
     /*
     m_firstLayer = new VisibleGraphicLayer(

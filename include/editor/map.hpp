@@ -9,6 +9,12 @@
 #include "editor/layer.hpp"
 #include "editor/level.hpp"
 
+namespace Dummy {
+namespace Core {
+class GraphicLayer;
+} // namespace Core
+} // namespace Dummy
+
 namespace Editor {
 class Level;
 using Levels = std::vector<std::unique_ptr<Level>>;
@@ -49,13 +55,13 @@ private:
 
     void _resizeBlockingLayer(std::uint16_t, std::uint16_t);
     void _resizeGraphicLayer(
-        Dummy::Local::GraphicLayer&,
+        Dummy::Core::GraphicLayer&,
         std::uint16_t,
         std::uint16_t
     );
 
     static void _writeStdString(std::ofstream&, const std::string&);
-    void _writeLevel(std::ofstream&, const Dummy::Local::Level&);
+    void writeLevel(std::ofstream&, const Dummy::Local::Level&) const;
     Levels m_editorLevels;
 };
 } // namespace Editor

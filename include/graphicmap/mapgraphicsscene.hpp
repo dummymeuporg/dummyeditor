@@ -15,7 +15,7 @@ class Map;
 namespace Dummy {
 namespace Core {
 class GraphicMap;
-using BlockingLayer = std::vector<std::uint8_t>;
+class BlockingLayer;
 
 } // namespace Core
 } // namespace Dummy
@@ -32,6 +32,8 @@ class BlockingGraphicLayer;
 class StartingPointLayer;
 class VisibleGraphicLayer;
 class MapSceneLayer;
+
+using GraphicLayers = std::vector<std::unique_ptr<GraphicLayer>>;
 
 class MapGraphicsScene : public QGraphicsScene
 {
@@ -105,6 +107,8 @@ private:
 
     //PaintingLayerState* m_paintingLayerState;
     DrawingTool* m_drawingTool;
+
+    GraphicLayers m_graphicLayers;
 
 
 };

@@ -1,22 +1,31 @@
+
 #pragma once
 
 #include <cstdint>
 #include <vector>
 
-
-#include "editor/layer.hpp"
-
 namespace Dummy {
 namespace Core {
-using GraphicLayer = std::vector<std::pair<std::int8_t, std::int8_t>>;
+class GraphicLayer;
 } // namespace Core
 } // namespace Dummy
 
+#include "editor/layer.hpp"
+
 namespace Editor {
+
 class GraphicLayer : public Layer {
 public:
-    GraphicLayer(const Dummy::Core::GraphicLayer&);
+    GraphicLayer(Dummy::Core::GraphicLayer&);
+    Dummy::Core::GraphicLayer& layer() {
+        return m_layer;
+    }
+
+    std::pair<std::int8_t, std::int8_t>& operator[](std::size_t index);
+
 private:
-    const Dummy::Core::GraphicLayer& m_layer;
+    Dummy::Core::GraphicLayer& m_layer;
+
 };
+
 } // namespace Editor

@@ -46,7 +46,7 @@ GraphicMap::BlockingGraphicLayer::removeTile(quint16 x, quint16 y)
     if (x < m_mapGraphicsScene.map()->width() * 16
         && y < m_mapGraphicsScene.map()->height() * 16)
     {
-        const std::shared_ptr<Dummy::Local::Map> map(
+        const std::shared_ptr<Editor::Map> map(
             m_mapGraphicsScene.map()
         );
         int index((y/8) * map->width() * 2 + (x/8));
@@ -66,7 +66,7 @@ void GraphicMap::BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
     if (x < m_mapGraphicsScene.map()->width() * 16
         && y < m_mapGraphicsScene.map()->height() * 16)
     {
-        const std::shared_ptr<Dummy::Local::Map> map(
+        const std::shared_ptr<Editor::Map> map(
             m_mapGraphicsScene.map()
         );
         int index((y/8) * map->width() * 2 + (x/8));
@@ -89,7 +89,6 @@ void GraphicMap::BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
             m_blockingLayer[index] = true;
         }
     }
-
 }
 
 void GraphicMap::BlockingGraphicLayer::setTile(quint16 x,

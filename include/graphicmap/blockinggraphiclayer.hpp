@@ -7,7 +7,7 @@
 
 namespace Dummy {
 namespace Core {
-using BlockingLayer = std::vector<std::uint8_t>;
+class BlockingLayer;
 } // namespace Core
 } // namespace Dummy
 
