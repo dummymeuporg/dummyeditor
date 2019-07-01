@@ -19,10 +19,11 @@ namespace GraphicMap {
         BlockingGraphicLayer(MapGraphicsScene&,
                              Editor::BlockingLayer&,
                              int zValue);
-        virtual ~BlockingGraphicLayer() override;
-        virtual MapSceneLayer& removeTile(quint16, quint16);
+        ~BlockingGraphicLayer() override;
+        MapSceneLayer& removeTile(quint16, quint16) override;
         void toggleTile(quint16, quint16);
         void setTile(quint16, quint16, bool);
+        Editor::Layer& editorLayer() override;
     private:
         void _draw(int, quint16, quint16);
         Editor::BlockingLayer& m_blockingLayer;

@@ -9,13 +9,18 @@ namespace Model {
 
 
 void MapLayerTreeItem::toggle() {
-    layer().setVisible(!layer().visible());
+    setVisible(!layer().visible());
+}
+
+void MapLayerTreeItem::setVisible(bool visible) {
+    layer().setVisible(visible);
     if (layer().visible()) {
         setIcon(QIcon(":/icons/icon_eye.png"));
     } else {
         setIcon(QIcon(":/icons/icon_eye_crossed.png"));
     }
 }
+
 } // namespace Model
 } // namespace MapLevelsList
 } // namespace Widget

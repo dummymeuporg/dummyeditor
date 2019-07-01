@@ -14,6 +14,7 @@ namespace Model {
 class MapLayerTreeItem : public MapTreeItem {
 public:
     void toggle() override;
+    void setVisible(bool) override;
     virtual Editor::Layer& layer() = 0;
 };
 } // namespace Model

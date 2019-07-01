@@ -14,7 +14,8 @@ class MapLevelTreeItem : public MapTreeItem {
 public:
     MapLevelTreeItem(Editor::Level&);
     QVariant data(int role = Qt::UserRole + 1) const override;
-    virtual void toggle() override;
+    void toggle() override;
+    void setVisible(bool) override;
 private:
     Editor::Level& m_editorLevel;
 };

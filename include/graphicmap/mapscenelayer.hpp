@@ -1,11 +1,12 @@
 #pragma once
 
-#include <QtGlobal>
+#include <QObject>
 
 namespace GraphicMap {
 class MapGraphicsScene;
-class MapSceneLayer
+class MapSceneLayer : public ::QObject
 {
+    Q_OBJECT
 public:
     MapSceneLayer(MapGraphicsScene&, int zIndex);
     virtual ~MapSceneLayer();

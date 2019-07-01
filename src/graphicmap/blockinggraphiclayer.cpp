@@ -7,8 +7,9 @@
 #include "graphicmap/blockinggraphiclayer.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
 
-GraphicMap::BlockingGraphicLayer::BlockingGraphicLayer(
-    GraphicMap::MapGraphicsScene& mapGraphicsScene,
+namespace GraphicMap {
+BlockingGraphicLayer::BlockingGraphicLayer(
+    MapGraphicsScene& mapGraphicsScene,
     Editor::BlockingLayer& blockingLayer,
     int zIndex
 ) : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex),
@@ -33,13 +34,11 @@ GraphicMap::BlockingGraphicLayer::BlockingGraphicLayer(
     }
 }
 
-GraphicMap::BlockingGraphicLayer::~BlockingGraphicLayer()
-{
+BlockingGraphicLayer::~BlockingGraphicLayer()
+{}
 
-}
-
-GraphicMap::MapSceneLayer&
-GraphicMap::BlockingGraphicLayer::removeTile(quint16 x, quint16 y)
+MapSceneLayer&
+BlockingGraphicLayer::removeTile(quint16 x, quint16 y)
 {
     qDebug() << "Toggle tile." << x << y;
     if (x < m_mapGraphicsScene.map()->width() * 16
@@ -59,7 +58,7 @@ GraphicMap::BlockingGraphicLayer::removeTile(quint16 x, quint16 y)
     return *this;
 }
 
-void GraphicMap::BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
+void BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
 {
     qDebug() << "Toggle tile." << x << y;
     if (x < m_mapGraphicsScene.map()->width() * 16
@@ -90,9 +89,7 @@ void GraphicMap::BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
     }
 }
 
-void GraphicMap::BlockingGraphicLayer::setTile(quint16 x,
-                                               quint16 y,
-                                               bool isBlocking)
+void BlockingGraphicLayer::setTile(quint16 x, quint16 y, bool isBlocking)
 {
     qDebug() << "Set blocking tile." << x << y;
     if (x < m_mapGraphicsScene.map()->width() * 16
@@ -121,8 +118,7 @@ void GraphicMap::BlockingGraphicLayer::setTile(quint16 x,
     }
 }
 
-void
-GraphicMap::BlockingGraphicLayer::_draw(int index, quint16 x, quint16 y)
+void BlockingGraphicLayer::_draw(int index, quint16 x, quint16 y)
 {
     m_layerItems[index] = new BlockingSquareItem();
     m_layerItems[index]->setZValue(m_zIndex);
@@ -130,3 +126,9 @@ GraphicMap::BlockingGraphicLayer::_draw(int index, quint16 x, quint16 y)
         QPointF(x - (x % 8), y - (y % 8)));
     m_mapGraphicsScene.addItem(m_layerItems[index]);
 }
+
+Editor::Layer& BlockingGraphicLayer::editorLayer() {
+    return m_blockingLayer;
+}
+
+} // namespace GraphicMap

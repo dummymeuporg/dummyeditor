@@ -246,14 +246,8 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
         (m_currentProject->coreProject().projectPath()
          / "chipsets" / map->chipset()).string().c_str()
     );
-    m_mapScene->setMapDocument(m_currentProject->document(mapName));
 
-    // Select some default layer
-    if (!ui->actionLow_layer_1->isChecked() &&
-        !ui->actionLow_layer_2->isChecked() &&
-            !ui->actionHigh_layer_1->isChecked()) {
-        ui->actionLow_layer_1->trigger();
-    }
+    m_mapScene->setMapDocument(m_currentProject->document(mapName));
 
     ui->graphicsViewChipset->viewport()->update();
     ui->graphicsViewMap->setSceneRect(QRect(0,

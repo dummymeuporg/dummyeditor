@@ -64,16 +64,22 @@ GraphicMap::MapGraphicsScene::setMapDocument
                                m_map->width() * 16, m_map->height() * 16);
         qDebug() << "INVALIDATE " << invalidateRegion;
         invalidate(invalidateRegion);
-    }
-    // Remove the grid.
-    clear();
 
+        for (auto& graphicLayer: m_graphicLayers) {
+            QObject::disconnect(
+                &graphicLayer->editorLayer(),
+                SIGNAL(visibilityChanged(bool)),
+                graphicLayer,
+                SLOT(setVisibility(bool))
+            );
+        }
+
+    }
+    // Clear the scene
+    clear();
 
     m_mapDocument = mapDocument;
     m_map = m_mapDocument->map();
-    //m_project = m_mapDocument->project();
-
-    //m_paintingLayerState->sceneCleared();
 
     const Editor::Project& project = m_mapDocument->project();
     m_mapChipset = QPixmap(
@@ -88,29 +94,42 @@ GraphicMap::MapGraphicsScene::setMapDocument
         delete graphicLayer;
     }
     m_graphicLayers.clear();
-    clear();
 
     int zindex = 0;
     for (const auto& level: m_map->levels()) {
         for (const auto& [position, layer]: level->graphicLayers()) {
             qDebug() << "Position: " << position;
-            m_graphicLayers.push_back(
-                new VisibleGraphicLayer(
-                    *this,
-                    *layer,
-                    m_mapChipset,
-                    zindex++
-                )
+
+            auto graphicLayer = new VisibleGraphicLayer(
+                *this,
+                *layer,
+                m_mapChipset,
+                zindex++
+            );
+
+            m_graphicLayers.push_back(graphicLayer);
+
+            QObject::connect(
+                &graphicLayer->editorLayer(),
+                SIGNAL(visibilityChanged(bool)),
+                graphicLayer,
+                SLOT(setVisibility(bool))
             );
         }
 
         // Add blocking layer
-        m_graphicLayers.push_back(
-            new BlockingGraphicLayer(
-                *this,
-                level->blockingLayer(),
-                ++zindex
-            )
+        auto graphicLayer = new BlockingGraphicLayer(
+            *this,
+            level->blockingLayer(),
+            ++zindex
+        );
+        m_graphicLayers.push_back(graphicLayer);
+
+        QObject::connect(
+            &graphicLayer->editorLayer(),
+            SIGNAL(visibilityChanged(bool)),
+            graphicLayer,
+            SLOT(setVisibility(bool))
         );
     }
 

@@ -11,13 +11,15 @@
 #include "graphicmap/mapgraphicsscene.hpp"
 #include "graphicmap/visiblegraphiclayer.hpp"
 
-GraphicMap::VisibleGraphicLayer::VisibleGraphicLayer(
-    GraphicMap::MapGraphicsScene& mapGraphicsScene,
+namespace GraphicMap {
+
+VisibleGraphicLayer::VisibleGraphicLayer(
+    MapGraphicsScene& mapGraphicsScene,
     Editor::GraphicLayer& layer,
     const QPixmap& chipsetPixmap,
     int zIndex)
     : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex),
-    m_layer(layer),
+    m_graphicLayer(layer),
     m_chipsetPixmap(chipsetPixmap)
 {
     qDebug() << "VisibleGraphicLayer(): " << this;
@@ -27,8 +29,8 @@ GraphicMap::VisibleGraphicLayer::VisibleGraphicLayer(
         m_mapGraphicsScene.map()
     );
     int index = 0;
-    for (auto it = m_layer.layer().begin();
-         it != m_layer.layer().end();
+    for (auto it = m_graphicLayer.layer().begin();
+         it != m_graphicLayer.layer().end();
          ++it, ++index)
     {
         m_layerItems[index] = nullptr;
@@ -44,29 +46,29 @@ GraphicMap::VisibleGraphicLayer::VisibleGraphicLayer(
 
             m_layerItems[index]->setPos(posX, posY);
             m_layerItems[index]->setZValue(m_zIndex);
-            m_layerItems[index]->setOpacity(m_layer.visible() * 1);
+            m_layerItems[index]->setOpacity(m_graphicLayer.visible() * 1);
             m_mapGraphicsScene.addItem(m_layerItems[index]);
         }
     }
 }
 
-GraphicMap::VisibleGraphicLayer::~VisibleGraphicLayer() {
-}
+VisibleGraphicLayer::~VisibleGraphicLayer()
+{}
 
 
-GraphicMap::MapSceneLayer&
-GraphicMap::VisibleGraphicLayer::removeTile(quint16 x, quint16 y)
+MapSceneLayer& VisibleGraphicLayer::removeTile(quint16 x, quint16 y)
 {
     setTile(x, y, -1, -1);
     return *this;
 }
 
-GraphicMap::VisibleGraphicLayer&
-GraphicMap::VisibleGraphicLayer::setTile(quint16 x,
-                                         quint16 y,
-                                         qint16 chipsetX,
-                                         qint16 chipsetY)
-{
+VisibleGraphicLayer&
+VisibleGraphicLayer::setTile(
+    quint16 x,
+    quint16 y,
+    qint16 chipsetX,
+    qint16 chipsetY
+) {
     const std::shared_ptr<Editor::Map> map(
         m_mapGraphicsScene.map()
     );
@@ -89,7 +91,7 @@ GraphicMap::VisibleGraphicLayer::setTile(quint16 x,
             m_layerItems[index]->setZValue(m_zIndex);
             m_mapGraphicsScene.addItem(m_layerItems[index]);
 
-            m_layer[index] = std::pair<std::int8_t, std::int8_t>(
+            m_graphicLayer[index] = std::pair<std::int8_t, std::int8_t>(
                  chipsetX / 16, chipsetY / 16
             );
 
@@ -103,7 +105,7 @@ GraphicMap::VisibleGraphicLayer::setTile(quint16 x,
                 m_mapGraphicsScene.removeItem(m_layerItems[index]);
                 m_layerItems[index] = nullptr;
                 //m_layer.setTile(x / 16, y / 16, -1, -1);
-                m_layer[index] =
+                m_graphicLayer[index] =
                     std::pair<std::int8_t, std::int8_t>(-1, -1);
             }
         }
@@ -111,3 +113,9 @@ GraphicMap::VisibleGraphicLayer::setTile(quint16 x,
 
     return *this;
 }
+
+Editor::Layer& VisibleGraphicLayer::editorLayer() {
+    return m_graphicLayer;
+}
+
+} // namespace GraphicMap

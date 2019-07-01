@@ -28,4 +28,5 @@ void GraphicLayer::setVisibility(bool visible) {
         }
     }
 }
+
 } // namespace GraphicMap

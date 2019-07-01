@@ -33,7 +33,7 @@ public:
     }
 
     inline const Editor::GraphicLayer& layer() const {
-        return m_layer;
+        return m_graphicLayer;
     }
 
     VisibleGraphicLayer& setTile(quint16 x,
@@ -45,8 +45,10 @@ public:
 
     virtual MapSceneLayer& removeTile(quint16, quint16) override;
 
+    Editor::Layer& editorLayer() override;
+
 private:
-    Editor::GraphicLayer& m_layer;
+    Editor::GraphicLayer& m_graphicLayer;
     const QPixmap& m_chipsetPixmap;
 };
 } // namespace GraphicMap
