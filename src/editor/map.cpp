@@ -187,9 +187,9 @@ Map::writeLevel(
             sizeof(std::int8_t)
         );
         ofs.write(
-            reinterpret_cast<const char*>(layer->data()),
+            reinterpret_cast<const char*>(layer.data()),
             static_cast<std::streamsize>(
-                layer->size() * sizeof(std::pair<std::int8_t, std::int8_t>)
+                layer.size() * sizeof(std::pair<std::int8_t, std::int8_t>)
             )
         );
     }

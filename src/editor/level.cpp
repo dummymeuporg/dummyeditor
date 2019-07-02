@@ -17,7 +17,7 @@ Level::Level(Dummy::Local::Level& level)
     m_blockingLayer = std::make_unique<BlockingLayer>(m_level.blockingLayer());
 
     for (auto& [position, layer]: m_level.graphicLayers()) {
-        m_graphicLayers[position] = std::make_unique<GraphicLayer>(*layer);
+        m_graphicLayers[position] = std::make_unique<GraphicLayer>(layer);
     }
 }
 
