@@ -10,8 +10,16 @@ GraphicPen::GraphicPen(GraphicMap::VisibleGraphicLayer& visibleGraphicLayer)
     : m_visibleGraphicLayer(visibleGraphicLayer)
 {}
 
-void GraphicPen::mouseMoveEvent(::QGraphicsSceneMouseEvent *) {}
-void GraphicPen::mousePressEvent(::QGraphicsSceneMouseEvent *) {}
-void GraphicPen::mouseReleaseEvent(::QGraphicsSceneMouseEvent *) {}
+void GraphicPen::mouseMoveEvent(::QGraphicsSceneMouseEvent* event) {
+
+}
+
+void GraphicPen::mousePressEvent(::QGraphicsSceneMouseEvent* event) {
+
+}
+
+void GraphicPen::mouseReleaseEvent(::QGraphicsSceneMouseEvent* event) {
+
+}
 
 } // namespace DrawingTool

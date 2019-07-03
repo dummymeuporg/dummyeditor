@@ -1,9 +1,11 @@
+#include <memory>
 #include <iostream>
 
 #include <QDebug>
 #include <QGraphicsPixmapItem>
 
 #include "core/graphic_layer.hpp"
+#include "drawing_tool/graphic_pen.hpp"
 
 #include "editor/map.hpp"
 #include "editor/graphic_layer.hpp"
@@ -116,6 +118,11 @@ VisibleGraphicLayer::setTile(
 
 Editor::Layer& VisibleGraphicLayer::editorLayer() {
     return m_graphicLayer;
+}
+
+std::unique_ptr<DrawingTool::GraphicPen>
+VisibleGraphicLayer::getGraphicPen() {
+    return nullptr;
 }
 
 } // namespace GraphicMap

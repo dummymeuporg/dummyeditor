@@ -1,9 +1,13 @@
 #pragma once
-
+#include <memory>
 #include <QGraphicsScene>
 #include <QPixmap>
 
 #include "graphicmap/graphiclayer.hpp"
+
+namespace DrawingTool {
+class GraphicPen;
+} // namespace DrawingTool
 
 namespace Editor {
 class GraphicLayer;
@@ -46,6 +50,9 @@ public:
     virtual MapSceneLayer& removeTile(quint16, quint16) override;
 
     Editor::Layer& editorLayer() override;
+
+    std::unique_ptr<DrawingTool::GraphicPen> getGraphicPen();
+
 
 private:
     Editor::GraphicLayer& m_graphicLayer;

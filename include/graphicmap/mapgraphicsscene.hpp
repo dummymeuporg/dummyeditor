@@ -26,7 +26,6 @@ namespace Misc {
 
 namespace GraphicMap {
 
-class DrawingTool;
 class GraphicLayer;
 class BlockingGraphicLayer;
 class StartingPointLayer;
@@ -54,28 +53,14 @@ public:
         return m_chipsetSelection;
     }
 
-    MapGraphicsScene& setPaitingTool(DrawingTool*);
+    //MapGraphicsScene& setPaitingTool(DrawingTool*);
 
     MapGraphicsScene& setMapDocument(
         const std::shared_ptr<Misc::MapDocument>& mapDocument);
 
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
-        override;
-    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
-        override;
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
-        override;
-    virtual void keyPressEvent(QKeyEvent*) override;
-    virtual void keyReleaseEvent(QKeyEvent*) override;
-
-    virtual bool eventFilter(QObject*, QEvent*) override;
 public slots:
     void changeMapDocument(
         const std::shared_ptr<Misc::MapDocument>& mapDocument);
-    void changeSelection(const QRect& selection);
-    void setPenTool();
-    void setRectangleTool();
-    void setSelectionTool();
 
     void adjustLayers() const;
 
@@ -106,7 +91,7 @@ private:
     bool m_isDrawing;
 
     //PaintingLayerState* m_paintingLayerState;
-    DrawingTool* m_drawingTool;
+    //DrawingTool* m_drawingTool;
 
     GraphicLayers m_graphicLayers;
 

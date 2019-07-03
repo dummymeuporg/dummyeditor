@@ -11,16 +11,10 @@
 #include "graphicmap/blockinggraphiclayer.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
 
-#include "graphicmap/nodrawingtool.hpp"
-#include "graphicmap/pendrawingtool.hpp"
-#include "graphicmap/rectangledrawingtool.hpp"
-#include "graphicmap/selectiondrawingtool.hpp"
 
 GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
     : QGraphicsScene(parent),
-      m_map(nullptr),
-      //m_paintingLayerState(new GraphicMap::NotPaintingState(*this)),
-      m_drawingTool(new NoDrawingTool(*this))
+      m_map(nullptr)
 
 {
     //m_paintingLayerState = new GraphicMap::NotPaintingState(*this);
@@ -30,7 +24,7 @@ GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
 
 GraphicMap::MapGraphicsScene::~MapGraphicsScene()
 {
-    delete m_drawingTool;
+    //delete m_drawingTool;
     //delete m_paintingLayerState;
 }
 
@@ -133,7 +127,7 @@ GraphicMap::MapGraphicsScene::setMapDocument
         );
     }
 
-    changeSelection(QRect(0,0,0,0));
+    //changeSelection(QRect(0,0,0,0));
 
     return *this;
 }
@@ -142,94 +136,6 @@ void GraphicMap::MapGraphicsScene::changeMapDocument(
     const std::shared_ptr<Misc::MapDocument>& mapDocument)
 {
     setMapDocument(mapDocument);
-}
-
-GraphicMap::MapGraphicsScene&
-GraphicMap::MapGraphicsScene::setPaitingTool(
-    GraphicMap::DrawingTool* tool
-)
-{
-    delete m_drawingTool;
-    m_drawingTool = tool;
-
-    if (nullptr != m_mapDocument) {
-        m_drawingTool->chipsetSelectionChanged(m_chipsetSelection);
-    }
-
-    return *this;
-}
-
-void
-GraphicMap::MapGraphicsScene::mouseMoveEvent(
-    QGraphicsSceneMouseEvent* mouseEvent)
-{
-    //QGraphicsScene::mouseMoveEvent(mouseEvent);
-    if (nullptr != m_mapDocument) {
-        m_drawingTool->onMouseMove(mouseEvent);
-    }
-}
-
-void
-GraphicMap::MapGraphicsScene::mousePressEvent(
-QGraphicsSceneMouseEvent* mouseEvent)
-{
-    m_drawingTool->onMousePress(mouseEvent);
-}
-
-void
-GraphicMap::MapGraphicsScene::mouseReleaseEvent(
-QGraphicsSceneMouseEvent* mouseEvent)
-{
-    m_drawingTool->onMouseRelease(mouseEvent);
-}
-
-void GraphicMap::MapGraphicsScene::keyPressEvent(QKeyEvent* keyEvent)
-{
-    m_drawingTool->onKeyPress(keyEvent);
-}
-
-void GraphicMap::MapGraphicsScene::keyReleaseEvent(QKeyEvent* keyEvent)
-{
-    m_drawingTool->onKeyRelease(keyEvent);
-}
-
-void GraphicMap::MapGraphicsScene::changeSelection(const QRect& selection)
-{
-    m_chipsetSelection = selection;
-    if (nullptr != m_mapDocument) {
-        m_drawingTool->chipsetSelectionChanged(selection);
-    }
-
-}
-
-void GraphicMap::MapGraphicsScene::setPenTool()
-{
-    qDebug() << "Pen tool enabled";
-    setPaitingTool(new GraphicMap::PenDrawingTool(*this));
-}
-
-void GraphicMap::MapGraphicsScene::setRectangleTool()
-{
-    qDebug() << "Rectangle tool enabled";
-    setPaitingTool(new GraphicMap::RectangleDrawingTool(*this));
-}
-
-void GraphicMap::MapGraphicsScene::setSelectionTool()
-{
-    qDebug() << "Selection tool enabled";
-    setPaitingTool(new GraphicMap::SelectionDrawingTool(*this));
-}
-
-bool GraphicMap::MapGraphicsScene::eventFilter(QObject *watched,
-                                               QEvent *event)
-{
-    Q_UNUSED(watched);
-    if (event->type() == QEvent::Leave)
-    {
-        qDebug() << "Mouse left the scene";
-        m_drawingTool->onMouseLeave();
-    }
-    return false;
 }
 
 void GraphicMap::MapGraphicsScene::adjustLayers() const {
