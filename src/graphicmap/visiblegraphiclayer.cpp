@@ -5,7 +5,7 @@
 #include <QGraphicsPixmapItem>
 
 #include "core/graphic_layer.hpp"
-#include "drawing_tool/graphic_pen.hpp"
+#include "drawing_tool/graphic/pen.hpp"
 
 #include "editor/map.hpp"
 #include "editor/graphic_layer.hpp"
@@ -120,7 +120,7 @@ Editor::Layer& VisibleGraphicLayer::editorLayer() {
     return m_graphicLayer;
 }
 
-std::unique_ptr<DrawingTool::GraphicPen>
+std::unique_ptr<DrawingTool::Graphic::Pen>
 VisibleGraphicLayer::getGraphicPen() {
     return nullptr;
 }

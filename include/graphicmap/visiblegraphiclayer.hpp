@@ -6,7 +6,9 @@
 #include "graphicmap/graphiclayer.hpp"
 
 namespace DrawingTool {
-class GraphicPen;
+namespace Graphic {
+class Pen;
+} // namespace Graphic
 } // namespace DrawingTool
 
 namespace Editor {
@@ -51,7 +53,7 @@ public:
 
     Editor::Layer& editorLayer() override;
 
-    std::unique_ptr<DrawingTool::GraphicPen> getGraphicPen();
+    std::unique_ptr<DrawingTool::Graphic::Pen> getGraphicPen();
 
 
 private:

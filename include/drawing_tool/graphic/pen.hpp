@@ -1,6 +1,6 @@
 #pragma once
 
-#include "drawing_tool/drawing_tool.hpp"
+#include "drawing_tool/graphic/graphic_tool.hpp"
 
 class QGraphicsSceneMouseEvent;
 
@@ -10,14 +10,16 @@ namespace GraphicMap {
 
 namespace DrawingTool {
 
-class GraphicPen : public DrawingTool {
+namespace Graphic {
+
+class Pen : public GraphicTool {
 public:
-    GraphicPen(GraphicMap::VisibleGraphicLayer&);
+    Pen(GraphicMap::VisibleGraphicLayer&);
     void mousePressEvent(::QGraphicsSceneMouseEvent*) override;
     void mouseMoveEvent(::QGraphicsSceneMouseEvent*) override;
     void mouseReleaseEvent(::QGraphicsSceneMouseEvent*) override;
-private:
-    GraphicMap::VisibleGraphicLayer& m_visibleGraphicLayer;
 };
+
+} // namespace Graphic
 
 } // namespace DrawingTool
