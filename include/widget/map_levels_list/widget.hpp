@@ -40,6 +40,9 @@ class Widget : public ::QWidget {
 public:
     Widget(::QWidget* parent = nullptr);
     void setEditorMap(std::shared_ptr<Editor::Map>);
+    const Model::MapLevelTreeModel* mapLevelTreeModel() const {
+        return m_mapLevelTreeModel;
+    }
 public slots:
     void toggleLayerVisibleState(QModelIndex);
 private:
