@@ -11,5 +11,13 @@ GraphicLayer::operator[](std::size_t index) {
     return m_layer[index];
 }
 
+std::uint16_t GraphicLayer::width() const {
+    return m_layer.width();
+}
+
+std::uint16_t GraphicLayer::height() const {
+    return m_layer.height();
+}
+
 
 } // namespace Editor

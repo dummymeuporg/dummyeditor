@@ -16,7 +16,7 @@ namespace GraphicMap {
     class BlockingGraphicLayer : public GraphicLayer
     {
     public:
-        BlockingGraphicLayer(MapGraphicsScene&,
+        BlockingGraphicLayer(MapGraphicsScene*,
                              Editor::BlockingLayer&,
                              int zValue);
         ~BlockingGraphicLayer() override;

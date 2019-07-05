@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <vector>
 
 #include <QString>
 
@@ -10,12 +11,19 @@ class GraphicMap;
 } // namespace Core
 } // namespace Dummy
 
+namespace GraphicMap {
+class GraphicLayer;
+} // namespace GraphicMap;
+
 namespace Editor {
 class Map;
 class Project;
 } // namespace Editor
 
 namespace Misc {
+
+using GraphicLayers = std::vector<std::shared_ptr<::GraphicMap::GraphicLayer>>;
+
 class MapDocument {
 public:
     MapDocument(Editor::Project&,
@@ -42,5 +50,6 @@ private:
     bool m_isModified;
     QString m_mapName;
     std::shared_ptr<Editor::Map> m_map;
+    GraphicLayers m_graphicLayers;
 };
 } // namespace Misc

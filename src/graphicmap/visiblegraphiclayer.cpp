@@ -16,7 +16,7 @@
 namespace GraphicMap {
 
 VisibleGraphicLayer::VisibleGraphicLayer(
-    MapGraphicsScene& mapGraphicsScene,
+    MapGraphicsScene* mapGraphicsScene,
     Editor::GraphicLayer& layer,
     const QPixmap& chipsetPixmap,
     int zIndex)
@@ -24,12 +24,10 @@ VisibleGraphicLayer::VisibleGraphicLayer(
     m_graphicLayer(layer),
     m_chipsetPixmap(chipsetPixmap)
 {
+    m_layerItems.resize(m_graphicLayer.width() * m_graphicLayer.height());
     qDebug() << "VisibleGraphicLayer(): " << this;
     qDebug() << "mapGraphicsScene:" << &m_mapGraphicsScene;
 
-    const std::shared_ptr<Editor::Map> map(
-        m_mapGraphicsScene.map()
-    );
     int index = 0;
     for (auto it = m_graphicLayer.layer().begin();
          it != m_graphicLayer.layer().end();
@@ -43,13 +41,13 @@ VisibleGraphicLayer::VisibleGraphicLayer(
             m_layerItems[index] = new QGraphicsPixmapItem(
                 m_chipsetPixmap.copy(QRect(x * 16, y * 16, 16, 16)));
 
-            qreal posX = (index % map->width()) * 16;
-            qreal posY = (index / map->width()) * 16;
+            qreal posX = (index % m_graphicLayer.width()) * 16;
+            qreal posY = (index / m_graphicLayer.width()) * 16;
 
             m_layerItems[index]->setPos(posX, posY);
             m_layerItems[index]->setZValue(m_zIndex);
             m_layerItems[index]->setOpacity(m_graphicLayer.visible() * 1);
-            m_mapGraphicsScene.addItem(m_layerItems[index]);
+            m_mapGraphicsScene->addItem(m_layerItems[index]);
         }
     }
 }
@@ -71,16 +69,14 @@ VisibleGraphicLayer::setTile(
     qint16 chipsetX,
     qint16 chipsetY
 ) {
-    const std::shared_ptr<Editor::Map> map(
-        m_mapGraphicsScene.map()
-    );
-    if (x < m_mapGraphicsScene.map()->width() * 16
-        && y < m_mapGraphicsScene.map()->height() * 16)
+
+    if (x < m_graphicLayer.width() * 16
+        && y < m_graphicLayer.height() * 16)
     {
-        unsigned long index = (y/16) * map->width() + (x/16);
+        unsigned long index = (y/16) * m_graphicLayer.width() + (x/16);
 
         if (nullptr != m_layerItems[index]) {
-            m_mapGraphicsScene.removeItem(m_layerItems[index]);
+            m_mapGraphicsScene->removeItem(m_layerItems[index]);
             m_layerItems[index] = nullptr;
         }
 
@@ -91,7 +87,7 @@ VisibleGraphicLayer::setTile(
                     m_chipsetPixmap.copy(QRect(chipsetX, chipsetY, 16, 16)));
             m_layerItems[index]->setPos(x, y);
             m_layerItems[index]->setZValue(m_zIndex);
-            m_mapGraphicsScene.addItem(m_layerItems[index]);
+            m_mapGraphicsScene->addItem(m_layerItems[index]);
 
             m_graphicLayer[index] = std::pair<std::int8_t, std::int8_t>(
                  chipsetX / 16, chipsetY / 16
@@ -104,7 +100,7 @@ VisibleGraphicLayer::setTile(
         {
             if (nullptr != m_layerItems[index])
             {
-                m_mapGraphicsScene.removeItem(m_layerItems[index]);
+                m_mapGraphicsScene->removeItem(m_layerItems[index]);
                 m_layerItems[index] = nullptr;
                 //m_layer.setTile(x / 16, y / 16, -1, -1);
                 m_graphicLayer[index] =

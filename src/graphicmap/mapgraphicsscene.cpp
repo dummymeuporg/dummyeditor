@@ -95,7 +95,7 @@ GraphicMap::MapGraphicsScene::setMapDocument
             qDebug() << "Position: " << position;
 
             auto graphicLayer = new VisibleGraphicLayer(
-                *this,
+                this,
                 *layer,
                 m_mapChipset,
                 zindex++
@@ -113,7 +113,7 @@ GraphicMap::MapGraphicsScene::setMapDocument
 
         // Add blocking layer
         auto graphicLayer = new BlockingGraphicLayer(
-            *this,
+            this,
             level->blockingLayer(),
             ++zindex
         );

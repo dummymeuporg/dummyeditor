@@ -29,7 +29,7 @@ class MapGraphicsScene;
 class VisibleGraphicLayer : public GraphicLayer {
 
 public:
-    VisibleGraphicLayer(MapGraphicsScene&,
+    VisibleGraphicLayer(MapGraphicsScene*,
                         Editor::GraphicLayer&,
                         const QPixmap&,
                         int);

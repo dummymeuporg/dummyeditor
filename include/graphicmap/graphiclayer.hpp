@@ -19,7 +19,7 @@ class GraphicLayer : public MapSceneLayer
 {
     Q_OBJECT
 public:
-    GraphicLayer(MapGraphicsScene&, int);
+    GraphicLayer(MapGraphicsScene*, int);
     virtual ~GraphicLayer() override;
 
     inline const QVector<QGraphicsItem*>& layerItems() const {

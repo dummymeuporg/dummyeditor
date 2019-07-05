@@ -9,16 +9,15 @@
 
 namespace GraphicMap {
 BlockingGraphicLayer::BlockingGraphicLayer(
-    MapGraphicsScene& mapGraphicsScene,
+    MapGraphicsScene* mapGraphicsScene,
     Editor::BlockingLayer& blockingLayer,
     int zIndex
 ) : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex),
     m_blockingLayer(blockingLayer)
 {
-    // XXX: Find a better way to resize?
-    m_layerItems.resize(m_layerItems.size() * 4);
 
-    const std::shared_ptr<Editor::Map> map(m_mapGraphicsScene.map());
+    m_layerItems.resize(m_blockingLayer.width() * m_blockingLayer.height());
+
     int index = 0;
     for (auto it = m_blockingLayer.layer().begin();
          it != m_blockingLayer.layer().end();
@@ -27,8 +26,8 @@ BlockingGraphicLayer::BlockingGraphicLayer(
         m_layerItems[index] = nullptr;
         if (m_blockingLayer[index])
         {
-            qreal posX((index % (map->width()*2)) * 8);
-            qreal posY((index / (map->width()*2)) * 8);
+            qreal posX((index % (m_blockingLayer.width())) * 8);
+            qreal posY((index / (m_blockingLayer.width())) * 8);
             _draw(index, quint16(posX), quint16(posY));
         }
     }
@@ -41,17 +40,14 @@ MapSceneLayer&
 BlockingGraphicLayer::removeTile(quint16 x, quint16 y)
 {
     qDebug() << "Toggle tile." << x << y;
-    if (x < m_mapGraphicsScene.map()->width() * 16
-        && y < m_mapGraphicsScene.map()->height() * 16)
+    if (x < m_blockingLayer.width() * 8 && y < m_blockingLayer.height() * 8)
     {
-        const std::shared_ptr<Editor::Map> map(
-            m_mapGraphicsScene.map()
-        );
-        int index((y/8) * map->width() * 2 + (x/8));
+
+        int index((y/8) * m_blockingLayer.width() + (x/8));
         m_blockingLayer[index] = false;
         if (nullptr != m_layerItems[index])
         {
-            m_mapGraphicsScene.removeItem(m_layerItems[index]);
+            m_mapGraphicsScene->removeItem(m_layerItems[index]);
             m_layerItems[index] = nullptr;
         }
    }
@@ -61,20 +57,16 @@ BlockingGraphicLayer::removeTile(quint16 x, quint16 y)
 void BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
 {
     qDebug() << "Toggle tile." << x << y;
-    if (x < m_mapGraphicsScene.map()->width() * 16
-        && y < m_mapGraphicsScene.map()->height() * 16)
+    if (x < m_blockingLayer.width() * 8 && y < m_blockingLayer.height() * 8)
     {
-        const std::shared_ptr<Editor::Map> map(
-            m_mapGraphicsScene.map()
-        );
-        int index((y/8) * map->width() * 2 + (x/8));
+        int index((y/8) * m_blockingLayer.width() + (x/8));
         qDebug() << "Index: " << index;
         if (m_blockingLayer[index])
         {
             m_blockingLayer[index] = false;
             if (nullptr != m_layerItems[index])
             {
-                m_mapGraphicsScene.removeItem(m_layerItems[index]);
+                m_mapGraphicsScene->removeItem(m_layerItems[index]);
                 m_layerItems[index] = nullptr;
             }
 
@@ -92,17 +84,13 @@ void BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
 void BlockingGraphicLayer::setTile(quint16 x, quint16 y, bool isBlocking)
 {
     qDebug() << "Set blocking tile." << x << y;
-    if (x < m_mapGraphicsScene.map()->width() * 16
-        && y < m_mapGraphicsScene.map()->height() * 16)
+    if (x < m_blockingLayer.width() * 8 && y < m_blockingLayer.height() * 8)
     {
-        const std::shared_ptr<Editor::Map> map(
-            m_mapGraphicsScene.map()
-        );
-        int index((y/8) * map->width() * 2 + (x/8));
+        int index((y/8) * m_blockingLayer.width() + (x/8));
 
         if (nullptr != m_layerItems[index])
         {
-            m_mapGraphicsScene.removeItem(m_layerItems[index]);
+            m_mapGraphicsScene->removeItem(m_layerItems[index]);
             m_layerItems[index] = nullptr;
         }
 
@@ -124,7 +112,7 @@ void BlockingGraphicLayer::_draw(int index, quint16 x, quint16 y)
     m_layerItems[index]->setZValue(m_zIndex);
     m_layerItems[index]->setPos(
         QPointF(x - (x % 8), y - (y % 8)));
-    m_mapGraphicsScene.addItem(m_layerItems[index]);
+    m_mapGraphicsScene->addItem(m_layerItems[index]);
 }
 
 Editor::Layer& BlockingGraphicLayer::editorLayer() {

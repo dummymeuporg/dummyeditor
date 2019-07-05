@@ -9,13 +9,9 @@
 #include "graphicmap/mapgraphicsscene.hpp"
 
 namespace GraphicMap {
-GraphicLayer::GraphicLayer(MapGraphicsScene& mapGraphicsScene, int zIndex)
-    : MapSceneLayer(mapGraphicsScene, zIndex),
-    m_layerItems(m_mapGraphicsScene.map()->width() *
-                 m_mapGraphicsScene.map()->height())
-{
-
-}
+GraphicLayer::GraphicLayer(MapGraphicsScene* mapGraphicsScene, int zIndex)
+    : MapSceneLayer(mapGraphicsScene, zIndex)
+{}
 
 GraphicLayer::~GraphicLayer() {}
 

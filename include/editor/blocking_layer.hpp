@@ -20,6 +20,9 @@ public:
         return m_layer;
     }
     std::uint8_t& operator[](std::size_t index);
+
+    std::uint16_t width() const;
+    std::uint16_t height() const;
 private:
     Dummy::Core::BlockingLayer& m_layer;
 };

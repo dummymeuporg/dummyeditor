@@ -15,6 +15,7 @@ Misc::MapDocument::MapDocument(
       m_mapName(name),
       m_map(map)
 {
+    // XXX: build graphic layers
 }
 
 
