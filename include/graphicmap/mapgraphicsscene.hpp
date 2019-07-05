@@ -58,9 +58,14 @@ public:
     MapGraphicsScene& setMapDocument(
         const std::shared_ptr<Misc::MapDocument>& mapDocument);
 
+    const GraphicLayers& graphicLayers() const {
+        return m_graphicLayers;
+    }
+
 public slots:
     void changeMapDocument(
-        const std::shared_ptr<Misc::MapDocument>& mapDocument);
+        const std::shared_ptr<Misc::MapDocument>& mapDocument
+    );
 
     void adjustLayers() const;
 

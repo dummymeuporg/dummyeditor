@@ -9,8 +9,8 @@
 
 namespace GraphicMap {
 BlockingGraphicLayer::BlockingGraphicLayer(
-    MapGraphicsScene* mapGraphicsScene,
     Editor::BlockingLayer& blockingLayer,
+    MapGraphicsScene& mapGraphicsScene,
     int zIndex
 ) : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex),
     m_blockingLayer(blockingLayer)
@@ -47,7 +47,7 @@ BlockingGraphicLayer::removeTile(quint16 x, quint16 y)
         m_blockingLayer[index] = false;
         if (nullptr != m_layerItems[index])
         {
-            m_mapGraphicsScene->removeItem(m_layerItems[index]);
+            m_mapGraphicsScene.removeItem(m_layerItems[index]);
             m_layerItems[index] = nullptr;
         }
    }
@@ -66,7 +66,7 @@ void BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
             m_blockingLayer[index] = false;
             if (nullptr != m_layerItems[index])
             {
-                m_mapGraphicsScene->removeItem(m_layerItems[index]);
+                m_mapGraphicsScene.removeItem(m_layerItems[index]);
                 m_layerItems[index] = nullptr;
             }
 
@@ -90,7 +90,7 @@ void BlockingGraphicLayer::setTile(quint16 x, quint16 y, bool isBlocking)
 
         if (nullptr != m_layerItems[index])
         {
-            m_mapGraphicsScene->removeItem(m_layerItems[index]);
+            m_mapGraphicsScene.removeItem(m_layerItems[index]);
             m_layerItems[index] = nullptr;
         }
 
@@ -112,7 +112,7 @@ void BlockingGraphicLayer::_draw(int index, quint16 x, quint16 y)
     m_layerItems[index]->setZValue(m_zIndex);
     m_layerItems[index]->setPos(
         QPointF(x - (x % 8), y - (y % 8)));
-    m_mapGraphicsScene->addItem(m_layerItems[index]);
+    m_mapGraphicsScene.addItem(m_layerItems[index]);
 }
 
 Editor::Layer& BlockingGraphicLayer::editorLayer() {

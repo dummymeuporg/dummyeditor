@@ -16,9 +16,11 @@ namespace GraphicMap {
     class BlockingGraphicLayer : public GraphicLayer
     {
     public:
-        BlockingGraphicLayer(MapGraphicsScene*,
-                             Editor::BlockingLayer&,
-                             int zValue);
+        BlockingGraphicLayer(
+            Editor::BlockingLayer&,
+            MapGraphicsScene&,
+            int zValue
+        );
         ~BlockingGraphicLayer() override;
         MapSceneLayer& removeTile(quint16, quint16) override;
         void toggleTile(quint16, quint16);

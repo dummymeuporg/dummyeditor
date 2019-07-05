@@ -249,6 +249,9 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
 
     m_mapScene->setMapDocument(m_currentProject->document(mapName));
 
+    for (const auto& layer: m_mapScene->graphicLayers()) {
+    }
+
     ui->graphicsViewChipset->viewport()->update();
     ui->graphicsViewMap->setSceneRect(QRect(0,
                                             0,

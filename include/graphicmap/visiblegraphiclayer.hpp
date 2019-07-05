@@ -29,8 +29,8 @@ class MapGraphicsScene;
 class VisibleGraphicLayer : public GraphicLayer {
 
 public:
-    VisibleGraphicLayer(MapGraphicsScene*,
-                        Editor::GraphicLayer&,
+    VisibleGraphicLayer(Editor::GraphicLayer&,
+                        MapGraphicsScene&,
                         const QPixmap&,
                         int);
     ~VisibleGraphicLayer() override;

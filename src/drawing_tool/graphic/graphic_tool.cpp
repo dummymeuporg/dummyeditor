@@ -4,8 +4,10 @@
 namespace DrawingTool {
 namespace Graphic {
 
-GraphicTool::GraphicTool(GraphicMap::VisibleGraphicLayer& visibleGraphicLayer)
-    : m_visibleGraphicLayer(visibleGraphicLayer)
+GraphicTool::GraphicTool(
+        QIcon&& icon,
+        GraphicMap::VisibleGraphicLayer& visibleGraphicLayer)
+    : DrawingTool(std::move(icon)), m_visibleGraphicLayer(visibleGraphicLayer)
 {}
 
 void GraphicTool::setChipsetSelection(QRect rect) {

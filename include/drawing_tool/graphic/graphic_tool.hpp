@@ -13,7 +13,7 @@ namespace Graphic {
 
 class GraphicTool : public DrawingTool {
 public:
-    GraphicTool(GraphicMap::VisibleGraphicLayer&);
+    GraphicTool(QIcon&&, GraphicMap::VisibleGraphicLayer&);
 public slots:
     void setChipsetSelection(QRect);
 private:

@@ -9,11 +9,9 @@
 #include "graphicmap/mapgraphicsscene.hpp"
 
 namespace GraphicMap {
-GraphicLayer::GraphicLayer(MapGraphicsScene* mapGraphicsScene, int zIndex)
+GraphicLayer::GraphicLayer(MapGraphicsScene& mapGraphicsScene, int zIndex)
     : MapSceneLayer(mapGraphicsScene, zIndex)
 {}
-
-GraphicLayer::~GraphicLayer() {}
 
 
 void GraphicLayer::setVisibility(bool visible) {

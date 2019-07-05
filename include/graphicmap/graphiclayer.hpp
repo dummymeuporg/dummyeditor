@@ -19,14 +19,16 @@ class GraphicLayer : public MapSceneLayer
 {
     Q_OBJECT
 public:
-    GraphicLayer(MapGraphicsScene*, int);
-    virtual ~GraphicLayer() override;
+    GraphicLayer(MapGraphicsScene&, int);
 
     inline const QVector<QGraphicsItem*>& layerItems() const {
         return m_layerItems;
     }
 
     virtual Editor::Layer& editorLayer() = 0;
+
+signals:
+    void layerSelected();
 
 public slots:
     void setVisibility(bool);
