@@ -39,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QActionGroup *toolsGroup = new QActionGroup(this);
     toolsGroup->addAction("Working tool");
     toolsGroup->addAction(ui->actionSelection);
-    toolsGroup->addAction(ui->actionPen);
+    //toolsGroup->addAction(ui->actionPen);
     toolsGroup->addAction(ui->actionRectangle);
     toolsGroup->addAction(ui->actionPath);
     tabGeneralToolBar->addActions(toolsGroup->actions());
@@ -104,6 +104,7 @@ void MainWindow::_connectScenes()
     QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
                      m_mapScene, SLOT(changeSelection(QRect)));
 
+    /*
     QObject::connect(ui->actionPen, SIGNAL(triggered(bool)),
                      m_mapScene, SLOT(setPenTool()));
     QObject::connect(ui->actionRectangle,
@@ -114,6 +115,7 @@ void MainWindow::_connectScenes()
                      SIGNAL(triggered(bool)),
                      m_mapScene,
                      SLOT(setSelectionTool()));
+    */
 
 }
 
@@ -136,15 +138,18 @@ void MainWindow::_closeCurrentProject()
                         m_mapScene, SLOT(showBlockingLayer()));
     QObject::disconnect(ui->actionStarting_point, SIGNAL(triggered(bool)),
                         m_mapScene, SLOT(showStartingPointLayer()));
+
+    /*
     QObject::disconnect(ui->actionPen, SIGNAL(triggered(bool)),
                         m_mapScene, SLOT(setPenTool()));
     QObject::disconnect(ui->actionPen, SIGNAL(trigerred(bool)),
                         m_mapScene, SLOT(setPenTool()));
+
     QObject::disconnect(ui->actionSelection,
                         SIGNAL(triggered(bool)),
                         m_mapScene,
                         SLOT(setSelectionTool()));
-
+    */
     delete m_chipsetScene;
     delete m_mapScene;
 }
@@ -261,6 +266,8 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
     reinterpret_cast<Widget::MapLevelsList::Widget*>(
         ui->dockWidgetMapLevelsList->widget()
     )->setEditorMap(map);
+
+    // Connect each graphic layer to this window's slot
 }
 
 void MainWindow::onCancel()

@@ -1,5 +1,7 @@
 #include <QDebug>
 
+#include "drawing_tool/drawing_tool.hpp"
+
 #include "editor/blocking_layer.hpp"
 #include "editor/map.hpp"
 
@@ -117,6 +119,13 @@ void BlockingGraphicLayer::_draw(int index, quint16 x, quint16 y)
 
 Editor::Layer& BlockingGraphicLayer::editorLayer() {
     return m_blockingLayer;
+}
+
+std::vector<std::unique_ptr<DrawingTool::DrawingTool>>
+BlockingGraphicLayer::getDrawingTools() {
+    // XXX: fill this.
+    return std::vector<std::unique_ptr<DrawingTool::DrawingTool>>{
+    };
 }
 
 } // namespace GraphicMap

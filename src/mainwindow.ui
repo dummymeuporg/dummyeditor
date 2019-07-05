@@ -501,11 +501,7 @@
     <property name="title">
      <string>Tools</string>
     </property>
-    <addaction name="actionSelection"/>
     <addaction name="separator"/>
-    <addaction name="actionPen"/>
-    <addaction name="actionRectangle"/>
-    <addaction name="actionPath"/>
    </widget>
    <widget class="QMenu" name="menuLayers">
     <property name="title">

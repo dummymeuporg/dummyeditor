@@ -1,11 +1,17 @@
 #pragma once
 
+#include <memory>
+
 #include <QtGlobal>
 #include <QVector>
 
 #include "graphicmap/mapscenelayer.hpp"
 
 class QGraphicsItem;
+
+namespace DrawingTool {
+class DrawingTool;
+} // namespace DrawingTool
 
 namespace Editor {
 class Layer;
@@ -26,6 +32,9 @@ public:
     }
 
     virtual Editor::Layer& editorLayer() = 0;
+
+    virtual std::vector<std::unique_ptr<DrawingTool::DrawingTool>>
+    getDrawingTools() = 0;
 
 signals:
     void layerSelected();

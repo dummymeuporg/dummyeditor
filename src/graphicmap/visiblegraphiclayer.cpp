@@ -114,9 +114,11 @@ Editor::Layer& VisibleGraphicLayer::editorLayer() {
     return m_graphicLayer;
 }
 
-std::unique_ptr<DrawingTool::Graphic::Pen>
-VisibleGraphicLayer::getGraphicPen() {
-    return nullptr;
+std::vector<std::unique_ptr<DrawingTool::DrawingTool>>
+VisibleGraphicLayer::getDrawingTools() {
+    // XXX: fill this.
+    return {
+    };
 }
 
 } // namespace GraphicMap

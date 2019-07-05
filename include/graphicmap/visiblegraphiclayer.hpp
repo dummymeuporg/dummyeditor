@@ -53,7 +53,8 @@ public:
 
     Editor::Layer& editorLayer() override;
 
-    std::unique_ptr<DrawingTool::Graphic::Pen> getGraphicPen();
+    std::vector<std::unique_ptr<DrawingTool::DrawingTool>>
+    getDrawingTools() override;
 
 
 private:
