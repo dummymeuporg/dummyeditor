@@ -33,10 +33,10 @@ public:
 
     virtual Editor::Layer& editorLayer() = 0;
 
-    virtual std::vector<DrawingTool::DrawingTool*> getDrawingTools() = 0;
+    virtual std::vector<DrawingTool::DrawingTool*> drawingTools() = 0;
 
 signals:
-    void layerSelected(const GraphicMap::GraphicLayer*);
+    void layerSelected(GraphicMap::GraphicLayer*);
 
 public slots:
     void setVisibility(bool);

@@ -121,7 +121,8 @@ Editor::Layer& BlockingGraphicLayer::editorLayer() {
     return m_blockingLayer;
 }
 
-std::vector<DrawingTool::DrawingTool*> BlockingGraphicLayer::getDrawingTools()
+std::vector<DrawingTool::DrawingTool*>
+BlockingGraphicLayer::drawingTools()
 {
     // XXX: fill this.
     return {};

@@ -6,6 +6,9 @@
 #include <QGraphicsScene>
 #include <QKeyEvent>
 #include <QMessageBox>
+#include <QToolButton>
+
+#include "drawing_tool/drawing_tool.hpp"
 
 #include "editor/map.hpp"
 #include "editor/project.hpp"
@@ -261,9 +264,9 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
         // to publish tools.
         QObject::connect(
             layer,
-            SIGNAL(layerSelected(const GraphicMap::GraphicLayer*)),
+            SIGNAL(layerSelected(GraphicMap::GraphicLayer*)),
             this,
-            SLOT(publishTools(const GraphicMap::GraphicLayer*))
+            SLOT(publishTools(GraphicMap::GraphicLayer*))
         );
     }
 
@@ -309,6 +312,14 @@ void MainWindow::onPaste()
     QCoreApplication::postEvent(m_mapScene, keyEvent);
 }
 
-void MainWindow::publishTools(const GraphicMap::GraphicLayer*) {
+void MainWindow::publishTools(GraphicMap::GraphicLayer* layer) {
     qDebug() << "Publish tools!";
+    std::vector<DrawingTool::DrawingTool*>&& tools(layer->drawingTools());
+    auto toolbox = ui->widgetDrawingToolbox;
+    toolbox->setLayout(new QHBoxLayout());
+    for (auto& tool: tools) {
+        QToolButton *button = new QToolButton;
+        button->setIcon(tool->icon());
+        toolbox->layout()->addWidget(button);
+    }
 }

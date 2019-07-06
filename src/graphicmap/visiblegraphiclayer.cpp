@@ -116,7 +116,7 @@ Editor::Layer& VisibleGraphicLayer::editorLayer() {
 }
 
 std::vector<DrawingTool::DrawingTool*>
-VisibleGraphicLayer::getDrawingTools() {
+VisibleGraphicLayer::drawingTools() {
     // XXX: fill this.
     return {&m_pen};
 }
