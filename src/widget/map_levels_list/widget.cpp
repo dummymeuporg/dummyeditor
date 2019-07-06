@@ -34,7 +34,14 @@ void Widget::reset() {
 void Widget::toggleLayerVisibleState(QModelIndex selectedIndex) {
     qDebug() << "selectedIndex: " << selectedIndex;
    m_mapLevelTreeModel->mapTreeItemFromIndex(selectedIndex)->toggle();
-
 }
+
+void Widget::selectLayer(QModelIndex selectedIndex) {
+    auto item = m_mapLevelTreeModel->mapTreeItemFromIndex(selectedIndex);
+    // This line will trigger a signal:
+    item->setSelected();
+}
+
+
 } // namespace MapLevelsList
 } // namespace Widget

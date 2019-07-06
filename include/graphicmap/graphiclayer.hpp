@@ -33,8 +33,7 @@ public:
 
     virtual Editor::Layer& editorLayer() = 0;
 
-    virtual std::vector<std::unique_ptr<DrawingTool::DrawingTool>>
-    getDrawingTools() = 0;
+    virtual std::vector<DrawingTool::DrawingTool*> getDrawingTools() = 0;
 
 signals:
     void layerSelected();

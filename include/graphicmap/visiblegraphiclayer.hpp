@@ -3,13 +3,9 @@
 #include <QGraphicsScene>
 #include <QPixmap>
 
-#include "graphicmap/graphiclayer.hpp"
+#include "drawing_tool/graphic/pen.hpp"
 
-namespace DrawingTool {
-namespace Graphic {
-class Pen;
-} // namespace Graphic
-} // namespace DrawingTool
+#include "graphicmap/graphiclayer.hpp"
 
 namespace Editor {
 class GraphicLayer;
@@ -53,12 +49,14 @@ public:
 
     Editor::Layer& editorLayer() override;
 
-    std::vector<std::unique_ptr<DrawingTool::DrawingTool>>
-    getDrawingTools() override;
+    std::vector<DrawingTool::DrawingTool*> getDrawingTools() override;
 
 
 private:
     Editor::GraphicLayer& m_graphicLayer;
     const QPixmap& m_chipsetPixmap;
+
+    // Drawing tools
+    DrawingTool::Graphic::Pen m_pen;
 };
 } // namespace GraphicMap

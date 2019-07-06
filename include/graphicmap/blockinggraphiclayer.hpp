@@ -27,8 +27,7 @@ namespace GraphicMap {
         void setTile(quint16, quint16, bool);
         Editor::Layer& editorLayer() override;
 
-        std::vector<std::unique_ptr<DrawingTool::DrawingTool>>
-        getDrawingTools() override;
+        std::vector<DrawingTool::DrawingTool*> getDrawingTools() override;
     private:
         void _draw(int, quint16, quint16);
         Editor::BlockingLayer& m_blockingLayer;

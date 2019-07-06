@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QIcon>
 
 #include "editor/blocking_layer.hpp"
@@ -54,6 +55,11 @@ void MapLevelTreeItem::setVisible(bool visible) {
             reinterpret_cast<MapLayerTreeItem*>(child(i));
         layerItem->setVisible(visible);
     }
+}
+
+void MapLevelTreeItem::setSelected() {
+    // Nothing to do.
+    qDebug() << "Selected level.";
 }
 
 } // namespace Model

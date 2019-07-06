@@ -61,8 +61,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>treeViewLevels</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>MapLevelsList</receiver>
+   <slot>selectLayer(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>128</x>
+     <y>180</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>214</x>
+     <y>440</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>toggleLayerVisibleState(QModelIndex)</slot>
+  <slot>selectLayer(QModelIndex)</slot>
+  <slot>setSelected(QModelIndex)</slot>
  </slots>
 </ui>

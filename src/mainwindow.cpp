@@ -38,10 +38,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //create a group action to regroup action tools
     QActionGroup *toolsGroup = new QActionGroup(this);
     toolsGroup->addAction("Working tool");
-    toolsGroup->addAction(ui->actionSelection);
+    //toolsGroup->addAction(ui->actionSelection);
     //toolsGroup->addAction(ui->actionPen);
-    toolsGroup->addAction(ui->actionRectangle);
-    toolsGroup->addAction(ui->actionPath);
+    //toolsGroup->addAction(ui->actionRectangle);
+    //toolsGroup->addAction(ui->actionPath);
     tabGeneralToolBar->addActions(toolsGroup->actions());
 
     tabGeneralToolBar->addSeparator();
@@ -255,6 +255,8 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
     m_mapScene->setMapDocument(m_currentProject->document(mapName));
 
     for (const auto& layer: m_mapScene->graphicLayers()) {
+        // XXX: connect the layers to the main window in order
+        // to publish tools.
     }
 
     ui->graphicsViewChipset->viewport()->update();
@@ -263,11 +265,11 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
                                             map->width()*16,
                                             map->height()*16));
 
-    reinterpret_cast<Widget::MapLevelsList::Widget*>(
+    auto mapLevelsList = reinterpret_cast<Widget::MapLevelsList::Widget*>(
         ui->dockWidgetMapLevelsList->widget()
-    )->setEditorMap(map);
+    );
 
-    // Connect each graphic layer to this window's slot
+    mapLevelsList->setEditorMap(map);
 }
 
 void MainWindow::onCancel()

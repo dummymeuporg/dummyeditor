@@ -14,7 +14,7 @@ namespace Graphic {
 
 class Pen : public GraphicTool {
 public:
-    Pen(QIcon&&, GraphicMap::VisibleGraphicLayer&);
+    Pen(GraphicMap::VisibleGraphicLayer&);
     void mousePressEvent(::QGraphicsSceneMouseEvent*) override;
     void mouseMoveEvent(::QGraphicsSceneMouseEvent*) override;
     void mouseReleaseEvent(::QGraphicsSceneMouseEvent*) override;

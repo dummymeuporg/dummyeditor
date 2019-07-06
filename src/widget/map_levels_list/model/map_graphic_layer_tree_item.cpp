@@ -1,3 +1,5 @@
+#include <QDebug>
+
 #include "editor/graphic_layer.hpp"
 
 #include "widget/map_levels_list/model/map_graphic_layer_tree_item.hpp"
@@ -27,6 +29,12 @@ QVariant MapGraphicLayerTreeItem::data(int role) const {
     }
     return QStandardItem::data(role);
 }
+
+void MapGraphicLayerTreeItem::setSelected() {
+    qDebug() << "Selected graphic layer.";
+    emit m_graphicLayer.setSelected();
+}
+
 } // namespace Model
 } // namespace MapLevelsList
 } // namespace Widget

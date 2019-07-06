@@ -14,7 +14,9 @@ class MainWindow;
 
 namespace GraphicMap {
     class MapGraphicsScene;
-}
+    class GraphicLayer;
+} // namespace GraphicMap
+
 class ChipsetGraphicsScene;
 class QTreeView;
 
@@ -49,4 +51,5 @@ private slots:
     void onCut();
     void onCopy();
     void onPaste();
+
 };

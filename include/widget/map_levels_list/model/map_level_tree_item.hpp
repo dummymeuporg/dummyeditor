@@ -16,6 +16,7 @@ public:
     QVariant data(int role = Qt::UserRole + 1) const override;
     void toggle() override;
     void setVisible(bool) override;
+    void setSelected() override;
 private:
     Editor::Level& m_editorLevel;
 };

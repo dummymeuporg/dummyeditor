@@ -22,7 +22,8 @@ VisibleGraphicLayer::VisibleGraphicLayer(
     int zIndex
 ) : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex),
     m_graphicLayer(layer),
-    m_chipsetPixmap(chipsetPixmap)
+    m_chipsetPixmap(chipsetPixmap),
+    m_pen(*this)
 {
     m_layerItems.resize(m_graphicLayer.width() * m_graphicLayer.height());
 
@@ -114,11 +115,10 @@ Editor::Layer& VisibleGraphicLayer::editorLayer() {
     return m_graphicLayer;
 }
 
-std::vector<std::unique_ptr<DrawingTool::DrawingTool>>
+std::vector<DrawingTool::DrawingTool*>
 VisibleGraphicLayer::getDrawingTools() {
     // XXX: fill this.
-    return {
-    };
+    return {&m_pen};
 }
 
 } // namespace GraphicMap

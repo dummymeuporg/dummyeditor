@@ -43,7 +43,10 @@ public:
     const Model::MapLevelTreeModel* mapLevelTreeModel() const {
         return m_mapLevelTreeModel;
     }
+signals:
+    void selectedLayerChanged();
 public slots:
+    void selectLayer(QModelIndex);
     void toggleLayerVisibleState(QModelIndex);
 private:
     void reset();

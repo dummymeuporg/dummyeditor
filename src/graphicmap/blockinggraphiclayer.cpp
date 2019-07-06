@@ -121,11 +121,10 @@ Editor::Layer& BlockingGraphicLayer::editorLayer() {
     return m_blockingLayer;
 }
 
-std::vector<std::unique_ptr<DrawingTool::DrawingTool>>
-BlockingGraphicLayer::getDrawingTools() {
+std::vector<DrawingTool::DrawingTool*> BlockingGraphicLayer::getDrawingTools()
+{
     // XXX: fill this.
-    return std::vector<std::unique_ptr<DrawingTool::DrawingTool>>{
-    };
+    return {};
 }
 
 } // namespace GraphicMap

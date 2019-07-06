@@ -1,3 +1,5 @@
+#include <QDebug>
+
 #include "editor/blocking_layer.hpp"
 
 #include "widget/map_levels_list/model/map_blocking_layer_tree_item.hpp"
@@ -26,6 +28,11 @@ QVariant MapBlockingLayerTreeItem::data(int role) const {
         return QStringLiteral("Blocking layer");
     }
     return QStandardItem::data(role);
+}
+
+void MapBlockingLayerTreeItem::setSelected() {
+    qDebug() << "Selected blocking layer.";
+    emit m_blockingLayer.setSelected();
 }
 
 } // namespace Model

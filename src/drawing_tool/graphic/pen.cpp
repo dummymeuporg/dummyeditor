@@ -8,8 +8,8 @@ namespace DrawingTool {
 
 namespace Graphic {
 
-Pen::Pen(QIcon&& icon, GraphicMap::VisibleGraphicLayer& visibleGraphicLayer)
-    : Graphic::GraphicTool(std::move(icon), visibleGraphicLayer)
+Pen::Pen(GraphicMap::VisibleGraphicLayer& visibleGraphicLayer)
+    : Graphic::GraphicTool(QIcon(":/icons/icon_pen.png"), visibleGraphicLayer)
 {}
 
 void Pen::mouseMoveEvent(::QGraphicsSceneMouseEvent* event) {

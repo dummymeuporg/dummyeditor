@@ -13,6 +13,7 @@ public:
     void setVisible(bool visible);
 signals:
     void visibilityChanged(bool);
+    void setSelected();
 private:
     bool m_visible;
 };
