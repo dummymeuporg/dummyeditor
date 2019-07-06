@@ -36,10 +36,11 @@ public:
     virtual std::vector<DrawingTool::DrawingTool*> getDrawingTools() = 0;
 
 signals:
-    void layerSelected();
+    void layerSelected(const GraphicMap::GraphicLayer*);
 
 public slots:
     void setVisibility(bool);
+    void setSelected();
 protected:
     QVector<QGraphicsItem*> m_layerItems;
 };

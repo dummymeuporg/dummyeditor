@@ -23,4 +23,8 @@ void GraphicLayer::setVisibility(bool visible) {
     }
 }
 
+void GraphicLayer::setSelected() {
+    emit layerSelected(this);
+}
+
 } // namespace GraphicMap

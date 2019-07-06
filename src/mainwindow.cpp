@@ -10,6 +10,8 @@
 #include "editor/map.hpp"
 #include "editor/project.hpp"
 
+#include "graphicmap/graphiclayer.hpp"
+
 #include "misc/map_tree_model.hpp"
 
 #include "chipsetgraphicsscene.hpp"
@@ -257,6 +259,12 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
     for (const auto& layer: m_mapScene->graphicLayers()) {
         // XXX: connect the layers to the main window in order
         // to publish tools.
+        QObject::connect(
+            layer,
+            SIGNAL(layerSelected(const GraphicMap::GraphicLayer*)),
+            this,
+            SLOT(publishTools(const GraphicMap::GraphicLayer*))
+        );
     }
 
     ui->graphicsViewChipset->viewport()->update();
@@ -299,4 +307,8 @@ void MainWindow::onPaste()
     QKeyEvent* keyEvent = new QKeyEvent(QEvent::KeyPress, Qt::Key_V,
                                         Qt::ControlModifier);
     QCoreApplication::postEvent(m_mapScene, keyEvent);
+}
+
+void MainWindow::publishTools(const GraphicMap::GraphicLayer*) {
+    qDebug() << "Publish tools!";
 }

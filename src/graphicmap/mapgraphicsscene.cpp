@@ -109,6 +109,13 @@ GraphicMap::MapGraphicsScene::setMapDocument
                 graphicLayer,
                 SLOT(setVisibility(bool))
             );
+
+            QObject::connect(
+                &graphicLayer->editorLayer(),
+                SIGNAL(setSelected()),
+                graphicLayer,
+                SLOT(setSelected())
+            );
         }
 
         // Add blocking layer
@@ -124,6 +131,12 @@ GraphicMap::MapGraphicsScene::setMapDocument
             SIGNAL(visibilityChanged(bool)),
             graphicLayer,
             SLOT(setVisibility(bool))
+        );
+        QObject::connect(
+            &graphicLayer->editorLayer(),
+            SIGNAL(setSelected()),
+            graphicLayer,
+            SLOT(setSelected())
         );
     }
 

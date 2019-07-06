@@ -51,5 +51,6 @@ private slots:
     void onCut();
     void onCopy();
     void onPaste();
+    void publishTools(const GraphicMap::GraphicLayer*);
 
 };
