@@ -7,6 +7,10 @@
 #include <memory>
 #include <vector>
 
+namespace DrawingTool {
+class DrawingTool;
+} // namespace DrawingTool
+
 namespace Editor {
 class Project;
 class Map;
@@ -53,8 +57,6 @@ public:
         return m_chipsetSelection;
     }
 
-    //MapGraphicsScene& setPaitingTool(DrawingTool*);
-
     MapGraphicsScene& setMapDocument(
         const std::shared_ptr<Misc::MapDocument>& mapDocument);
 
@@ -62,10 +64,17 @@ public:
         return m_graphicLayers;
     }
 
+    void mousePressEvent(QGraphicsSceneMouseEvent*) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent*) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
+    void keyPressEvent(QKeyEvent*) override;
+    void keyReleaseEvent(QKeyEvent*) override;
+
 public slots:
     void changeMapDocument(
         const std::shared_ptr<Misc::MapDocument>& mapDocument
     );
+    void setDrawingTool(DrawingTool::DrawingTool*);
 
     void adjustLayers() const;
 
@@ -95,8 +104,7 @@ private:
 
     bool m_isDrawing;
 
-    //PaintingLayerState* m_paintingLayerState;
-    //DrawingTool* m_drawingTool;
+    DrawingTool::DrawingTool* m_drawingTool;
 
     GraphicLayers m_graphicLayers;
 

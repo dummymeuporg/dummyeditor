@@ -12,9 +12,14 @@
 #include "graphicmap/mapgraphicsscene.hpp"
 
 
-GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
+namespace GraphicMap {
+
+MapGraphicsScene::MapGraphicsScene(QObject* parent)
     : QGraphicsScene(parent),
-      m_map(nullptr)
+      m_mapDocument(nullptr),
+      m_map(nullptr),
+      m_isDrawing(false),
+      m_drawingTool(nullptr)
 
 {
     //m_paintingLayerState = new GraphicMap::NotPaintingState(*this);
@@ -22,13 +27,13 @@ GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
     installEventFilter(this);
 }
 
-GraphicMap::MapGraphicsScene::~MapGraphicsScene()
+MapGraphicsScene::~MapGraphicsScene()
 {
     //delete m_drawingTool;
     //delete m_paintingLayerState;
 }
 
-void GraphicMap::MapGraphicsScene::_drawGrid()
+void MapGraphicsScene::_drawGrid()
 {
 
     QPen pen(Qt::black, 0.5);
@@ -48,11 +53,8 @@ void GraphicMap::MapGraphicsScene::_drawGrid()
 
 }
 
-GraphicMap::MapGraphicsScene&
-GraphicMap::MapGraphicsScene::setMapDocument
-(const std::shared_ptr<Misc::MapDocument>& mapDocument)
-{
-
+MapGraphicsScene& MapGraphicsScene::setMapDocument
+(const std::shared_ptr<Misc::MapDocument>& mapDocument) {
     if (m_map != nullptr) {
         QRect invalidateRegion(0, 0,
                                m_map->width() * 16, m_map->height() * 16);
@@ -145,13 +147,13 @@ GraphicMap::MapGraphicsScene::setMapDocument
     return *this;
 }
 
-void GraphicMap::MapGraphicsScene::changeMapDocument(
-    const std::shared_ptr<Misc::MapDocument>& mapDocument)
-{
+void MapGraphicsScene::changeMapDocument(
+    const std::shared_ptr<Misc::MapDocument>& mapDocument
+) {
     setMapDocument(mapDocument);
 }
 
-void GraphicMap::MapGraphicsScene::adjustLayers() const {
+void MapGraphicsScene::adjustLayers() const {
     /*
     if (nullptr != m_paintingLayerState)
     {
@@ -159,3 +161,41 @@ void GraphicMap::MapGraphicsScene::adjustLayers() const {
     }
     */
 }
+
+void MapGraphicsScene::setDrawingTool(DrawingTool::DrawingTool* drawingTool) {
+    m_drawingTool = drawingTool;
+    qDebug() << "tool is set.";
+}
+
+void MapGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event) {
+    if (nullptr != m_drawingTool) {
+        m_drawingTool->mousePressEvent(event);
+    }
+}
+
+void MapGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
+    if (nullptr != m_drawingTool) {
+        m_drawingTool->mouseMoveEvent(event);
+    }
+}
+
+void MapGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
+    if (nullptr != m_drawingTool) {
+        m_drawingTool->mouseReleaseEvent(event);
+    }
+}
+
+void MapGraphicsScene::keyPressEvent(QKeyEvent* event) {
+    if (nullptr != m_drawingTool) {
+        m_drawingTool->keyPressEvent(event);
+    }
+}
+
+void MapGraphicsScene::keyReleaseEvent(QKeyEvent* event) {
+    if (nullptr != m_drawingTool) {
+        m_drawingTool->keyReleaseEvent(event);
+    }
+}
+
+
+} // namespace GraphicMap

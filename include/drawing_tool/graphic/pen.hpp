@@ -18,6 +18,8 @@ public:
     void mousePressEvent(::QGraphicsSceneMouseEvent*) override;
     void mouseMoveEvent(::QGraphicsSceneMouseEvent*) override;
     void mouseReleaseEvent(::QGraphicsSceneMouseEvent*) override;
+    void keyPressEvent(::QKeyEvent*) override;
+    void keyReleaseEvent(::QKeyEvent*) override;
 };
 
 } // namespace Graphic

@@ -14,6 +14,7 @@
 #include "editor/project.hpp"
 
 #include "graphicmap/graphiclayer.hpp"
+#include "graphicmap/mapgraphicsscene.hpp"
 
 #include "misc/map_tree_model.hpp"
 
@@ -316,19 +317,5 @@ void MainWindow::publishTools(GraphicMap::GraphicLayer* layer) {
     qDebug() << "Publish tools!";
     std::vector<DrawingTool::DrawingTool*>&& tools(layer->drawingTools());
     auto toolbox = ui->widgetDrawingToolbox;
-    delete toolbox->layout();
-    toolbox->setLayout(new QHBoxLayout());
-
-    auto toolbar = new QToolBar(toolbox);
-    auto drawingToolsGroup = new QActionGroup(toolbar);
-
-    for (auto& tool: tools) {
-        auto action = new QAction(drawingToolsGroup);
-        action->setIcon(tool->icon());
-        action->setText(tr("Tool"));
-        action->setCheckable(true);
-        drawingToolsGroup->addAction(action);
-    }
-    toolbar->addActions(drawingToolsGroup->actions());
-    toolbox->layout()->addWidget(toolbar);
+    toolbox->reset(m_mapScene, m_chipsetScene, tools);
 }

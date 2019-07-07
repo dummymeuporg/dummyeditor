@@ -5,6 +5,10 @@
 
 #include <memory>
 
+namespace DrawingTool {
+class GraphicTool;
+} // namespace DrawingTool
+
 class QGraphicsPixmapItem;
 class QGraphicsSceneMouseEvent;
 
@@ -31,6 +35,7 @@ public:
 
 signals:
     void selectionChanged(const QRect&);
+    void chipsetChanged(QString);
 
 public slots:
     void changeChipset(const QString& chipsetPath);
@@ -40,6 +45,7 @@ private:
     QRect m_currentSelection;
     bool m_isSelecting;
     QPoint m_selectionStart;
+    DrawingTool::GraphicTool* m_currentTool;
 };
 
 #endif // CHIPSETGRAPHICSCENE_H

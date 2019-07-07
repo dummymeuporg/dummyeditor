@@ -57,6 +57,7 @@ ChipsetGraphicsScene::setChipset(const QString& chipsetPath) {
 
 void ChipsetGraphicsScene::changeChipset(const QString& chipsetPath) {
     setChipset(chipsetPath);
+    emit chipsetChanged(chipsetPath);
 }
 
 void

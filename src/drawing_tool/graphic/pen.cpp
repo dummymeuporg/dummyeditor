@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 
 #include "graphicmap/visiblegraphiclayer.hpp"
@@ -13,15 +14,23 @@ Pen::Pen(GraphicMap::VisibleGraphicLayer& visibleGraphicLayer)
 {}
 
 void Pen::mouseMoveEvent(::QGraphicsSceneMouseEvent* event) {
-
+    qDebug() << "Pen move.";
 }
 
 void Pen::mousePressEvent(::QGraphicsSceneMouseEvent* event) {
-
+    qDebug() << "Pen press.";
 }
 
 void Pen::mouseReleaseEvent(::QGraphicsSceneMouseEvent* event) {
+    qDebug() << "Pen release.";
+}
 
+void Pen::keyPressEvent(::QKeyEvent* event) {
+    qDebug() << "key press.";
+}
+
+void Pen::keyReleaseEvent(::QKeyEvent* event) {
+    qDebug() << "key release.";
 }
 
 } // namespace Graphic
