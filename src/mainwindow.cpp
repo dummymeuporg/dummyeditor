@@ -316,10 +316,19 @@ void MainWindow::publishTools(GraphicMap::GraphicLayer* layer) {
     qDebug() << "Publish tools!";
     std::vector<DrawingTool::DrawingTool*>&& tools(layer->drawingTools());
     auto toolbox = ui->widgetDrawingToolbox;
+    delete toolbox->layout();
     toolbox->setLayout(new QHBoxLayout());
+
+    auto toolbar = new QToolBar(toolbox);
+    auto drawingToolsGroup = new QActionGroup(toolbar);
+
     for (auto& tool: tools) {
-        QToolButton *button = new QToolButton;
-        button->setIcon(tool->icon());
-        toolbox->layout()->addWidget(button);
+        auto action = new QAction(drawingToolsGroup);
+        action->setIcon(tool->icon());
+        action->setText(tr("Tool"));
+        action->setCheckable(true);
+        drawingToolsGroup->addAction(action);
     }
+    toolbar->addActions(drawingToolsGroup->actions());
+    toolbox->layout()->addWidget(toolbar);
 }
