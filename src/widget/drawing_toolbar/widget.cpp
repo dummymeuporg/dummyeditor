@@ -71,9 +71,9 @@ void Widget::visitTool(DrawingTool::Graphic::Pen& pen) {
     qDebug() << "visitTool: connect tool.";
     QObject::connect(
         &pen,
-        SIGNAL(drawingToolSelected(::DrawingTool::Graphic::GraphicTool*)),
+        SIGNAL(drawingToolSelected(::DrawingTool::Graphic::PaletteTool*)),
         m_chipsetGraphicsScene,
-        SLOT(setGraphicTool(::DrawingTool::Graphic::GraphicTool*))
+        SLOT(setPaletteTool(::DrawingTool::Graphic::PaletteTool*))
     );
 }
 

@@ -16,10 +16,6 @@ GraphicTool::GraphicTool(
       m_visibleGraphicLayer(visibleGraphicLayer)
 {}
 
-void GraphicTool::setChipsetSelection(QRect rect) {
-    m_chipsetSelection = rect;
-}
-
 void GraphicTool::emitDrawingToolSelected() {
     qDebug() << "Emit drawing tool selected.";
     emit drawingToolSelected(this);

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "drawing_tool/graphic/graphic_tool.hpp"
+#include "drawing_tool/graphic/palette_tool.hpp"
 
 class QGraphicsSceneMouseEvent;
 
@@ -12,7 +12,7 @@ namespace DrawingTool {
 
 namespace Graphic {
 
-class Pen : public GraphicTool {
+class Pen : public PaletteTool {
     Q_OBJECT
 public:
     Pen(GraphicMap::VisibleGraphicLayer&);
@@ -22,9 +22,6 @@ public:
     void mapMouseReleaseEvent(::QGraphicsSceneMouseEvent*) override;
     void mapKeyPressEvent(::QKeyEvent*) override;
     void mapKeyReleaseEvent(::QKeyEvent*) override;
-    void paletteMousePressEvent(::QGraphicsSceneMouseEvent*) override;
-    void paletteMouseMoveEvent(::QGraphicsSceneMouseEvent*) override;
-    void paletteMouseReleaseEvent(::QGraphicsSceneMouseEvent*) override;
     void emitDrawingToolSelected() override;
 };
 

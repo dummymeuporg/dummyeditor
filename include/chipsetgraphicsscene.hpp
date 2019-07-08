@@ -7,7 +7,7 @@
 
 namespace DrawingTool {
 namespace Graphic {
-class GraphicTool;
+class PaletteTool;
 } // namespace Graphic
 } // namespace DrawingTool
 
@@ -40,7 +40,7 @@ signals:
     void chipsetChanged(QString);
 
 public slots:
-    void setGraphicTool(::DrawingTool::Graphic::GraphicTool*);
+    void setPaletteTool(::DrawingTool::Graphic::PaletteTool*);
     void changeChipset(const QString& chipsetPath);
 private:
     QGraphicsRectItem* m_selectionRectItem;
@@ -48,7 +48,7 @@ private:
     QRect m_currentSelection;
     bool m_isSelecting;
     QPoint m_selectionStart;
-    DrawingTool::Graphic::GraphicTool* m_graphicTool;
+    DrawingTool::Graphic::PaletteTool* m_paletteTool;
 };
 
 #endif // CHIPSETGRAPHICSCENE_H

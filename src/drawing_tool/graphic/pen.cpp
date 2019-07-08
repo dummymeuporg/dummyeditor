@@ -11,7 +11,7 @@ namespace DrawingTool {
 namespace Graphic {
 
 Pen::Pen(GraphicMap::VisibleGraphicLayer& visibleGraphicLayer)
-    : Graphic::GraphicTool(QIcon(":/icons/icon_pen.png"), visibleGraphicLayer)
+    : Graphic::PaletteTool(QIcon(":/icons/icon_pen.png"), visibleGraphicLayer)
 {}
 
 void Pen::mapMouseMoveEvent(::QGraphicsSceneMouseEvent* event) {
@@ -33,19 +33,6 @@ void Pen::mapKeyPressEvent(::QKeyEvent* event) {
 void Pen::mapKeyReleaseEvent(::QKeyEvent* event) {
     qDebug() << "key release.";
 }
-
-void Pen::paletteMousePressEvent(::QGraphicsSceneMouseEvent* event) {
-    qDebug() << "palette mouse press event.";
-}
-
-void Pen::paletteMouseMoveEvent(::QGraphicsSceneMouseEvent* event) {
-    qDebug() << "palette mouse move event.";
-}
-
-void Pen::paletteMouseReleaseEvent(::QGraphicsSceneMouseEvent* event) {
-    qDebug() << "palette mouse release event.";
-}
-
 
 void Pen::accept(Visitor& visitor) {
     visitor.visitTool(*this);

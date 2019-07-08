@@ -8,14 +8,14 @@
 #include <algorithm>
 
 #include "chipsetgraphicsscene.hpp"
-#include "drawing_tool/graphic/graphic_tool.hpp"
+#include "drawing_tool/graphic/palette_tool.hpp"
 
 ChipsetGraphicsScene::ChipsetGraphicsScene(QObject* parent) :
     QGraphicsScene(parent),
     m_selectionRectItem(nullptr),
     m_chipset(nullptr),
     m_isSelecting(false),
-    m_graphicTool(nullptr)
+    m_paletteTool(nullptr)
 {
     if (m_chipset) {
         _drawGrid();
@@ -67,8 +67,8 @@ void ChipsetGraphicsScene::changeChipset(const QString& chipsetPath) {
 void
 ChipsetGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) {
     QGraphicsScene::mouseReleaseEvent(mouseEvent);
-    if (nullptr != m_graphicTool) {
-        m_graphicTool->paletteMouseReleaseEvent(mouseEvent);
+    if (nullptr != m_paletteTool) {
+        m_paletteTool->paletteMouseReleaseEvent(mouseEvent);
     }
     /*
     if (nullptr != m_chipset) {
@@ -108,8 +108,8 @@ ChipsetGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
 
     }
     */
-    if (nullptr != m_graphicTool) {
-        m_graphicTool->paletteMouseMoveEvent(mouseEvent);
+    if (nullptr != m_paletteTool) {
+        m_paletteTool->paletteMouseMoveEvent(mouseEvent);
     }
 }
 
@@ -140,15 +140,15 @@ ChipsetGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
     }
     */
 
-    if (nullptr != m_graphicTool) {
-        m_graphicTool->paletteMouseMoveEvent(mouseEvent);
+    if (nullptr != m_paletteTool) {
+        m_paletteTool->paletteMouseMoveEvent(mouseEvent);
     }
 }
 
 void
-ChipsetGraphicsScene::setGraphicTool(
-    ::DrawingTool::Graphic::GraphicTool* graphicTool
+ChipsetGraphicsScene::setPaletteTool(
+    ::DrawingTool::Graphic::PaletteTool* paletteTool
 ) {
-    m_graphicTool = graphicTool;
+    m_paletteTool = paletteTool;
     qDebug() << "ChispetGraphicsScene: graphic tool set!";
 }
