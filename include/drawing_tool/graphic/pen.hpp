@@ -13,6 +13,7 @@ namespace DrawingTool {
 namespace Graphic {
 
 class Pen : public GraphicTool {
+    Q_OBJECT
 public:
     Pen(GraphicMap::VisibleGraphicLayer&);
     void accept(Visitor&) override;
@@ -24,6 +25,7 @@ public:
     void paletteMousePressEvent(::QGraphicsSceneMouseEvent*) override;
     void paletteMouseMoveEvent(::QGraphicsSceneMouseEvent*) override;
     void paletteMouseReleaseEvent(::QGraphicsSceneMouseEvent*) override;
+    void emitDrawingToolSelected() override;
 };
 
 } // namespace Graphic

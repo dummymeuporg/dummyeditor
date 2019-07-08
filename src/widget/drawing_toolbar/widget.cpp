@@ -7,6 +7,8 @@
 #include "graphicmap/mapgraphicsscene.hpp"
 #include "chipsetgraphicsscene.hpp"
 
+#include <QDebug>
+
 #include "widget/drawing_toolbar/drawing_tool_action.hpp"
 #include "widget/drawing_toolbar/widget.hpp"
 
@@ -56,13 +58,7 @@ Widget::reset(const GraphicMap::MapGraphicsScene* mapScene,
             mapScene,
             SLOT(setDrawingTool(DrawingTool::DrawingTool*))
         );
-
-        QObject::connect(
-            action,
-            SIGNAL(trigerred(bool)),
-            action,
-            SLOT(setDrawingTool(bool))
-        );
+        tool->accept(*this);
 
     }
     m_toolbar->addActions(m_actionGroup->actions());
@@ -72,13 +68,13 @@ Widget::reset(const GraphicMap::MapGraphicsScene* mapScene,
 void Widget::visitTool(DrawingTool::Graphic::Pen& pen) {
     // XXX: connect the pen to the chipset scene.
     // m_chipsetScene
+    qDebug() << "visitTool: connect tool.";
     QObject::connect(
         &pen,
-        SIGNAL(trigerred(DrawingTool::GraphicTool*)),
+        SIGNAL(drawingToolSelected(::DrawingTool::Graphic::GraphicTool*)),
         m_chipsetGraphicsScene,
-        SLOT(setGraphicTool(DrawingTool::GraphicTool*))
+        SLOT(setGraphicTool(::DrawingTool::Graphic::GraphicTool*))
     );
-
 }
 
 } // namespace DrawingToolbar

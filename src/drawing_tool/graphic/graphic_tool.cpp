@@ -1,3 +1,5 @@
+#include <QDebug>
+
 #include "graphicmap/mapgraphicsscene.hpp"
 #include "graphicmap/visiblegraphiclayer.hpp"
 #include "drawing_tool/graphic/graphic_tool.hpp"
@@ -18,10 +20,9 @@ void GraphicTool::setChipsetSelection(QRect rect) {
     m_chipsetSelection = rect;
 }
 
-void GraphicTool::setSelected(bool selected) {
-    if (selected) {
-        emit toolSelected(this);
-    }
+void GraphicTool::emitDrawingToolSelected() {
+    qDebug() << "Emit drawing tool selected.";
+    emit drawingToolSelected(this);
 }
 
 } // namespace Graphic

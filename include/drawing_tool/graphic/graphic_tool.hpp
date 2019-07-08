@@ -20,12 +20,13 @@ public:
     virtual void paletteMousePressEvent(::QGraphicsSceneMouseEvent*) = 0;
     virtual void paletteMouseMoveEvent(::QGraphicsSceneMouseEvent*) = 0;
     virtual void paletteMouseReleaseEvent(::QGraphicsSceneMouseEvent*) = 0;
-
+    void emitDrawingToolSelected() override;
 signals:
-    void toolSelected(GraphicTool*);
+    // Note: I have to put the whole namespace shit here, because Qt
+    // signals/slots framework is based on textual comparison.
+    void drawingToolSelected(::DrawingTool::Graphic::GraphicTool*);
 public slots:
     void setChipsetSelection(QRect);
-    void setSelected(bool);
 private:
     GraphicMap::VisibleGraphicLayer& m_visibleGraphicLayer;
     QRect m_chipsetSelection;

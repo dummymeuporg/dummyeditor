@@ -17,6 +17,7 @@ namespace DrawingTool {
 class Visitor;
 
 class DrawingTool : public ::QObject {
+    Q_OBJECT
 public:
     DrawingTool(GraphicMap::MapGraphicsScene&, QIcon&&);
     virtual void mapMousePressEvent(::QGraphicsSceneMouseEvent*) = 0;
@@ -30,6 +31,12 @@ public:
     }
 
     virtual void accept(Visitor&) = 0;
+    virtual void emitDrawingToolSelected();
+
+    void setSelected(bool selected);
+
+signals:
+    void drawingToolSelected(DrawingTool*);
 private:
     GraphicMap::MapGraphicsScene& m_mapGraphicsScene;
     QIcon m_icon;

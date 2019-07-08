@@ -51,6 +51,10 @@ void Pen::accept(Visitor& visitor) {
     visitor.visitTool(*this);
 }
 
+void Pen::emitDrawingToolSelected() {
+    emit drawingToolSelected(this);
+}
+
 } // namespace Graphic
 
 } // namespace DrawingTool
