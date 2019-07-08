@@ -3,6 +3,7 @@
 #include <QHBoxLayout>
 
 #include "drawing_tool/drawing_tool.hpp"
+#include "drawing_tool/graphic/pen.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
 #include "chipsetgraphicsscene.hpp"
 
@@ -16,7 +17,8 @@ namespace DrawingToolbar {
 Widget::Widget(::QWidget* parent) :
     QWidget(parent),
     m_toolbar(new QToolBar(this)),
-    m_actionGroup(new QActionGroup(m_toolbar))
+    m_actionGroup(new QActionGroup(m_toolbar)),
+    m_chipsetGraphicsScene(nullptr)
 {
     // Set empty toolbar for the moment.
     setLayout(new QHBoxLayout());
@@ -25,12 +27,12 @@ Widget::Widget(::QWidget* parent) :
 
 void
 Widget::reset(const GraphicMap::MapGraphicsScene* mapScene,
-              const ::ChipsetGraphicsScene* chipsetGraphicScene,
+              const ::ChipsetGraphicsScene* chipsetScene,
               const std::vector<DrawingTool::DrawingTool*>& drawingTools) {
     layout()->removeWidget(m_toolbar);
     delete m_toolbar;
 
-
+    m_chipsetGraphicsScene = chipsetScene;
 
     m_toolbar = new QToolBar(this);
     m_actionGroup = new QActionGroup(m_toolbar);
@@ -54,13 +56,29 @@ Widget::reset(const GraphicMap::MapGraphicsScene* mapScene,
             mapScene,
             SLOT(setDrawingTool(DrawingTool::DrawingTool*))
         );
+
+        QObject::connect(
+            action,
+            SIGNAL(trigerred(bool)),
+            action,
+            SLOT(setDrawingTool(bool))
+        );
+
     }
     m_toolbar->addActions(m_actionGroup->actions());
     layout()->addWidget(m_toolbar);
 }
 
-void Widget::visit(DrawingTool::Graphic::GraphicTool& graphicTool) {
-    // Connect the graphic tool to the
+void Widget::visitTool(DrawingTool::Graphic::Pen& pen) {
+    // XXX: connect the pen to the chipset scene.
+    // m_chipsetScene
+    QObject::connect(
+        &pen,
+        SIGNAL(trigerred(DrawingTool::GraphicTool*)),
+        m_chipsetGraphicsScene,
+        SLOT(setGraphicTool(DrawingTool::GraphicTool*))
+    );
+
 }
 
 } // namespace DrawingToolbar

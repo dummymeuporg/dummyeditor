@@ -4,6 +4,8 @@
 #include <QModelIndex>
 #include <QMainWindow>
 
+#include "drawing_tool/visitor.hpp"
+
 namespace Editor {
 class Project;
 } // namespace Editor
@@ -28,7 +30,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     virtual ~MainWindow();
-
 private:
     void _initializeProject(const QString&);
     void _initializeScenes();

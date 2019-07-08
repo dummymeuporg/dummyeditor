@@ -4,6 +4,7 @@
 #include "graphicmap/visiblegraphiclayer.hpp"
 
 #include "drawing_tool/graphic/pen.hpp"
+#include "drawing_tool/visitor.hpp"
 
 namespace DrawingTool {
 
@@ -13,24 +14,41 @@ Pen::Pen(GraphicMap::VisibleGraphicLayer& visibleGraphicLayer)
     : Graphic::GraphicTool(QIcon(":/icons/icon_pen.png"), visibleGraphicLayer)
 {}
 
-void Pen::mouseMoveEvent(::QGraphicsSceneMouseEvent* event) {
+void Pen::mapMouseMoveEvent(::QGraphicsSceneMouseEvent* event) {
     qDebug() << "Pen move.";
 }
 
-void Pen::mousePressEvent(::QGraphicsSceneMouseEvent* event) {
+void Pen::mapMousePressEvent(::QGraphicsSceneMouseEvent* event) {
     qDebug() << "Pen press.";
 }
 
-void Pen::mouseReleaseEvent(::QGraphicsSceneMouseEvent* event) {
+void Pen::mapMouseReleaseEvent(::QGraphicsSceneMouseEvent* event) {
     qDebug() << "Pen release.";
 }
 
-void Pen::keyPressEvent(::QKeyEvent* event) {
+void Pen::mapKeyPressEvent(::QKeyEvent* event) {
     qDebug() << "key press.";
 }
 
-void Pen::keyReleaseEvent(::QKeyEvent* event) {
+void Pen::mapKeyReleaseEvent(::QKeyEvent* event) {
     qDebug() << "key release.";
+}
+
+void Pen::paletteMousePressEvent(::QGraphicsSceneMouseEvent* event) {
+    qDebug() << "palette mouse press event.";
+}
+
+void Pen::paletteMouseMoveEvent(::QGraphicsSceneMouseEvent* event) {
+    qDebug() << "palette mouse move event.";
+}
+
+void Pen::paletteMouseReleaseEvent(::QGraphicsSceneMouseEvent* event) {
+    qDebug() << "palette mouse release event.";
+}
+
+
+void Pen::accept(Visitor& visitor) {
+    visitor.visitTool(*this);
 }
 
 } // namespace Graphic

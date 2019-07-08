@@ -14,18 +14,22 @@ class MapGraphicsScene;
 
 namespace DrawingTool {
 
+class Visitor;
+
 class DrawingTool : public ::QObject {
 public:
     DrawingTool(GraphicMap::MapGraphicsScene&, QIcon&&);
-    virtual void mousePressEvent(::QGraphicsSceneMouseEvent*) = 0;
-    virtual void mouseMoveEvent(::QGraphicsSceneMouseEvent*) = 0;
-    virtual void mouseReleaseEvent(::QGraphicsSceneMouseEvent*) = 0;
-    virtual void keyPressEvent(::QKeyEvent*) = 0;
-    virtual void keyReleaseEvent(::QKeyEvent*) = 0;
+    virtual void mapMousePressEvent(::QGraphicsSceneMouseEvent*) = 0;
+    virtual void mapMouseMoveEvent(::QGraphicsSceneMouseEvent*) = 0;
+    virtual void mapMouseReleaseEvent(::QGraphicsSceneMouseEvent*) = 0;
+    virtual void mapKeyPressEvent(::QKeyEvent*) = 0;
+    virtual void mapKeyReleaseEvent(::QKeyEvent*) = 0;
 
     const QIcon& icon() const {
         return m_icon;
     }
+
+    virtual void accept(Visitor&) = 0;
 private:
     GraphicMap::MapGraphicsScene& m_mapGraphicsScene;
     QIcon m_icon;

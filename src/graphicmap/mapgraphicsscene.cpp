@@ -169,31 +169,31 @@ void MapGraphicsScene::setDrawingTool(DrawingTool::DrawingTool* drawingTool) {
 
 void MapGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event) {
     if (nullptr != m_drawingTool) {
-        m_drawingTool->mousePressEvent(event);
+        m_drawingTool->mapMousePressEvent(event);
     }
 }
 
 void MapGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
     if (nullptr != m_drawingTool) {
-        m_drawingTool->mouseMoveEvent(event);
+        m_drawingTool->mapMouseMoveEvent(event);
     }
 }
 
 void MapGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
     if (nullptr != m_drawingTool) {
-        m_drawingTool->mouseReleaseEvent(event);
+        m_drawingTool->mapMouseReleaseEvent(event);
     }
 }
 
 void MapGraphicsScene::keyPressEvent(QKeyEvent* event) {
     if (nullptr != m_drawingTool) {
-        m_drawingTool->keyPressEvent(event);
+        m_drawingTool->mapKeyPressEvent(event);
     }
 }
 
 void MapGraphicsScene::keyReleaseEvent(QKeyEvent* event) {
     if (nullptr != m_drawingTool) {
-        m_drawingTool->keyReleaseEvent(event);
+        m_drawingTool->mapKeyReleaseEvent(event);
     }
 }
 

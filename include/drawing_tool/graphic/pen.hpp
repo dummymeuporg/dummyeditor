@@ -15,11 +15,15 @@ namespace Graphic {
 class Pen : public GraphicTool {
 public:
     Pen(GraphicMap::VisibleGraphicLayer&);
-    void mousePressEvent(::QGraphicsSceneMouseEvent*) override;
-    void mouseMoveEvent(::QGraphicsSceneMouseEvent*) override;
-    void mouseReleaseEvent(::QGraphicsSceneMouseEvent*) override;
-    void keyPressEvent(::QKeyEvent*) override;
-    void keyReleaseEvent(::QKeyEvent*) override;
+    void accept(Visitor&) override;
+    void mapMousePressEvent(::QGraphicsSceneMouseEvent*) override;
+    void mapMouseMoveEvent(::QGraphicsSceneMouseEvent*) override;
+    void mapMouseReleaseEvent(::QGraphicsSceneMouseEvent*) override;
+    void mapKeyPressEvent(::QKeyEvent*) override;
+    void mapKeyReleaseEvent(::QKeyEvent*) override;
+    void paletteMousePressEvent(::QGraphicsSceneMouseEvent*) override;
+    void paletteMouseMoveEvent(::QGraphicsSceneMouseEvent*) override;
+    void paletteMouseReleaseEvent(::QGraphicsSceneMouseEvent*) override;
 };
 
 } // namespace Graphic

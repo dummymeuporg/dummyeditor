@@ -1,6 +1,8 @@
 #include "graphicmap/mapgraphicsscene.hpp"
 #include "graphicmap/visiblegraphiclayer.hpp"
 #include "drawing_tool/graphic/graphic_tool.hpp"
+#include "drawing_tool/visitor.hpp"
+
 
 namespace DrawingTool {
 namespace Graphic {
@@ -16,8 +18,10 @@ void GraphicTool::setChipsetSelection(QRect rect) {
     m_chipsetSelection = rect;
 }
 
-void accept(Widget::DrawingToolbar::Widget* widget) {
-    //widget->visit(*this);
+void GraphicTool::setSelected(bool selected) {
+    if (selected) {
+        emit toolSelected(this);
+    }
 }
 
 } // namespace Graphic
