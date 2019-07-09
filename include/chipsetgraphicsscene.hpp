@@ -22,21 +22,17 @@ public:
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
     virtual void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent);
-    ChipsetGraphicsScene& setChipset(const QPixmap& pixmap);
-    ChipsetGraphicsScene& setChipset(const QString& chipsetPath);
+    void setChipset(const QPixmap& pixmap);
+    void setChipset(const QString& chipsetPath);
     void _drawGrid();
 
     inline const QRect& selection() const {
         return m_currentSelection;
     }
-    ChipsetGraphicsScene& setSelection(const QRect& selection) {
-        m_currentSelection = selection;
-        emit selectionChanged(m_currentSelection);
-        return *this;
-    }
+    ChipsetGraphicsScene& setSelection(const QRect& selection);
 
 signals:
-    void selectionChanged(const QRect&);
+    void selectionChanged(QRect, QPixmap);
     void chipsetChanged(QString);
 
 public slots:

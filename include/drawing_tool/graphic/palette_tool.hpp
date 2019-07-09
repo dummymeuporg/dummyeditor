@@ -3,6 +3,8 @@
 #include "drawing_tool/graphic/graphic_tool.hpp"
 
 class QIcon;
+class QGraphicsRectItem;
+class QGraphicsPixmapItem;
 
 namespace DrawingTool {
 
@@ -16,6 +18,11 @@ public:
     void paletteMouseMoveEvent(::QGraphicsSceneMouseEvent*);
     void paletteMouseReleaseEvent(::QGraphicsSceneMouseEvent*);
     void emitDrawingToolSelected() override;
+    void setSelection(const QRect&, const QPixmap&);
+    ::ChipsetGraphicsScene* chipsetGraphicsScene() const {
+        return m_chipsetGraphicsScene;
+    }
+    void setChipsetGraphicsScene(::ChipsetGraphicsScene*);
 signals:
     // Note: I have to put the whole namespace shit here, because Qt
     // signals/slots framework is based on textual comparison.
@@ -23,7 +30,14 @@ signals:
 public slots:
     void setChipsetSelection(QRect);
 private:
-    QRect m_chipsetSelection;
+    ::ChipsetGraphicsScene* m_chipsetGraphicsScene;
+    QRect m_selection;
+    QPixmap m_selectionPixmap;
+    ::QGraphicsRectItem* m_selectionRectItem;
+    ::QGraphicsPixmapItem* m_chipset;
+    QRect m_currentSelection;
+    bool m_isSelecting;
+    QPoint m_selectionStart;
 };
 
 } // namespace Graphic

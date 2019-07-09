@@ -45,18 +45,25 @@ ChipsetGraphicsScene::_drawGrid() {
 
 }
 
-ChipsetGraphicsScene& ChipsetGraphicsScene::setChipset(const QPixmap& pixmap) {
+void ChipsetGraphicsScene::setChipset(const QPixmap& pixmap) {
     clear();
     m_chipset = addPixmap(pixmap);
     _drawGrid();
-    return *this;
 }
 
 ChipsetGraphicsScene&
+ChipsetGraphicsScene::setSelection(const QRect& selection) {
+    m_currentSelection = selection;
+    QPixmap selectionPixmap(m_chipset->pixmap().copy(m_currentSelection));
+    emit selectionChanged(m_currentSelection, selectionPixmap);
+    return *this;
+}
+
+void
 ChipsetGraphicsScene::setChipset(const QString& chipsetPath) {
     qDebug() << chipsetPath;
+    setChipset(QPixmap(chipsetPath));
     setSelection(QRect(0, 0, 0, 0));
-    return setChipset(QPixmap(chipsetPath));
 }
 
 void ChipsetGraphicsScene::changeChipset(const QString& chipsetPath) {
@@ -150,5 +157,6 @@ ChipsetGraphicsScene::setPaletteTool(
     ::DrawingTool::Graphic::PaletteTool* paletteTool
 ) {
     m_paletteTool = paletteTool;
+    m_paletteTool->setChipsetGraphicsScene(this);
     qDebug() << "ChispetGraphicsScene: graphic tool set!";
 }
