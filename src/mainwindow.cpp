@@ -84,8 +84,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
                      m_chipsetScene, SLOT(changeChipset(QString)));
+    /*
     QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
                      m_mapScene, SLOT(changeSelection(QRect)));
+    */
 
     ui->graphicsViewChipset->scale(2.0, 2.0);
     ui->graphicsViewMap->scale(2.0, 2.0);

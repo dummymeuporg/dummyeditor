@@ -27,15 +27,12 @@ signals:
     // Note: I have to put the whole namespace shit here, because Qt
     // signals/slots framework is based on textual comparison.
     void drawingToolSelected(::DrawingTool::Graphic::PaletteTool*);
-public slots:
-    void setChipsetSelection(QRect);
 private:
     ::ChipsetGraphicsScene* m_chipsetGraphicsScene;
-    QRect m_selection;
+    QRect m_rectSelection;
     QPixmap m_selectionPixmap;
     ::QGraphicsRectItem* m_selectionRectItem;
-    ::QGraphicsPixmapItem* m_chipset;
-    QRect m_currentSelection;
+    ::QGraphicsPixmapItem* m_selectionItem;
     bool m_isSelecting;
     QPoint m_selectionStart;
 };

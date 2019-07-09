@@ -148,7 +148,7 @@ ChipsetGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
     */
 
     if (nullptr != m_paletteTool) {
-        m_paletteTool->paletteMouseMoveEvent(mouseEvent);
+        m_paletteTool->paletteMousePressEvent(mouseEvent);
     }
 }
 
@@ -158,5 +158,5 @@ ChipsetGraphicsScene::setPaletteTool(
 ) {
     m_paletteTool = paletteTool;
     m_paletteTool->setChipsetGraphicsScene(this);
-    qDebug() << "ChispetGraphicsScene: graphic tool set!";
+    qDebug() << "ChispetGraphicsScene: palette tool set!";
 }

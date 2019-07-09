@@ -18,13 +18,9 @@ PaletteTool::PaletteTool(
     : GraphicTool(std::move(icon), visibleGraphicLayer),
       m_chipsetGraphicsScene(nullptr),
       m_selectionRectItem(nullptr),
-      m_chipset(nullptr),
+      m_selectionItem(nullptr),
       m_isSelecting(false)
 {}
-
-void PaletteTool::setChipsetSelection(QRect rect) {
-    m_selection = rect;
-}
 
 void PaletteTool::emitDrawingToolSelected() {
     qDebug() << "Emit drawing tool selected.";
@@ -34,12 +30,14 @@ void PaletteTool::emitDrawingToolSelected() {
 void
 PaletteTool::paletteMousePressEvent(::QGraphicsSceneMouseEvent* mouseEvent)
 {
-    if (nullptr != m_chipset && mouseEvent->buttons() & Qt::LeftButton) {
+    if (nullptr != m_chipsetGraphicsScene
+            && mouseEvent->buttons() & Qt::LeftButton && !m_isSelecting)
+    {
         m_isSelecting = true;
         m_selectionStart = mouseEvent->scenePos().toPoint();
 
-        if (m_selectionStart.x() < m_chipset->boundingRect().width()
-            && m_selectionStart.y() < m_chipset->boundingRect().height())
+        if (m_selectionStart.x() < m_chipsetGraphicsScene->width()
+            && m_selectionStart.y() < m_chipsetGraphicsScene->height())
         {
             if (m_selectionRectItem != nullptr) {
                 m_chipsetGraphicsScene->invalidate(
@@ -51,53 +49,69 @@ PaletteTool::paletteMousePressEvent(::QGraphicsSceneMouseEvent* mouseEvent)
             }
 
             // Add a square
-            QPen pen(Qt::red, 2);
+            QBrush brush(QColor(66, 135, 245));
             int x = m_selectionStart.x() - (m_selectionStart.x() % 16);
             int y = m_selectionStart.y() - (m_selectionStart.y() % 16);
-            //setSelection(QRect(x, y, 16, 16));
-            m_selectionRectItem = m_chipsetGraphicsScene->addRect(
-                m_currentSelection, pen
+            setSelection(
+                QRect(x, y, 16, 16),
+                m_chipsetGraphicsScene->chipset()->pixmap()
             );
+            m_selectionRectItem = m_chipsetGraphicsScene->addRect(
+                m_rectSelection
+            );
+            m_selectionRectItem->setBrush(brush);
+            m_selectionRectItem->setOpacity(0.3);
         }
     }
 }
 
 void
 PaletteTool::paletteMouseMoveEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
-    if (nullptr != m_chipset && m_isSelecting) {
+    if (nullptr != m_selectionRectItem && m_isSelecting) {
         QPoint pt = mouseEvent->scenePos().toPoint();
 
-        pt.setX(std::min(pt.x(), m_chipset->pixmap().width() - 16));
-        pt.setY(std::min(pt.y(), m_chipset->pixmap().height() - 16));
+        /*
+        pt.setX(std::min(pt.x(), m_selectionItem->pixmap().width() - 16));
+        pt.setY(std::min(pt.y(), m_selectionItem->pixmap().height() - 16));
+        */
+        pt.setX(pt.x() + (16 - (pt.x() % 16)));
+        pt.setY(pt.y() + (16 - (pt.y() % 16)));
+
 
         if (m_selectionRectItem != nullptr) {
             m_chipsetGraphicsScene->removeItem(m_selectionRectItem);
             m_selectionRectItem = nullptr;
         }
 
-        QPen pen(Qt::red, 2);
+        QBrush brush(QColor(66, 135, 245));
 
         int x = m_selectionStart.x() - (m_selectionStart.x() % 16);
         int y = m_selectionStart.y() - (m_selectionStart.y() % 16);
-        int xEnd = pt.x() + (16 - (pt.x() % 16));
-        int yEnd = pt.y() + (16 - (pt.y() % 16));
+        int xEnd = pt.x();
+        int yEnd = pt.y();
+        qDebug() << x << y << xEnd << yEnd;
 
+        /*
         if (pt.x() >= m_selectionStart.x()
             && pt.y() >= m_selectionStart.y())
         {
-            m_chipsetGraphicsScene->setSelection(
-                QRect(x, y, xEnd - x, yEnd - y)
+        */
+            setSelection(
+                QRect(x, y, xEnd - x, yEnd - y),
+                m_chipsetGraphicsScene->chipset()->pixmap()
             );
             m_selectionRectItem = m_chipsetGraphicsScene->addRect(
-                m_currentSelection, pen
+                m_rectSelection
             );
-        }
+            m_selectionRectItem->setBrush(brush);
+            m_selectionRectItem->setOpacity(0.3);
+        //}
     }
 }
 
 void
 PaletteTool::paletteMouseReleaseEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
-    if (nullptr != m_chipset) {
+    if (nullptr != m_selectionItem) {
         m_isSelecting = false;
     }
 }
@@ -105,11 +119,11 @@ PaletteTool::paletteMouseReleaseEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
 void
 PaletteTool::setSelection(
     const QRect& selection,
-    const QPixmap& selectionPixmap
+    const QPixmap& chipsetPixmap
 ) {
-    m_selection = selection;
-    m_selectionPixmap = selectionPixmap;
-    m_chipset = new ::QGraphicsPixmapItem(m_selectionPixmap);
+    m_rectSelection = selection;
+    m_selectionPixmap = chipsetPixmap.copy(selection);
+    m_selectionItem = new ::QGraphicsPixmapItem(m_selectionPixmap);
 }
 
 void

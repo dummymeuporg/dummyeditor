@@ -19,9 +19,9 @@ class ChipsetGraphicsScene : public QGraphicsScene
     Q_OBJECT
 public:
     ChipsetGraphicsScene(QObject* parent = nullptr);
-    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent);
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent*) override;
+    void mousePressEvent(QGraphicsSceneMouseEvent*) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
     void setChipset(const QPixmap& pixmap);
     void setChipset(const QString& chipsetPath);
     void _drawGrid();
@@ -30,6 +30,9 @@ public:
         return m_currentSelection;
     }
     ChipsetGraphicsScene& setSelection(const QRect& selection);
+    QGraphicsPixmapItem* chipset() const {
+        return m_chipset;
+    }
 
 signals:
     void selectionChanged(QRect, QPixmap);
