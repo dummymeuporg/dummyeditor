@@ -162,7 +162,8 @@ void MapGraphicsScene::adjustLayers() const {
     */
 }
 
-void MapGraphicsScene::setDrawingTool(DrawingTool::DrawingTool* drawingTool) {
+void MapGraphicsScene::setDrawingTool(::DrawingTool::DrawingTool* drawingTool)
+{
     m_drawingTool = drawingTool;
     qDebug() << "tool is set.";
 }

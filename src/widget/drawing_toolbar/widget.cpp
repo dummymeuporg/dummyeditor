@@ -20,7 +20,8 @@ Widget::Widget(::QWidget* parent) :
     QWidget(parent),
     m_toolbar(new QToolBar(this)),
     m_actionGroup(new QActionGroup(m_toolbar)),
-    m_chipsetGraphicsScene(nullptr)
+    m_chipsetGraphicsScene(nullptr),
+    m_mapScene(nullptr)
 {
     // Set empty toolbar for the moment.
     setLayout(new QHBoxLayout());
@@ -34,6 +35,7 @@ Widget::reset(const GraphicMap::MapGraphicsScene* mapScene,
     layout()->removeWidget(m_toolbar);
     delete m_toolbar;
 
+    m_mapScene = mapScene;
     m_chipsetGraphicsScene = chipsetScene;
 
     m_toolbar = new QToolBar(this);
@@ -53,10 +55,10 @@ Widget::reset(const GraphicMap::MapGraphicsScene* mapScene,
             SLOT(setDrawingTool(bool))
         );
         QObject::connect(
-            action,
-            SIGNAL(trigerred(DrawingTool::DrawingTool*)),
+            tool,
+            SIGNAL(drawingToolSelected(::DrawingTool::DrawingTool*)),
             mapScene,
-            SLOT(setDrawingTool(DrawingTool::DrawingTool*))
+            SLOT(setDrawingTool(::DrawingTool::DrawingTool*))
         );
         tool->accept(*this);
 

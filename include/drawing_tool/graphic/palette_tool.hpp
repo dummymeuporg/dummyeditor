@@ -27,7 +27,7 @@ signals:
     // Note: I have to put the whole namespace shit here, because Qt
     // signals/slots framework is based on textual comparison.
     void drawingToolSelected(::DrawingTool::Graphic::PaletteTool*);
-private:
+protected:
     ::ChipsetGraphicsScene* m_chipsetGraphicsScene;
     QRect m_rectSelection;
     QPixmap m_selectionPixmap;

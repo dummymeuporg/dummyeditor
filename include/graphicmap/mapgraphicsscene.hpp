@@ -74,7 +74,7 @@ public slots:
     void changeMapDocument(
         const std::shared_ptr<Misc::MapDocument>& mapDocument
     );
-    void setDrawingTool(DrawingTool::DrawingTool*);
+    void setDrawingTool(::DrawingTool::DrawingTool*);
 
     void adjustLayers() const;
 

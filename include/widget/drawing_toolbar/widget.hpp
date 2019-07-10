@@ -34,6 +34,7 @@ private:
     ::QToolBar* m_toolbar;
     ::QActionGroup* m_actionGroup;
     const ::ChipsetGraphicsScene* m_chipsetGraphicsScene;
+    const GraphicMap::MapGraphicsScene* m_mapScene;
 };
 
 } // namespace DrawingToolbar

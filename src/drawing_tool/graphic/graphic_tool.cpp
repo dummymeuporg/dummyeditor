@@ -17,6 +17,7 @@ GraphicTool::GraphicTool(
 {}
 
 void GraphicTool::emitDrawingToolSelected() {
+    DrawingTool::emitDrawingToolSelected();
     qDebug() << "Emit drawing tool selected.";
     emit drawingToolSelected(this);
 }

@@ -37,8 +37,9 @@ public:
 
 signals:
     void drawingToolSelected(DrawingTool*);
-private:
+protected:
     GraphicMap::MapGraphicsScene& m_mapGraphicsScene;
+private:
     QIcon m_icon;
 };
 

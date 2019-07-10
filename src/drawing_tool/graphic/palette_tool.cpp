@@ -23,6 +23,7 @@ PaletteTool::PaletteTool(
 {}
 
 void PaletteTool::emitDrawingToolSelected() {
+    GraphicTool::emitDrawingToolSelected();
     qDebug() << "Emit drawing tool selected.";
     emit drawingToolSelected(this);
 }
@@ -60,7 +61,7 @@ PaletteTool::paletteMousePressEvent(::QGraphicsSceneMouseEvent* mouseEvent)
                 m_rectSelection
             );
             m_selectionRectItem->setBrush(brush);
-            m_selectionRectItem->setOpacity(0.3);
+            m_selectionRectItem->setOpacity(0.5);
         }
     }
 }
@@ -104,7 +105,7 @@ PaletteTool::paletteMouseMoveEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
                 m_rectSelection
             );
             m_selectionRectItem->setBrush(brush);
-            m_selectionRectItem->setOpacity(0.3);
+            m_selectionRectItem->setOpacity(0.5);
         //}
     }
 }

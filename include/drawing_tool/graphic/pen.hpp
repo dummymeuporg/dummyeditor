@@ -23,6 +23,10 @@ public:
     void mapKeyPressEvent(::QKeyEvent*) override;
     void mapKeyReleaseEvent(::QKeyEvent*) override;
     void emitDrawingToolSelected() override;
+signals:
+    void drawingToolSelected(::DrawingTool::DrawingTool*);
+private:
+    ::QGraphicsPixmapItem* m_hoverItem;
 };
 
 } // namespace Graphic

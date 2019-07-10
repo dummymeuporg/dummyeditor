@@ -109,8 +109,10 @@ void MainWindow::_connectScenes()
 {
     QObject::connect(ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
                      m_chipsetScene, SLOT(changeChipset(QString)));
+    /*
     QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
                      m_mapScene, SLOT(changeSelection(QRect)));
+    */
 
     /*
     QObject::connect(ui->actionPen, SIGNAL(triggered(bool)),
