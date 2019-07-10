@@ -106,10 +106,6 @@ void Map::_saveBlockingLayers() {
     ofs.write(reinterpret_cast<const char*>(&magicNumber),
               sizeof(std::uint32_t));
 
-    // Write the version number
-    ofs.write(reinterpret_cast<const char*>(&version),
-              sizeof(std::uint16_t));
-
     // Write the blocking layers
     for (auto& level: m_levels) {
         ofs.write(
