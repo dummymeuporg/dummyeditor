@@ -30,6 +30,7 @@ public:
                const ::ChipsetGraphicsScene*,
                const std::vector<DrawingTool::DrawingTool*>&);
     void visitTool(DrawingTool::Graphic::Pen&) override;
+    void visitTool(DrawingTool::Graphic::Rectangle&) override;
 private:
     ::QToolBar* m_toolbar;
     ::QActionGroup* m_actionGroup;

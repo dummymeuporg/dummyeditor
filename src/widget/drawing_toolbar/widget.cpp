@@ -78,5 +78,8 @@ void Widget::visitTool(DrawingTool::Graphic::Pen& pen) {
     );
 }
 
+void Widget::visitTool(DrawingTool::Graphic::Rectangle& rectangle) {
+}
+
 } // namespace DrawingToolbar
 } // namespace Widget
