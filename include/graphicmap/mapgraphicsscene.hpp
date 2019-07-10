@@ -69,11 +69,13 @@ public:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
     void keyPressEvent(QKeyEvent*) override;
     void keyReleaseEvent(QKeyEvent*) override;
+    bool eventFilter(QObject*, QEvent*) override;
 
 public slots:
     void changeMapDocument(
         const std::shared_ptr<Misc::MapDocument>& mapDocument
     );
+    void unsetDrawingTool();
     void setDrawingTool(::DrawingTool::DrawingTool*);
 
     void adjustLayers() const;

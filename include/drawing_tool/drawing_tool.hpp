@@ -5,6 +5,7 @@
 
 #include "widget/drawing_toolbar/widget.hpp"
 
+class QEvent;
 class QGraphicsSceneMouseEvent;
 class QKeyEvent;
 
@@ -25,6 +26,10 @@ public:
     virtual void mapMouseReleaseEvent(::QGraphicsSceneMouseEvent*) = 0;
     virtual void mapKeyPressEvent(::QKeyEvent*) = 0;
     virtual void mapKeyReleaseEvent(::QKeyEvent*) = 0;
+    virtual void mapMouseLeaveEvent() = 0;
+    virtual void drawGrid() = 0;
+    virtual void onSelected() = 0;
+    virtual void onUnselected() = 0;
 
     const QIcon& icon() const {
         return m_icon;

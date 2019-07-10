@@ -319,6 +319,12 @@ void MainWindow::onPaste()
 
 void MainWindow::publishTools(GraphicMap::GraphicLayer* layer) {
     qDebug() << "Publish tools!";
+    // XXX: if we are publishing (new tools), make the map scene
+    // unselect its previous tool (if any).
+    // ...
+    // Not sure this is a fancy way to do so, though.
+    m_mapScene->unsetDrawingTool();
+    m_chipsetScene->unsetPaletteTool();
     std::vector<DrawingTool::DrawingTool*>&& tools(layer->drawingTools());
     auto toolbox = ui->widgetDrawingToolbox;
     toolbox->reset(m_mapScene, m_chipsetScene, tools);

@@ -23,6 +23,8 @@ public:
         return m_chipsetGraphicsScene;
     }
     void setChipsetGraphicsScene(::ChipsetGraphicsScene*);
+    void onUnselected() override;
+    void onSelected() override;
 signals:
     // Note: I have to put the whole namespace shit here, because Qt
     // signals/slots framework is based on textual comparison.

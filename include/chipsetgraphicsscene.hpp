@@ -33,6 +33,7 @@ public:
     QGraphicsPixmapItem* chipset() const {
         return m_chipset;
     }
+    void unsetPaletteTool();
 
 signals:
     void selectionChanged(QRect, QPixmap);

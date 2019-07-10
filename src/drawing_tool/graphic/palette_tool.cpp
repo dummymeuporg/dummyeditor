@@ -92,21 +92,16 @@ PaletteTool::paletteMouseMoveEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
         int yEnd = pt.y();
         qDebug() << x << y << xEnd << yEnd;
 
-        /*
-        if (pt.x() >= m_selectionStart.x()
-            && pt.y() >= m_selectionStart.y())
-        {
-        */
-            setSelection(
-                QRect(x, y, xEnd - x, yEnd - y),
-                m_chipsetGraphicsScene->chipset()->pixmap()
-            );
-            m_selectionRectItem = m_chipsetGraphicsScene->addRect(
-                m_rectSelection
-            );
-            m_selectionRectItem->setBrush(brush);
-            m_selectionRectItem->setOpacity(0.5);
-        //}
+        setSelection(
+            QRect(x, y, xEnd - x, yEnd - y),
+            m_chipsetGraphicsScene->chipset()->pixmap()
+        );
+        m_selectionRectItem = m_chipsetGraphicsScene->addRect(
+            m_rectSelection
+        );
+        m_selectionRectItem->setBrush(brush);
+        m_selectionRectItem->setOpacity(0.5);
+
     }
 }
 
@@ -132,6 +127,15 @@ PaletteTool::setChipsetGraphicsScene(
     ::ChipsetGraphicsScene* chipsetGraphicsScene
 ) {
     m_chipsetGraphicsScene = chipsetGraphicsScene;
+}
+
+void PaletteTool::onUnselected() {
+    if (nullptr!= m_chipsetGraphicsScene) {
+        m_chipsetGraphicsScene->removeItem(m_selectionRectItem);
+    }
+}
+
+void PaletteTool::onSelected() {
 }
 
 } // namespace Graphic

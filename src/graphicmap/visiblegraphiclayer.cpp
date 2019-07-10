@@ -91,9 +91,6 @@ VisibleGraphicLayer::setTile(
             m_graphicLayer[index] = std::pair<std::int8_t, std::int8_t>(
                  chipsetX / 16, chipsetY / 16
             );
-
-            //m_layer.setTile(x / 16, y / 16, chipsetX / 16, chipsetY / 16);
-
         }
         else
         {

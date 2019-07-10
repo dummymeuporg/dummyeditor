@@ -33,26 +33,6 @@ MapGraphicsScene::~MapGraphicsScene()
     //delete m_paintingLayerState;
 }
 
-void MapGraphicsScene::_drawGrid()
-{
-
-    QPen pen(Qt::black, 0.5);
-
-    quint16 width = m_map->width();
-    quint16 height = m_map->height();
-
-    for (int i = 0; i <= width; ++i) {
-        QGraphicsItem* item = addLine(i * 16, 0, i * 16, 16 * height, pen);
-        item->setZValue(99);
-    }
-
-    for (int i = 0; i <= height; ++i) {
-        QGraphicsItem* item = addLine(0, i * 16, 16 * width, 16 * i, pen);
-        item->setZValue(99);
-    }
-
-}
-
 MapGraphicsScene& MapGraphicsScene::setMapDocument
 (const std::shared_ptr<Misc::MapDocument>& mapDocument) {
     if (m_map != nullptr) {
@@ -164,8 +144,12 @@ void MapGraphicsScene::adjustLayers() const {
 
 void MapGraphicsScene::setDrawingTool(::DrawingTool::DrawingTool* drawingTool)
 {
+    if (nullptr != m_drawingTool) {
+        m_drawingTool->onUnselected();
+    }
     m_drawingTool = drawingTool;
     qDebug() << "tool is set.";
+    m_drawingTool->drawGrid();
 }
 
 void MapGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event) {
@@ -198,5 +182,24 @@ void MapGraphicsScene::keyReleaseEvent(QKeyEvent* event) {
     }
 }
 
+void MapGraphicsScene::unsetDrawingTool() {
+    if (nullptr != m_drawingTool) {
+        m_drawingTool->onUnselected();
+    }
+    m_drawingTool = nullptr;
+}
+
+bool MapGraphicsScene::eventFilter(QObject *watched, QEvent *event)
+{
+    Q_UNUSED(watched)
+    if (event->type() == QEvent::Leave)
+    {
+        qDebug() << "Mouse left the scene";
+        if (nullptr != m_drawingTool) {
+            m_drawingTool->mapMouseLeaveEvent();
+        }
+    }
+    return false;
+}
 
 } // namespace GraphicMap

@@ -1,7 +1,9 @@
 #include <QDebug>
+#include <QEvent>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsPixmapItem>
 
+#include "chipsetgraphicsscene.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
 #include "graphicmap/visiblegraphiclayer.hpp"
 
@@ -19,8 +21,8 @@ Pen::Pen(GraphicMap::VisibleGraphicLayer& visibleGraphicLayer)
 
 void Pen::mapMouseMoveEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
     QPoint pt(mouseEvent->scenePos().toPoint());
-    pt.setX(pt.x() + (16 - (pt.x() % 16)));
-    pt.setY(pt.y() + (16 - (pt.y() % 16)));
+    pt.setX(pt.x() - (pt.x() % 16));
+    pt.setY(pt.y() - (pt.y() % 16));
     if (nullptr != m_selectionItem) {
 
         if (m_hoverItem == nullptr ||
@@ -37,6 +39,27 @@ void Pen::mapMouseMoveEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
 
 void Pen::mapMousePressEvent(::QGraphicsSceneMouseEvent* event) {
     qDebug() << "Pen press.";
+
+    // XXX: set tiles.
+    const QPoint& point(event->scenePos().toPoint());
+    const QRect& selectionRect(m_selectionItem->pixmap().rect());
+    int width(selectionRect.width() / 16);
+    int height(selectionRect.height() / 16);
+
+    for (int j = 0; j < height; ++j) {
+        for(int i = 0; i < width; ++i) {
+            m_visibleGraphicLayer.setTile(
+                 quint16(point.x()
+                         - (point.x() % 16)
+                         + (i * 16)),
+                 quint16(point.y()
+                         - (point.y() % 16)
+                         + (j * 16)),
+                 qint16(m_rectSelection.x() + (i * 16)),
+                 qint16(m_rectSelection.y() + (j * 16))
+            );
+        }
+    }
 }
 
 void Pen::mapMouseReleaseEvent(::QGraphicsSceneMouseEvent* event) {
@@ -51,6 +74,11 @@ void Pen::mapKeyReleaseEvent(::QKeyEvent* event) {
     qDebug() << "key release.";
 }
 
+void Pen::mapMouseLeaveEvent() {
+    m_mapGraphicsScene.removeItem(m_hoverItem);
+    m_hoverItem = nullptr;
+}
+
 void Pen::accept(Visitor& visitor) {
     visitor.visitTool(*this);
 }
@@ -59,6 +87,15 @@ void Pen::emitDrawingToolSelected() {
     PaletteTool::emitDrawingToolSelected();
     emit drawingToolSelected(this);
 }
+
+void Pen::onUnselected() {
+    PaletteTool::onUnselected();
+    m_mapGraphicsScene.removeItem(m_hoverItem);
+    m_mapGraphicsScene.removeItem(m_selectionItem);
+    m_hoverItem = nullptr;
+    m_selectionItem = nullptr;
+}
+
 
 } // namespace Graphic
 

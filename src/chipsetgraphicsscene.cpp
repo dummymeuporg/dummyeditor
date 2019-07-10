@@ -160,3 +160,8 @@ ChipsetGraphicsScene::setPaletteTool(
     m_paletteTool->setChipsetGraphicsScene(this);
     qDebug() << "ChispetGraphicsScene: palette tool set!";
 }
+
+void ChipsetGraphicsScene::unsetPaletteTool() {
+    m_paletteTool = nullptr;
+    qDebug() << "Palette tool unset.";
+}

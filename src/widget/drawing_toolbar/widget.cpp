@@ -34,7 +34,6 @@ Widget::reset(const GraphicMap::MapGraphicsScene* mapScene,
               const std::vector<DrawingTool::DrawingTool*>& drawingTools) {
     layout()->removeWidget(m_toolbar);
     delete m_toolbar;
-
     m_mapScene = mapScene;
     m_chipsetGraphicsScene = chipsetScene;
 

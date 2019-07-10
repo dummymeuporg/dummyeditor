@@ -18,6 +18,7 @@ class GraphicTool : public DrawingTool {
 public:
     GraphicTool(QIcon&&, GraphicMap::VisibleGraphicLayer&);
     void emitDrawingToolSelected() override;
+    void drawGrid() override;
 signals:
     // Note: I have to put the whole namespace shit here, because Qt
     // signals/slots framework is based on textual comparison.

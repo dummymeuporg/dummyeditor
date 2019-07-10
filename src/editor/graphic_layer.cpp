@@ -19,5 +19,4 @@ std::uint16_t GraphicLayer::height() const {
     return m_layer.height();
 }
 
-
 } // namespace Editor
