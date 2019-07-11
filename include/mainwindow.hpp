@@ -37,6 +37,7 @@ private:
     void _enableMapCreation();
     void _closeCurrentProject();
     void _loadProject(const QString&);
+    void removeTools();
 
     Ui::MainWindow *ui;
     std::shared_ptr<Editor::Project> m_currentProject;

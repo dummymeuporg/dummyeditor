@@ -286,6 +286,7 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
     );
 
     mapLevelsList->setEditorMap(map);
+    removeTools();
 }
 
 void MainWindow::onCancel()
@@ -315,6 +316,13 @@ void MainWindow::onPaste()
     QKeyEvent* keyEvent = new QKeyEvent(QEvent::KeyPress, Qt::Key_V,
                                         Qt::ControlModifier);
     QCoreApplication::postEvent(m_mapScene, keyEvent);
+}
+
+void MainWindow::removeTools() {
+    qDebug() << "Remove tools";
+    m_mapScene->unsetDrawingTool();
+    m_chipsetScene->unsetPaletteTool();
+    ui->widgetDrawingToolbox->clear();
 }
 
 void MainWindow::publishTools(GraphicMap::GraphicLayer* layer) {

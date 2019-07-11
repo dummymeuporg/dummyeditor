@@ -123,7 +123,7 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument
     }
 
     //changeSelection(QRect(0,0,0,0));
-
+    m_drawingTool = nullptr;
     return *this;
 }
 

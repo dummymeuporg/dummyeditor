@@ -26,6 +26,7 @@ class Widget : public ::QWidget,
     Q_OBJECT
 public:
     Widget(::QWidget* parent = nullptr);
+    void clear();
     void reset(const GraphicMap::MapGraphicsScene*,
                const ::ChipsetGraphicsScene*,
                const std::vector<DrawingTool::DrawingTool*>&);

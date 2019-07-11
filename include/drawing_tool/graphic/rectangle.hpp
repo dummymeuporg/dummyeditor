@@ -33,12 +33,14 @@ signals:
 private:
     /* Methods. */
     void drawChipsetSelectionInRectangle();
+    void applyChipsetSelectionInRectangle();
+    void applySelectionToMap(quint16 mapX, quint16 mapY);
 
     /* Attributes */
-    bool b_mouseClicked;
+    bool m_mouseClicked;
     ::QRect m_rectangle;
     // Rectangle Graphic Item to be drawn on the map edition.
-    ::QGraphicsPixmapItem* m_selectionItem;
+    ::QGraphicsPixmapItem* m_hoverItem;
 };
 
 } // namespace Graphic

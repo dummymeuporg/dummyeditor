@@ -4,6 +4,7 @@
 
 #include "drawing_tool/drawing_tool.hpp"
 #include "drawing_tool/graphic/pen.hpp"
+#include "drawing_tool/graphic/rectangle.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
 #include "chipsetgraphicsscene.hpp"
 
@@ -28,12 +29,17 @@ Widget::Widget(::QWidget* parent) :
     layout()->addWidget(m_toolbar);
 }
 
+void Widget::clear() {
+    layout()->removeWidget(m_toolbar);
+    delete m_toolbar;
+    m_toolbar = nullptr;
+}
+
 void
 Widget::reset(const GraphicMap::MapGraphicsScene* mapScene,
               const ::ChipsetGraphicsScene* chipsetScene,
               const std::vector<DrawingTool::DrawingTool*>& drawingTools) {
-    layout()->removeWidget(m_toolbar);
-    delete m_toolbar;
+    clear();
     m_mapScene = mapScene;
     m_chipsetGraphicsScene = chipsetScene;
 
@@ -79,6 +85,13 @@ void Widget::visitTool(DrawingTool::Graphic::Pen& pen) {
 }
 
 void Widget::visitTool(DrawingTool::Graphic::Rectangle& rectangle) {
+    qDebug() << "visitTool: connect tool.";
+    QObject::connect(
+        &rectangle,
+        SIGNAL(drawingToolSelected(::DrawingTool::Graphic::PaletteTool*)),
+        m_chipsetGraphicsScene,
+        SLOT(setPaletteTool(::DrawingTool::Graphic::PaletteTool*))
+    );
 }
 
 } // namespace DrawingToolbar
