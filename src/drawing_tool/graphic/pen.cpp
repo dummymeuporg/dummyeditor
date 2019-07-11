@@ -90,10 +90,15 @@ void Pen::emitDrawingToolSelected() {
 
 void Pen::onUnselected() {
     PaletteTool::onUnselected();
-    m_mapGraphicsScene.removeItem(m_hoverItem);
-    m_mapGraphicsScene.removeItem(m_selectionItem);
-    m_hoverItem = nullptr;
-    m_selectionItem = nullptr;
+    if (m_hoverItem != nullptr) {
+        m_mapGraphicsScene.removeItem(m_hoverItem);
+        m_hoverItem = nullptr;
+    }
+    qDebug() << "Remove selection item.";
+    if (nullptr != m_selectionItem) {
+        m_mapGraphicsScene.removeItem(m_selectionItem);
+        m_selectionItem = nullptr;
+    }
 }
 
 

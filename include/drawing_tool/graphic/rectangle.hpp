@@ -1,7 +1,10 @@
 #pragma once
 
+#include <QRect>
+
 #include "drawing_tool/graphic/palette_tool.hpp"
 
+class QGraphicsPixmapItem;
 class QGraphicsSceneMouseEvent;
 
 namespace GraphicMap {
@@ -27,6 +30,15 @@ public:
     void onUnselected() override;
 signals:
     void drawingToolSelected(::DrawingTool::DrawingTool*);
+private:
+    /* Methods. */
+    void drawChipsetSelectionInRectangle();
+
+    /* Attributes */
+    bool b_mouseClicked;
+    ::QRect m_rectangle;
+    // Rectangle Graphic Item to be drawn on the map edition.
+    ::QGraphicsPixmapItem* m_selectionItem;
 };
 
 } // namespace Graphic

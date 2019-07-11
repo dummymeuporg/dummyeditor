@@ -4,6 +4,7 @@
 #include <QPixmap>
 
 #include "drawing_tool/graphic/pen.hpp"
+#include "drawing_tool/graphic/rectangle.hpp"
 
 #include "graphicmap/graphiclayer.hpp"
 
@@ -57,5 +58,6 @@ private:
 
     // Drawing tools
     DrawingTool::Graphic::Pen m_pen;
+    DrawingTool::Graphic::Rectangle m_rectangle;
 };
 } // namespace GraphicMap

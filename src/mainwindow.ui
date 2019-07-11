@@ -570,7 +570,7 @@
   </widget>
   <widget class="QDockWidget" name="dockWidgetDrawingToolbox">
    <attribute name="dockWidgetArea">
-    <number>2</number>
+    <number>8</number>
    </attribute>
    <widget class="Widget::DrawingToolbar::Widget" name="widgetDrawingToolbox"/>
   </widget>
