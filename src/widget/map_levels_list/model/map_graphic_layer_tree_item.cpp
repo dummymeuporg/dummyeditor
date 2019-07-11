@@ -25,7 +25,7 @@ Editor::Layer& MapGraphicLayerTreeItem::layer() {
 
 QVariant MapGraphicLayerTreeItem::data(int role) const {
     if (role == Qt::DisplayRole) {
-        return QStringLiteral("Layer");
+        return QStringLiteral("Layer %1").arg(m_position);
     }
     return QStandardItem::data(role);
 }

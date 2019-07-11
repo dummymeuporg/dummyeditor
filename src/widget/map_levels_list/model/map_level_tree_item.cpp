@@ -12,8 +12,8 @@
 namespace Widget {
 namespace MapLevelsList {
 namespace Model {
-MapLevelTreeItem::MapLevelTreeItem(Editor::Level& level)
-    : m_editorLevel(level)
+MapLevelTreeItem::MapLevelTreeItem(Editor::Level& level, std::size_t index)
+    : m_editorLevel(level), m_index(index)
 {
     if (m_editorLevel.visible()) {
         setIcon(QIcon(":/icons/icon_eye.png"));
@@ -33,7 +33,7 @@ MapLevelTreeItem::MapLevelTreeItem(Editor::Level& level)
 
 QVariant MapLevelTreeItem::data(int role) const {
     if (role == Qt::DisplayRole) {
-        return QStringLiteral("Level");
+        return QStringLiteral("Level %1").arg(m_index);
     }
     return QStandardItem::data(role);
 }

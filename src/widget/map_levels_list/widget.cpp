@@ -42,6 +42,5 @@ void Widget::selectLayer(QModelIndex selectedIndex) {
     item->setSelected();
 }
 
-
 } // namespace MapLevelsList
 } // namespace Widget

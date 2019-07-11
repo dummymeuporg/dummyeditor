@@ -12,13 +12,14 @@ namespace MapLevelsList {
 namespace Model {
 class MapLevelTreeItem : public MapTreeItem {
 public:
-    MapLevelTreeItem(Editor::Level&);
+    MapLevelTreeItem(Editor::Level&, std::size_t index);
     QVariant data(int role = Qt::UserRole + 1) const override;
     void toggle() override;
     void setVisible(bool) override;
     void setSelected() override;
 private:
     Editor::Level& m_editorLevel;
+    std::size_t m_index;
 };
 } // namespace Model
 } // namespace MapLevelsList
