@@ -27,5 +27,7 @@
         <file>icons/icon_penpath.png</file>
         <file>icons/icon_eye.png</file>
         <file>icons/icon_eye_crossed.png</file>
+        <file>icons/icon_pen_2.png</file>
+        <file>icons/icon_eraser.png</file>
     </qresource>
 </RCC>

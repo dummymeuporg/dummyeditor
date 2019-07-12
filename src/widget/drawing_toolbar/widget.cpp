@@ -3,8 +3,11 @@
 #include <QHBoxLayout>
 
 #include "drawing_tool/drawing_tool.hpp"
+
+#include "drawing_tool/graphic/eraser.hpp"
 #include "drawing_tool/graphic/pen.hpp"
 #include "drawing_tool/graphic/rectangle.hpp"
+
 #include "graphicmap/mapgraphicsscene.hpp"
 #include "chipsetgraphicsscene.hpp"
 
@@ -92,6 +95,10 @@ void Widget::visitTool(DrawingTool::Graphic::Rectangle& rectangle) {
         m_chipsetGraphicsScene,
         SLOT(setPaletteTool(::DrawingTool::Graphic::PaletteTool*))
     );
+}
+
+void Widget::visitTool(DrawingTool::Graphic::Eraser& eraser) {
+    // Nothing to do!
 }
 
 } // namespace DrawingToolbar
