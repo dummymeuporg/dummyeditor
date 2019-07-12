@@ -140,6 +140,6 @@ void MapsTreeView::_onPropertiesAction() {
             map->resize(width, height);
         }
 
-        map->save();
+        //map->save();
     }
 }

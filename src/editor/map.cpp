@@ -40,19 +40,18 @@ void Map::reset(std::uint16_t width, std::uint16_t height) {
 
 void Map::save() {
     // Save the blocking layer, then the graphic info.
-    _saveBlockingLayers();
-    _saveGraphicLayers();
+    saveBlockingLayers();
+    saveGraphicLayers();
 }
 
 void
-Map::_resizeGraphicLayer(
-    Dummy::Core::GraphicLayer& graphicLayer,
+Map::resizeGraphicLayer(
+    Editor::GraphicLayer& graphicLayer,
     std::uint16_t width,
     std::uint16_t height)
 {
     // XXX: fix this
-    /*
-    Dummy::Core::GraphicLayer newGraphicLayer(width * height);
+    Dummy::Core::GraphicLayer newGraphicLayer(width, height);
 
     for (std::uint16_t y = 0; y < height; ++y) {
         for (std::uint16_t x = 0; x < width; ++x) {
@@ -64,40 +63,58 @@ Map::_resizeGraphicLayer(
             }
         }
     }
-    graphicLayer = std::move(newGraphicLayer);
-    */
+    graphicLayer.layer() = std::move(newGraphicLayer);
 }
 
-void Map::_resizeBlockingLayer(std::uint16_t width, std::uint16_t height)
+void Map::resizeBlockingLayer(
+    Editor::BlockingLayer& blockingLayer,
+    std::uint16_t width,
+    std::uint16_t height
+)
 {
     Dummy::Core::BlockingLayer newBlockingLayer(width, height);
 
     // XXX: Fix this.
-    /*
     for (std::uint16_t y = 0; y < height; ++y) {
         for (std::uint16_t x = 0; x < width; ++x) {
             if (x < m_width && y < m_height) {
                 newBlockingLayer[y * width + x] =
-                    m_blockingLayer[y * m_width + x];
+                    blockingLayer[y * m_width + x];
             } else {
                 newBlockingLayer[y * width + x] = 0;
             }
         }
     }
-    m_blockingLayer = std::move(newBlockingLayer);
-    */
+    blockingLayer.layer() = std::move(newBlockingLayer);
 }
 
 void Map::resize(std::uint16_t width, std::uint16_t height) {
-    _resizeBlockingLayer(width, height);
+    for (auto& level: m_editorLevels) {
+        resizeLevel(*level, width, height);
+    }
     m_width = width;
     m_height = height;
-
 }
 
-void Map::_saveBlockingLayers() {
+void
+Map::resizeLevel(
+    Editor::Level& level,
+    std::uint16_t width,
+    std::uint16_t height
+) {
+    resizeBlockingLayer(level.blockingLayer(), width, height);
+
+    for (auto& [position, layer]: level.graphicLayers()) {
+        resizeGraphicLayer(
+            *layer,
+            width,
+            height
+        );
+    }
+}
+
+void Map::saveBlockingLayers() {
     std::uint32_t magicNumber = BLK_MAGIC_WORD;
-    std::uint16_t version = 2;
     std::string filename(m_name + ".blk");
     std::ofstream ofs(m_project.projectPath() / "maps" / filename,
                       std::ios::binary);
@@ -119,7 +136,7 @@ void Map::_saveBlockingLayers() {
     ofs.close();
 }
 
-void Map::_saveGraphicLayers() {
+void Map::saveGraphicLayers() {
     std::uint32_t magicNumber = MAP_MAGIC_WORD;
     std::uint16_t version = 2; // XXX for now.
     std::string filename(m_name + ".map");

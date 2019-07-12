@@ -50,12 +50,17 @@ public:
     void load();
 
 private:
-    void _saveBlockingLayers();
-    void _saveGraphicLayers();
+    void saveBlockingLayers();
+    void saveGraphicLayers();
 
-    void _resizeBlockingLayer(std::uint16_t, std::uint16_t);
-    void _resizeGraphicLayer(
-        Dummy::Core::GraphicLayer&,
+    void resizeLevel(Editor::Level&, std::uint16_t, std::uint16_t);
+    void resizeBlockingLayer(
+        Editor::BlockingLayer&,
+        std::uint16_t,
+        std::uint16_t
+    );
+    void resizeGraphicLayer(
+        Editor::GraphicLayer&,
         std::uint16_t,
         std::uint16_t
     );
