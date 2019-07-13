@@ -27,7 +27,7 @@ void Pen::mapMouseMoveEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
 
     if (m_mouseClicked) {
         // XXX: set blocking tile
-        m_blockingGraphicLayer.setTile(point.x() / 8, point.y() / 8, true);
+        m_blockingGraphicLayer.setTile(point.x(), point.y(), true);
     }
 }
 
