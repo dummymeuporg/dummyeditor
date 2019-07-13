@@ -1,21 +1,20 @@
 #pragma once
 
-#include "drawing_tool/graphic/palette_tool.hpp"
+#include "drawing_tool/blocking/blocking_tool.hpp"
 
 class QGraphicsSceneMouseEvent;
 
 namespace GraphicMap {
-    class VisibleGraphicLayer;
+    class BlockingGraphicLayer;
 }
 
 namespace DrawingTool {
+namespace Blocking {
 
-namespace Graphic {
-
-class Pen : public PaletteTool {
+class Pen : public BlockingTool {
     Q_OBJECT
 public:
-    Pen(GraphicMap::VisibleGraphicLayer&);
+    Pen(GraphicMap::BlockingGraphicLayer&);
     void accept(Visitor&) override;
     void mapMousePressEvent(::QGraphicsSceneMouseEvent*) override;
     void mapMouseMoveEvent(::QGraphicsSceneMouseEvent*) override;
@@ -24,14 +23,13 @@ public:
     void mapKeyReleaseEvent(::QKeyEvent*) override;
     void mapMouseLeaveEvent() override;
     void emitDrawingToolSelected() override;
-    void onSelected() override;
     void onUnselected() override;
+    void onSelected() override;
 signals:
     void drawingToolSelected(::DrawingTool::DrawingTool*);
 private:
-    ::QGraphicsPixmapItem* m_hoverItem;
+    bool m_mouseClicked;
 };
 
-} // namespace Graphic
-
+} // namespace Blocking
 } // namespace DrawingTool

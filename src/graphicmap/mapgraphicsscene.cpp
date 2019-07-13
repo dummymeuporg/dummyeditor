@@ -142,6 +142,44 @@ void MapGraphicsScene::adjustLayers() const {
     */
 }
 
+void MapGraphicsScene::drawGrid(
+    quint16 width,
+    quint16 height,
+    unsigned int unit)
+{
+    QPen pen(Qt::black, 0.5);
+
+    // Remove the previous grid.
+    for (auto it = m_gridItems.begin(); it != m_gridItems.end(); ++it) {
+        removeItem(*it);
+    }
+
+    m_gridItems.clear();
+
+    for (int i = 0; i <= width; ++i) {
+        QGraphicsItem* item = addLine(
+            i * unit, 0,
+            i * unit,
+            unit * height,
+            pen
+        );
+        item->setZValue(88888);
+        m_gridItems.push_back(item);
+    }
+
+    for (int i = 0; i <= height; ++i) {
+        QGraphicsItem* item = addLine(
+            0,
+            i * unit,
+            unit * width,
+            unit * i,
+            pen
+        );
+        item->setZValue(88888);
+        m_gridItems.push_back(item);
+    }
+}
+
 void MapGraphicsScene::setDrawingTool(::DrawingTool::DrawingTool* drawingTool)
 {
     if (nullptr != m_drawingTool) {

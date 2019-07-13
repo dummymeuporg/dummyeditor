@@ -15,7 +15,8 @@ BlockingGraphicLayer::BlockingGraphicLayer(
     MapGraphicsScene& mapGraphicsScene,
     int zIndex
 ) : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex),
-    m_blockingLayer(blockingLayer)
+    m_blockingLayer(blockingLayer),
+    m_pen(*this)
 {
 
     m_layerItems.resize(m_blockingLayer.width() * m_blockingLayer.height());
@@ -125,7 +126,7 @@ std::vector<DrawingTool::DrawingTool*>
 BlockingGraphicLayer::drawingTools()
 {
     // XXX: fill this.
-    return {};
+    return {&m_pen};
 }
 
 } // namespace GraphicMap

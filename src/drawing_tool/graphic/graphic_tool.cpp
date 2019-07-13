@@ -25,31 +25,11 @@ void GraphicTool::emitDrawingToolSelected() {
 }
 
 void GraphicTool::drawGrid() {
-    QPen pen(Qt::black, 0.5);
-
-    quint16 width = m_visibleGraphicLayer.layer().width();
-    quint16 height = m_visibleGraphicLayer.layer().height();
-
-    for (int i = 0; i <= width; ++i) {
-        QGraphicsItem* item = m_mapGraphicsScene.addLine(
-            i * 16, 0,
-            i * 16,
-            16 * height,
-            pen
-        );
-        item->setZValue(88888);
-    }
-
-    for (int i = 0; i <= height; ++i) {
-        QGraphicsItem* item = m_mapGraphicsScene.addLine(
-            0,
-            i * 16,
-            16 * width,
-            16 * i,
-            pen
-        );
-        item->setZValue(88888);
-    }
+    m_mapGraphicsScene.drawGrid(
+        m_visibleGraphicLayer.layer().width(),
+        m_visibleGraphicLayer.layer().height(),
+        16
+    );
 }
 
 } // namespace Graphic

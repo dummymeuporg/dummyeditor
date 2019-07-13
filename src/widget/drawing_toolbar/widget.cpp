@@ -101,5 +101,9 @@ void Widget::visitTool(DrawingTool::Graphic::Eraser& eraser) {
     // Nothing to do!
 }
 
+void Widget::visitTool(DrawingTool::Blocking::Pen& pen) {
+    // Nothing to do!
+}
+
 } // namespace DrawingToolbar
 } // namespace Widget

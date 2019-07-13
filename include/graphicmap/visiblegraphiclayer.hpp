@@ -52,7 +52,6 @@ public:
     Editor::Layer& editorLayer() override;
 
     std::vector<DrawingTool::DrawingTool*> drawingTools() override;
-
 private:
     Editor::GraphicLayer& m_graphicLayer;
     const QPixmap& m_chipsetPixmap;

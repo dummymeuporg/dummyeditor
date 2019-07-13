@@ -70,6 +70,7 @@ public:
     void keyPressEvent(QKeyEvent*) override;
     void keyReleaseEvent(QKeyEvent*) override;
     bool eventFilter(QObject*, QEvent*) override;
+    void drawGrid(quint16 width, quint16 height, unsigned int unit);
 
 public slots:
     void changeMapDocument(
@@ -109,6 +110,8 @@ private:
     DrawingTool::DrawingTool* m_drawingTool;
 
     GraphicLayers m_graphicLayers;
+
+    QVector<QGraphicsItem*> m_gridItems;
 
 
 };

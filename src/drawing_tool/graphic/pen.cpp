@@ -88,6 +88,10 @@ void Pen::emitDrawingToolSelected() {
     emit drawingToolSelected(this);
 }
 
+void Pen::onSelected() {
+
+}
+
 void Pen::onUnselected() {
     PaletteTool::onUnselected();
     if (m_hoverItem != nullptr) {

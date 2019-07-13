@@ -18,7 +18,7 @@ void GraphicLayer::setVisibility(bool visible) {
     for (auto it = m_layerItems.begin(); it != m_layerItems.end(); ++it)
     {
         if(*it != nullptr) {
-            (*it)->setOpacity(visible * 1);
+            (*it)->setVisible(visible);
         }
     }
 }
