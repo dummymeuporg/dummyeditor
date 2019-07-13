@@ -43,6 +43,8 @@ public:
         return m_editorLevels;
     }
 
+    void addLevel(std::unique_ptr<Editor::Level>);
+
     GraphicLayer& graphicLayerAt(std::uint8_t level, std::int8_t position) {
         return m_editorLevels[level]->graphicLayerAt(position);
     }

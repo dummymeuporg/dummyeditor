@@ -97,11 +97,15 @@ void Widget::visitTool(DrawingTool::Graphic::Rectangle& rectangle) {
     );
 }
 
-void Widget::visitTool(DrawingTool::Graphic::Eraser& eraser) {
+void Widget::visitTool(DrawingTool::Graphic::Eraser&) {
     // Nothing to do!
 }
 
-void Widget::visitTool(DrawingTool::Blocking::Pen& pen) {
+void Widget::visitTool(DrawingTool::Blocking::Pen&) {
+    // Nothing to do!
+}
+
+void Widget::visitTool(DrawingTool::Blocking::Eraser&) {
     // Nothing to do!
 }
 

@@ -74,7 +74,6 @@ void Map::resizeBlockingLayer(
 {
     Dummy::Core::BlockingLayer newBlockingLayer(width, height);
 
-    // XXX: Fix this.
     for (std::uint16_t y = 0; y < height; ++y) {
         for (std::uint16_t x = 0; x < width; ++x) {
             if (x < m_width && y < m_height) {
@@ -207,4 +206,12 @@ Map::writeLevel(
         );
     }
 }
+
+void Map::addLevel(std::unique_ptr<Editor::Level> level) {
+    m_levels.push_back(level->localLevel());
+    m_editorLevels.push_back(std::move(level));
+    ++m_levelsCount;
+}
+
+
 } // namespace Editor

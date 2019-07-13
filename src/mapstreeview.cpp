@@ -2,8 +2,12 @@
 #include <QDebug>
 #include <QTreeWidgetItem>
 
+#include "editor/blocking_layer.hpp"
+#include "editor/graphic_layer.hpp"
 #include "editor/map.hpp"
+#include "editor/level.hpp"
 #include "editor/project.hpp"
+
 #include "mapstreeview.hpp"
 #include "mapeditdialog.hpp"
 
@@ -98,6 +102,33 @@ void MapsTreeView::_onNewMapAction() {
         auto mapDocument = std::make_shared<Misc::MapDocument>(
             *m_project, mapName, map
         );
+
+        // XXX: For now, create one level with four layers.
+        // The layers will have for positions :
+        // -1 (the lowest one)
+        // 0 (the one juste below the character)
+        // 1 (the one juste above the character)
+        // 2 (another one above)
+        Dummy::Local::Level level(*map);
+        level.addGraphicLayer(
+            -1,
+            Dummy::Core::GraphicLayer(dlg.getWidth(), dlg.getHeight())
+        );
+        level.addGraphicLayer(
+            0,
+            Dummy::Core::GraphicLayer(dlg.getWidth(), dlg.getHeight())
+        );
+        level.addGraphicLayer(
+            1,
+            Dummy::Core::GraphicLayer(dlg.getWidth(), dlg.getHeight())
+        );
+        level.addGraphicLayer(
+            2,
+            Dummy::Core::GraphicLayer(dlg.getWidth(), dlg.getHeight())
+        );
+
+        map->addLevel(std::make_unique<Editor::Level>(level));
+        map->resize(dlg.getWidth(), dlg.getHeight());
 
         map->save();
         // Add the new map into the tree.

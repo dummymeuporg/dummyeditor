@@ -4,6 +4,8 @@
 #include <QVector>
 
 #include "drawing_tool/blocking/pen.hpp"
+#include "drawing_tool/blocking/eraser.hpp"
+
 #include "graphicmap/graphiclayer.hpp"
 
 namespace Editor {
@@ -40,5 +42,6 @@ private:
 
     // Drawing tools
     DrawingTool::Blocking::Pen m_pen;
+    DrawingTool::Blocking::Eraser m_eraser;
 };
 } // namespace GraphicMap

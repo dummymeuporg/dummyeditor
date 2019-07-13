@@ -33,6 +33,10 @@ public:
     GraphicLayers& graphicLayers() {
         return m_graphicLayers;
     }
+
+    Dummy::Local::Level& localLevel()  {
+        return m_level;
+    }
 private:
     Dummy::Local::Level& m_level;
     std::unique_ptr<BlockingLayer> m_blockingLayer;
