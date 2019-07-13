@@ -2,38 +2,24 @@
 #include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
 
-#include "editormap.hpp"
-#include "editorproject.hpp"
+#include "core/graphic_layer.hpp"
+
+#include "editor/map.hpp"
+#include "editor/project.hpp"
 
 #include "graphicmap/visiblegraphiclayer.hpp"
 #include "graphicmap/blockinggraphiclayer.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
 
-#include "graphicmap/notpaintingstate.hpp"
-#include "graphicmap/blockinglayerstate.hpp"
-#include "graphicmap/firstlayerstate.hpp"
-#include "graphicmap/fourthlayerstate.hpp"
-#include "graphicmap/secondlayerstate.hpp"
-#include "graphicmap/thirdlayerstate.hpp"
-#include "graphicmap/startingpointlayerstate.hpp"
 
-#include "graphicmap/nodrawingtool.hpp"
-#include "graphicmap/pendrawingtool.hpp"
-#include "graphicmap/rectangledrawingtool.hpp"
-#include "graphicmap/selectiondrawingtool.hpp"
-#include "graphicmap/startingpointlayer.hpp"
+namespace GraphicMap {
 
-GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
+MapGraphicsScene::MapGraphicsScene(QObject* parent)
     : QGraphicsScene(parent),
+      m_mapDocument(nullptr),
       m_map(nullptr),
-      m_firstLayer(nullptr),
-      m_secondLayer(nullptr), m_thirdLayer(nullptr),
-      m_fourthLayer(nullptr),
-      m_blockingLayer(nullptr),
-      m_activeLayer(nullptr),
-      m_startingPointLayer(nullptr),
-      m_paintingLayerState(new GraphicMap::NotPaintingState(*this)),
-      m_drawingTool(new NoDrawingTool(*this))
+      m_isDrawing(false),
+      m_drawingTool(nullptr)
 
 {
     //m_paintingLayerState = new GraphicMap::NotPaintingState(*this);
@@ -41,60 +27,37 @@ GraphicMap::MapGraphicsScene::MapGraphicsScene(QObject* parent)
     installEventFilter(this);
 }
 
-GraphicMap::MapGraphicsScene::~MapGraphicsScene()
+MapGraphicsScene::~MapGraphicsScene()
 {
-    delete m_drawingTool;
-    delete m_paintingLayerState;
+    //delete m_drawingTool;
+    //delete m_paintingLayerState;
 }
 
-void GraphicMap::MapGraphicsScene::_drawGrid()
-{
-
-    QPen pen(Qt::black, 0.5);
-
-    quint16 width = m_map->width();
-    quint16 height = m_map->height();
-
-    for (int i = 0; i <= width; ++i) {
-        QGraphicsItem* item = addLine(i * 16, 0, i * 16, 16 * height, pen);
-        item->setZValue(99);
-    }
-
-    for (int i = 0; i <= height; ++i) {
-        QGraphicsItem* item = addLine(0, i * 16, 16 * width, 16 * i, pen);
-        item->setZValue(99);
-    }
-
-}
-
-GraphicMap::MapGraphicsScene&
-GraphicMap::MapGraphicsScene::setMapDocument
-(const std::shared_ptr<Misc::MapDocument>& mapDocument)
-{
-
+MapGraphicsScene& MapGraphicsScene::setMapDocument
+(const std::shared_ptr<Misc::MapDocument>& mapDocument) {
     if (m_map != nullptr) {
         QRect invalidateRegion(0, 0,
                                m_map->width() * 16, m_map->height() * 16);
         qDebug() << "INVALIDATE " << invalidateRegion;
         invalidate(invalidateRegion);
-        delete m_firstLayer;
-        delete m_secondLayer;
-        delete m_thirdLayer;
-        delete m_fourthLayer;
-        delete m_blockingLayer;
-        delete m_startingPointLayer;
-    }
-    // Remove the grid.
-    clear();
 
+        for (auto& graphicLayer: m_graphicLayers) {
+            QObject::disconnect(
+                &graphicLayer->editorLayer(),
+                SIGNAL(visibilityChanged(bool)),
+                graphicLayer,
+                SLOT(setVisibility(bool))
+            );
+        }
+
+    }
+    // Clear the scene
+    clear();
 
     m_mapDocument = mapDocument;
     m_map = m_mapDocument->map();
-    //m_project = m_mapDocument->project();
 
-    m_paintingLayerState->sceneCleared();
-
-    const EditorProject& project = m_mapDocument->project();
+    const Editor::Project& project = m_mapDocument->project();
     m_mapChipset = QPixmap(
         QString(
             (project.coreProject().projectPath()
@@ -103,211 +66,178 @@ GraphicMap::MapGraphicsScene::setMapDocument
             ).string().c_str())
     );
 
-    m_firstLayer = new VisibleGraphicLayer(
-        *this,
-        m_map->firstLayer(),
-        m_mapChipset,
-        1
-    );
+    for (auto& graphicLayer: m_graphicLayers) {
+        delete graphicLayer;
+    }
+    m_graphicLayers.clear();
 
-    m_secondLayer = new VisibleGraphicLayer(
-        *this,
-        m_map->secondLayer(),
-        m_mapChipset,
-        3
-    );
+    int zindex = 0;
+    for (const auto& level: m_map->levels()) {
+        for (const auto& [position, layer]: level->graphicLayers()) {
+            qDebug() << "Position: " << position;
 
-    m_thirdLayer = new VisibleGraphicLayer(
-        *this,
-        m_map->thirdLayer(),
-        m_mapChipset,
-        5
-    );
+            auto graphicLayer = new VisibleGraphicLayer(
+                *layer,
+                *this,
+                m_mapChipset,
+                zindex++
+            );
 
-    m_fourthLayer = new VisibleGraphicLayer(
-        *this,
-        m_map->fourthLayer(),
-        m_mapChipset,
-        7
-    );
+            m_graphicLayers.push_back(graphicLayer);
 
-    m_blockingLayer = new BlockingGraphicLayer(*this, m_map->blockingLayer());
+            QObject::connect(
+                &graphicLayer->editorLayer(),
+                SIGNAL(visibilityChanged(bool)),
+                graphicLayer,
+                SLOT(setVisibility(bool))
+            );
 
-    m_startingPointLayer = new GraphicMap::StartingPointLayer(*this);
+            QObject::connect(
+                &graphicLayer->editorLayer(),
+                SIGNAL(setSelected()),
+                graphicLayer,
+                SLOT(setSelected())
+            );
+        }
 
-    m_paintingLayerState->onNewMap();
-    m_paintingLayerState->adjustLayers();
-    m_paintingLayerState->drawGrid();
+        // Add blocking layer
+        auto graphicLayer = new BlockingGraphicLayer(
+            level->blockingLayer(),
+            *this,
+            ++zindex
+        );
+        m_graphicLayers.push_back(graphicLayer);
 
-    changeSelection(QRect(0,0,0,0));
+        QObject::connect(
+            &graphicLayer->editorLayer(),
+            SIGNAL(visibilityChanged(bool)),
+            graphicLayer,
+            SLOT(setVisibility(bool))
+        );
+        QObject::connect(
+            &graphicLayer->editorLayer(),
+            SIGNAL(setSelected()),
+            graphicLayer,
+            SLOT(setSelected())
+        );
+    }
 
+    //changeSelection(QRect(0,0,0,0));
+    m_drawingTool = nullptr;
     return *this;
 }
 
-void GraphicMap::MapGraphicsScene::changeMapDocument(
-    const std::shared_ptr<Misc::MapDocument>& mapDocument)
-{
+void MapGraphicsScene::changeMapDocument(
+    const std::shared_ptr<Misc::MapDocument>& mapDocument
+) {
     setMapDocument(mapDocument);
 }
 
-GraphicMap::MapGraphicsScene&
-GraphicMap::MapGraphicsScene::setPaitingTool(
-    GraphicMap::DrawingTool* tool
-)
-{
-    delete m_drawingTool;
-    m_drawingTool = tool;
-
-    if (nullptr != m_mapDocument) {
-        m_drawingTool->chipsetSelectionChanged(m_chipsetSelection);
-    }
-
-    return *this;
-}
-
-GraphicMap::MapGraphicsScene&
-GraphicMap::MapGraphicsScene::setPaitingLayerState(
-    GraphicMap::PaintingLayerState* state
-)
-{
-    delete m_paintingLayerState;
-    m_paintingLayerState = state;
-    m_paintingLayerState->onNewMap();
-    m_paintingLayerState->adjustLayers();
-    m_paintingLayerState->drawGrid();
-    return *this;
-}
-
-void
-GraphicMap::MapGraphicsScene::mouseMoveEvent(
-    QGraphicsSceneMouseEvent* mouseEvent)
-{
-    //QGraphicsScene::mouseMoveEvent(mouseEvent);
-    if (nullptr != m_mapDocument) {
-        m_drawingTool->onMouseMove(mouseEvent);
-    }
-}
-
-void
-GraphicMap::MapGraphicsScene::mousePressEvent(
-QGraphicsSceneMouseEvent* mouseEvent)
-{
-    m_drawingTool->onMousePress(mouseEvent);
-}
-
-void
-GraphicMap::MapGraphicsScene::mouseReleaseEvent(
-QGraphicsSceneMouseEvent* mouseEvent)
-{
-    m_drawingTool->onMouseRelease(mouseEvent);
-}
-
-void GraphicMap::MapGraphicsScene::keyPressEvent(QKeyEvent* keyEvent)
-{
-    m_drawingTool->onKeyPress(keyEvent);
-}
-
-void GraphicMap::MapGraphicsScene::keyReleaseEvent(QKeyEvent* keyEvent)
-{
-    m_drawingTool->onKeyRelease(keyEvent);
-}
-
-void GraphicMap::MapGraphicsScene::changeSelection(const QRect& selection)
-{
-    m_chipsetSelection = selection;
-    if (nullptr != m_mapDocument) {
-        m_drawingTool->chipsetSelectionChanged(selection);
-    }
-
-}
-
-void GraphicMap::MapGraphicsScene::showFirstLayer() {
-    qDebug() << "First active layer";
-    if (nullptr == m_mapDocument) {
-        return;
-    }
-    setPaitingLayerState(new FirstLayerState(*this));
-}
-
-void GraphicMap::MapGraphicsScene::showSecondLayer() {
-    qDebug() << "Second active layer";
-    if (nullptr == m_mapDocument) {
-        return;
-    }
-    setPaitingLayerState(new SecondLayerState(*this));
-}
-
-void GraphicMap::MapGraphicsScene::showThirdLayer() {
-    qDebug() << "Third active layer";
-    if (nullptr == m_mapDocument) {
-        return;
-    }
-    setPaitingLayerState(new ThirdLayerState(*this));
-}
-
-void GraphicMap::MapGraphicsScene::showFourthLayer()
-{
-    qDebug() << "Fourth active layer";
-    if (nullptr == m_mapDocument)
-    {
-        return;
-    }
-    setPaitingLayerState(new FourthLayerState(*this));
-}
-
-void GraphicMap::MapGraphicsScene::showBlockingLayer()
-{
-    qDebug() << "Blocking active layer";
-    if (nullptr == m_mapDocument)
-    {
-        return;
-    }
-    setPaitingLayerState(new BlockingLayerState(*this));
-}
-
-void GraphicMap::MapGraphicsScene::showStartingPointLayer()
-{
-    qDebug() << "Starting Point active layer";
-    if (nullptr == m_mapDocument)
-    {
-        return;
-    }
-    setPaitingLayerState(new StartingPointLayerState(*this));
-}
-
-void GraphicMap::MapGraphicsScene::setPenTool()
-{
-    qDebug() << "Pen tool enabled";
-    setPaitingTool(new GraphicMap::PenDrawingTool(*this));
-}
-
-void GraphicMap::MapGraphicsScene::setRectangleTool()
-{
-    qDebug() << "Rectangle tool enabled";
-    setPaitingTool(new GraphicMap::RectangleDrawingTool(*this));
-}
-
-void GraphicMap::MapGraphicsScene::setSelectionTool()
-{
-    qDebug() << "Selection tool enabled";
-    setPaitingTool(new GraphicMap::SelectionDrawingTool(*this));
-}
-
-bool GraphicMap::MapGraphicsScene::eventFilter(QObject *watched,
-                                               QEvent *event)
-{
-    Q_UNUSED(watched);
-    if (event->type() == QEvent::Leave)
-    {
-        qDebug() << "Mouse left the scene";
-        m_drawingTool->onMouseLeave();
-    }
-    return false;
-}
-
-void GraphicMap::MapGraphicsScene::adjustLayers() const {
+void MapGraphicsScene::adjustLayers() const {
+    /*
     if (nullptr != m_paintingLayerState)
     {
         m_paintingLayerState->adjustLayers();
     }
+    */
 }
+
+void MapGraphicsScene::drawGrid(
+    quint16 width,
+    quint16 height,
+    unsigned int unit)
+{
+    QPen pen(Qt::black, 0.5);
+
+    // Remove the previous grid.
+    for (auto it = m_gridItems.begin(); it != m_gridItems.end(); ++it) {
+        removeItem(*it);
+    }
+
+    m_gridItems.clear();
+
+    for (int i = 0; i <= width; ++i) {
+        QGraphicsItem* item = addLine(
+            i * unit, 0,
+            i * unit,
+            unit * height,
+            pen
+        );
+        item->setZValue(88888);
+        m_gridItems.push_back(item);
+    }
+
+    for (int i = 0; i <= height; ++i) {
+        QGraphicsItem* item = addLine(
+            0,
+            i * unit,
+            unit * width,
+            unit * i,
+            pen
+        );
+        item->setZValue(88888);
+        m_gridItems.push_back(item);
+    }
+}
+
+void MapGraphicsScene::setDrawingTool(::DrawingTool::DrawingTool* drawingTool)
+{
+    if (nullptr != m_drawingTool) {
+        m_drawingTool->onUnselected();
+    }
+    m_drawingTool = drawingTool;
+    qDebug() << "tool is set.";
+    m_drawingTool->drawGrid();
+}
+
+void MapGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event) {
+    if (nullptr != m_drawingTool) {
+        m_drawingTool->mapMousePressEvent(event);
+    }
+}
+
+void MapGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
+    if (nullptr != m_drawingTool) {
+        m_drawingTool->mapMouseMoveEvent(event);
+    }
+}
+
+void MapGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
+    if (nullptr != m_drawingTool) {
+        m_drawingTool->mapMouseReleaseEvent(event);
+    }
+}
+
+void MapGraphicsScene::keyPressEvent(QKeyEvent* event) {
+    if (nullptr != m_drawingTool) {
+        m_drawingTool->mapKeyPressEvent(event);
+    }
+}
+
+void MapGraphicsScene::keyReleaseEvent(QKeyEvent* event) {
+    if (nullptr != m_drawingTool) {
+        m_drawingTool->mapKeyReleaseEvent(event);
+    }
+}
+
+void MapGraphicsScene::unsetDrawingTool() {
+    if (nullptr != m_drawingTool) {
+        m_drawingTool->onUnselected();
+    }
+    m_drawingTool = nullptr;
+}
+
+bool MapGraphicsScene::eventFilter(QObject *watched, QEvent *event)
+{
+    Q_UNUSED(watched)
+    if (event->type() == QEvent::Leave)
+    {
+        qDebug() << "Mouse left the scene";
+        if (nullptr != m_drawingTool) {
+            m_drawingTool->mapMouseLeaveEvent();
+        }
+    }
+    return false;
+}
+
+} // namespace GraphicMap

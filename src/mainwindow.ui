@@ -53,6 +53,9 @@
              </property>
              <item>
               <widget class="QGraphicsView" name="graphicsViewChipset">
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
                <property name="alignment">
                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
                </property>
@@ -448,7 +451,7 @@
      <x>0</x>
      <y>0</y>
      <width>874</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -501,11 +504,7 @@
     <property name="title">
      <string>Tools</string>
     </property>
-    <addaction name="actionSelection"/>
     <addaction name="separator"/>
-    <addaction name="actionPen"/>
-    <addaction name="actionRectangle"/>
-    <addaction name="actionPath"/>
    </widget>
    <widget class="QMenu" name="menuLayers">
     <property name="title">
@@ -562,6 +561,18 @@
    <addaction name="actionCopy"/>
    <addaction name="actionPaste"/>
    <addaction name="separator"/>
+  </widget>
+  <widget class="QDockWidget" name="dockWidgetMapLevelsList">
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="Widget::MapLevelsList::Widget" name="widgetMapLevelsList"/>
+  </widget>
+  <widget class="QDockWidget" name="dockWidgetDrawingToolbox">
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="Widget::DrawingToolbar::Widget" name="widgetDrawingToolbox"/>
   </widget>
   <action name="actionNew">
    <property name="icon">
@@ -735,6 +746,9 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../icons.qrc">
      <normaloff>:/icons/icon_layer0.png</normaloff>:/icons/icon_layer0.png</iconset>
@@ -750,6 +764,9 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../icons.qrc">
      <normaloff>:/icons/icon_layer1.png</normaloff>:/icons/icon_layer1.png</iconset>
@@ -764,6 +781,9 @@
   <action name="actionHigh_layer_1">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
    </property>
    <property name="icon">
     <iconset resource="../icons.qrc">
@@ -824,6 +844,9 @@
   <action name="actionStarting_point">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
    </property>
    <property name="icon">
     <iconset resource="../icons.qrc">
@@ -926,6 +949,9 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../icons.qrc">
      <normaloff>:/icons/icon_blocking.png</normaloff>:/icons/icon_blocking.png</iconset>
@@ -949,6 +975,9 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../icons.qrc">
      <normaloff>:/icons/icon_layer3.png</normaloff>:/icons/icon_layer3.png</iconset>
@@ -966,6 +995,18 @@
    <class>MapsTreeView</class>
    <extends>QTreeView</extends>
    <header>mapstreeview.hpp</header>
+  </customwidget>
+  <customwidget>
+   <class>Widget::MapLevelsList::Widget</class>
+   <extends>QWidget</extends>
+   <header>widget/map_levels_list/widget.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Widget::DrawingToolbar::Widget</class>
+   <extends>QWidget</extends>
+   <header>widget/drawing_toolbar/widget.hpp</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

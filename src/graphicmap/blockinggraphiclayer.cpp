@@ -1,55 +1,53 @@
 #include <QDebug>
 
-#include "editormap.hpp"
+#include "drawing_tool/drawing_tool.hpp"
+
+#include "editor/blocking_layer.hpp"
+#include "editor/map.hpp"
 
 #include "graphicmap/blockingsquareitem.hpp"
 #include "graphicmap/blockinggraphiclayer.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
 
-GraphicMap::BlockingGraphicLayer::BlockingGraphicLayer(
-    GraphicMap::MapGraphicsScene& mapGraphicsScene,
-    Dummy::Core::BlockingLayer& blockingLayer)
-    : GraphicMap::GraphicLayer(mapGraphicsScene),
-      m_blockingLayer(blockingLayer)
+namespace GraphicMap {
+BlockingGraphicLayer::BlockingGraphicLayer(
+    Editor::BlockingLayer& blockingLayer,
+    MapGraphicsScene& mapGraphicsScene,
+    int zIndex
+) : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex),
+    m_blockingLayer(blockingLayer),
+    m_pen(*this),
+    m_eraser(*this)
 {
-    // XXX: Find a better way to resize?
-    m_layerItems.resize(m_layerItems.size() * 4);
 
-    const std::shared_ptr<EditorMap> map(
-        m_mapGraphicsScene.map()
-    );
+    m_layerItems.resize(m_blockingLayer.width() * m_blockingLayer.height());
+
     int index = 0;
-    for (auto it = m_blockingLayer.begin(); it != m_blockingLayer.end();
+    for (auto it = m_blockingLayer.layer().begin();
+         it != m_blockingLayer.layer().end();
          ++it, ++index)
     {
         m_layerItems[index] = nullptr;
-        qDebug() << "VALUE:" << m_blockingLayer[index];
         if (m_blockingLayer[index])
         {
-            qDebug() << "TRUE!";
-            qreal posX((index % (map->width()*2)) * 8);
-            qreal posY((index / (map->width()*2)) * 8);
+            qreal posX((index % (m_blockingLayer.width())) * 8);
+            qreal posY((index / (m_blockingLayer.width())) * 8);
             _draw(index, quint16(posX), quint16(posY));
         }
     }
 }
 
-GraphicMap::BlockingGraphicLayer::~BlockingGraphicLayer()
-{
+BlockingGraphicLayer::~BlockingGraphicLayer()
+{}
 
-}
-
-GraphicMap::MapSceneLayer&
-GraphicMap::BlockingGraphicLayer::removeTile(quint16 x, quint16 y)
+MapSceneLayer&
+BlockingGraphicLayer::removeTile(quint16 x, quint16 y)
 {
     qDebug() << "Toggle tile." << x << y;
-    if (x < m_mapGraphicsScene.map()->width() * 16
-        && y < m_mapGraphicsScene.map()->height() * 16)
+    if (x < m_blockingLayer.width() * 8 && y < m_blockingLayer.height() * 8)
     {
-        const std::shared_ptr<Dummy::Core::GraphicMap> map(
-            m_mapGraphicsScene.map()
-        );
-        int index((y/8) * map->width() * 2 + (x/8));
+
+        int index((y/8) * m_blockingLayer.width() + (x/8));
         m_blockingLayer[index] = false;
         if (nullptr != m_layerItems[index])
         {
@@ -60,16 +58,12 @@ GraphicMap::BlockingGraphicLayer::removeTile(quint16 x, quint16 y)
     return *this;
 }
 
-void GraphicMap::BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
+void BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
 {
     qDebug() << "Toggle tile." << x << y;
-    if (x < m_mapGraphicsScene.map()->width() * 16
-        && y < m_mapGraphicsScene.map()->height() * 16)
+    if (x < m_blockingLayer.width() * 8 && y < m_blockingLayer.height() * 8)
     {
-        const std::shared_ptr<Dummy::Core::GraphicMap> map(
-            m_mapGraphicsScene.map()
-        );
-        int index((y/8) * map->width() * 2 + (x/8));
+        int index((y/8) * m_blockingLayer.width() + (x/8));
         qDebug() << "Index: " << index;
         if (m_blockingLayer[index])
         {
@@ -89,21 +83,14 @@ void GraphicMap::BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
             m_blockingLayer[index] = true;
         }
     }
-
 }
 
-void GraphicMap::BlockingGraphicLayer::setTile(quint16 x,
-                                               quint16 y,
-                                               bool isBlocking)
+void BlockingGraphicLayer::setTile(quint16 x, quint16 y, bool isBlocking)
 {
     qDebug() << "Set blocking tile." << x << y;
-    if (x < m_mapGraphicsScene.map()->width() * 16
-        && y < m_mapGraphicsScene.map()->height() * 16)
+    if (x < m_blockingLayer.width() * 8 && y < m_blockingLayer.height() * 8)
     {
-        const std::shared_ptr<Dummy::Core::GraphicMap> map(
-            m_mapGraphicsScene.map()
-        );
-        int index((y/8) * map->width() * 2 + (x/8));
+        int index((y/8) * m_blockingLayer.width() + (x/8));
 
         if (nullptr != m_layerItems[index])
         {
@@ -123,12 +110,24 @@ void GraphicMap::BlockingGraphicLayer::setTile(quint16 x,
     }
 }
 
-void
-GraphicMap::BlockingGraphicLayer::_draw(int index, quint16 x, quint16 y)
+void BlockingGraphicLayer::_draw(int index, quint16 x, quint16 y)
 {
     m_layerItems[index] = new BlockingSquareItem();
-    m_layerItems[index]->setZValue(50);
+    m_layerItems[index]->setZValue(m_zIndex);
     m_layerItems[index]->setPos(
         QPointF(x - (x % 8), y - (y % 8)));
     m_mapGraphicsScene.addItem(m_layerItems[index]);
 }
+
+Editor::Layer& BlockingGraphicLayer::editorLayer() {
+    return m_blockingLayer;
+}
+
+std::vector<DrawingTool::DrawingTool*>
+BlockingGraphicLayer::drawingTools()
+{
+    // XXX: fill this.
+    return {&m_pen, &m_eraser};
+}
+
+} // namespace GraphicMap

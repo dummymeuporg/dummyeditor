@@ -8,10 +8,14 @@
 #include <algorithm>
 
 #include "chipsetgraphicsscene.hpp"
+#include "drawing_tool/graphic/palette_tool.hpp"
 
 ChipsetGraphicsScene::ChipsetGraphicsScene(QObject* parent) :
-    QGraphicsScene(parent), m_selectionRectItem(nullptr), m_chipset(nullptr),
-    m_isSelecting(false)
+    QGraphicsScene(parent),
+    m_selectionRectItem(nullptr),
+    m_chipset(nullptr),
+    m_isSelecting(false),
+    m_paletteTool(nullptr)
 {
     if (m_chipset) {
         _drawGrid();
@@ -41,35 +45,49 @@ ChipsetGraphicsScene::_drawGrid() {
 
 }
 
-ChipsetGraphicsScene& ChipsetGraphicsScene::setChipset(const QPixmap& pixmap) {
+void ChipsetGraphicsScene::setChipset(const QPixmap& pixmap) {
     clear();
     m_chipset = addPixmap(pixmap);
     _drawGrid();
-    return *this;
 }
 
 ChipsetGraphicsScene&
+ChipsetGraphicsScene::setSelection(const QRect& selection) {
+    m_currentSelection = selection;
+    QPixmap selectionPixmap(m_chipset->pixmap().copy(m_currentSelection));
+    emit selectionChanged(m_currentSelection, selectionPixmap);
+    return *this;
+}
+
+void
 ChipsetGraphicsScene::setChipset(const QString& chipsetPath) {
     qDebug() << chipsetPath;
+    setChipset(QPixmap(chipsetPath));
     setSelection(QRect(0, 0, 0, 0));
-    return setChipset(QPixmap(chipsetPath));
 }
 
 void ChipsetGraphicsScene::changeChipset(const QString& chipsetPath) {
     setChipset(chipsetPath);
+    emit chipsetChanged(chipsetPath);
 }
 
 void
 ChipsetGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) {
     QGraphicsScene::mouseReleaseEvent(mouseEvent);
+    if (nullptr != m_paletteTool) {
+        m_paletteTool->paletteMouseReleaseEvent(mouseEvent);
+    }
+    /*
     if (nullptr != m_chipset) {
         m_isSelecting = false;
     }
+    */
 }
 
 void
 ChipsetGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
     QGraphicsScene::mouseMoveEvent(mouseEvent);
+    /*
     if (nullptr != m_chipset && m_isSelecting) {
         QPoint pt = mouseEvent->scenePos().toPoint();
 
@@ -96,11 +114,17 @@ ChipsetGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
         }
 
     }
+    */
+    if (nullptr != m_paletteTool) {
+        m_paletteTool->paletteMouseMoveEvent(mouseEvent);
+    }
 }
 
 void
 ChipsetGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
     QGraphicsScene::mousePressEvent(mouseEvent);
+
+    /*
     if (nullptr != m_chipset && mouseEvent->buttons() & Qt::LeftButton) {
         m_isSelecting = true;
         m_selectionStart = mouseEvent->scenePos().toPoint();
@@ -120,6 +144,24 @@ ChipsetGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
             setSelection(QRect(x, y, 16, 16));
             m_selectionRectItem = addRect(m_currentSelection, pen);
         }
-
     }
+    */
+
+    if (nullptr != m_paletteTool) {
+        m_paletteTool->paletteMousePressEvent(mouseEvent);
+    }
+}
+
+void
+ChipsetGraphicsScene::setPaletteTool(
+    ::DrawingTool::Graphic::PaletteTool* paletteTool
+) {
+    m_paletteTool = paletteTool;
+    m_paletteTool->setChipsetGraphicsScene(this);
+    qDebug() << "ChispetGraphicsScene: palette tool set!";
+}
+
+void ChipsetGraphicsScene::unsetPaletteTool() {
+    m_paletteTool = nullptr;
+    qDebug() << "Palette tool unset.";
 }

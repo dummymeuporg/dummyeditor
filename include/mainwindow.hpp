@@ -1,10 +1,14 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
-
+#pragma once
+#include <memory>
 #include <QAction>
+#include <QModelIndex>
 #include <QMainWindow>
 
-#include "editorproject.hpp"
+#include "drawing_tool/visitor.hpp"
+
+namespace Editor {
+class Project;
+} // namespace Editor
 
 namespace Ui {
 class MainWindow;
@@ -12,7 +16,9 @@ class MainWindow;
 
 namespace GraphicMap {
     class MapGraphicsScene;
-}
+    class GraphicLayer;
+} // namespace GraphicMap
+
 class ChipsetGraphicsScene;
 class QTreeView;
 
@@ -24,7 +30,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     virtual ~MainWindow();
-
 private:
     void _initializeProject(const QString&);
     void _initializeScenes();
@@ -32,9 +37,10 @@ private:
     void _enableMapCreation();
     void _closeCurrentProject();
     void _loadProject(const QString&);
+    void removeTools();
 
     Ui::MainWindow *ui;
-    std::shared_ptr<EditorProject> m_currentProject;
+    std::shared_ptr<Editor::Project> m_currentProject;
     ChipsetGraphicsScene* m_chipsetScene;
     GraphicMap::MapGraphicsScene* m_mapScene;
 
@@ -47,6 +53,6 @@ private slots:
     void onCut();
     void onCopy();
     void onPaste();
-};
+    void publishTools(GraphicMap::GraphicLayer*);
 
-#endif // MAINWINDOW_H
+};

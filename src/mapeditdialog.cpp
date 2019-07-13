@@ -6,10 +6,10 @@
 #include "mapeditdialog.hpp"
 #include "ui_mapeditdialog.h"
 
-#include "editormap.hpp"
+#include "editor/map.hpp"
 
 MapEditDialog::MapEditDialog(
-    const std::shared_ptr<const EditorProject> project,
+    const std::shared_ptr<const Editor::Project> project,
     std::shared_ptr<Misc::MapDocument> mapDocument,
     QWidget *parent) : QDialog(parent),
                        ui(new Ui::MapEditDialog),

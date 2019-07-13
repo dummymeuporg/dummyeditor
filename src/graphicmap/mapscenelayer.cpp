@@ -1,13 +1,12 @@
 #include "graphicmap/mapscenelayer.hpp"
 
-GraphicMap::MapSceneLayer::MapSceneLayer(
-    GraphicMap::MapGraphicsScene& mapGraphicsScene)
-    : m_mapGraphicsScene(mapGraphicsScene)
-{
+namespace GraphicMap {
+MapSceneLayer::MapSceneLayer(
+    MapGraphicsScene& mapGraphicsScene,
+    int zIndex
+) : m_mapGraphicsScene(mapGraphicsScene), m_zIndex(zIndex)
+{}
 
-}
-
-GraphicMap::MapSceneLayer::~MapSceneLayer()
-{
-
-}
+MapSceneLayer::~MapSceneLayer()
+{}
+} // namespace GraphicMap

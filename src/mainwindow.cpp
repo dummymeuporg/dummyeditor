@@ -6,16 +6,23 @@
 #include <QGraphicsScene>
 #include <QKeyEvent>
 #include <QMessageBox>
+#include <QToolButton>
 
-#include "editormap.hpp"
-#include "editorproject.hpp"
+#include "drawing_tool/drawing_tool.hpp"
 
-#include "misc/maptreemodel.hpp"
+#include "editor/map.hpp"
+#include "editor/project.hpp"
+
+#include "graphicmap/graphiclayer.hpp"
+#include "graphicmap/mapgraphicsscene.hpp"
+
+#include "misc/map_tree_model.hpp"
 
 #include "chipsetgraphicsscene.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
 #include "mainwindow.hpp"
 #include "mapeditdialog.hpp"
+#include "widget/map_levels_list/widget.hpp"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -37,10 +44,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //create a group action to regroup action tools
     QActionGroup *toolsGroup = new QActionGroup(this);
     toolsGroup->addAction("Working tool");
-    toolsGroup->addAction(ui->actionSelection);
-    toolsGroup->addAction(ui->actionPen);
-    toolsGroup->addAction(ui->actionRectangle);
-    toolsGroup->addAction(ui->actionPath);
+    //toolsGroup->addAction(ui->actionSelection);
+    //toolsGroup->addAction(ui->actionPen);
+    //toolsGroup->addAction(ui->actionRectangle);
+    //toolsGroup->addAction(ui->actionPath);
     tabGeneralToolBar->addActions(toolsGroup->actions());
 
     tabGeneralToolBar->addSeparator();
@@ -77,8 +84,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
                      m_chipsetScene, SLOT(changeChipset(QString)));
+    /*
     QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
                      m_mapScene, SLOT(changeSelection(QRect)));
+    */
 
     ui->graphicsViewChipset->scale(2.0, 2.0);
     ui->graphicsViewMap->scale(2.0, 2.0);
@@ -100,21 +109,12 @@ void MainWindow::_connectScenes()
 {
     QObject::connect(ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
                      m_chipsetScene, SLOT(changeChipset(QString)));
+    /*
     QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
                      m_mapScene, SLOT(changeSelection(QRect)));
+    */
 
-    QObject::connect(ui->actionLow_layer_1, SIGNAL(triggered(bool)),
-                     m_mapScene, SLOT(showFirstLayer()));
-    QObject::connect(ui->actionLow_layer_2, SIGNAL(triggered(bool)),
-                     m_mapScene, SLOT(showSecondLayer()));
-    QObject::connect(ui->actionHigh_layer_1, SIGNAL(triggered(bool)),
-                     m_mapScene, SLOT(showThirdLayer()));
-    QObject::connect(ui->actionHigh_layer_2, SIGNAL(triggered(bool)),
-                     m_mapScene, SLOT(showFourthLayer()));
-    QObject::connect(ui->actionBlocking_layer, SIGNAL(triggered(bool)),
-                     m_mapScene, SLOT(showBlockingLayer()));
-    QObject::connect(ui->actionStarting_point, SIGNAL(triggered(bool)),
-                     m_mapScene, SLOT(showStartingPointLayer()));
+    /*
     QObject::connect(ui->actionPen, SIGNAL(triggered(bool)),
                      m_mapScene, SLOT(setPenTool()));
     QObject::connect(ui->actionRectangle,
@@ -125,6 +125,7 @@ void MainWindow::_connectScenes()
                      SIGNAL(triggered(bool)),
                      m_mapScene,
                      SLOT(setSelectionTool()));
+    */
 
 }
 
@@ -147,15 +148,18 @@ void MainWindow::_closeCurrentProject()
                         m_mapScene, SLOT(showBlockingLayer()));
     QObject::disconnect(ui->actionStarting_point, SIGNAL(triggered(bool)),
                         m_mapScene, SLOT(showStartingPointLayer()));
+
+    /*
     QObject::disconnect(ui->actionPen, SIGNAL(triggered(bool)),
                         m_mapScene, SLOT(setPenTool()));
     QObject::disconnect(ui->actionPen, SIGNAL(trigerred(bool)),
                         m_mapScene, SLOT(setPenTool()));
+
     QObject::disconnect(ui->actionSelection,
                         SIGNAL(triggered(bool)),
                         m_mapScene,
                         SLOT(setSelectionTool()));
-
+    */
     delete m_chipsetScene;
     delete m_mapScene;
 }
@@ -212,7 +216,7 @@ void MainWindow::_loadProject(const QString& projectDirectory) {
 
     _connectScenes();
 
-    m_currentProject = std::make_shared<EditorProject>(
+    m_currentProject = std::make_shared<Editor::Project>(
         std::filesystem::path(projectDirectory.toStdString()).string()
     );
 
@@ -243,7 +247,7 @@ void MainWindow::saveProject() {
 
 
 void MainWindow::_initializeProject(const QString& projectDirectory) {
-    EditorProject::create(projectDirectory);
+    Editor::Project::create(projectDirectory);
 }
 
 void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
@@ -251,19 +255,24 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
 
     QString mapName(mapModel->itemFromIndex(selectedIndex)->text());
     qDebug() << mapName;
-    std::shared_ptr<EditorMap> map(
+    std::shared_ptr<Editor::Map> map(
         m_currentProject->document(mapName)->map());
     m_chipsetScene->setChipset(
         (m_currentProject->coreProject().projectPath()
          / "chipsets" / map->chipset()).string().c_str()
     );
+
     m_mapScene->setMapDocument(m_currentProject->document(mapName));
 
-    // Select some default layer
-    if (!ui->actionLow_layer_1->isChecked() &&
-        !ui->actionLow_layer_2->isChecked() &&
-            !ui->actionHigh_layer_1->isChecked()) {
-        ui->actionLow_layer_1->trigger();
+    for (const auto& layer: m_mapScene->graphicLayers()) {
+        // XXX: connect the layers to the main window in order
+        // to publish tools.
+        QObject::connect(
+            layer,
+            SIGNAL(layerSelected(GraphicMap::GraphicLayer*)),
+            this,
+            SLOT(publishTools(GraphicMap::GraphicLayer*))
+        );
     }
 
     ui->graphicsViewChipset->viewport()->update();
@@ -271,6 +280,13 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
                                             0,
                                             map->width()*16,
                                             map->height()*16));
+
+    auto mapLevelsList = reinterpret_cast<Widget::MapLevelsList::Widget*>(
+        ui->dockWidgetMapLevelsList->widget()
+    );
+
+    mapLevelsList->setEditorMap(map);
+    removeTools();
 }
 
 void MainWindow::onCancel()
@@ -300,4 +316,24 @@ void MainWindow::onPaste()
     QKeyEvent* keyEvent = new QKeyEvent(QEvent::KeyPress, Qt::Key_V,
                                         Qt::ControlModifier);
     QCoreApplication::postEvent(m_mapScene, keyEvent);
+}
+
+void MainWindow::removeTools() {
+    qDebug() << "Remove tools";
+    m_mapScene->unsetDrawingTool();
+    m_chipsetScene->unsetPaletteTool();
+    ui->widgetDrawingToolbox->clear();
+}
+
+void MainWindow::publishTools(GraphicMap::GraphicLayer* layer) {
+    qDebug() << "Publish tools!";
+    // XXX: if we are publishing (new tools), make the map scene
+    // unselect its previous tool (if any).
+    // ...
+    // Not sure this is a fancy way to do so, though.
+    m_mapScene->unsetDrawingTool();
+    m_chipsetScene->unsetPaletteTool();
+    std::vector<DrawingTool::DrawingTool*>&& tools(layer->drawingTools());
+    auto toolbox = ui->widgetDrawingToolbox;
+    toolbox->reset(m_mapScene, m_chipsetScene, tools);
 }

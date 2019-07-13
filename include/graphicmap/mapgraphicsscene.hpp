@@ -7,12 +7,19 @@
 #include <memory>
 #include <vector>
 
-class EditorProject;
+namespace DrawingTool {
+class DrawingTool;
+} // namespace DrawingTool
+
+namespace Editor {
+class Project;
+class Map;
+} // namespace Editor
 
 namespace Dummy {
 namespace Core {
 class GraphicMap;
-using BlockingLayer = std::vector<std::uint8_t>;
+class BlockingLayer;
 
 } // namespace Core
 } // namespace Dummy
@@ -21,12 +28,7 @@ namespace Misc {
     class MapDocument;
 }
 
-class EditorMap;
-
-
 namespace GraphicMap {
-
-class DrawingTool;
 
 class GraphicLayer;
 class BlockingGraphicLayer;
@@ -34,7 +36,8 @@ class StartingPointLayer;
 class VisibleGraphicLayer;
 class MapSceneLayer;
 
-class PaintingLayerState;
+using GraphicLayers = std::vector<GraphicLayer*>;
+
 class MapGraphicsScene : public QGraphicsScene
 {
     Q_OBJECT
@@ -42,7 +45,7 @@ public:
     MapGraphicsScene(QObject* parent = nullptr);
     virtual ~MapGraphicsScene() override;
 
-    inline const std::shared_ptr<EditorMap> map() const {
+    inline const std::shared_ptr<Editor::Map> map() const {
         return m_map;
     }
 
@@ -50,81 +53,39 @@ public:
         return m_mapDocument;
     }
 
-    inline VisibleGraphicLayer* firstLayer() const {
-        return m_firstLayer;
-    }
-
-    inline VisibleGraphicLayer* secondLayer() const {
-        return m_secondLayer;
-    }
-
-    inline VisibleGraphicLayer* thirdLayer() const {
-        return m_thirdLayer;
-    }
-
-    inline VisibleGraphicLayer* fourthLayer() const {
-        return m_fourthLayer;
-    }
-
-    inline BlockingGraphicLayer* blockingLayer() const
-    {
-        return m_blockingLayer;
-    }
-
-    inline StartingPointLayer* startingPointLayer() const
-    {
-        return m_startingPointLayer;
-    }
-
-    inline MapSceneLayer* activeLayer() const {
-        return m_activeLayer;
-    }
-
     inline const QRect& chipsetSelection() const {
         return m_chipsetSelection;
     }
 
-    MapGraphicsScene& setPaitingLayerState(PaintingLayerState*);
-    MapGraphicsScene& setPaitingTool(DrawingTool*);
-
     MapGraphicsScene& setMapDocument(
         const std::shared_ptr<Misc::MapDocument>& mapDocument);
 
-    MapGraphicsScene& setActiveLayer(MapSceneLayer* layer) {
-        m_activeLayer = layer;
-        return *this;
+    const GraphicLayers& graphicLayers() const {
+        return m_graphicLayers;
     }
 
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
-        override;
-    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
-        override;
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
-        override;
-    virtual void keyPressEvent(QKeyEvent*) override;
-    virtual void keyReleaseEvent(QKeyEvent*) override;
+    void mousePressEvent(QGraphicsSceneMouseEvent*) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent*) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
+    void keyPressEvent(QKeyEvent*) override;
+    void keyReleaseEvent(QKeyEvent*) override;
+    bool eventFilter(QObject*, QEvent*) override;
+    void drawGrid(quint16 width, quint16 height, unsigned int unit);
 
-    virtual bool eventFilter(QObject*, QEvent*) override;
 public slots:
     void changeMapDocument(
-        const std::shared_ptr<Misc::MapDocument>& mapDocument);
-    void changeSelection(const QRect& selection);
-    void showFirstLayer();
-    void showSecondLayer();
-    void showThirdLayer();
-    void showFourthLayer();
-    void showBlockingLayer();
-    void showStartingPointLayer();
-
-    void setPenTool();
-    void setRectangleTool();
-    void setSelectionTool();
+        const std::shared_ptr<Misc::MapDocument>& mapDocument
+    );
+    void unsetDrawingTool();
+    void setDrawingTool(::DrawingTool::DrawingTool*);
 
     void adjustLayers() const;
 
+    /*
     const PaintingLayerState& paintingLayerState() const {
         return *m_paintingLayerState;
     }
+    */
 
 private:
     void _cleanLayer(QVector<QGraphicsPixmapItem*>& layer);
@@ -139,23 +100,18 @@ private:
     void _drawDarkFilter();
 
     std::shared_ptr<Misc::MapDocument> m_mapDocument;
-    std::shared_ptr<EditorMap> m_map;
+    std::shared_ptr<Editor::Map> m_map;
     QGraphicsRectItem* m_darkFilter;
     QPixmap m_mapChipset;
     QRect m_chipsetSelection;
 
     bool m_isDrawing;
 
-    VisibleGraphicLayer* m_firstLayer;
-    VisibleGraphicLayer* m_secondLayer;
-    VisibleGraphicLayer* m_thirdLayer;
-    VisibleGraphicLayer* m_fourthLayer;
-    BlockingGraphicLayer* m_blockingLayer;
-    MapSceneLayer* m_activeLayer; // Either 1st, 2nd or 3rd layer.
-    StartingPointLayer* m_startingPointLayer;
+    DrawingTool::DrawingTool* m_drawingTool;
 
-    PaintingLayerState* m_paintingLayerState;
-    DrawingTool* m_drawingTool;
+    GraphicLayers m_graphicLayers;
+
+    QVector<QGraphicsItem*> m_gridItems;
 
 
 };

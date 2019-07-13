@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MapLevelsList</class>
+ <widget class="QWidget" name="MapLevelsList">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>167</width>
+    <height>307</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTreeView" name="treeViewLevels">
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="itemsExpandable">
+      <bool>true</bool>
+     </property>
+     <property name="expandsOnDoubleClick">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButtonNewLayer">
+     <property name="text">
+      <string>New layer</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButtonNewLevel">
+     <property name="text">
+      <string>New level</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>treeViewLevels</sender>
+   <signal>doubleClicked(QModelIndex)</signal>
+   <receiver>MapLevelsList</receiver>
+   <slot>toggleLayerVisibleState(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>84</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>193</x>
+     <y>353</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeViewLevels</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>MapLevelsList</receiver>
+   <slot>selectLayer(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>128</x>
+     <y>180</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>214</x>
+     <y>440</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>selectLayer(QModelIndex)</slot>
+  <slot>setSelected(QModelIndex)</slot>
+ </slots>
+</ui>
