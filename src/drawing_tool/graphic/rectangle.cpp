@@ -22,8 +22,8 @@ void Rectangle::mapMouseMoveEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
     if (m_mouseClicked)
     {
         QPoint pt(mouseEvent->scenePos().toPoint());
-        pt.setX(pt.x() + (15 - (pt.x() % 16)));
-        pt.setY(pt.y() + (15 - (pt.y() % 16)));
+        pt.setX(pt.x() + (16 - (pt.x() % 16)));
+        pt.setY(pt.y() + (16 - (pt.y() % 16)));
         qDebug() << m_rectangle;
         m_rectangle.setBottomRight(pt);
 
@@ -87,7 +87,9 @@ void Rectangle::drawChipsetSelectionInRectangle() {
 
 void Rectangle::mapMouseReleaseEvent(::QGraphicsSceneMouseEvent* event) {
     m_mouseClicked = false;
-    applyChipsetSelectionInRectangle();
+    if (nullptr != m_selectionItem) {
+        applyChipsetSelectionInRectangle();
+    }
     m_rectangle = QRect(0, 0, 0, 0);
 
     if (nullptr != m_hoverItem) {
