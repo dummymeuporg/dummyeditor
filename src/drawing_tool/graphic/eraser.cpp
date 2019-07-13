@@ -20,19 +20,37 @@ Eraser::Eraser(GraphicMap::VisibleGraphicLayer& visibleGraphicLayer)
 {}
 
 void Eraser::mapMouseMoveEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
-    QPoint pt(mouseEvent->scenePos().toPoint());
-    pt.setX(pt.x() - (pt.x() % 16));
-    pt.setY(pt.y() - (pt.y() % 16));
+    QPoint point(mouseEvent->scenePos().toPoint());
+    point.setX(point.x() - (point.x() % 16));
+    point.setY(point.y() - (point.y() % 16));
     if (m_mouseClicked) {
         // XXX : remove the tile.
+        m_visibleGraphicLayer.setTile(
+            quint16(point.x() - (point.x() % 16)),
+            quint16(point.y() - (point.y() % 16)),
+            -1,
+            -1
+        );
     }
 }
 
-void Eraser::mapMousePressEvent(::QGraphicsSceneMouseEvent* event) {
+void Eraser::mapMousePressEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
+    QPoint point(mouseEvent->scenePos().toPoint());
+    point.setX(point.x() - (point.x() % 16));
+    point.setY(point.y() - (point.y() % 16));
     qDebug() << "Eraser press.";
 
     // XXX: remove tile.
     m_mouseClicked = true;
+
+    m_visibleGraphicLayer.setTile(
+        quint16(point.x() - (point.x() % 16)),
+        quint16(point.y() - (point.y() % 16)),
+        -1,
+        -1
+    );
+
+
 }
 
 void Eraser::mapMouseReleaseEvent(::QGraphicsSceneMouseEvent* event) {
