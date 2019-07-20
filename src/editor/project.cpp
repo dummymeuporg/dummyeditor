@@ -46,7 +46,9 @@ Project::Project(const std::string& projectFolder)
         m_startingPoint = std::make_unique<StartingPoint>(
             attributes.namedItem("map").nodeValue().toStdString().c_str(),
             attributes.namedItem("x").nodeValue().toUShort(),
-            attributes.namedItem("y").nodeValue().toUShort());
+            attributes.namedItem("y").nodeValue().toUShort(),
+            attributes.namedItem("floor").nodeValue().toUShort()
+        );
     }
 }
 
@@ -116,6 +118,10 @@ void Project::saveProjectFile() {
         startingPointNode.setAttribute("map", m_startingPoint->mapName());
         startingPointNode.setAttribute("x", m_startingPoint->x());
         startingPointNode.setAttribute("y", m_startingPoint->y());
+        startingPointNode.setAttribute(
+            "floor",
+            static_cast<std::uint16_t>(m_startingPoint->floor())
+        );
         projectNode.appendChild(startingPointNode);
     }
 

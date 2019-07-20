@@ -8,8 +8,11 @@ StartingPoint::StartingPoint()
 }
 
 StartingPoint::StartingPoint(
-    const char* mapName, std::uint16_t x, std::uint16_t y
-) : m_mapName(mapName), m_x(x), m_y(y)
+    const char* mapName,
+    std::uint16_t x,
+    std::uint16_t y,
+    std::uint8_t floor
+) : m_mapName(mapName), m_x(x), m_y(y), m_floor(floor)
 {}
 
 StartingPoint& StartingPoint::setMapName(const char* mapName)
@@ -27,6 +30,11 @@ StartingPoint& StartingPoint::setX(std::uint16_t x)
 StartingPoint& StartingPoint::setY(std::uint16_t y)
 {
     m_y = y;
+    return *this;
+}
+
+StartingPoint& StartingPoint::setFloor(std::uint8_t floor) {
+    m_floor = floor;
     return *this;
 }
 } // namespace Editor

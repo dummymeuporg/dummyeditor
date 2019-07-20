@@ -96,14 +96,8 @@ VisibleGraphicLayer::setTile(
         }
         else
         {
-            if (nullptr != m_layerItems[index])
-            {
-                //m_mapGraphicsScene->removeItem(m_layerItems[index]);
-                m_layerItems[index] = nullptr;
-                //m_layer.setTile(x / 16, y / 16, -1, -1);
-                m_graphicLayer[index] =
-                    std::pair<std::int8_t, std::int8_t>(-1, -1);
-            }
+            m_graphicLayer[index] =
+                std::pair<std::int8_t, std::int8_t>(-1, -1);
         }
     }
 
