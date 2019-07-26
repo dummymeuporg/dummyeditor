@@ -4,7 +4,8 @@
 #include <QDebug>
 #include <QGraphicsPixmapItem>
 
-#include "core/graphic_layer.hpp"
+#include <dummy/core/graphic_layer.hpp>
+
 #include "drawing_tool/graphic/pen.hpp"
 
 #include "editor/map.hpp"

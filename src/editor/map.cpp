@@ -1,10 +1,10 @@
 #include <QDebug>
 
-#include "core/blocking_layer.hpp"
-#include "core/graphic_layer.hpp"
+#include <dummy/core/blocking_layer.hpp>
+#include <dummy/core/graphic_layer.hpp>
 
-#include "local/level.hpp"
-#include "local/project.hpp"
+#include <dummy/local/level.hpp>
+#include <dummy/local/project.hpp>
 
 #include "editor/blocking_layer.hpp"
 #include "editor/graphic_layer.hpp"

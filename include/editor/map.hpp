@@ -4,7 +4,7 @@
 #include <memory>
 #include <string>
 
-#include "local/map.hpp"
+#include <dummy/local/map.hpp>
 
 #include "editor/layer.hpp"
 #include "editor/level.hpp"
