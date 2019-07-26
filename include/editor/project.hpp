@@ -6,7 +6,7 @@
 #include <QMap>
 #include <QString>
 
-#include "local/project.hpp"
+#include <dummy/local/project.hpp>
 
 #include "misc/mapdocument.hpp"
 #include "misc/map_tree_model.hpp"
