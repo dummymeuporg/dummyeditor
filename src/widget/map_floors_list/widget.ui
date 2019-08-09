@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MapLevelsList</class>
- <widget class="QWidget" name="MapLevelsList">
+ <class>MapFloorsList</class>
+ <widget class="QWidget" name="MapFloorsList">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QTreeView" name="treeViewLevels">
+    <widget class="QTreeView" name="treeViewFloors">
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
@@ -35,9 +35,9 @@
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="pushButtonNewLevel">
+    <widget class="QPushButton" name="pushButtonNewFloor">
      <property name="text">
-      <string>New level</string>
+      <string>New floor</string>
      </property>
     </widget>
    </item>
@@ -46,9 +46,9 @@
  <resources/>
  <connections>
   <connection>
-   <sender>treeViewLevels</sender>
+   <sender>treeViewFloors</sender>
    <signal>doubleClicked(QModelIndex)</signal>
-   <receiver>MapLevelsList</receiver>
+   <receiver>MapFloorsList</receiver>
    <slot>toggleLayerVisibleState(QModelIndex)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -62,9 +62,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>treeViewLevels</sender>
+   <sender>treeViewFloors</sender>
    <signal>clicked(QModelIndex)</signal>
-   <receiver>MapLevelsList</receiver>
+   <receiver>MapFloorsList</receiver>
    <slot>selectLayer(QModelIndex)</slot>
    <hints>
     <hint type="sourcelabel">

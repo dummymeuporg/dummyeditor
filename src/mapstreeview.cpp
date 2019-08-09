@@ -5,7 +5,7 @@
 #include "editor/blocking_layer.hpp"
 #include "editor/graphic_layer.hpp"
 #include "editor/map.hpp"
-#include "editor/level.hpp"
+#include "editor/floor.hpp"
 #include "editor/project.hpp"
 
 #include "mapstreeview.hpp"
@@ -103,31 +103,31 @@ void MapsTreeView::_onNewMapAction() {
             *m_project, mapName, map
         );
 
-        // XXX: For now, create one level with four layers.
+        // XXX: For now, create one floor with four layers.
         // The layers will have for positions :
         // -1 (the lowest one)
         // 0 (the one juste below the character)
         // 1 (the one juste above the character)
         // 2 (another one above)
-        Dummy::Local::Level level(*map);
-        level.addGraphicLayer(
+        Dummy::Local::Floor floor(*map);
+        floor.addGraphicLayer(
             -1,
             Dummy::Core::GraphicLayer(dlg.getWidth(), dlg.getHeight())
         );
-        level.addGraphicLayer(
+        floor.addGraphicLayer(
             0,
             Dummy::Core::GraphicLayer(dlg.getWidth(), dlg.getHeight())
         );
-        level.addGraphicLayer(
+        floor.addGraphicLayer(
             1,
             Dummy::Core::GraphicLayer(dlg.getWidth(), dlg.getHeight())
         );
-        level.addGraphicLayer(
+        floor.addGraphicLayer(
             2,
             Dummy::Core::GraphicLayer(dlg.getWidth(), dlg.getHeight())
         );
 
-        map->addLevel(std::make_unique<Editor::Level>(level));
+        map->addFloor(std::make_unique<Editor::Floor>(floor));
         map->resize(dlg.getWidth(), dlg.getHeight());
 
         map->save();

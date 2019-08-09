@@ -72,8 +72,8 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument
     m_graphicLayers.clear();
 
     int zindex = 0;
-    for (const auto& level: m_map->levels()) {
-        for (const auto& [position, layer]: level->graphicLayers()) {
+    for (const auto& floor: m_map->floors()) {
+        for (const auto& [position, layer]: floor->graphicLayers()) {
             qDebug() << "Position: " << position;
 
             auto graphicLayer = new VisibleGraphicLayer(
@@ -102,7 +102,7 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument
 
         // Add blocking layer
         auto graphicLayer = new BlockingGraphicLayer(
-            level->blockingLayer(),
+            floor->blockingLayer(),
             *this,
             ++zindex
         );

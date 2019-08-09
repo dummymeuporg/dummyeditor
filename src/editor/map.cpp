@@ -3,12 +3,12 @@
 #include <dummy/core/blocking_layer.hpp>
 #include <dummy/core/graphic_layer.hpp>
 
-#include <dummy/local/level.hpp>
+#include <dummy/local/floor.hpp>
 #include <dummy/local/project.hpp>
 
 #include "editor/blocking_layer.hpp"
 #include "editor/graphic_layer.hpp"
-#include "editor/level.hpp"
+#include "editor/floor.hpp"
 #include "editor/map.hpp"
 
 namespace Editor {
@@ -20,8 +20,8 @@ Map::~Map() {}
 void Map::load() {
     Dummy::Local::Map::load();
 
-    for (auto& level: m_levels) {
-        m_editorLevels.push_back(std::make_unique<Level>(level));
+    for (auto& floor: m_floors) {
+        m_editorFloors.push_back(std::make_unique<Floor>(floor));
     }
 
 }
@@ -88,22 +88,22 @@ void Map::resizeBlockingLayer(
 }
 
 void Map::resize(std::uint16_t width, std::uint16_t height) {
-    for (auto& level: m_editorLevels) {
-        resizeLevel(*level, width, height);
+    for (auto& floor: m_editorFloors) {
+        resizeFloor(*floor, width, height);
     }
     m_width = width;
     m_height = height;
 }
 
 void
-Map::resizeLevel(
-    Editor::Level& level,
+Map::resizeFloor(
+    Editor::Floor& floor,
     std::uint16_t width,
     std::uint16_t height
 ) {
-    resizeBlockingLayer(level.blockingLayer(), width, height);
+    resizeBlockingLayer(floor.blockingLayer(), width, height);
 
-    for (auto& [position, layer]: level.graphicLayers()) {
+    for (auto& [position, layer]: floor.graphicLayers()) {
         resizeGraphicLayer(
             *layer,
             width,
@@ -123,11 +123,11 @@ void Map::saveBlockingLayers() {
               sizeof(std::uint32_t));
 
     // Write the blocking layers
-    for (auto& level: m_levels) {
+    for (auto& floor: m_floors) {
         ofs.write(
-            reinterpret_cast<const char*>(level.blockingLayer().data()),
+            reinterpret_cast<const char*>(floor.blockingLayer().data()),
             static_cast<std::streamsize>(
-                level.blockingLayer().size() * sizeof(std::int8_t)
+                floor.blockingLayer().size() * sizeof(std::int8_t)
             )
         );
     }
@@ -156,8 +156,8 @@ void Map::saveGraphicLayers() {
     ofs.write(reinterpret_cast<const char*>(&m_height),
               sizeof(std::uint16_t));
 
-    // write the levels count
-    ofs.write(reinterpret_cast<char*>(&m_levelsCount), sizeof(std::uint8_t));
+    // write the floors count
+    ofs.write(reinterpret_cast<char*>(&m_floorsCount), sizeof(std::uint8_t));
 
     // write the chipset
     _writeStdString(ofs, m_chipset);
@@ -165,9 +165,9 @@ void Map::saveGraphicLayers() {
     // write the music
     _writeStdString(ofs, m_music);
 
-    // write the levels
-    for(auto& level: m_levels) {
-        writeLevel(ofs, level);
+    // write the floors
+    for(auto& floor: m_floors) {
+        writeFloor(ofs, floor);
     }
 }
 
@@ -182,18 +182,18 @@ void Map::_writeStdString(std::ofstream& ofs,
 }
 
 void
-Map::writeLevel(
+Map::writeFloor(
     std::ofstream& ofs,
-    const Dummy::Local::Level& level
+    const Dummy::Local::Floor& floor
 ) const {
     // Write the layers count.
-    std::uint8_t layersCount = level.graphicLayers().size();
+    std::uint8_t layersCount = floor.graphicLayers().size();
     ofs.write(
         reinterpret_cast<char*>(&layersCount),
         sizeof(std::uint8_t)
     );
 
-    for (const auto& [position, layer]: level.graphicLayers()) {
+    for (const auto& [position, layer]: floor.graphicLayers()) {
         ofs.write(
             reinterpret_cast<const char*>(&position),
             sizeof(std::int8_t)
@@ -207,10 +207,10 @@ Map::writeLevel(
     }
 }
 
-void Map::addLevel(std::unique_ptr<Editor::Level> level) {
-    m_levels.push_back(level->localLevel());
-    m_editorLevels.push_back(std::move(level));
-    ++m_levelsCount;
+void Map::addFloor(std::unique_ptr<Editor::Floor> floor) {
+    m_floors.push_back(floor->localFloor());
+    m_editorFloors.push_back(std::move(floor));
+    ++m_floorsCount;
 }
 
 

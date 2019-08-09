@@ -8,15 +8,15 @@ class Map;
 } // namespace Editor
 
 namespace Ui {
-class MapLevelsList;
+class MapFloorsList;
 } // namespace Ui
 
 
 namespace Widget {
-namespace MapLevelsList {
+namespace MapFloorsList {
 
 namespace Model {
-class MapLevelTreeModel;
+class MapFloorTreeModel;
 } // namespace Model
 
 
@@ -28,7 +28,7 @@ class MapLevelTreeModel;
 // since Qt Designer does not seem to like it.
 // Instead, one has to set "void toggleLayerVisibleState(QModelIndex);".
 // Though, "QModelIndex" would be considered here to be in the
-// "Widget::MapLevelsList" namespace (if it ever exists). This is ugly.
+// "Widget::MapFloorsList" namespace (if it ever exists). This is ugly.
 // So the following directive will create an alias that points on the
 // global namespace's QModelIndex.
 //
@@ -40,8 +40,8 @@ class Widget : public ::QWidget {
 public:
     Widget(::QWidget* parent = nullptr);
     void setEditorMap(std::shared_ptr<Editor::Map>);
-    const Model::MapLevelTreeModel* mapLevelTreeModel() const {
-        return m_mapLevelTreeModel;
+    const Model::MapFloorTreeModel* mapFloorTreeModel() const {
+        return m_mapFloorTreeModel;
     }
 signals:
     void selectedLayerChanged();
@@ -50,10 +50,10 @@ public slots:
     void toggleLayerVisibleState(QModelIndex);
 private:
     void reset();
-    Ui::MapLevelsList* ui;
+    Ui::MapFloorsList* ui;
     std::shared_ptr<Editor::Map> m_editorMap;
-    Model::MapLevelTreeModel* m_mapLevelTreeModel;
+    Model::MapFloorTreeModel* m_mapFloorTreeModel;
 };
 
-} // namespace MapLevelsList
+} // namespace MapFloorsList
 } // namespace Widget

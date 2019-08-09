@@ -3,7 +3,7 @@
 #include <QStandardItem>
 
 namespace Widget {
-namespace MapLevelsList {
+namespace MapFloorsList {
 namespace Model {
 
 class MapTreeItem : public QStandardItem {
@@ -14,5 +14,5 @@ public:
 };
 
 } // namespace Model
-} // namespace MapLevelsList
+} // namespace MapFloorsList
 } // namespace Widget
