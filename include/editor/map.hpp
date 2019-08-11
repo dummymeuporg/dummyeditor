@@ -7,7 +7,7 @@
 #include <dummy/local/map.hpp>
 
 #include "editor/layer.hpp"
-#include "editor/level.hpp"
+#include "editor/floor.hpp"
 
 namespace Dummy {
 namespace Core {
@@ -16,8 +16,8 @@ class GraphicLayer;
 } // namespace Dummy
 
 namespace Editor {
-class Level;
-using Levels = std::vector<std::unique_ptr<Level>>;
+class Floor;
+using Floors = std::vector<std::unique_ptr<Floor>>;
 
 class Map : public Dummy::Local::Map {
 public:
@@ -31,22 +31,22 @@ public:
     void save();
     void resize(std::uint16_t, std::uint16_t);
 
-    std::uint8_t levelsCount() const {
-        return m_levelsCount;
+    std::uint8_t floorsCount() const {
+        return m_floorsCount;
     }
 
-    Level& levelAt(std::uint8_t index) {
-        return *m_editorLevels[index];
+    Floor& floorAt(std::uint8_t index) {
+        return *m_editorFloors[index];
     }
 
-    const Levels& levels() const {
-        return m_editorLevels;
+    const Floors& floors() const {
+        return m_editorFloors;
     }
 
-    void addLevel(std::unique_ptr<Editor::Level>);
+    void addFloor(std::unique_ptr<Editor::Floor>);
 
-    GraphicLayer& graphicLayerAt(std::uint8_t level, std::int8_t position) {
-        return m_editorLevels[level]->graphicLayerAt(position);
+    GraphicLayer& graphicLayerAt(std::uint8_t floor, std::int8_t position) {
+        return m_editorFloors[floor]->graphicLayerAt(position);
     }
 
     void load();
@@ -55,7 +55,7 @@ private:
     void saveBlockingLayers();
     void saveGraphicLayers();
 
-    void resizeLevel(Editor::Level&, std::uint16_t, std::uint16_t);
+    void resizeFloor(Editor::Floor&, std::uint16_t, std::uint16_t);
     void resizeBlockingLayer(
         Editor::BlockingLayer&,
         std::uint16_t,
@@ -68,7 +68,7 @@ private:
     );
 
     static void _writeStdString(std::ofstream&, const std::string&);
-    void writeLevel(std::ofstream&, const Dummy::Local::Level&) const;
-    Levels m_editorLevels;
+    void writeFloor(std::ofstream&, const Dummy::Local::Floor&) const;
+    Floors m_editorFloors;
 };
 } // namespace Editor

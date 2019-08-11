@@ -227,14 +227,14 @@
               <item row="4" column="0">
                <widget class="QLabel" name="label_5">
                 <property name="text">
-                 <string>Max level :</string>
+                 <string>Max floor :</string>
                 </property>
                </widget>
               </item>
               <item row="5" column="0">
                <widget class="QLabel" name="label_6">
                 <property name="text">
-                 <string>Level up point :</string>
+                 <string>Floor up point :</string>
                 </property>
                </widget>
               </item>
@@ -562,11 +562,11 @@
    <addaction name="actionPaste"/>
    <addaction name="separator"/>
   </widget>
-  <widget class="QDockWidget" name="dockWidgetMapLevelsList">
+  <widget class="QDockWidget" name="dockWidgetMapFloorsList">
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
-   <widget class="Widget::MapLevelsList::Widget" name="widgetMapLevelsList"/>
+   <widget class="Widget::MapFloorsList::Widget" name="widgetMapFloorsList"/>
   </widget>
   <widget class="QDockWidget" name="dockWidgetDrawingToolbox">
    <attribute name="dockWidgetArea">
@@ -997,9 +997,9 @@
    <header>mapstreeview.hpp</header>
   </customwidget>
   <customwidget>
-   <class>Widget::MapLevelsList::Widget</class>
+   <class>Widget::MapFloorsList::Widget</class>
    <extends>QWidget</extends>
-   <header>widget/map_levels_list/widget.hpp</header>
+   <header>widget/map_floors_list/widget.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
