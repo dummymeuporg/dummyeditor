@@ -10,16 +10,16 @@ class Map;
 } // namespace Editor
 
 namespace Widget {
-namespace MapLevelsList {
+namespace MapFloorsList {
 namespace Model {
 class MapTreeItem;
-class MapLevelTreeModel : public QStandardItemModel {
+class MapFloorTreeModel : public QStandardItemModel {
 public:
-    MapLevelTreeModel(std::shared_ptr<Editor::Map>);
+    MapFloorTreeModel(std::shared_ptr<Editor::Map>);
     MapTreeItem* mapTreeItemFromIndex(const QModelIndex&) const;
 private:
     std::shared_ptr<Editor::Map> m_editorMap;
 };
 } // namespace Model
-} // namespace MapLevelsList
+} // namespace MapFloorsList
 } // namespace Widget

@@ -2,16 +2,16 @@
 #include <map>
 #include <memory>
 
-#include <dummy/local/level.hpp>
+#include <dummy/local/floor.hpp>
 
 namespace Editor {
 class BlockingLayer;
 class GraphicLayer;
 using GraphicLayers = std::map<std::int8_t, std::unique_ptr<GraphicLayer>>;
 
-class Level{
+class Floor{
 public:
-    Level(Dummy::Local::Level&);
+    Floor(Dummy::Local::Floor&);
     GraphicLayer& graphicLayerAt(std::int8_t position);
 
     const GraphicLayers& graphicLayers() const {
@@ -34,11 +34,11 @@ public:
         return m_graphicLayers;
     }
 
-    Dummy::Local::Level& localLevel()  {
-        return m_level;
+    Dummy::Local::Floor& localFloor()  {
+        return m_floor;
     }
 private:
-    Dummy::Local::Level& m_level;
+    Dummy::Local::Floor& m_floor;
     std::unique_ptr<BlockingLayer> m_blockingLayer;
     GraphicLayers m_graphicLayers;
     bool m_visible;

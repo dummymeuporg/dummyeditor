@@ -22,7 +22,7 @@
 #include "graphicmap/mapgraphicsscene.hpp"
 #include "mainwindow.hpp"
 #include "mapeditdialog.hpp"
-#include "widget/map_levels_list/widget.hpp"
+#include "widget/map_floors_list/widget.hpp"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -281,11 +281,11 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
                                             map->width()*16,
                                             map->height()*16));
 
-    auto mapLevelsList = reinterpret_cast<Widget::MapLevelsList::Widget*>(
-        ui->dockWidgetMapLevelsList->widget()
+    auto mapFloorsList = reinterpret_cast<Widget::MapFloorsList::Widget*>(
+        ui->dockWidgetMapFloorsList->widget()
     );
 
-    mapLevelsList->setEditorMap(map);
+    mapFloorsList->setEditorMap(map);
     removeTools();
 }
 

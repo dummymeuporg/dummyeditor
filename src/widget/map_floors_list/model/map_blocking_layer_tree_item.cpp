@@ -2,10 +2,10 @@
 
 #include "editor/blocking_layer.hpp"
 
-#include "widget/map_levels_list/model/map_blocking_layer_tree_item.hpp"
+#include "widget/map_floors_list/model/map_blocking_layer_tree_item.hpp"
 
 namespace Widget {
-namespace MapLevelsList {
+namespace MapFloorsList {
 namespace Model {
 
 MapBlockingLayerTreeItem::MapBlockingLayerTreeItem(
@@ -36,5 +36,5 @@ void MapBlockingLayerTreeItem::setSelected() {
 }
 
 } // namespace Model
-} // namespace MapLevelsList
+} // namespace MapFloorsList
 } // namespace Widget

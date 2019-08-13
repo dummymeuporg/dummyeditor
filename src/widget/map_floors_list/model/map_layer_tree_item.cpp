@@ -1,9 +1,9 @@
 #include "editor/layer.hpp"
 
-#include "widget/map_levels_list/model/map_layer_tree_item.hpp"
+#include "widget/map_floors_list/model/map_layer_tree_item.hpp"
 
 namespace Widget {
-namespace MapLevelsList {
+namespace MapFloorsList {
 namespace Model {
 
 
@@ -22,5 +22,5 @@ void MapLayerTreeItem::setVisible(bool visible) {
 }
 
 } // namespace Model
-} // namespace MapLevelsList
+} // namespace MapFloorsList
 } // namespace Widget
