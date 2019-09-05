@@ -40,6 +40,10 @@ void Pen::mapMouseMoveEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
 void Pen::mapMousePressEvent(::QGraphicsSceneMouseEvent* event) {
     qDebug() << "Pen press.";
 
+    if (nullptr == m_selectionItem) {
+        return;
+    }
+
     // XXX: set tiles.
     const QPoint& point(event->scenePos().toPoint());
     const QRect& selectionRect(m_selectionItem->pixmap().rect());

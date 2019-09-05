@@ -71,6 +71,7 @@ public:
     void keyReleaseEvent(QKeyEvent*) override;
     bool eventFilter(QObject*, QEvent*) override;
     void drawGrid(quint16 width, quint16 height, unsigned int unit);
+    void clearGrid();
 
 public slots:
     void changeMapDocument(

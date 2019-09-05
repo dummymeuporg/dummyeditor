@@ -52,6 +52,7 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument
 
     }
     // Clear the scene
+    clearGrid();
     clear();
 
     m_mapDocument = mapDocument;
@@ -142,6 +143,13 @@ void MapGraphicsScene::adjustLayers() const {
     */
 }
 
+void MapGraphicsScene::clearGrid() {
+    for (auto it = m_gridItems.begin(); it != m_gridItems.end(); ++it) {
+        removeItem(*it);
+    }
+    m_gridItems.clear();
+}
+
 void MapGraphicsScene::drawGrid(
     quint16 width,
     quint16 height,
@@ -149,12 +157,7 @@ void MapGraphicsScene::drawGrid(
 {
     QPen pen(Qt::black, 0.5);
 
-    // Remove the previous grid.
-    for (auto it = m_gridItems.begin(); it != m_gridItems.end(); ++it) {
-        removeItem(*it);
-    }
-
-    m_gridItems.clear();
+    clearGrid();
 
     for (int i = 0; i <= width; ++i) {
         QGraphicsItem* item = addLine(
