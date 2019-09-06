@@ -53,7 +53,8 @@ set(DUMMYEDITOR_LINK_LIBRARIES
     Qt5::Xml
     Qt5::Widgets
     dummy
-    ${Boost_LIBRARIES})
+    ${Boost_LIBRARIES}
+    lua)
 
 if (UNIX)
     set(DUMMYEDITOR_LINK_LIBRARIES
