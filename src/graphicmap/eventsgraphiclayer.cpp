@@ -26,8 +26,8 @@ EventsGraphicLayer::EventsGraphicLayer(
         *it = nullptr;
         if (touchEvents.find(index) != std::end(touchEvents))
         {
-            qreal posX((index % (floor.width())) * 8);
-            qreal posY((index / (floor.width())) * 8);
+            qreal posX((index % (floor.width())) * 16);
+            qreal posY((index / (floor.width())) * 16);
             draw(index, quint16(posX), quint16(posY));
         }
     }
