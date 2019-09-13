@@ -4,6 +4,7 @@
 #include <dummy/local/floor.hpp>
 
 #include "editor/blocking_layer.hpp"
+#include "editor/events_layer.hpp"
 #include "editor/graphic_layer.hpp"
 #include "editor/floor.hpp"
 
@@ -13,9 +14,8 @@ Floor::Floor(Dummy::Local::Floor& floor)
       m_blockingLayer(nullptr),
       m_visible(true)
 {
-    // XXX: create blocking layer and graphic layers
     m_blockingLayer = std::make_unique<BlockingLayer>(m_floor.blockingLayer());
-
+    m_eventsLayer = std::make_unique<EventsLayer>(m_floor);
     for (auto& [position, layer]: m_floor.graphicLayers()) {
         m_graphicLayers[position] = std::make_unique<GraphicLayer>(layer);
     }

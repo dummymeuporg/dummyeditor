@@ -9,6 +9,12 @@
 #include "editor/layer.hpp"
 #include "editor/floor.hpp"
 
+extern "C" {
+#include <lua.h>
+#include <lualib.h>
+#include <lauxlib.h>
+}
+
 namespace Dummy {
 namespace Core {
 class GraphicLayer;
@@ -50,7 +56,6 @@ public:
     }
 
     void load();
-
 private:
     void saveBlockingLayers();
     void saveGraphicLayers();
