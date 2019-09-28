@@ -59,6 +59,7 @@ public:
 private:
     void saveBlockingLayers();
     void saveGraphicLayers();
+    void saveEventsFile();
 
     void resizeFloor(Editor::Floor&, std::uint16_t, std::uint16_t);
     void resizeBlockingLayer(

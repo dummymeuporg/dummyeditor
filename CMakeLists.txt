@@ -18,6 +18,9 @@ find_package(Qt5Gui REQUIRED)
 find_package(Qt5Xml REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Boost 1.69.0 REQUIRED)
+find_package(Lua 5.1 REQUIRED)
+
+add_definitions(-D_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING)
 
 macro(GroupSources curdir)
     file(
@@ -38,7 +41,7 @@ macro(GroupSources curdir)
     endforeach()
 endmacro()
 
-link_directories(${Boost_LIBRARY_DIRS})
+link_directories(${Boost_LIBRARY_DIRS} ${LUA_LIBRARIES})
 
 file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.ui")
 file(GLOB_RECURSE HEADERS "include/*.hpp")
@@ -54,7 +57,7 @@ set(DUMMYEDITOR_LINK_LIBRARIES
     Qt5::Widgets
     dummy
     ${Boost_LIBRARIES}
-    lua)
+    ${LUA_LIBRARY})
 
 if (UNIX)
     set(DUMMYEDITOR_LINK_LIBRARIES
@@ -65,8 +68,43 @@ endif (UNIX)
 
 add_executable(dummyeditor ${SOURCES} ${HEADERS} icons.qrc)
 
+IF (WIN32)
+    SET_TARGET_PROPERTIES (dummyeditor
+        PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:console /NODEFAULTLIB:library"
+    )
+    SET_TARGET_PROPERTIES (dummyeditor
+        PROPERTIES LINK_FLAGS_RELEASE
+        "/SUBSYSTEM:windows /ENTRY:mainCRTStartup /NODEFAULTLIB:library"
+    )
+    SET_TARGET_PROPERTIES (dummyeditor
+        PROPERTIES LINK_FLAGS_MINSIZEREL
+        "/SUBSYSTEM:windows /ENTRY:mainCRTStartup /NODEFAULTLIB:library"
+    )
+    SET_TARGET_PROPERTIES (dummyeditor
+        PROPERTIES LINK_FLAGS_RELWITHDEBINFO
+        "/SUBSYSTEM:windows /ENTRY:mainCRTStartup /NODEFAULTLIB:library"
+    )
+
+    # On Windows, need to specify Boost’s lib dir. Sick.
+    if (CMAKE_BUILD_TYPE MATCHES Debug)
+        target_link_directories(dummyeditor
+            PUBLIC
+            ${Boost_LIBRARY_DIR_DEBUG}
+        )
+    endif (CMAKE_BUILD_TYPE MATCHES Debug)
+
+    if (CMAKE_BUILD_TYPE MATCHES Release)
+        target_link_directories(dummyeditor
+            PUBLIC
+            ${Boost_LIBRARY_DIR_RELEASE}
+        )
+    endif (CMAKE_BUILD_TYPE MATCHES Release)
+ENDIF (WIN32)
+
+
+
 target_link_libraries(dummyeditor
     ${DUMMYEDITOR_LINK_LIBRARIES}
 )
 
-target_include_directories(dummyeditor PUBLIC ${Boost_INCLUDE_DIR})
+target_include_directories(dummyeditor PUBLIC ${Boost_INCLUDE_DIR} ${LUA_INCLUDE_DIR})

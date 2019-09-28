@@ -43,6 +43,17 @@ void Map::save() {
     // Save the blocking layer, then the graphic info.
     saveBlockingLayers();
     saveGraphicLayers();
+    saveEventsFile();
+}
+
+void Map::saveEventsFile() {
+    // Simply create the .lua file if it does not exist.
+    std::string filename(m_name + ".lua");
+    fs::path filePath(m_project.projectPath() / "maps" / filename);
+    if (!fs::exists(filePath)) {
+        std::ofstream ofs(filePath);
+        ofs.close();
+    }
 }
 
 void
