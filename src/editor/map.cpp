@@ -7,6 +7,7 @@
 #include <dummy/local/project.hpp>
 
 #include "editor/blocking_layer.hpp"
+#include "editor/events_layer.hpp"
 #include "editor/graphic_layer.hpp"
 #include "editor/floor.hpp"
 #include "editor/map.hpp"
@@ -42,6 +43,17 @@ void Map::save() {
     // Save the blocking layer, then the graphic info.
     saveBlockingLayers();
     saveGraphicLayers();
+    saveEventsFile();
+}
+
+void Map::saveEventsFile() {
+    // Simply create the .lua file if it does not exist.
+    std::string filename(m_name + ".lua");
+    fs::path filePath(m_project.projectPath() / "maps" / filename);
+    if (!fs::exists(filePath)) {
+        std::ofstream ofs(filePath);
+        ofs.close();
+    }
 }
 
 void

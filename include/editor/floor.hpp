@@ -6,6 +6,7 @@
 
 namespace Editor {
 class BlockingLayer;
+class EventsLayer;
 class GraphicLayer;
 using GraphicLayers = std::map<std::int8_t, std::unique_ptr<GraphicLayer>>;
 
@@ -26,6 +27,10 @@ public:
         return *m_blockingLayer;
     }
 
+    EventsLayer& eventsLayer() {
+        return *m_eventsLayer;
+    }
+
     GraphicLayer& graphicLayer(std::int8_t position) {
         return *(m_graphicLayers.at(position));
     }
@@ -40,6 +45,7 @@ public:
 private:
     Dummy::Local::Floor& m_floor;
     std::unique_ptr<BlockingLayer> m_blockingLayer;
+    std::unique_ptr<EventsLayer> m_eventsLayer;
     GraphicLayers m_graphicLayers;
     bool m_visible;
 };

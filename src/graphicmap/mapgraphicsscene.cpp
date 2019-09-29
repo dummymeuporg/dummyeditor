@@ -9,6 +9,7 @@
 
 #include "graphicmap/visiblegraphiclayer.hpp"
 #include "graphicmap/blockinggraphiclayer.hpp"
+#include "graphicmap/eventsgraphiclayer.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
 
 
@@ -107,6 +108,14 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument
             *this,
             ++zindex
         );
+
+        // Add event layer
+        auto eventLayer = new EventsGraphicLayer(
+            floor->eventsLayer(),
+            *this,
+            ++zindex
+        );
+
         m_graphicLayers.push_back(graphicLayer);
 
         QObject::connect(

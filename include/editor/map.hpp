@@ -9,6 +9,12 @@
 #include "editor/layer.hpp"
 #include "editor/floor.hpp"
 
+extern "C" {
+#include <lua.h>
+#include <lualib.h>
+#include <lauxlib.h>
+}
+
 namespace Dummy {
 namespace Core {
 class GraphicLayer;
@@ -50,10 +56,10 @@ public:
     }
 
     void load();
-
 private:
     void saveBlockingLayers();
     void saveGraphicLayers();
+    void saveEventsFile();
 
     void resizeFloor(Editor::Floor&, std::uint16_t, std::uint16_t);
     void resizeBlockingLayer(
