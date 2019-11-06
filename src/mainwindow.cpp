@@ -7,6 +7,7 @@
 #include <QKeyEvent>
 #include <QMessageBox>
 #include <QToolButton>
+#include <QDesktopWidget>
 
 #include "drawing_tool/drawing_tool.hpp"
 
@@ -92,6 +93,21 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphicsViewChipset->scale(2.0, 2.0);
     ui->graphicsViewMap->scale(2.0, 2.0);
 
+
+    //initialising size of qsplitter of general tab
+    QDesktopWidget *desktop = new QDesktopWidget;
+    int desktopWidth = desktop->screenGeometry().width();
+    int desktopHeight = desktop->screenGeometry().height();
+
+    QList<int> desktopSizeListWidth;
+    desktopSizeListWidth.append(desktopWidth/5);
+    desktopSizeListWidth.append(3*desktopWidth/5);
+    ui->splitter_2->setSizes(desktopSizeListWidth);
+
+    QList<int> desktopSizeListHeight;
+    desktopSizeListHeight.append(3*desktopHeight/5);
+    desktopSizeListHeight.append(desktopHeight/5);
+    ui->splitter->setSizes(desktopSizeListHeight);
 }
 
 void MainWindow::_initializeScenes()

@@ -32,56 +32,15 @@
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayoutMapEdition">
-          <item>
-           <widget class="QWidget" name="widgetMapLeftEdition" native="true">
-            <property name="minimumSize">
-             <size>
-              <width>100</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="layoutDirection">
-             <enum>Qt::LeftToRight</enum>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_8">
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QGraphicsView" name="graphicsViewChipset">
-               <property name="mouseTracking">
-                <bool>true</bool>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="MapsTreeView" name="treeViewMaps">
-               <property name="contextMenuPolicy">
-                <enum>Qt::CustomContextMenu</enum>
-               </property>
-               <property name="editTriggers">
-                <set>QAbstractItemView::NoEditTriggers</set>
-               </property>
-               <property name="itemsExpandable">
-                <bool>true</bool>
-               </property>
-               <property name="expandsOnDoubleClick">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QGraphicsView" name="graphicsViewMap">
+         <widget class="QSplitter" name="splitter_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <widget class="QSplitter" name="splitter">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <widget class="QGraphicsView" name="graphicsViewChipset">
             <property name="mouseTracking">
              <bool>true</bool>
             </property>
@@ -89,15 +48,32 @@
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
             </property>
            </widget>
-          </item>
-         </layout>
+           <widget class="MapsTreeView" name="treeViewMaps">
+            <property name="contextMenuPolicy">
+             <enum>Qt::CustomContextMenu</enum>
+            </property>
+            <property name="editTriggers">
+             <set>QAbstractItemView::NoEditTriggers</set>
+            </property>
+            <property name="itemsExpandable">
+             <bool>true</bool>
+            </property>
+            <property name="expandsOnDoubleClick">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </widget>
+          <widget class="QGraphicsView" name="graphicsViewMap">
+           <property name="mouseTracking">
+            <bool>true</bool>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+           </property>
+          </widget>
+         </widget>
         </item>
        </layout>
-      </widget>
-      <widget class="QWidget" name="tabChipset">
-       <attribute name="title">
-        <string>Chipset</string>
-       </attribute>
       </widget>
       <widget class="QWidget" name="tabClass">
        <attribute name="title">
@@ -451,7 +427,7 @@
      <x>0</x>
      <y>0</y>
      <width>874</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1062,22 +1038,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>treeViewMaps</sender>
-   <signal>doubleClicked(QModelIndex)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>selectCurrentMap(QModelIndex)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>170</x>
-     <y>481</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>26</x>
-     <y>620</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>actionCancel</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
@@ -1138,6 +1098,22 @@
     <hint type="destinationlabel">
      <x>436</x>
      <y>321</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeViewMaps</sender>
+   <signal>doubleClicked(QModelIndex)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>selectCurrentMap(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>170</x>
+     <y>481</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>26</x>
+     <y>620</y>
     </hint>
    </hints>
   </connection>
