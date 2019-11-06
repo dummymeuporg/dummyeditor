@@ -38,11 +38,13 @@ private:
     void _closeCurrentProject();
     void _loadProject(const QString&);
     void removeTools();
+    void closeEvent (QCloseEvent *event);
 
     Ui::MainWindow *ui;
     std::shared_ptr<Editor::Project> m_currentProject;
     ChipsetGraphicsScene* m_chipsetScene;
     GraphicMap::MapGraphicsScene* m_mapScene;
+
 
 private slots:
     void newProject();
