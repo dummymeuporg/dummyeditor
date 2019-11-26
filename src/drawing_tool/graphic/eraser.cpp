@@ -16,7 +16,7 @@ namespace Graphic {
 
 Eraser::Eraser(GraphicMap::VisibleGraphicLayer& visibleGraphicLayer)
     : Graphic::GraphicTool(QIcon(":/icons/icon_eraser.png"),
-                           visibleGraphicLayer)
+                           visibleGraphicLayer), m_mouseClicked(false)
 {}
 
 void Eraser::mapMouseMoveEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
