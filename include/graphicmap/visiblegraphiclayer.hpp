@@ -57,8 +57,5 @@ private:
     const QPixmap& m_chipsetPixmap;
 
     // Drawing tools
-    DrawingTool::Graphic::Pen m_pen;
-    DrawingTool::Graphic::Rectangle m_rectangle;
-    DrawingTool::Graphic::Eraser m_eraser;
 };
 } // namespace GraphicMap
