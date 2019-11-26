@@ -351,16 +351,25 @@ void MainWindow::publishTools(GraphicMap::GraphicLayer* layer) {
 
 void MainWindow::closeEvent (QCloseEvent *event)
 {
-    QMessageBox::StandardButton resBtn = QMessageBox::question( this, "APP_NAME",
-                                                                tr("Do you want to save before you quit ?\n"),
-                                                                QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
-                                                                QMessageBox::Cancel);
-    if (resBtn == QMessageBox::Yes){
+    QMessageBox::StandardButton resBtn = QMessageBox::question(
+        this,
+        "DummyEditor",
+        tr("Do you want to save before you quit ?\n"),
+        QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
+        QMessageBox::Cancel
+    );
+    switch(resBtn) {
+    case QMessageBox::Yes:
         saveProject();
         event->accept();
-    } else if (resBtn == QMessageBox::No){
+        break;
+    case QMessageBox::No:
         event->accept();
-    } else if (resBtn == QMessageBox::Cancel){
+        break;
+    case QMessageBox::Cancel:
         event->ignore();
-}
+        break;
+    default:
+        break;
+    }
 }
