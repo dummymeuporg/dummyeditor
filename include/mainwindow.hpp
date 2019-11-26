@@ -4,6 +4,8 @@
 #include <QModelIndex>
 #include <QMainWindow>
 
+
+#include "graphicmap/graphic_layer_visitor.hpp"
 #include "drawing_tool/visitor.hpp"
 
 namespace Editor {
@@ -17,20 +19,39 @@ class MainWindow;
 namespace GraphicMap {
     class MapGraphicsScene;
     class GraphicLayer;
+    class VisibleGraphicLayer;
+    class BlockingGraphicLayer;
 } // namespace GraphicMap
+
+namespace DrawingTool {
+
+namespace Blocking {
+class BlockingTool;
+} // namespace Blocking
+
+namespace Graphic {
+class GraphicTool;
+} // namespace Graphic
+
+} // namespace DrawingTool
 
 class ChipsetGraphicsScene;
 class QTreeView;
 
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, public GraphicMap::GraphicLayerVisitor
 {
     Q_OBJECT
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     virtual ~MainWindow();
+    // Inherited from GraphicMap::GraphicLayerVisitor
+    void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
+    void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
+
 private:
+    void initializeDrawingTools();
     void _initializeProject(const QString&);
     void _initializeScenes();
     void _connectScenes();
@@ -44,6 +65,13 @@ private:
     std::shared_ptr<Editor::Project> m_currentProject;
     ChipsetGraphicsScene* m_chipsetScene;
     GraphicMap::MapGraphicsScene* m_mapScene;
+
+    std::vector<std::shared_ptr<DrawingTool::Graphic::GraphicTool>>
+        m_graphicTools;
+    std::vector<std::shared_ptr<DrawingTool::Blocking::BlockingTool>>
+        m_blockingTools;
+
+
 
 
 private slots:

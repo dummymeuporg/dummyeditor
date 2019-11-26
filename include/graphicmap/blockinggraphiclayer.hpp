@@ -35,6 +35,7 @@ public:
     }
 
     std::vector<DrawingTool::DrawingTool*> drawingTools() override;
+    virtual void accept(GraphicLayerVisitor&) override;
 private:
     void _draw(int, quint16, quint16);
     Editor::BlockingLayer& m_blockingLayer;

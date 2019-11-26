@@ -12,6 +12,14 @@
 
 #include "drawing_tool/drawing_tool.hpp"
 
+#include "drawing_tool/blocking/pen.hpp"
+#include "drawing_tool/blocking/eraser.hpp"
+
+#include "drawing_tool/graphic/eraser.hpp"
+#include "drawing_tool/graphic/pen.hpp"
+#include "drawing_tool/graphic/rectangle.hpp"
+
+
 #include "editor/map.hpp"
 #include "editor/project.hpp"
 
@@ -31,8 +39,18 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     m_currentProject(nullptr),
-    m_chipsetScene(nullptr),
-    m_mapScene(nullptr)
+    m_chipsetScene(new ChipsetGraphicsScene()),
+    m_mapScene(new GraphicMap::MapGraphicsScene()),
+    m_graphicTools {
+        std::make_shared<DrawingTool::Graphic::Pen>(*m_mapScene),
+        std::make_shared<DrawingTool::Graphic::Rectangle>(*m_mapScene),
+        std::make_shared<DrawingTool::Graphic::Eraser>(*m_mapScene)
+    },
+    m_blockingTools {
+        std::make_shared<DrawingTool::Blocking::Pen>(*m_mapScene),
+        std::make_shared<DrawingTool::Blocking::Eraser>(*m_mapScene)
+    }
+
 {
     ui->setupUi(this);
 
@@ -83,6 +101,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->tabGeneral->layout()->setMenuBar(tabGeneralToolBar);
     _initializeScenes();
+    initializeDrawingTools();
 
     QObject::connect(ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
                      m_chipsetScene, SLOT(changeChipset(QString)));
@@ -103,6 +122,24 @@ MainWindow::MainWindow(QWidget *parent) :
     desktopSizeListHeight.append(3*height()/5);
     desktopSizeListHeight.append(height()/5);
     ui->splitter->setSizes(desktopSizeListHeight);
+}
+
+void MainWindow::initializeDrawingTools() {
+    auto graphicPen = std::make_shared<DrawingTool::Graphic::Pen>(m_mapScene);
+    auto graphicRectangle = std::make_shared<DrawingTool::Graphic::Rectangle>(
+        m_mapScene
+    );
+    auto graphicEraser = std::make_shared<DrawingTool::Graphic::Eraser>(
+        m_mapScene
+    );
+
+    auto BlockingPen = std::make_shared<DrawingTool::Blocking::Pen>(
+        m_mapScene
+    );
+
+    auto BlockingEraser = std::make_shared<DrawingTool::Blocking::Eraser>(
+        m_mapScene
+    );
 }
 
 void MainWindow::_initializeScenes()
@@ -372,4 +409,11 @@ void MainWindow::closeEvent (QCloseEvent *event)
     default:
         break;
     }
+}
+
+void MainWindow::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer) {
+
+}
+void MainWindow::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer) {
+    // Publish blocking related tools
 }

@@ -130,4 +130,8 @@ BlockingGraphicLayer::drawingTools()
     return {&m_pen, &m_eraser};
 }
 
+virtual void BlockingGraphicLayer::accept(GraphicLayerVisitor& visitor) {
+    visitor.accept(*this);
+}
+
 } // namespace GraphicMap

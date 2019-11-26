@@ -52,10 +52,10 @@ public:
     Editor::Layer& editorLayer() override;
 
     std::vector<DrawingTool::DrawingTool*> drawingTools() override;
+
+    virtual void accept(GraphicLayerVisitor&) override;
 private:
     Editor::GraphicLayer& m_graphicLayer;
     const QPixmap& m_chipsetPixmap;
-
-    // Drawing tools
 };
 } // namespace GraphicMap
