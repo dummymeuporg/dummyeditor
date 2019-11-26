@@ -7,7 +7,8 @@
 #include <QKeyEvent>
 #include <QMessageBox>
 #include <QToolButton>
-#include <QDesktopWidget>
+#include <QCloseEvent>
+#include <QFrame>
 
 #include "drawing_tool/drawing_tool.hpp"
 
@@ -346,4 +347,29 @@ void MainWindow::publishTools(GraphicMap::GraphicLayer* layer) {
     std::vector<DrawingTool::DrawingTool*>&& tools(layer->drawingTools());
     auto toolbox = ui->widgetDrawingToolbox;
     toolbox->reset(m_mapScene, m_chipsetScene, tools);
+}
+
+void MainWindow::closeEvent (QCloseEvent *event)
+{
+    QMessageBox::StandardButton resBtn = QMessageBox::question(
+        this,
+        "DummyEditor",
+        tr("Do you want to save before you quit ?\n"),
+        QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
+        QMessageBox::Cancel
+    );
+    switch(resBtn) {
+    case QMessageBox::Yes:
+        saveProject();
+        event->accept();
+        break;
+    case QMessageBox::No:
+        event->accept();
+        break;
+    case QMessageBox::Cancel:
+        event->ignore();
+        break;
+    default:
+        break;
+    }
 }
