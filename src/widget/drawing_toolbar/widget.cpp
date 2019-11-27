@@ -109,5 +109,13 @@ void Widget::visitTool(DrawingTool::Blocking::Eraser&) {
     // Nothing to do!
 }
 
+void visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer) {
+
+}
+
+void visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer) {
+
+}
+
 } // namespace DrawingToolbar
 } // namespace Widget

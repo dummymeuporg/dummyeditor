@@ -4,10 +4,11 @@
 
 namespace GraphicMap {
 
-class VisibleGraphicLayer;
 class BlockingGraphicLayer;
+class EventsGraphicLayer;
+class VisibleGraphicLayer;
 
-class GraphicLayerNotSupportedException : public std::exception {
+class GraphicLayerNotSupported : public std::exception {
 public:
     const char* what() const override {
         return "this graphic layer is not supported";
@@ -17,11 +18,15 @@ public:
 class GraphicLayerVisitor {
 public:
     virtual void visitGraphicLayer(VisibleGraphicLayer&) {
-        throw GraphicLayerNotSupportedException();
+        throw GraphicLayerNotSupported();
     }
 
     virtual void visitGraphicLayer(BlockingGraphicLayer&) {
-        throw GraphicLayerNotSupportedException();
+        throw GraphicLayerNotSupported();
+    }
+
+    virtual void visitGraphicLayer(EventsGraphicLayer&) {
+        throw GraphicLayerNotSupported();
     }
 };
 

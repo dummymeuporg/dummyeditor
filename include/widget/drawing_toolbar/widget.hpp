@@ -2,6 +2,7 @@
 
 #include <QWidget>
 #include "drawing_tool/visitor.hpp"
+#include "graphicmap/graphic_layer_visitor.hpp"
 
 class QToolBar;
 class QActionGroup;
@@ -9,6 +10,8 @@ class ChipsetGraphicsScene;
 
 namespace GraphicMap {
 class MapGraphicsScene;
+class VisibleGraphicLayer;
+class BlockingGraphicLayer;
 } // namespace GraphicMap
 
 namespace DrawingTool {
@@ -22,7 +25,8 @@ namespace Widget {
 namespace DrawingToolbar {
 
 class Widget : public ::QWidget,
-               public DrawingTool::Visitor {
+               public DrawingTool::Visitor,
+               public GraphicMap::GraphicLayerVisitor {
     Q_OBJECT
 public:
     Widget(::QWidget* parent = nullptr);
@@ -31,12 +35,16 @@ public:
                const ::ChipsetGraphicsScene*,
                const std::vector<DrawingTool::DrawingTool*>&);
 
-    // Visiter methods:
+    // DrawingTool::Visitor methods:
     void visitTool(DrawingTool::Graphic::Pen&) override;
     void visitTool(DrawingTool::Graphic::Rectangle&) override;
     void visitTool(DrawingTool::Graphic::Eraser&) override;
     void visitTool(DrawingTool::Blocking::Eraser&) override;
     void visitTool(DrawingTool::Blocking::Pen&) override;
+
+    // GraphicMap::GraphicLayerVisitor methods:
+    void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
+    void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
 
 private:
     ::QToolBar* m_toolbar;

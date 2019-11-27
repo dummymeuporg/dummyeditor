@@ -8,6 +8,7 @@
 #include "graphicmap/blockingsquareitem.hpp"
 #include "graphicmap/blockinggraphiclayer.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
+#include "graphicmap/graphic_layer_visitor.hpp"
 
 namespace GraphicMap {
 BlockingGraphicLayer::BlockingGraphicLayer(
@@ -130,8 +131,8 @@ BlockingGraphicLayer::drawingTools()
     return {&m_pen, &m_eraser};
 }
 
-virtual void BlockingGraphicLayer::accept(GraphicLayerVisitor& visitor) {
-    visitor.accept(*this);
+void BlockingGraphicLayer::accept(GraphicLayerVisitor& visitor) {
+    visitor.visitGraphicLayer(*this);
 }
 
 } // namespace GraphicMap

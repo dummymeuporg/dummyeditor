@@ -53,7 +53,7 @@ public:
 
     std::vector<DrawingTool::DrawingTool*> drawingTools() override;
 
-    virtual void accept(GraphicLayerVisitor&) override;
+    void accept(GraphicLayerVisitor&) override;
 private:
     Editor::GraphicLayer& m_graphicLayer;
     const QPixmap& m_chipsetPixmap;

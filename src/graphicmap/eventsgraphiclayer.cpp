@@ -2,9 +2,12 @@
 
 #include <dummy/local/floor.hpp>
 #include "editor/events_layer.hpp"
+
+
 #include "graphicmap/eventsquareitem.hpp"
 #include "graphicmap/eventsgraphiclayer.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
+#include "graphicmap/graphic_layer_visitor.hpp"
 
 namespace GraphicMap {
 
@@ -53,6 +56,10 @@ std::vector<DrawingTool::DrawingTool*> EventsGraphicLayer::drawingTools() {
 
 Editor::Layer& EventsGraphicLayer::editorLayer() {
     return m_eventsLayer;
+}
+
+void EventsGraphicLayer::accept(GraphicLayerVisitor& visitor) {
+    visitor.visitGraphicLayer(*this);
 }
 
 
