@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_graphicTools {
         new DrawingTool::Graphic::Pen(*m_mapScene),
         new DrawingTool::Graphic::Rectangle(*m_mapScene),
-        new DrawingTool::Graphic::Rectangle(*m_mapScene)
+        new DrawingTool::Graphic::Eraser(*m_mapScene)
     },
     m_blockingTools {
         new DrawingTool::Blocking::Pen(*m_mapScene),
@@ -134,12 +134,7 @@ void MainWindow::initializeDrawingTools() {
 
 void MainWindow::_initializeScenes()
 {
-    m_chipsetScene = new ChipsetGraphicsScene();
-
     ui->graphicsViewChipset->setScene(m_chipsetScene);
-
-    m_mapScene = new GraphicMap::MapGraphicsScene();
-
     ui->graphicsViewMap->setScene(m_mapScene);
 }
 
@@ -331,6 +326,7 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
 
     mapFloorsList->setEditorMap(map);
     removeTools();
+    ui->widgetDrawingToolbox->setInitialState();
 }
 
 void MainWindow::onCancel()

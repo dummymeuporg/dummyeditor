@@ -136,5 +136,9 @@ void Widget::setState(std::shared_ptr<State::State> state) {
     m_state = state;
 }
 
+void Widget::setInitialState() {
+    setState(std::make_shared<State::NoDrawingTools>(*this));
+}
+
 } // namespace DrawingToolbar
 } // namespace Widget

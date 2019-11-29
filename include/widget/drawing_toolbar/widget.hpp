@@ -47,6 +47,8 @@ public:
         return m_mapScene;
     }
 
+    void setInitialState();
+
     // DrawingTool::Visitor methods:
     void visitTool(DrawingTool::Graphic::Pen&) override;
     void visitTool(DrawingTool::Graphic::Rectangle&) override;
