@@ -131,7 +131,7 @@ PaletteTool::setChipsetGraphicsScene(
 }
 
 void PaletteTool::onUnselected() {
-    if (nullptr!= m_chipsetGraphicsScene) {
+    if (nullptr != m_chipsetGraphicsScene) {
         m_chipsetGraphicsScene->removeItem(m_selectionRectItem);
         m_selectionItem = nullptr;
     }

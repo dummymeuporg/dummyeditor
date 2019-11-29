@@ -40,6 +40,16 @@ void BlockingTool::setBlockingGraphicLayer(
 )
 {
     m_blockingGraphicLayer = layer;
+    m_mapGraphicsScene.redrawGrid();
+}
+
+void BlockingTool::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer) {
+    qDebug() << "Visit blocking layer";
+    setBlockingGraphicLayer(&layer);
+}
+
+void BlockingTool::visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) {
+    // Do nothing. Not the right tool.
 }
 
 } // namespace Graphic

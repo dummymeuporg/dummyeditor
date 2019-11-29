@@ -39,6 +39,16 @@ void
 GraphicTool::setVisibleGraphicLayer(GraphicMap::VisibleGraphicLayer* layer)
 {
     m_visibleGraphicLayer = layer;
+    m_mapGraphicsScene.redrawGrid();
+}
+
+void GraphicTool::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer) {
+    qDebug() << "Visit visible graphic layer";
+    setVisibleGraphicLayer(&layer);
+}
+
+void GraphicTool::visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) {
+    // Nothing to do. Not the right kind of tool.
 }
 
 } // namespace Graphic

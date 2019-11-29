@@ -27,11 +27,14 @@ void
 DisplayGraphicTools::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer)
 {
     // Nothing to do here. We are already displaying accurate tools.
+    auto tool = m_widget.mapScene()->drawingTool();
 
-    // XXX: Disgusting.
-    reinterpret_cast<DrawingTool::Graphic::GraphicTool*>(
-        m_widget.mapScene()->drawingTool()
-    )->setVisibleGraphicLayer(&layer);
+    if (nullptr != tool) {
+        // XXX: Disgusting.
+        reinterpret_cast<DrawingTool::Graphic::GraphicTool*>(
+            tool
+        )->setVisibleGraphicLayer(&layer);
+    }
 }
 
 } // namespace State

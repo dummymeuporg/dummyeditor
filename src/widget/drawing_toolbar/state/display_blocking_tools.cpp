@@ -20,9 +20,12 @@ void
 DisplayBlockingTools::visitGraphicLayer(
     GraphicMap::BlockingGraphicLayer& layer
 ) {
-    reinterpret_cast<DrawingTool::Blocking::BlockingTool*>(
-        m_widget.mapScene()->drawingTool()
-    )->setBlockingGraphicLayer(&layer);
+    auto tool = m_widget.mapScene()->drawingTool();
+    if (nullptr != tool) {
+        reinterpret_cast<DrawingTool::Blocking::BlockingTool*>(
+            tool
+        )->setBlockingGraphicLayer(&layer);
+    }
 }
 
 void

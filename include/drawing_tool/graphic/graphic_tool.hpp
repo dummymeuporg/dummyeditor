@@ -27,6 +27,11 @@ public:
         return m_visibleGraphicLayer;
     }
     void setVisibleGraphicLayer(GraphicMap::VisibleGraphicLayer*);
+
+    // Methods inherited from GraphicMap::GraphicLayerVisitor
+    void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
+    void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
+
 signals:
     // Note: I have to put the whole namespace shit here, because Qt
     // signals/slots framework is based on textual comparison.
