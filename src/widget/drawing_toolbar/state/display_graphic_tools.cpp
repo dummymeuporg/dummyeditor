@@ -1,3 +1,5 @@
+#include "drawing_tool/graphic/graphic_tool.hpp"
+
 #include "graphicmap/mapgraphicsscene.hpp"
 
 #include "widget/drawing_toolbar/widget.hpp"
@@ -13,7 +15,8 @@ DisplayGraphicTools::DisplayGraphicTools(Widget& widget)
 {}
 
 void
-DisplayGraphicTools::visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) {
+DisplayGraphicTools::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer)
+{
     // Here we will reset tools and change state.
     auto self(shared_from_this());
     m_widget.reset();
@@ -24,7 +27,11 @@ void
 DisplayGraphicTools::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer)
 {
     // Nothing to do here. We are already displaying accurate tools.
-    //m_widget.mapScene()->drawingTool()
+
+    // XXX: Disgusting.
+    reinterpret_cast<DrawingTool::Graphic::GraphicTool*>(
+        m_widget.mapScene()->drawingTool()
+    )->setVisibleGraphicLayer(&layer);
 }
 
 } // namespace State

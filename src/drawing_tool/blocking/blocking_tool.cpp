@@ -35,5 +35,12 @@ void BlockingTool::drawGrid() {
     }
 }
 
+void BlockingTool::setBlockingGraphicLayer(
+    GraphicMap::BlockingGraphicLayer* layer
+)
+{
+    m_blockingGraphicLayer = layer;
+}
+
 } // namespace Graphic
 } // namespace DrawingTool

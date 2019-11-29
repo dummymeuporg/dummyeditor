@@ -52,7 +52,6 @@ Widget::onLayerSelected(
     GraphicMap::GraphicLayer& layer,
     std::vector<DrawingTool::DrawingTool*>* drawingTools)
 {
-    clear();
     m_mapScene = mapScene;
     m_chipsetGraphicsScene = chipsetScene;
     m_drawingTools = drawingTools;
@@ -61,6 +60,7 @@ Widget::onLayerSelected(
 }
 
 void Widget::reset() {
+    clear();
     m_toolbar = new QToolBar(this);
     m_actionGroup = new QActionGroup(m_toolbar);
 

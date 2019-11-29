@@ -23,6 +23,7 @@ public:
     );
     void emitDrawingToolSelected() override;
     void drawGrid() override;
+    void setBlockingGraphicLayer(GraphicMap::BlockingGraphicLayer*);
 signals:
     // Note: I have to put the whole namespace shit here, because Qt
     // signals/slots framework is based on textual comparison.
