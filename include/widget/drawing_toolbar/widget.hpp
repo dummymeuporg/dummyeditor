@@ -9,6 +9,7 @@ class QActionGroup;
 class ChipsetGraphicsScene;
 
 namespace GraphicMap {
+class GraphicLayer;
 class MapGraphicsScene;
 class VisibleGraphicLayer;
 class BlockingGraphicLayer;
@@ -24,6 +25,10 @@ class GraphicTool;
 namespace Widget {
 namespace DrawingToolbar {
 
+namespace State {
+class State;
+}
+
 class Widget : public ::QWidget,
                public DrawingTool::Visitor,
                public GraphicMap::GraphicLayerVisitor {
@@ -31,9 +36,16 @@ class Widget : public ::QWidget,
 public:
     Widget(::QWidget* parent = nullptr);
     void clear();
-    void reset(const GraphicMap::MapGraphicsScene*,
-               const ::ChipsetGraphicsScene*,
-               const std::vector<DrawingTool::DrawingTool*>&);
+    void reset();
+    void setState(std::shared_ptr<State::State>);
+    void onLayerSelected(const GraphicMap::MapGraphicsScene*,
+                         const ::ChipsetGraphicsScene*,
+                         GraphicMap::GraphicLayer&,
+                         std::vector<DrawingTool::DrawingTool*>*);
+
+    const GraphicMap::MapGraphicsScene* mapScene() {
+        return m_mapScene;
+    }
 
     // DrawingTool::Visitor methods:
     void visitTool(DrawingTool::Graphic::Pen&) override;
@@ -46,11 +58,15 @@ public:
     void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
     void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
 
+
+
 private:
     ::QToolBar* m_toolbar;
     ::QActionGroup* m_actionGroup;
     const ::ChipsetGraphicsScene* m_chipsetGraphicsScene;
     const GraphicMap::MapGraphicsScene* m_mapScene;
+    std::vector<DrawingTool::DrawingTool*>* m_drawingTools;
+    std::shared_ptr<State::State> m_state;
 };
 
 } // namespace DrawingToolbar

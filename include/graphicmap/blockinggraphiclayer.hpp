@@ -42,7 +42,9 @@ private:
     QVector<BlockingSquareItem*> m_crossItems;
 
     // Drawing tools
+    /*
     DrawingTool::Blocking::Pen m_pen;
     DrawingTool::Blocking::Eraser m_eraser;
+    */
 };
 } // namespace GraphicMap

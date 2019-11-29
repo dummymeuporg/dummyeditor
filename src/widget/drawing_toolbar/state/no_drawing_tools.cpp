@@ -1,6 +1,7 @@
-#include "graphicmap/mapgraphicsscene.hpp"
-
+#include <memory>
 #include "widget/drawing_toolbar/widget.hpp"
+
+#include "widget/drawing_toolbar/state/no_drawing_tools.hpp"
 #include "widget/drawing_toolbar/state/display_blocking_tools.hpp"
 #include "widget/drawing_toolbar/state/display_graphic_tools.hpp"
 
@@ -8,12 +9,14 @@ namespace Widget {
 namespace DrawingToolbar {
 namespace State {
 
-DisplayGraphicTools::DisplayGraphicTools(Widget& widget)
+NoDrawingTools::NoDrawingTools(Widget& widget)
     : State(widget)
 {}
 
 void
-DisplayGraphicTools::visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) {
+NoDrawingTools::visitGraphicLayer(
+    GraphicMap::BlockingGraphicLayer& layer
+) {
     // Here we will reset tools and change state.
     auto self(shared_from_this());
     m_widget.reset();
@@ -21,10 +24,13 @@ DisplayGraphicTools::visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) {
 }
 
 void
-DisplayGraphicTools::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer)
-{
-    // Nothing to do here. We are already displaying accurate tools.
-    //m_widget.mapScene()->drawingTool()
+NoDrawingTools::visitGraphicLayer(
+    GraphicMap::VisibleGraphicLayer& layer
+) {
+    // Here we will reset tools and change state.
+    auto self(shared_from_this());
+    m_widget.reset();
+    m_widget.setState(std::make_shared<DisplayGraphicTools>(m_widget));
 }
 
 } // namespace State

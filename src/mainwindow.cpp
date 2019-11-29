@@ -24,7 +24,11 @@
 #include "editor/project.hpp"
 
 #include "graphicmap/graphiclayer.hpp"
+#include "graphicmap/blockinggraphiclayer.hpp"
+#include "graphicmap/visiblegraphiclayer.hpp"
+
 #include "graphicmap/mapgraphicsscene.hpp"
+
 
 #include "misc/map_tree_model.hpp"
 
@@ -42,13 +46,13 @@ MainWindow::MainWindow(QWidget *parent) :
     m_chipsetScene(new ChipsetGraphicsScene()),
     m_mapScene(new GraphicMap::MapGraphicsScene()),
     m_graphicTools {
-        std::make_shared<DrawingTool::Graphic::Pen>(*m_mapScene),
-        std::make_shared<DrawingTool::Graphic::Rectangle>(*m_mapScene),
-        std::make_shared<DrawingTool::Graphic::Eraser>(*m_mapScene)
+        new DrawingTool::Graphic::Pen(*m_mapScene),
+        new DrawingTool::Graphic::Rectangle(*m_mapScene),
+        new DrawingTool::Graphic::Rectangle(*m_mapScene)
     },
     m_blockingTools {
-        std::make_shared<DrawingTool::Blocking::Pen>(*m_mapScene),
-        std::make_shared<DrawingTool::Blocking::Eraser>(*m_mapScene)
+        new DrawingTool::Blocking::Pen(*m_mapScene),
+        new DrawingTool::Blocking::Eraser(*m_mapScene)
     }
 
 {
@@ -125,21 +129,7 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 void MainWindow::initializeDrawingTools() {
-    auto graphicPen = std::make_shared<DrawingTool::Graphic::Pen>(m_mapScene);
-    auto graphicRectangle = std::make_shared<DrawingTool::Graphic::Rectangle>(
-        m_mapScene
-    );
-    auto graphicEraser = std::make_shared<DrawingTool::Graphic::Eraser>(
-        m_mapScene
-    );
-
-    auto BlockingPen = std::make_shared<DrawingTool::Blocking::Pen>(
-        m_mapScene
-    );
-
-    auto BlockingEraser = std::make_shared<DrawingTool::Blocking::Eraser>(
-        m_mapScene
-    );
+    // XXX: Remove this.
 }
 
 void MainWindow::_initializeScenes()
@@ -217,6 +207,12 @@ MainWindow::~MainWindow()
 {
     if (m_currentProject != nullptr) {
         m_currentProject.reset();
+    }
+    for (auto tool: m_blockingTools) {
+        delete tool;
+    }
+    for (auto tool: m_graphicTools) {
+        delete tool;
     }
     delete ui;
 }
@@ -379,11 +375,16 @@ void MainWindow::publishTools(GraphicMap::GraphicLayer* layer) {
     // unselect its previous tool (if any).
     // ...
     // Not sure this is a fancy way to do so, though.
-    m_mapScene->unsetDrawingTool();
-    m_chipsetScene->unsetPaletteTool();
+    //m_mapScene->unsetDrawingTool();
+    //m_chipsetScene->unsetPaletteTool();
+
+    /*
     std::vector<DrawingTool::DrawingTool*>&& tools(layer->drawingTools());
     auto toolbox = ui->widgetDrawingToolbox;
     toolbox->reset(m_mapScene, m_chipsetScene, tools);
+    */
+
+    layer->accept(*this);
 }
 
 void MainWindow::closeEvent (QCloseEvent *event)
@@ -412,8 +413,21 @@ void MainWindow::closeEvent (QCloseEvent *event)
 }
 
 void MainWindow::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer) {
-
+    // Publish visible/graphic related tools
+    ui->widgetDrawingToolbox->onLayerSelected(
+        m_mapScene,
+        m_chipsetScene,
+        layer,
+        &m_graphicTools
+    );
 }
+
 void MainWindow::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer) {
     // Publish blocking related tools
+    ui->widgetDrawingToolbox->onLayerSelected(
+        m_mapScene,
+        m_chipsetScene,
+        layer,
+        &m_blockingTools
+    );
 }

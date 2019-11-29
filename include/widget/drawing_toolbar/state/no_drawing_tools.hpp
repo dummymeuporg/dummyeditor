@@ -12,11 +12,11 @@ namespace DrawingToolbar {
 class Widget;
 namespace State {
 
-class DisplayGraphicTools : public State {
+class NoDrawingTools : public State {
 public:
-    DisplayGraphicTools(Widget&);
+    NoDrawingTools(Widget&);
     void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
-    void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&layer) override;
+    void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
 };
 
 } // namespace State

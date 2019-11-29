@@ -16,7 +16,11 @@ namespace Blocking {
 class BlockingTool : public DrawingTool {
     Q_OBJECT
 public:
-    BlockingTool(QIcon&&, GraphicMap::BlockingGraphicLayer&);
+    BlockingTool(
+        QIcon&&,
+        GraphicMap::MapGraphicsScene& mapGraphicsScene,
+        GraphicMap::BlockingGraphicLayer* = nullptr
+    );
     void emitDrawingToolSelected() override;
     void drawGrid() override;
 signals:
@@ -24,7 +28,7 @@ signals:
     // signals/slots framework is based on textual comparison.
     void drawingToolSelected(::DrawingTool::Blocking::BlockingTool*);
 protected:
-    GraphicMap::BlockingGraphicLayer& m_blockingGraphicLayer;
+    GraphicMap::BlockingGraphicLayer* m_blockingGraphicLayer;
 };
 
 } // namespace Graphic

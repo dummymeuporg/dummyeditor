@@ -14,33 +14,40 @@ namespace DrawingTool {
 
 namespace Blocking {
 
-Pen::Pen(GraphicMap::BlockingGraphicLayer& blockingGraphicLayer)
-    : Blocking::BlockingTool(QIcon(":/icons/icon_pen_2.png"),
-                             blockingGraphicLayer),
+Pen::Pen(
+    GraphicMap::MapGraphicsScene& mapGraphicsScene,
+    GraphicMap::BlockingGraphicLayer* blockingGraphicLayer
+) : Blocking::BlockingTool(QIcon(":/icons/icon_pen_2.png"),
+                           mapGraphicsScene,
+                           blockingGraphicLayer),
       m_mouseClicked(false)
 {}
 
 void Pen::mapMouseMoveEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
-    QPoint point(mouseEvent->scenePos().toPoint());
-    point.setX(point.x() - (point.x() % 8));
-    point.setY(point.y() - (point.y() % 8));
 
-    if (m_mouseClicked) {
-        // XXX: set blocking tile
-        m_blockingGraphicLayer.setTile(point.x(), point.y(), true);
+    if (nullptr != m_blockingGraphicLayer) {
+        QPoint point(mouseEvent->scenePos().toPoint());
+        point.setX(point.x() - (point.x() % 8));
+        point.setY(point.y() - (point.y() % 8));
+
+        if (m_mouseClicked) {
+            // XXX: set blocking tile
+            m_blockingGraphicLayer->setTile(point.x(), point.y(), true);
+        }
     }
 }
 
 void Pen::mapMousePressEvent(::QGraphicsSceneMouseEvent* event) {
     qDebug() << "Blocking pen press.";
+    if (nullptr != m_blockingGraphicLayer) {
+        QPoint point(event->scenePos().toPoint());
+        point.setX(point.x() - (point.x() % 8));
+        point.setY(point.y() - (point.y() % 8));
+        // XXX: set blocking tile.
+        m_blockingGraphicLayer->setTile(point.x(), point.y(), true);
 
-    QPoint point(event->scenePos().toPoint());
-    point.setX(point.x() - (point.x() % 8));
-    point.setY(point.y() - (point.y() % 8));
-    // XXX: set blocking tile.
-    m_blockingGraphicLayer.setTile(point.x(), point.y(), true);
-
-    m_mouseClicked = true;
+        m_mouseClicked = true;
+    }
 }
 
 void Pen::mapMouseReleaseEvent(::QGraphicsSceneMouseEvent* event) {

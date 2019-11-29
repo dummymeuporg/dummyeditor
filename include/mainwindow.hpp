@@ -24,6 +24,7 @@ namespace GraphicMap {
 } // namespace GraphicMap
 
 namespace DrawingTool {
+class DrawingTool;
 
 namespace Blocking {
 class BlockingTool;
@@ -66,10 +67,8 @@ private:
     ChipsetGraphicsScene* m_chipsetScene;
     GraphicMap::MapGraphicsScene* m_mapScene;
 
-    std::vector<std::shared_ptr<DrawingTool::Graphic::GraphicTool>>
-        m_graphicTools;
-    std::vector<std::shared_ptr<DrawingTool::Blocking::BlockingTool>>
-        m_blockingTools;
+    std::vector<DrawingTool::DrawingTool*> m_graphicTools;
+    std::vector<DrawingTool::DrawingTool*> m_blockingTools;
 
 
 

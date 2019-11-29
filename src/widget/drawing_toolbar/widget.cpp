@@ -9,12 +9,18 @@
 #include "drawing_tool/graphic/rectangle.hpp"
 
 #include "graphicmap/mapgraphicsscene.hpp"
+#include "graphicmap/graphiclayer.hpp"
 #include "chipsetgraphicsscene.hpp"
 
 #include <QDebug>
 
 #include "widget/drawing_toolbar/drawing_tool_action.hpp"
 #include "widget/drawing_toolbar/widget.hpp"
+#include "widget/drawing_toolbar/state/state.hpp"
+
+#include "widget/drawing_toolbar/state/no_drawing_tools.hpp"
+#include "widget/drawing_toolbar/state/display_blocking_tools.hpp"
+#include "widget/drawing_toolbar/state/display_graphic_tools.hpp"
 
 
 namespace Widget {
@@ -25,7 +31,8 @@ Widget::Widget(::QWidget* parent) :
     m_toolbar(new QToolBar(this)),
     m_actionGroup(new QActionGroup(m_toolbar)),
     m_chipsetGraphicsScene(nullptr),
-    m_mapScene(nullptr)
+    m_mapScene(nullptr),
+    m_state(std::make_shared<State::NoDrawingTools>(*this))
 {
     // Set empty toolbar for the moment.
     setLayout(new QHBoxLayout());
@@ -39,17 +46,25 @@ void Widget::clear() {
 }
 
 void
-Widget::reset(const GraphicMap::MapGraphicsScene* mapScene,
-              const ::ChipsetGraphicsScene* chipsetScene,
-              const std::vector<DrawingTool::DrawingTool*>& drawingTools) {
+Widget::onLayerSelected(
+    const GraphicMap::MapGraphicsScene* mapScene,
+    const ::ChipsetGraphicsScene* chipsetScene,
+    GraphicMap::GraphicLayer& layer,
+    std::vector<DrawingTool::DrawingTool*>* drawingTools)
+{
     clear();
     m_mapScene = mapScene;
     m_chipsetGraphicsScene = chipsetScene;
+    m_drawingTools = drawingTools;
 
+    layer.accept(*this);
+}
+
+void Widget::reset() {
     m_toolbar = new QToolBar(this);
     m_actionGroup = new QActionGroup(m_toolbar);
 
-    for (auto& tool: drawingTools) {
+    for (auto& tool: *m_drawingTools) {
         auto action(new DrawingToolAction(tool, this));
         action->setIcon(tool->icon());
         action->setText(tr("Tool"));
@@ -65,7 +80,7 @@ Widget::reset(const GraphicMap::MapGraphicsScene* mapScene,
         QObject::connect(
             tool,
             SIGNAL(drawingToolSelected(::DrawingTool::DrawingTool*)),
-            mapScene,
+            m_mapScene,
             SLOT(setDrawingTool(::DrawingTool::DrawingTool*))
         );
         tool->accept(*this);
@@ -109,12 +124,16 @@ void Widget::visitTool(DrawingTool::Blocking::Eraser&) {
     // Nothing to do!
 }
 
-void visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer) {
-
+void Widget::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer) {
+    m_state->visitGraphicLayer(layer);
 }
 
-void visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer) {
+void Widget::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer) {
+    m_state->visitGraphicLayer(layer);
+}
 
+void Widget::setState(std::shared_ptr<State::State> state) {
+    m_state = state;
 }
 
 } // namespace DrawingToolbar

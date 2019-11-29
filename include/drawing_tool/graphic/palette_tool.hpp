@@ -16,7 +16,7 @@ public:
     PaletteTool(
         QIcon&&,
         GraphicMap::MapGraphicsScene&,
-        GraphicMap::VisibleGraphicLayer*
+        GraphicMap::VisibleGraphicLayer* = nullptr
     );
     void paletteMousePressEvent(::QGraphicsSceneMouseEvent*);
     void paletteMouseMoveEvent(::QGraphicsSceneMouseEvent*);

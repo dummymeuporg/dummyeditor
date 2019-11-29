@@ -79,6 +79,9 @@ public slots:
     );
     void unsetDrawingTool();
     void setDrawingTool(::DrawingTool::DrawingTool*);
+    DrawingTool::DrawingTool* drawingTool() const {
+        return m_drawingTool;
+    }
 
     void adjustLayers() const;
 

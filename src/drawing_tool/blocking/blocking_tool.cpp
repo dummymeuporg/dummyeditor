@@ -13,8 +13,9 @@ namespace Blocking {
 
 BlockingTool::BlockingTool(
         QIcon&& icon,
-        GraphicMap::BlockingGraphicLayer& blockingGraphicLayer)
-    : DrawingTool(blockingGraphicLayer.mapGraphicsScene(), std::move(icon)),
+        GraphicMap::MapGraphicsScene& mapGraphicsScene,
+        GraphicMap::BlockingGraphicLayer* blockingGraphicLayer)
+    : DrawingTool(mapGraphicsScene, std::move(icon)),
       m_blockingGraphicLayer(blockingGraphicLayer)
 {}
 
@@ -25,11 +26,13 @@ void BlockingTool::emitDrawingToolSelected() {
 }
 
 void BlockingTool::drawGrid() {
-    m_mapGraphicsScene.drawGrid(
-        m_blockingGraphicLayer.layer().width(),
-        m_blockingGraphicLayer.layer().height(),
-        8
-    );
+    if (nullptr != m_blockingGraphicLayer) {
+        m_mapGraphicsScene.drawGrid(
+            m_blockingGraphicLayer->layer().width(),
+            m_blockingGraphicLayer->layer().height(),
+            8
+        );
+    }
 }
 
 } // namespace Graphic
