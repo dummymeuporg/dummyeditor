@@ -12,11 +12,23 @@
 
 #include "drawing_tool/drawing_tool.hpp"
 
+#include "drawing_tool/blocking/pen.hpp"
+#include "drawing_tool/blocking/eraser.hpp"
+
+#include "drawing_tool/graphic/eraser.hpp"
+#include "drawing_tool/graphic/pen.hpp"
+#include "drawing_tool/graphic/rectangle.hpp"
+
+
 #include "editor/map.hpp"
 #include "editor/project.hpp"
 
 #include "graphicmap/graphiclayer.hpp"
+#include "graphicmap/blockinggraphiclayer.hpp"
+#include "graphicmap/visiblegraphiclayer.hpp"
+
 #include "graphicmap/mapgraphicsscene.hpp"
+
 
 #include "misc/map_tree_model.hpp"
 
@@ -31,8 +43,18 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     m_currentProject(nullptr),
-    m_chipsetScene(nullptr),
-    m_mapScene(nullptr)
+    m_chipsetScene(new ChipsetGraphicsScene()),
+    m_mapScene(new GraphicMap::MapGraphicsScene()),
+    m_graphicTools {
+        new DrawingTool::Graphic::Pen(*m_mapScene),
+        new DrawingTool::Graphic::Rectangle(*m_mapScene),
+        new DrawingTool::Graphic::Eraser(*m_mapScene)
+    },
+    m_blockingTools {
+        new DrawingTool::Blocking::Pen(*m_mapScene),
+        new DrawingTool::Blocking::Eraser(*m_mapScene)
+    }
+
 {
     ui->setupUi(this);
 
@@ -83,6 +105,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->tabGeneral->layout()->setMenuBar(tabGeneralToolBar);
     _initializeScenes();
+    initializeDrawingTools();
 
     QObject::connect(ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
                      m_chipsetScene, SLOT(changeChipset(QString)));
@@ -105,14 +128,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->splitter->setSizes(desktopSizeListHeight);
 }
 
+void MainWindow::initializeDrawingTools() {
+    // XXX: Remove this.
+}
+
 void MainWindow::_initializeScenes()
 {
-    m_chipsetScene = new ChipsetGraphicsScene();
-
     ui->graphicsViewChipset->setScene(m_chipsetScene);
-
-    m_mapScene = new GraphicMap::MapGraphicsScene();
-
     ui->graphicsViewMap->setScene(m_mapScene);
 }
 
@@ -180,6 +202,12 @@ MainWindow::~MainWindow()
 {
     if (m_currentProject != nullptr) {
         m_currentProject.reset();
+    }
+    for (auto tool: m_blockingTools) {
+        delete tool;
+    }
+    for (auto tool: m_graphicTools) {
+        delete tool;
     }
     delete ui;
 }
@@ -298,6 +326,7 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
 
     mapFloorsList->setEditorMap(map);
     removeTools();
+    ui->widgetDrawingToolbox->setInitialState();
 }
 
 void MainWindow::onCancel()
@@ -342,11 +371,16 @@ void MainWindow::publishTools(GraphicMap::GraphicLayer* layer) {
     // unselect its previous tool (if any).
     // ...
     // Not sure this is a fancy way to do so, though.
-    m_mapScene->unsetDrawingTool();
-    m_chipsetScene->unsetPaletteTool();
+    //m_mapScene->unsetDrawingTool();
+    //m_chipsetScene->unsetPaletteTool();
+
+    /*
     std::vector<DrawingTool::DrawingTool*>&& tools(layer->drawingTools());
     auto toolbox = ui->widgetDrawingToolbox;
     toolbox->reset(m_mapScene, m_chipsetScene, tools);
+    */
+
+    layer->accept(*this);
 }
 
 void MainWindow::closeEvent (QCloseEvent *event)
@@ -372,4 +406,24 @@ void MainWindow::closeEvent (QCloseEvent *event)
     default:
         break;
     }
+}
+
+void MainWindow::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer) {
+    // Publish visible/graphic related tools
+    ui->widgetDrawingToolbox->onLayerSelected(
+        m_mapScene,
+        m_chipsetScene,
+        layer,
+        &m_graphicTools
+    );
+}
+
+void MainWindow::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer) {
+    // Publish blocking related tools
+    ui->widgetDrawingToolbox->onLayerSelected(
+        m_mapScene,
+        m_chipsetScene,
+        layer,
+        &m_blockingTools
+    );
 }

@@ -3,6 +3,8 @@
 #include <QIcon>
 #include <QObject>
 
+#include "graphicmap/graphic_layer_visitor.hpp"
+
 #include "widget/drawing_toolbar/widget.hpp"
 
 class QEvent;
@@ -17,10 +19,11 @@ namespace DrawingTool {
 
 class Visitor;
 
-class DrawingTool : public ::QObject {
+class DrawingTool : public ::QObject, public GraphicMap::GraphicLayerVisitor {
     Q_OBJECT
 public:
     DrawingTool(GraphicMap::MapGraphicsScene&, QIcon&&);
+
     virtual void mapMousePressEvent(::QGraphicsSceneMouseEvent*) = 0;
     virtual void mapMouseMoveEvent(::QGraphicsSceneMouseEvent*) = 0;
     virtual void mapMouseReleaseEvent(::QGraphicsSceneMouseEvent*) = 0;
@@ -30,6 +33,7 @@ public:
     virtual void drawGrid() = 0;
     virtual void onSelected() = 0;
     virtual void onUnselected() = 0;
+
 
     const QIcon& icon() const {
         return m_icon;

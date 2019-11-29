@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QGraphicsItem>
 
+#include "drawing_tool/drawing_tool.hpp"
 #include "editor/map.hpp"
 
 #include "graphicmap/graphiclayer.hpp"
@@ -25,6 +26,14 @@ void GraphicLayer::setVisibility(bool visible) {
 
 void GraphicLayer::setSelected() {
     emit layerSelected(this);
+
+    // Bind the tool to this graphic layer
+    auto drawingTool = m_mapGraphicsScene.drawingTool();
+    if (nullptr != drawingTool) {
+        accept(*drawingTool);
+    }
+
+    m_mapGraphicsScene.setCurrentGraphicLayer(this);
 }
 
 } // namespace GraphicMap

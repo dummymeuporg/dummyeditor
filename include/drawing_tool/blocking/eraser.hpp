@@ -14,7 +14,8 @@ namespace Blocking {
 class Eraser : public BlockingTool {
     Q_OBJECT
 public:
-    Eraser(GraphicMap::BlockingGraphicLayer&);
+    Eraser(GraphicMap::MapGraphicsScene&,
+           GraphicMap::BlockingGraphicLayer* = nullptr);
     void accept(Visitor&) override;
     void mapMousePressEvent(::QGraphicsSceneMouseEvent*) override;
     void mapMouseMoveEvent(::QGraphicsSceneMouseEvent*) override;

@@ -13,8 +13,9 @@ namespace Graphic {
 
 GraphicTool::GraphicTool(
         QIcon&& icon,
-        GraphicMap::VisibleGraphicLayer& visibleGraphicLayer)
-    : DrawingTool(visibleGraphicLayer.mapGraphicsScene(), std::move(icon)),
+        GraphicMap::MapGraphicsScene& mapGraphicsScene,
+        GraphicMap::VisibleGraphicLayer* visibleGraphicLayer)
+    : DrawingTool(mapGraphicsScene, std::move(icon)),
       m_visibleGraphicLayer(visibleGraphicLayer)
 {}
 
@@ -25,11 +26,29 @@ void GraphicTool::emitDrawingToolSelected() {
 }
 
 void GraphicTool::drawGrid() {
-    m_mapGraphicsScene.drawGrid(
-        m_visibleGraphicLayer.layer().width(),
-        m_visibleGraphicLayer.layer().height(),
-        16
-    );
+    if (nullptr != m_visibleGraphicLayer) {
+        m_mapGraphicsScene.drawGrid(
+            m_visibleGraphicLayer->layer().width(),
+            m_visibleGraphicLayer->layer().height(),
+            16
+        );
+    }
+}
+
+void
+GraphicTool::setVisibleGraphicLayer(GraphicMap::VisibleGraphicLayer* layer)
+{
+    m_visibleGraphicLayer = layer;
+    m_mapGraphicsScene.redrawGrid();
+}
+
+void GraphicTool::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer) {
+    qDebug() << "Visit visible graphic layer";
+    setVisibleGraphicLayer(&layer);
+}
+
+void GraphicTool::visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) {
+    // Nothing to do. Not the right kind of tool.
 }
 
 } // namespace Graphic

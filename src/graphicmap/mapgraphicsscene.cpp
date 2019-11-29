@@ -20,7 +20,8 @@ MapGraphicsScene::MapGraphicsScene(QObject* parent)
       m_mapDocument(nullptr),
       m_map(nullptr),
       m_isDrawing(false),
-      m_drawingTool(nullptr)
+      m_drawingTool(nullptr),
+      m_currentGraphicLayer(nullptr)
 
 {
     //m_paintingLayerState = new GraphicMap::NotPaintingState(*this);
@@ -68,6 +69,7 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument
             ).string().c_str())
     );
 
+    m_currentGraphicLayer = nullptr;
     for (auto& graphicLayer: m_graphicLayers) {
         delete graphicLayer;
     }
@@ -153,6 +155,7 @@ void MapGraphicsScene::adjustLayers() const {
 }
 
 void MapGraphicsScene::clearGrid() {
+    qDebug() << "Clear grid.";
     for (auto it = m_gridItems.begin(); it != m_gridItems.end(); ++it) {
         removeItem(*it);
     }
@@ -167,6 +170,8 @@ void MapGraphicsScene::drawGrid(
     QPen pen(Qt::black, 0.5);
 
     clearGrid();
+
+    qDebug() << "Draw grid.";
 
     for (int i = 0; i <= width; ++i) {
         QGraphicsItem* item = addLine(
@@ -192,12 +197,21 @@ void MapGraphicsScene::drawGrid(
     }
 }
 
+void MapGraphicsScene::redrawGrid() {
+    //m_drawingTool->drawGrid();
+}
+
 void MapGraphicsScene::setDrawingTool(::DrawingTool::DrawingTool* drawingTool)
 {
     if (nullptr != m_drawingTool) {
         m_drawingTool->onUnselected();
     }
     m_drawingTool = drawingTool;
+
+    if (nullptr != m_currentGraphicLayer) {
+        m_currentGraphicLayer->accept(*m_drawingTool);
+    }
+
     qDebug() << "tool is set.";
     m_drawingTool->drawGrid();
 }
@@ -250,6 +264,14 @@ bool MapGraphicsScene::eventFilter(QObject *watched, QEvent *event)
         }
     }
     return false;
+}
+
+void MapGraphicsScene::setCurrentGraphicLayer(GraphicLayer* layer) {
+    qDebug() << "Set current graphic layer.";
+    m_currentGraphicLayer = layer;
+    if (nullptr != m_drawingTool) {
+        layer->accept(*m_drawingTool);
+    }
 }
 
 } // namespace GraphicMap

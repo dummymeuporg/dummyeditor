@@ -52,13 +52,10 @@ public:
     Editor::Layer& editorLayer() override;
 
     std::vector<DrawingTool::DrawingTool*> drawingTools() override;
+
+    void accept(GraphicLayerVisitor&) override;
 private:
     Editor::GraphicLayer& m_graphicLayer;
     const QPixmap& m_chipsetPixmap;
-
-    // Drawing tools
-    DrawingTool::Graphic::Pen m_pen;
-    DrawingTool::Graphic::Rectangle m_rectangle;
-    DrawingTool::Graphic::Eraser m_eraser;
 };
 } // namespace GraphicMap

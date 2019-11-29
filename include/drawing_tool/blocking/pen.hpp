@@ -14,7 +14,10 @@ namespace Blocking {
 class Pen : public BlockingTool {
     Q_OBJECT
 public:
-    Pen(GraphicMap::BlockingGraphicLayer&);
+    Pen(
+        GraphicMap::MapGraphicsScene&,
+        GraphicMap::BlockingGraphicLayer* = nullptr
+    );
     void accept(Visitor&) override;
     void mapMousePressEvent(::QGraphicsSceneMouseEvent*) override;
     void mapMouseMoveEvent(::QGraphicsSceneMouseEvent*) override;

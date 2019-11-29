@@ -8,6 +8,7 @@
 #include "graphicmap/blockingsquareitem.hpp"
 #include "graphicmap/blockinggraphiclayer.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
+#include "graphicmap/graphic_layer_visitor.hpp"
 
 namespace GraphicMap {
 BlockingGraphicLayer::BlockingGraphicLayer(
@@ -15,9 +16,7 @@ BlockingGraphicLayer::BlockingGraphicLayer(
     MapGraphicsScene& mapGraphicsScene,
     int zIndex
 ) : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex),
-    m_blockingLayer(blockingLayer),
-    m_pen(*this),
-    m_eraser(*this)
+    m_blockingLayer(blockingLayer)
 {
 
     m_layerItems.resize(m_blockingLayer.width() * m_blockingLayer.height());
@@ -127,7 +126,11 @@ std::vector<DrawingTool::DrawingTool*>
 BlockingGraphicLayer::drawingTools()
 {
     // XXX: fill this.
-    return {&m_pen, &m_eraser};
+    return {/*&m_pen, &m_eraser*/};
+}
+
+void BlockingGraphicLayer::accept(GraphicLayerVisitor& visitor) {
+    visitor.visitGraphicLayer(*this);
 }
 
 } // namespace GraphicMap

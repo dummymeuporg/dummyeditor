@@ -20,6 +20,7 @@ class Layer;
 namespace GraphicMap {
 
 class MapGraphicsScene;
+class GraphicLayerVisitor;
 
 class GraphicLayer : public MapSceneLayer
 {
@@ -34,6 +35,8 @@ public:
     virtual Editor::Layer& editorLayer() = 0;
 
     virtual std::vector<DrawingTool::DrawingTool*> drawingTools() = 0;
+
+    virtual void accept(GraphicLayerVisitor&) = 0;
 
 signals:
     void layerSelected(GraphicMap::GraphicLayer*);

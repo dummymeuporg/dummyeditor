@@ -13,7 +13,11 @@ namespace Graphic {
 class PaletteTool : public GraphicTool {
     Q_OBJECT
 public:
-    PaletteTool(QIcon&&, GraphicMap::VisibleGraphicLayer&);
+    PaletteTool(
+        QIcon&&,
+        GraphicMap::MapGraphicsScene&,
+        GraphicMap::VisibleGraphicLayer* = nullptr
+    );
     void paletteMousePressEvent(::QGraphicsSceneMouseEvent*);
     void paletteMouseMoveEvent(::QGraphicsSceneMouseEvent*);
     void paletteMouseReleaseEvent(::QGraphicsSceneMouseEvent*);

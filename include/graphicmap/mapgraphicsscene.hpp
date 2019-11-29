@@ -72,6 +72,7 @@ public:
     bool eventFilter(QObject*, QEvent*) override;
     void drawGrid(quint16 width, quint16 height, unsigned int unit);
     void clearGrid();
+    void redrawGrid();
 
 public slots:
     void changeMapDocument(
@@ -79,6 +80,9 @@ public slots:
     );
     void unsetDrawingTool();
     void setDrawingTool(::DrawingTool::DrawingTool*);
+    DrawingTool::DrawingTool* drawingTool() const {
+        return m_drawingTool;
+    }
 
     void adjustLayers() const;
 
@@ -87,6 +91,8 @@ public slots:
         return *m_paintingLayerState;
     }
     */
+
+    void setCurrentGraphicLayer(GraphicLayer*);
 
 private:
     void _cleanLayer(QVector<QGraphicsPixmapItem*>& layer);
@@ -111,6 +117,7 @@ private:
     DrawingTool::DrawingTool* m_drawingTool;
 
     GraphicLayers m_graphicLayers;
+    GraphicLayer* m_currentGraphicLayer;
 
     QVector<QGraphicsItem*> m_gridItems;
 

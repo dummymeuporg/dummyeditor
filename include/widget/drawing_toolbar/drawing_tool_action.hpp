@@ -13,8 +13,8 @@ class DrawingToolAction : public ::QAction {
     Q_OBJECT
 public:
     DrawingToolAction(DrawingTool::DrawingTool*, QWidget* parent = nullptr);
-    DrawingTool::DrawingTool* drawingTool() const {
-        return m_drawingTool;
+    DrawingTool::DrawingTool& drawingTool() const {
+        return *m_drawingTool;
     }
 signals:
     void trigerred(DrawingTool::DrawingTool*);

@@ -3,6 +3,10 @@
 
 #include <QWidget>
 
+namespace GraphicMap {
+class MapGraphicsScene;
+} // namespace GraphicMap
+
 namespace Editor {
 class Map;
 } // namespace Editor
@@ -53,6 +57,7 @@ private:
     Ui::MapFloorsList* ui;
     std::shared_ptr<Editor::Map> m_editorMap;
     Model::MapFloorTreeModel* m_mapFloorTreeModel;
+    GraphicMap::MapGraphicsScene* m_mapScene;
 };
 
 } // namespace MapFloorsList

@@ -15,7 +15,10 @@ namespace Graphic {
 class Eraser : public GraphicTool {
     Q_OBJECT
 public:
-    Eraser(GraphicMap::VisibleGraphicLayer&);
+    Eraser(
+            GraphicMap::MapGraphicsScene&,
+            GraphicMap::VisibleGraphicLayer* = nullptr
+    );
     void accept(Visitor&) override;
     void mapMousePressEvent(::QGraphicsSceneMouseEvent*) override;
     void mapMouseMoveEvent(::QGraphicsSceneMouseEvent*) override;

@@ -14,18 +14,21 @@ namespace DrawingTool {
 
 namespace Graphic {
 
-Eraser::Eraser(GraphicMap::VisibleGraphicLayer& visibleGraphicLayer)
-    : Graphic::GraphicTool(QIcon(":/icons/icon_eraser.png"),
-                           visibleGraphicLayer), m_mouseClicked(false)
+Eraser::Eraser(
+    GraphicMap::MapGraphicsScene& mapGraphicsScene,
+    GraphicMap::VisibleGraphicLayer* visibleGraphicLayer
+) : Graphic::GraphicTool(QIcon(":/icons/icon_eraser.png"),
+                         mapGraphicsScene,
+                         visibleGraphicLayer), m_mouseClicked(false)
 {}
 
 void Eraser::mapMouseMoveEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
     QPoint point(mouseEvent->scenePos().toPoint());
     point.setX(point.x() - (point.x() % 16));
     point.setY(point.y() - (point.y() % 16));
-    if (m_mouseClicked) {
+    if (m_mouseClicked && m_visibleGraphicLayer != nullptr) {
         // XXX : remove the tile.
-        m_visibleGraphicLayer.setTile(
+        m_visibleGraphicLayer->setTile(
             quint16(point.x() - (point.x() % 16)),
             quint16(point.y() - (point.y() % 16)),
             -1,
@@ -35,34 +38,34 @@ void Eraser::mapMouseMoveEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
 }
 
 void Eraser::mapMousePressEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
-    QPoint point(mouseEvent->scenePos().toPoint());
-    point.setX(point.x() - (point.x() % 16));
-    point.setY(point.y() - (point.y() % 16));
-    qDebug() << "Eraser press.";
+    if (nullptr != m_visibleGraphicLayer) {
+        QPoint point(mouseEvent->scenePos().toPoint());
+        point.setX(point.x() - (point.x() % 16));
+        point.setY(point.y() - (point.y() % 16));
+        qDebug() << "Eraser press.";
 
-    // XXX: remove tile.
-    m_mouseClicked = true;
+        // XXX: remove tile.
+        m_mouseClicked = true;
 
-    m_visibleGraphicLayer.setTile(
-        quint16(point.x() - (point.x() % 16)),
-        quint16(point.y() - (point.y() % 16)),
-        -1,
-        -1
-    );
-
-
+        m_visibleGraphicLayer->setTile(
+            quint16(point.x() - (point.x() % 16)),
+            quint16(point.y() - (point.y() % 16)),
+            -1,
+            -1
+        );
+    }
 }
 
-void Eraser::mapMouseReleaseEvent(::QGraphicsSceneMouseEvent* event) {
+void Eraser::mapMouseReleaseEvent(::QGraphicsSceneMouseEvent*) {
     qDebug() << "Eraser release.";
     m_mouseClicked = false;
 }
 
-void Eraser::mapKeyPressEvent(::QKeyEvent* event) {
+void Eraser::mapKeyPressEvent(::QKeyEvent*) {
     qDebug() << "key press.";
 }
 
-void Eraser::mapKeyReleaseEvent(::QKeyEvent* event) {
+void Eraser::mapKeyReleaseEvent(::QKeyEvent*) {
     qDebug() << "key release.";
 }
 

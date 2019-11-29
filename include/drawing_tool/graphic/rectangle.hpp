@@ -18,7 +18,8 @@ namespace Graphic {
 class Rectangle : public PaletteTool {
     Q_OBJECT
 public:
-    Rectangle(GraphicMap::VisibleGraphicLayer&);
+    Rectangle(GraphicMap::MapGraphicsScene&,
+              GraphicMap::VisibleGraphicLayer* = nullptr);
     void accept(Visitor&) override;
     void mapMousePressEvent(::QGraphicsSceneMouseEvent*) override;
     void mapMouseMoveEvent(::QGraphicsSceneMouseEvent*) override;

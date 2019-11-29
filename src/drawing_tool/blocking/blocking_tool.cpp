@@ -13,8 +13,9 @@ namespace Blocking {
 
 BlockingTool::BlockingTool(
         QIcon&& icon,
-        GraphicMap::BlockingGraphicLayer& blockingGraphicLayer)
-    : DrawingTool(blockingGraphicLayer.mapGraphicsScene(), std::move(icon)),
+        GraphicMap::MapGraphicsScene& mapGraphicsScene,
+        GraphicMap::BlockingGraphicLayer* blockingGraphicLayer)
+    : DrawingTool(mapGraphicsScene, std::move(icon)),
       m_blockingGraphicLayer(blockingGraphicLayer)
 {}
 
@@ -25,11 +26,30 @@ void BlockingTool::emitDrawingToolSelected() {
 }
 
 void BlockingTool::drawGrid() {
-    m_mapGraphicsScene.drawGrid(
-        m_blockingGraphicLayer.layer().width(),
-        m_blockingGraphicLayer.layer().height(),
-        8
-    );
+    if (nullptr != m_blockingGraphicLayer) {
+        m_mapGraphicsScene.drawGrid(
+            m_blockingGraphicLayer->layer().width(),
+            m_blockingGraphicLayer->layer().height(),
+            8
+        );
+    }
+}
+
+void BlockingTool::setBlockingGraphicLayer(
+    GraphicMap::BlockingGraphicLayer* layer
+)
+{
+    m_blockingGraphicLayer = layer;
+    m_mapGraphicsScene.redrawGrid();
+}
+
+void BlockingTool::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer) {
+    qDebug() << "Visit blocking layer";
+    setBlockingGraphicLayer(&layer);
+}
+
+void BlockingTool::visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) {
+    // Do nothing. Not the right tool.
 }
 
 } // namespace Graphic

@@ -14,8 +14,14 @@ namespace DrawingTool {
 
 namespace Graphic {
 
-Pen::Pen(GraphicMap::VisibleGraphicLayer& visibleGraphicLayer)
-    : Graphic::PaletteTool(QIcon(":/icons/icon_pen.png"), visibleGraphicLayer),
+Pen::Pen(
+        GraphicMap::MapGraphicsScene& mapGraphicsScene,
+        GraphicMap::VisibleGraphicLayer* visibleGraphicLayer
+    ) : Graphic::PaletteTool(
+            QIcon(":/icons/icon_pen.png"),
+            mapGraphicsScene,
+            visibleGraphicLayer
+      ),
       m_hoverItem(nullptr)
 {}
 
@@ -40,7 +46,7 @@ void Pen::mapMouseMoveEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
 void Pen::mapMousePressEvent(::QGraphicsSceneMouseEvent* event) {
     qDebug() << "Pen press.";
 
-    if (nullptr == m_selectionItem) {
+    if (nullptr == m_selectionItem || nullptr == m_visibleGraphicLayer) {
         return;
     }
 
@@ -52,7 +58,7 @@ void Pen::mapMousePressEvent(::QGraphicsSceneMouseEvent* event) {
 
     for (int j = 0; j < height; ++j) {
         for(int i = 0; i < width; ++i) {
-            m_visibleGraphicLayer.setTile(
+            m_visibleGraphicLayer->setTile(
                  quint16(point.x()
                          - (point.x() % 16)
                          + (i * 16)),

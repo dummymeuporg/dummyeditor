@@ -15,7 +15,10 @@ namespace Graphic {
 class Pen : public PaletteTool {
     Q_OBJECT
 public:
-    Pen(GraphicMap::VisibleGraphicLayer&);
+    Pen(
+        GraphicMap::MapGraphicsScene&,
+        GraphicMap::VisibleGraphicLayer* = nullptr
+    );
     void accept(Visitor&) override;
     void mapMousePressEvent(::QGraphicsSceneMouseEvent*) override;
     void mapMouseMoveEvent(::QGraphicsSceneMouseEvent*) override;

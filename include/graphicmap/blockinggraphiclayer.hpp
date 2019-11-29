@@ -35,13 +35,16 @@ public:
     }
 
     std::vector<DrawingTool::DrawingTool*> drawingTools() override;
+    void accept(GraphicLayerVisitor&) override;
 private:
     void _draw(int, quint16, quint16);
     Editor::BlockingLayer& m_blockingLayer;
     QVector<BlockingSquareItem*> m_crossItems;
 
     // Drawing tools
+    /*
     DrawingTool::Blocking::Pen m_pen;
     DrawingTool::Blocking::Eraser m_eraser;
+    */
 };
 } // namespace GraphicMap

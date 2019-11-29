@@ -11,9 +11,13 @@ namespace DrawingTool {
 
 namespace Graphic {
 
-Rectangle::Rectangle(GraphicMap::VisibleGraphicLayer& visibleGraphicLayer)
-    : Graphic::PaletteTool(QIcon(":/icons/icon_rect.png"),
-                           visibleGraphicLayer),
+Rectangle::Rectangle(
+    GraphicMap::MapGraphicsScene& mapGraphicsScene,
+    GraphicMap::VisibleGraphicLayer* visibleGraphicLayer
+) : Graphic::PaletteTool(
+    QIcon(":/icons/icon_rect.png"),
+    mapGraphicsScene,
+    visibleGraphicLayer),
       m_mouseClicked(false),
       m_hoverItem(nullptr)
 {}
@@ -142,6 +146,10 @@ void Rectangle::applyChipsetSelectionInRectangle()
 
 void Rectangle::applySelectionToMap(quint16 mapX, quint16 mapY)
 {
+    if (nullptr == m_visibleGraphicLayer) {
+        return;
+    }
+
     qDebug() << mapX << mapY;
 
     QPoint point(mapX, mapY);
@@ -155,7 +163,7 @@ void Rectangle::applySelectionToMap(quint16 mapX, quint16 mapY)
         {
             qDebug() << "CHIPSET: " << chipsetX + i << chipsetY + j;
             qDebug() << "TARGET: " << point.x() + i << point.y() + j;
-            m_visibleGraphicLayer.setTile(
+            m_visibleGraphicLayer->setTile(
                 quint16(point.x() + i * 16),
                 quint16(point.y() + j * 16),
                 (chipsetX + i) * 16, (chipsetY + j) * 16
