@@ -32,7 +32,9 @@ public:
 signals:
     void drawingToolSelected(::DrawingTool::DrawingTool*);
 private:
+    void drawPattern(::QGraphicsSceneMouseEvent*);
     ::QGraphicsPixmapItem* m_hoverItem;
+    bool m_mousePressed;
 };
 
 } // namespace Graphic

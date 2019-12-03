@@ -22,7 +22,8 @@ Pen::Pen(
             mapGraphicsScene,
             visibleGraphicLayer
       ),
-      m_hoverItem(nullptr)
+      m_hoverItem(nullptr),
+      m_mousePressed(false)
 {}
 
 void Pen::mapMouseMoveEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
@@ -41,6 +42,10 @@ void Pen::mapMouseMoveEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
         }
         m_hoverItem->setPos(pt);
     }
+
+    if (m_mousePressed) {
+        drawPattern(mouseEvent);
+    }
 }
 
 void Pen::mapMousePressEvent(::QGraphicsSceneMouseEvent* event) {
@@ -50,30 +55,13 @@ void Pen::mapMousePressEvent(::QGraphicsSceneMouseEvent* event) {
         return;
     }
 
-    // XXX: set tiles.
-    const QPoint& point(event->scenePos().toPoint());
-    const QRect& selectionRect(m_selectionItem->pixmap().rect());
-    int width(selectionRect.width() / 16);
-    int height(selectionRect.height() / 16);
-
-    for (int j = 0; j < height; ++j) {
-        for(int i = 0; i < width; ++i) {
-            m_visibleGraphicLayer->setTile(
-                 quint16(point.x()
-                         - (point.x() % 16)
-                         + (i * 16)),
-                 quint16(point.y()
-                         - (point.y() % 16)
-                         + (j * 16)),
-                 qint16(m_rectSelection.x() + (i * 16)),
-                 qint16(m_rectSelection.y() + (j * 16))
-            );
-        }
-    }
+    m_mousePressed = true;
+    drawPattern(event);
 }
 
 void Pen::mapMouseReleaseEvent(::QGraphicsSceneMouseEvent* event) {
     qDebug() << "Pen release.";
+    m_mousePressed = false;
 }
 
 void Pen::mapKeyPressEvent(::QKeyEvent* event) {
@@ -112,6 +100,28 @@ void Pen::onUnselected() {
     if (nullptr != m_selectionItem) {
         m_mapGraphicsScene.removeItem(m_selectionItem);
         m_selectionItem = nullptr;
+    }
+}
+
+void Pen::drawPattern(::QGraphicsSceneMouseEvent* event) {
+    const QPoint& point(event->scenePos().toPoint());
+    const QRect& selectionRect(m_selectionItem->pixmap().rect());
+    int width(selectionRect.width() / 16);
+    int height(selectionRect.height() / 16);
+
+    for (int j = 0; j < height; ++j) {
+        for(int i = 0; i < width; ++i) {
+            m_visibleGraphicLayer->setTile(
+                 quint16(point.x()
+                         - (point.x() % 16)
+                         + (i * 16)),
+                 quint16(point.y()
+                         - (point.y() % 16)
+                         + (j * 16)),
+                 qint16(m_rectSelection.x() + (i * 16)),
+                 qint16(m_rectSelection.y() + (j * 16))
+            );
+        }
     }
 }
 
