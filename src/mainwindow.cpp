@@ -11,6 +11,7 @@
 #include <QFrame>
 
 #include "drawing_tool/drawing_tool.hpp"
+#include "drawing_tool/selection.hpp"
 
 #include "drawing_tool/blocking/pen.hpp"
 #include "drawing_tool/blocking/eraser.hpp"
@@ -45,10 +46,12 @@ MainWindow::MainWindow(QWidget *parent) :
     m_currentProject(nullptr),
     m_chipsetScene(new ChipsetGraphicsScene()),
     m_mapScene(new GraphicMap::MapGraphicsScene()),
+    m_selectionDrawingTool(new DrawingTool::Selection(*m_mapScene)),
     m_graphicTools {
         new DrawingTool::Graphic::Pen(*m_mapScene),
         new DrawingTool::Graphic::Rectangle(*m_mapScene),
-        new DrawingTool::Graphic::Eraser(*m_mapScene)
+        new DrawingTool::Graphic::Eraser(*m_mapScene),
+        m_selectionDrawingTool
     },
     m_blockingTools {
         new DrawingTool::Blocking::Pen(*m_mapScene),

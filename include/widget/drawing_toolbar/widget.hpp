@@ -55,6 +55,7 @@ public:
     void visitTool(DrawingTool::Graphic::Eraser&) override;
     void visitTool(DrawingTool::Blocking::Eraser&) override;
     void visitTool(DrawingTool::Blocking::Pen&) override;
+    void visitTool(DrawingTool::Selection&) override;
 
     // GraphicMap::GraphicLayerVisitor methods:
     void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;

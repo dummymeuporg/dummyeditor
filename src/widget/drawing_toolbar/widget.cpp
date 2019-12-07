@@ -124,6 +124,10 @@ void Widget::visitTool(DrawingTool::Blocking::Eraser&) {
     // Nothing to do!
 }
 
+void Widget::visitTool(DrawingTool::Selection&) {
+    // Nothing to do!
+}
+
 void Widget::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer) {
     m_state->visitGraphicLayer(layer);
 }
