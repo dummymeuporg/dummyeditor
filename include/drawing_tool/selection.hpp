@@ -1,8 +1,11 @@
 #pragma once
 
+#include <map>
+
 #include <QGraphicsRectItem>
 
-#include "drawing_tool/graphic/graphic_tool.hpp"
+#include "drawing_tool/drawing_tool.hpp"
+#include "layer_clipboard/clipboard.hpp"
 
 
 namespace DrawingTool {
@@ -22,13 +25,26 @@ public:
     void drawGrid() override;
     void onSelected() override;
     void onUnselected() override;
+
+    // GraphicLayerVisitor
+    void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
+    void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
+    void onCopyKeyPressed();
 signals:
     void drawingToolSelected(::DrawingTool::DrawingTool*);
 private:
+    /* Methods. */
     void drawSelection();
+    void onCopyKeyPressed(::QKeyEvent*);
+    void onCutKeyPressed(::QKeyEvent*);
+    void onPasteKeyPressed(::QKeyEvent*);
+
+    /* Attributes. */
     bool m_mouseClicked;
     QGraphicsRectItem* m_selectionRectItem;
     QPoint m_startSelection, m_endSelection;
+    std::map<GraphicMap::GraphicLayer*,
+             std::shared_ptr<LayerClipboard::Clipboard>> m_layers;
 };
 
 } // namespace DrawingTool

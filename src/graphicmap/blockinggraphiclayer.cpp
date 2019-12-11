@@ -5,6 +5,8 @@
 #include "editor/blocking_layer.hpp"
 #include "editor/map.hpp"
 
+#include "layer_clipboard/blocking.hpp"
+
 #include "graphicmap/blockingsquareitem.hpp"
 #include "graphicmap/blockinggraphiclayer.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
@@ -131,6 +133,27 @@ BlockingGraphicLayer::drawingTools()
 
 void BlockingGraphicLayer::accept(GraphicLayerVisitor& visitor) {
     visitor.visitGraphicLayer(*this);
+}
+
+std::shared_ptr<LayerClipboard::Clipboard>
+BlockingGraphicLayer::getClipboardRegion(const QRect& clip) {
+    unsigned x(clip.x() / 16);
+    unsigned y(clip.y() / 16);
+    unsigned width(clip.width() / 16);
+    unsigned height(clip.width() / 16);
+
+    std::vector<std::uint8_t> content;
+
+    for (unsigned j = y; j < height; ++j) {
+        for (unsigned i = x; i < width; ++i) {
+            unsigned index(j * m_blockingLayer.width() + i);
+            content.push_back(m_blockingLayer.layer().at(index));
+        }
+    }
+
+    return std::make_shared<LayerClipboard::Blocking>(
+        std::move(clip), std::move(content)
+    );
 }
 
 } // namespace GraphicMap

@@ -13,6 +13,10 @@ namespace Editor {
 class GraphicLayer;
 } // namespace Editor
 
+namespace LayerClipboard {
+class Clipboard;
+} // namespace LayerClipboard
+
 namespace Dummy {
 namespace Core {
 class GraphicLayer;
@@ -52,6 +56,9 @@ public:
     Editor::Layer& editorLayer() override;
 
     std::vector<DrawingTool::DrawingTool*> drawingTools() override;
+
+    std::shared_ptr<LayerClipboard::Clipboard>
+    getClipboardRegion(const QRect& clip) override;
 
     void accept(GraphicLayerVisitor&) override;
 private:

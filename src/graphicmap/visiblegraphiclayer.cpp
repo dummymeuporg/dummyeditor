@@ -15,6 +15,8 @@
 #include "graphicmap/visiblegraphiclayer.hpp"
 #include "graphicmap/graphic_layer_visitor.hpp"
 
+#include "layer_clipboard/visible.hpp"
+
 
 namespace GraphicMap {
 
@@ -116,6 +118,27 @@ VisibleGraphicLayer::drawingTools() {
 
 void VisibleGraphicLayer::accept(GraphicLayerVisitor& visitor) {
     visitor.visitGraphicLayer(*this);
+}
+
+std::shared_ptr<LayerClipboard::Clipboard>
+VisibleGraphicLayer::getClipboardRegion(const QRect& clip) {
+    unsigned x(clip.x() / 16);
+    unsigned y(clip.y() / 16);
+    unsigned width(clip.width() / 16);
+    unsigned height(clip.width() / 16);
+
+    std::vector<std::pair<std::int8_t, std::int8_t>> content;
+
+    for (unsigned j = y; j < height; ++j) {
+        for (unsigned i = x; i < width; ++i) {
+            unsigned index(j * m_graphicLayer.width() + i);
+            content.push_back(m_graphicLayer.layer().at(index));
+        }
+    }
+
+    return std::make_shared<LayerClipboard::Visible>(
+        std::move(clip), std::move(content)
+    );
 }
 
 } // namespace GraphicMap

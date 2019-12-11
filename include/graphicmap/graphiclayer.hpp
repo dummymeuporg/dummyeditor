@@ -17,6 +17,10 @@ namespace Editor {
 class Layer;
 } // namespace Editor
 
+namespace LayerClipboard {
+class Clipboard;
+} // namespace LayerClipboard
+
 namespace GraphicMap {
 
 class MapGraphicsScene;
@@ -37,6 +41,9 @@ public:
     virtual std::vector<DrawingTool::DrawingTool*> drawingTools() = 0;
 
     virtual void accept(GraphicLayerVisitor&) = 0;
+
+    virtual std::shared_ptr<LayerClipboard::Clipboard>
+    getClipboardRegion(const QRect& clip) = 0;
 
 signals:
     void layerSelected(GraphicMap::GraphicLayer*);

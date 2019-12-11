@@ -36,6 +36,9 @@ public:
 
     std::vector<DrawingTool::DrawingTool*> drawingTools() override;
     void accept(GraphicLayerVisitor&) override;
+
+    std::shared_ptr<LayerClipboard::Clipboard>
+    getClipboardRegion(const QRect& clip) override;
 private:
     void _draw(int, quint16, quint16);
     Editor::BlockingLayer& m_blockingLayer;

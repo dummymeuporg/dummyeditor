@@ -62,5 +62,11 @@ void EventsGraphicLayer::accept(GraphicLayerVisitor& visitor) {
     visitor.visitGraphicLayer(*this);
 }
 
+std::shared_ptr<LayerClipboard::Clipboard>
+EventsGraphicLayer::getClipboardRegion(const QRect& clip) {
+    //XXX: Todo later.
+    return nullptr;
+}
+
 
 } // namespace GraphicMap
