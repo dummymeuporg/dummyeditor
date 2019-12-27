@@ -15,6 +15,9 @@ public:
     std::vector<DrawingTool::DrawingTool*> drawingTools() override;
     Editor::Layer& editorLayer() override;
     void accept(GraphicLayerVisitor&) override;
+
+    std::shared_ptr<LayerClipboard::Clipboard>
+    getClipboardRegion(const QRect& clip) override;
 private:
     void draw(int, quint16, quint16);
     Editor::EventsLayer& m_eventsLayer;

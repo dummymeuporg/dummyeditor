@@ -67,6 +67,7 @@ private:
     ChipsetGraphicsScene* m_chipsetScene;
     GraphicMap::MapGraphicsScene* m_mapScene;
 
+    DrawingTool::Selection* m_selectionDrawingTool;
     std::vector<DrawingTool::DrawingTool*> m_graphicTools;
     std::vector<DrawingTool::DrawingTool*> m_blockingTools;
 
