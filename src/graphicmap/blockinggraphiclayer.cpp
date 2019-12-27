@@ -137,15 +137,15 @@ void BlockingGraphicLayer::accept(GraphicLayerVisitor& visitor) {
 
 std::shared_ptr<LayerClipboard::Clipboard>
 BlockingGraphicLayer::getClipboardRegion(const QRect& clip) {
-    unsigned x(clip.x() / 16);
-    unsigned y(clip.y() / 16);
-    unsigned width(clip.width() / 16);
-    unsigned height(clip.width() / 16);
+    unsigned x(clip.x() / 8);
+    unsigned y(clip.y() / 8);
+    unsigned width((clip.width() / 8) + 1);
+    unsigned height((clip.height() / 8) + 1);
 
     std::vector<std::uint8_t> content;
 
-    for (unsigned j = y; j < height; ++j) {
-        for (unsigned i = x; i < width; ++i) {
+    for (unsigned j = y; j <= (y + height); ++j) {
+        for (unsigned i = x; i <= (x + width); ++i) {
             unsigned index(j * m_blockingLayer.width() + i);
             content.push_back(m_blockingLayer.layer().at(index));
         }

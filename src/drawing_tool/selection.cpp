@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 #include <QKeyEvent>
@@ -107,7 +109,9 @@ void Selection::mapKeyPressEvent(::QKeyEvent* event) {
     // If ctrl+c, copy
     if(event->type() == ::QKeyEvent::KeyPress) {
         if(event->matches(QKeySequence::Copy)) {
-            onCopyKeyPressed((event));
+            onCopyKeyPressed(event);
+        } else if (event->matches(QKeySequence::Paste)) {
+            onPasteKeyPressed(event);
         }
     }
 }
@@ -126,7 +130,13 @@ void Selection::onCutKeyPressed(::QKeyEvent* event) {
 }
 
 void Selection::onPasteKeyPressed(::QKeyEvent* event) {
-    qDebug() << "Paste";
+    std::cerr << "Paste" << std::endl;
+    std::cerr << "layers count: " << m_layers.size() << std::endl;
+    for (auto& [layer, clip] : m_layers) {
+        std::cerr << layer << std::endl;
+        clip->setTarget(m_startSelection);
+        layer->accept(*clip);
+    }
 }
 
 void Selection::mapKeyReleaseEvent(::QKeyEvent*) {

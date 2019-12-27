@@ -18,6 +18,7 @@ class Blocking : public Clipboard {
 public:
     Blocking(const QRect&, const std::vector<std::uint8_t>&);
     Blocking(QRect&&, std::vector<std::uint8_t>&&);
+    void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
 private:
     QRect m_clip;
     std::vector<std::uint8_t> m_content;

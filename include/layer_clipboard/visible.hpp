@@ -23,6 +23,7 @@ public:
         const std::vector<std::pair<std::int8_t, std::int8_t>>&
     );
     Visible(QRect&&, std::vector<std::pair<std::int8_t, std::int8_t>>&&);
+    void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
 private:
     QRect m_clip;
     std::vector<std::pair<std::int8_t, std::int8_t>> m_content;

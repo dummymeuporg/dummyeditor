@@ -125,12 +125,12 @@ VisibleGraphicLayer::getClipboardRegion(const QRect& clip) {
     unsigned x(clip.x() / 16);
     unsigned y(clip.y() / 16);
     unsigned width(clip.width() / 16);
-    unsigned height(clip.width() / 16);
+    unsigned height(clip.height() / 16);
 
     std::vector<std::pair<std::int8_t, std::int8_t>> content;
 
-    for (unsigned j = y; j < height; ++j) {
-        for (unsigned i = x; i < width; ++i) {
+    for (unsigned j = y; j <= (y + height); ++j) {
+        for (unsigned i = x; i <= (x + width); ++i) {
             unsigned index(j * m_graphicLayer.width() + i);
             content.push_back(m_graphicLayer.layer().at(index));
         }
