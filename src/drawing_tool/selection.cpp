@@ -3,7 +3,10 @@
 #include <QKeyEvent>
 
 #include "editor/map.hpp"
+
+#include "graphicmap/graphiclayer.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
+
 #include "drawing_tool/selection.hpp"
 
 namespace DrawingTool {
@@ -111,9 +114,10 @@ void Selection::mapKeyPressEvent(::QKeyEvent* event) {
 
 void Selection::onCopyKeyPressed(::QKeyEvent* event) {
     qDebug() << "Copy";
+    m_layers.clear();
     for (const auto& layer: m_mapGraphicsScene.graphicLayers()) {
         QRect clip(m_startSelection, m_endSelection);
-        //layer->getClipboardRegion(clip);
+        m_layers[layer] = layer->getClipboardRegion(clip);
     }
 }
 
