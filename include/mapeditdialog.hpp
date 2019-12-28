@@ -1,9 +1,15 @@
-#pragma once
+#ifndef MAPEDITDIALOG_H
+#define MAPEDITDIALOG_H
+
 #include <memory>
 
 #include <QDialog>
 
 #include "editor/project.hpp"
+
+//////////////////////////////////////////////////////////////////////////////
+//  pre-declaration
+//////////////////////////////////////////////////////////////////////////////
 
 namespace Dummy {
     class Map;
@@ -12,6 +18,10 @@ namespace Dummy {
 namespace Ui {
 class MapEditDialog;
 }
+
+//////////////////////////////////////////////////////////////////////////////
+//  MapEditDialog class
+//////////////////////////////////////////////////////////////////////////////
 
 class MapEditDialog : public QDialog
 {
@@ -30,10 +40,13 @@ public:
     QString getChipset() const;
     QString getMusic() const;
 
-private:
-    Ui::MapEditDialog *ui;
-    const std::shared_ptr<const Editor::Project> m_project;
 private slots:
     void onChipsetBrowse();
     void onOK();
+
+private:
+    Ui::MapEditDialog *m_ui;
+    const std::shared_ptr<const Editor::Project> m_project;
 };
+
+#endif MAPEDITDIALOG_H

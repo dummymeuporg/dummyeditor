@@ -1,65 +1,41 @@
 #include <filesystem>
 
 #include <QDebug>
-#include <QFile>
 #include <QFileDialog>
-#include <QGraphicsScene>
-#include <QKeyEvent>
 #include <QMessageBox>
-#include <QToolButton>
 #include <QCloseEvent>
-#include <QFrame>
 
-#include "drawing_tool/drawing_tool.hpp"
 #include "drawing_tool/selection.hpp"
-
-#include "drawing_tool/blocking/pen.hpp"
-#include "drawing_tool/blocking/eraser.hpp"
-
-#include "drawing_tool/graphic/eraser.hpp"
-#include "drawing_tool/graphic/pen.hpp"
-#include "drawing_tool/graphic/rectangle.hpp"
-
-
 #include "editor/map.hpp"
-#include "editor/project.hpp"
 
-#include "graphicmap/graphiclayer.hpp"
 #include "graphicmap/blockinggraphiclayer.hpp"
+#include "graphicmap/mapgraphicsscene.hpp"
 #include "graphicmap/visiblegraphiclayer.hpp"
 
-#include "graphicmap/mapgraphicsscene.hpp"
-
-
-#include "misc/map_tree_model.hpp"
-
 #include "chipsetgraphicsscene.hpp"
-#include "graphicmap/mapgraphicsscene.hpp"
 #include "mainwindow.hpp"
-#include "mapeditdialog.hpp"
-#include "widget/map_floors_list/widget.hpp"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    m_currentProject(nullptr),
-    m_chipsetScene(new ChipsetGraphicsScene()),
-    m_mapScene(new GraphicMap::MapGraphicsScene()),
-    m_selectionDrawingTool(new DrawingTool::Selection(*m_mapScene)),
-    m_graphicTools {
+
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
+    , m_ui(new Ui::MainWindow)
+    , m_currentProject(nullptr)
+    , m_chipsetScene(new ChipsetGraphicsScene())
+    , m_mapScene(new GraphicMap::MapGraphicsScene())
+    , m_selectionDrawingTool(new DrawingTool::Selection(*m_mapScene))
+    , m_graphicTools({
         new DrawingTool::Graphic::Pen(*m_mapScene),
         new DrawingTool::Graphic::Rectangle(*m_mapScene),
         new DrawingTool::Graphic::Eraser(*m_mapScene),
         m_selectionDrawingTool
-    },
-    m_blockingTools {
+    })
+    , m_blockingTools({
         new DrawingTool::Blocking::Pen(*m_mapScene),
         new DrawingTool::Blocking::Eraser(*m_mapScene)
-    }
-
+    })
 {
-    ui->setupUi(this);
+    m_ui->setupUi(this);
 
 
     /*----------------------tab GENERAL---------------------------------- */
@@ -82,15 +58,15 @@ MainWindow::MainWindow(QWidget *parent) :
     //create a group action to regroup action layers
     QActionGroup *layersGroup = new QActionGroup(this);
     layersGroup->addAction("Working layer");
-    layersGroup->addAction(ui->actionLow_layer_1);
-    layersGroup->addAction(ui->actionLow_layer_2);
-    layersGroup->addAction(ui->actionHigh_layer_1);
-    layersGroup->addAction(ui->actionHigh_layer_2);
-    layersGroup->addAction(ui->actionBlocking_layer);
-    layersGroup->addAction(ui->actionEvents_layer);
-    layersGroup->addAction(ui->actionQuick_go_admin);
-    layersGroup->addAction(ui->actionStarting_point);
-    layersGroup->addAction(ui->actionRespawn_point);
+    layersGroup->addAction(m_ui->actionLow_layer_1);
+    layersGroup->addAction(m_ui->actionLow_layer_2);
+    layersGroup->addAction(m_ui->actionHigh_layer_1);
+    layersGroup->addAction(m_ui->actionHigh_layer_2);
+    layersGroup->addAction(m_ui->actionBlocking_layer);
+    layersGroup->addAction(m_ui->actionEvents_layer);
+    layersGroup->addAction(m_ui->actionQuick_go_admin);
+    layersGroup->addAction(m_ui->actionStarting_point);
+    layersGroup->addAction(m_ui->actionRespawn_point);
     tabGeneralToolBar->addActions(layersGroup->actions());
 
     tabGeneralToolBar->addSeparator();
@@ -99,51 +75,47 @@ MainWindow::MainWindow(QWidget *parent) :
     QActionGroup *launchTestGroup = new QActionGroup(this);
     launchTestGroup->setExclusive(false);
     launchTestGroup->addAction("Launch test settings");
-    launchTestGroup->addAction(ui->actionLaunch_test);
-    launchTestGroup->addAction(ui->actionActivate_fullscreen);
-    launchTestGroup->addAction(ui->actionActivate_music);
-    launchTestGroup->addAction(ui->actionActivate_character_setting);
+    launchTestGroup->addAction(m_ui->actionLaunch_test);
+    launchTestGroup->addAction(m_ui->actionActivate_fullscreen);
+    launchTestGroup->addAction(m_ui->actionActivate_music);
+    launchTestGroup->addAction(m_ui->actionActivate_character_setting);
     tabGeneralToolBar->addActions(launchTestGroup->actions());
 
 
-    ui->tabGeneral->layout()->setMenuBar(tabGeneralToolBar);
-    _initializeScenes();
+    m_ui->tabGeneral->layout()->setMenuBar(tabGeneralToolBar);
+    initializeScenes();
     initializeDrawingTools();
 
-    QObject::connect(ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
+    QObject::connect(m_ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
                      m_chipsetScene, SLOT(changeChipset(QString)));
     /*
     QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
                      m_mapScene, SLOT(changeSelection(QRect)));
     */
 
-    ui->graphicsViewChipset->scale(2.0, 2.0);
-    ui->graphicsViewMap->scale(2.0, 2.0);
+    m_ui->graphicsViewChipset->scale(2.0, 2.0);
+    m_ui->graphicsViewMap->scale(2.0, 2.0);
 
-    QList<int> desktopSizeListWidth;
-    desktopSizeListWidth.append(width()/5);
-    desktopSizeListWidth.append(3*width()/5);
-    ui->splitter_2->setSizes(desktopSizeListWidth);
+    QList<int> desktopSizeListWidth {width()/5, 3*width()/5};
+    m_ui->splitter_2->setSizes(desktopSizeListWidth);
 
-    QList<int> desktopSizeListHeight;
-    desktopSizeListHeight.append(3*height()/5);
-    desktopSizeListHeight.append(height()/5);
-    ui->splitter->setSizes(desktopSizeListHeight);
+    QList<int> desktopSizeListHeight {3*height()/5, height()/5};
+    m_ui->splitter->setSizes(desktopSizeListHeight);
 }
 
 void MainWindow::initializeDrawingTools() {
-    // XXX: Remove this.
+    // TODO: Remove this.
 }
 
-void MainWindow::_initializeScenes()
+void MainWindow::initializeScenes()
 {
-    ui->graphicsViewChipset->setScene(m_chipsetScene);
-    ui->graphicsViewMap->setScene(m_mapScene);
+    m_ui->graphicsViewChipset->setScene(m_chipsetScene);
+    m_ui->graphicsViewMap->setScene(m_mapScene);
 }
 
-void MainWindow::_connectScenes()
+void MainWindow::connectScenes()
 {
-    QObject::connect(ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
+    QObject::connect(m_ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
                      m_chipsetScene, SLOT(changeChipset(QString)));
     /*
     QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
@@ -165,24 +137,24 @@ void MainWindow::_connectScenes()
 
 }
 
-void MainWindow::_closeCurrentProject()
+void MainWindow::closeCurrentProject()
 {
-    QObject::disconnect(ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
+    QObject::disconnect(m_ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
                         m_chipsetScene, SLOT(changeChipset(QString)));
     QObject::disconnect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
                         m_mapScene, SLOT(changeSelection(QRect)));
 
-    QObject::disconnect(ui->actionLow_layer_1, SIGNAL(triggered(bool)),
+    QObject::disconnect(m_ui->actionLow_layer_1, SIGNAL(triggered(bool)),
                         m_mapScene, SLOT(showFirstLayer()));
-    QObject::disconnect(ui->actionLow_layer_2, SIGNAL(triggered(bool)),
+    QObject::disconnect(m_ui->actionLow_layer_2, SIGNAL(triggered(bool)),
                         m_mapScene, SLOT(showSecondLayer()));
-    QObject::disconnect(ui->actionHigh_layer_1, SIGNAL(triggered(bool)),
+    QObject::disconnect(m_ui->actionHigh_layer_1, SIGNAL(triggered(bool)),
                         m_mapScene, SLOT(showThirdLayer()));
-    QObject::disconnect(ui->actionHigh_layer_2, SIGNAL(triggered(bool)),
+    QObject::disconnect(m_ui->actionHigh_layer_2, SIGNAL(triggered(bool)),
                         m_mapScene, SLOT(showFourthLayer()));
-    QObject::disconnect(ui->actionBlocking_layer, SIGNAL(triggered(bool)),
+    QObject::disconnect(m_ui->actionBlocking_layer, SIGNAL(triggered(bool)),
                         m_mapScene, SLOT(showBlockingLayer()));
-    QObject::disconnect(ui->actionStarting_point, SIGNAL(triggered(bool)),
+    QObject::disconnect(m_ui->actionStarting_point, SIGNAL(triggered(bool)),
                         m_mapScene, SLOT(showStartingPointLayer()));
 
     /*
@@ -204,6 +176,7 @@ void MainWindow::_closeCurrentProject()
 MainWindow::~MainWindow()
 {
     if (m_currentProject != nullptr) {
+        closeCurrentProject();
         m_currentProject.reset();
     }
     for (auto tool: m_blockingTools) {
@@ -212,7 +185,7 @@ MainWindow::~MainWindow()
     for (auto tool: m_graphicTools) {
         delete tool;
     }
-    delete ui;
+    delete m_ui;
 }
 
 void MainWindow::newProject() {
@@ -225,21 +198,23 @@ void MainWindow::newProject() {
         return;
     }
 
+    // TODO clean currently loaded project
+
     // Initialize a project into this directory
-    _initializeProject(projectDirectory);
+    initializeProject(projectDirectory);
 
     if (nullptr != m_currentProject) {
-        _closeCurrentProject();
+        closeCurrentProject();
     }
 
-    _loadProject(projectDirectory);
+    loadProject(projectDirectory);
 
 }
 
 void MainWindow::openProject() {
 
     if (nullptr != m_currentProject) {
-        _closeCurrentProject();
+        closeCurrentProject();
     }
 
     QString projectDirectory =
@@ -250,45 +225,49 @@ void MainWindow::openProject() {
         return;
     }
 
-    _loadProject(projectDirectory);
+    loadProject(projectDirectory);
 
 }
 
-void MainWindow::_loadProject(const QString& projectDirectory) {
+void MainWindow::loadProject(const QString& projectDirectory) {
 
-    _connectScenes();
+    connectScenes();
 
     m_currentProject = std::make_shared<Editor::Project>(
         std::filesystem::path(projectDirectory.toStdString()).string()
     );
 
-    ui->treeViewMaps->setModel(
+    m_ui->treeViewMaps->setModel(
         static_cast<QAbstractItemModel*>(m_currentProject->mapsModel())
     );
 
-    ui->treeViewMaps->setProject(m_currentProject);
+    m_ui->treeViewMaps->setProject(m_currentProject);
 
     // Enable the first layer drawing by default.
-    ui->actionLow_layer_1->trigger();
+    m_ui->actionLow_layer_1->trigger();
 }
 
 void MainWindow::saveProject() {
-    if (nullptr != m_currentProject) {
-        m_currentProject->saveProjectFile();
-        qDebug() << m_currentProject->openedMaps().count();
-        if (m_currentProject->openedMaps().count() > 0) {
-            QMap<QString, Misc::MapDocument>::iterator i;
+    if (nullptr == m_currentProject) {
+        return;
+    }
 
-            for(auto e : m_currentProject->openedMaps().keys()) {
-                qDebug() << e;
-                m_currentProject->document(e)->save();
-            }
-        }
+    m_currentProject->saveProjectFile();
+    qDebug() << m_currentProject->openedMaps().count();
+
+    if (m_currentProject->openedMaps().count() <= 0) {
+        return;
+    }
+
+    QMap<QString, Misc::MapDocument>::iterator i;
+
+    for(auto e : m_currentProject->openedMaps().keys()) {
+        qDebug() << e;
+        m_currentProject->document(e)->save();
     }
 }
 
-
-void MainWindow::_initializeProject(const QString& projectDirectory) {
+void MainWindow::initializeProject(const QString& projectDirectory) {
     Editor::Project::create(projectDirectory);
 }
 
@@ -317,19 +296,17 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
         );
     }
 
-    ui->graphicsViewChipset->viewport()->update();
-    ui->graphicsViewMap->setSceneRect(QRect(0,
-                                            0,
-                                            map->width()*16,
-                                            map->height()*16));
+    m_ui->graphicsViewChipset->viewport()->update();
+    m_ui->graphicsViewMap->setSceneRect(
+                QRect(0, 0, map->width()*16, map->height()*16));
 
     auto mapFloorsList = reinterpret_cast<Widget::MapFloorsList::Widget*>(
-        ui->dockWidgetMapFloorsList->widget()
+        m_ui->dockWidgetMapFloorsList->widget()
     );
 
     mapFloorsList->setEditorMap(map);
     removeTools();
-    ui->widgetDrawingToolbox->setInitialState();
+    m_ui->widgetDrawingToolbox->setInitialState();
 }
 
 void MainWindow::onCancel()
@@ -340,6 +317,10 @@ void MainWindow::onCancel()
 void MainWindow::onCut()
 {
     qDebug() << "Cut.";
+    // TODO it's not the best way to manage event.
+    // Shortcut are good to be kept customisable. If we do so in the future, we'll need to update all those methods.
+    // Future refacto : expose the event to call and call it directly.
+    // And from the other way, use QShortcut (we might need to set shortcutContext) instead of keypressevent
     QKeyEvent* keyEvent = new QKeyEvent(QEvent::KeyPress, Qt::Key_X,
                                         Qt::ControlModifier);
     QCoreApplication::postEvent(m_mapScene, keyEvent);
@@ -348,6 +329,10 @@ void MainWindow::onCut()
 void MainWindow::onCopy()
 {
     qDebug() << "Copy.";
+    // TODO it's not the best way to manage event.
+    // Shortcut are good to be kept customisable. If we do so in the future, we'll need to update all those methods.
+    // Future refacto : expose the event to call and call it directly.
+    // And from the other way, use QShortcut (we might need to set shortcutContext) instead of keypressevent
     QKeyEvent* keyEvent = new QKeyEvent(QEvent::KeyPress, Qt::Key_C,
                                         Qt::ControlModifier);
     QCoreApplication::postEvent(m_mapScene, keyEvent);
@@ -356,6 +341,10 @@ void MainWindow::onCopy()
 void MainWindow::onPaste()
 {
     qDebug() << "Paste.";
+    // TODO: it's not the best way to manage event.
+    // Shortcut are good to be kept customisable. If we do so in the future, we'll need to update all those methods.
+    // Future refacto : expose the event to call and call it directly.
+    // And from the other way, use QShortcut (we might need to set shortcutContext) instead of keypressevent
     QKeyEvent* keyEvent = new QKeyEvent(QEvent::KeyPress, Qt::Key_V,
                                         Qt::ControlModifier);
     QCoreApplication::postEvent(m_mapScene, keyEvent);
@@ -365,7 +354,7 @@ void MainWindow::removeTools() {
     qDebug() << "Remove tools";
     m_mapScene->unsetDrawingTool();
     m_chipsetScene->unsetPaletteTool();
-    ui->widgetDrawingToolbox->clear();
+    m_ui->widgetDrawingToolbox->clear();
 }
 
 void MainWindow::publishTools(GraphicMap::GraphicLayer* layer) {
@@ -388,6 +377,7 @@ void MainWindow::publishTools(GraphicMap::GraphicLayer* layer) {
 
 void MainWindow::closeEvent (QCloseEvent *event)
 {
+    // TODO check if there is a project before asking to save...
     QMessageBox::StandardButton resBtn = QMessageBox::question(
         this,
         "DummyEditor",
@@ -413,7 +403,7 @@ void MainWindow::closeEvent (QCloseEvent *event)
 
 void MainWindow::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer) {
     // Publish visible/graphic related tools
-    ui->widgetDrawingToolbox->onLayerSelected(
+    m_ui->widgetDrawingToolbox->onLayerSelected(
         m_mapScene,
         m_chipsetScene,
         layer,
@@ -423,7 +413,7 @@ void MainWindow::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer) {
 
 void MainWindow::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer) {
     // Publish blocking related tools
-    ui->widgetDrawingToolbox->onLayerSelected(
+    m_ui->widgetDrawingToolbox->onLayerSelected(
         m_mapScene,
         m_chipsetScene,
         layer,

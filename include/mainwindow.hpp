@@ -1,12 +1,17 @@
-#pragma once
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
+
 #include <memory>
-#include <QAction>
-#include <QModelIndex>
+
 #include <QMainWindow>
+#include <QModelIndex>
 
-
-#include "graphicmap/graphic_layer_visitor.hpp"
 #include "drawing_tool/visitor.hpp"
+#include "graphicmap/graphic_layer_visitor.hpp"
+
+//////////////////////////////////////////////////////////////////////////////
+//  pre-declaration
+//////////////////////////////////////////////////////////////////////////////
 
 namespace Editor {
 class Project;
@@ -39,6 +44,9 @@ class GraphicTool;
 class ChipsetGraphicsScene;
 class QTreeView;
 
+//////////////////////////////////////////////////////////////////////////////
+//  MainWindow class
+//////////////////////////////////////////////////////////////////////////////
 
 class MainWindow : public QMainWindow, public GraphicMap::GraphicLayerVisitor
 {
@@ -46,23 +54,35 @@ class MainWindow : public QMainWindow, public GraphicMap::GraphicLayerVisitor
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-    virtual ~MainWindow();
+    virtual ~MainWindow() override;
     // Inherited from GraphicMap::GraphicLayerVisitor
     void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
     void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
 
 private:
     void initializeDrawingTools();
-    void _initializeProject(const QString&);
-    void _initializeScenes();
-    void _connectScenes();
-    void _enableMapCreation();
-    void _closeCurrentProject();
-    void _loadProject(const QString&);
+    void initializeProject(const QString&);
+    void initializeScenes();
+    void connectScenes();
+    void enableMapCreation();
+    void closeCurrentProject();
+    void loadProject(const QString&);
     void removeTools();
     void closeEvent (QCloseEvent *event);
 
-    Ui::MainWindow *ui;
+private slots:
+    void newProject();
+    void openProject();
+    void saveProject();
+    void selectCurrentMap(QModelIndex );
+    void onCancel();
+    void onCut();
+    void onCopy();
+    void onPaste();
+    void publishTools(GraphicMap::GraphicLayer*);
+
+private:
+    Ui::MainWindow *m_ui;
     std::shared_ptr<Editor::Project> m_currentProject;
     ChipsetGraphicsScene* m_chipsetScene;
     GraphicMap::MapGraphicsScene* m_mapScene;
@@ -70,19 +90,6 @@ private:
     DrawingTool::Selection* m_selectionDrawingTool;
     std::vector<DrawingTool::DrawingTool*> m_graphicTools;
     std::vector<DrawingTool::DrawingTool*> m_blockingTools;
-
-
-
-
-private slots:
-    void newProject();
-    void openProject();
-    void saveProject();
-    void selectCurrentMap(QModelIndex);
-    void onCancel();
-    void onCut();
-    void onCopy();
-    void onPaste();
-    void publishTools(GraphicMap::GraphicLayer*);
-
 };
+
+#endif // MAINWINDOW_H

@@ -3,7 +3,9 @@
 
 #include <QGraphicsScene>
 
-#include <memory>
+//////////////////////////////////////////////////////////////////////////////
+//  pre-declaration
+//////////////////////////////////////////////////////////////////////////////
 
 namespace DrawingTool {
 namespace Graphic {
@@ -14,6 +16,11 @@ class PaletteTool;
 class QGraphicsPixmapItem;
 class QGraphicsSceneMouseEvent;
 
+
+//////////////////////////////////////////////////////////////////////////////
+//  ChipsetGraphicsScene class
+//////////////////////////////////////////////////////////////////////////////
+
 class ChipsetGraphicsScene : public QGraphicsScene
 {
     Q_OBJECT
@@ -22,18 +29,16 @@ public:
     void mouseMoveEvent(QGraphicsSceneMouseEvent*) override;
     void mousePressEvent(QGraphicsSceneMouseEvent*) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
+
+    QGraphicsPixmapItem* chipset() const { return m_chipset; }
+
     void setChipset(const QPixmap& pixmap);
     void setChipset(const QString& chipsetPath);
-    void _drawGrid();
-
-    inline const QRect& selection() const {
-        return m_currentSelection;
-    }
-    ChipsetGraphicsScene& setSelection(const QRect& selection);
-    QGraphicsPixmapItem* chipset() const {
-        return m_chipset;
-    }
+    void setSelection(const QRect& selection);
     void unsetPaletteTool();
+
+private:
+    void drawGrid();
 
 signals:
     void selectionChanged(QRect, QPixmap);
@@ -43,11 +48,8 @@ public slots:
     void setPaletteTool(::DrawingTool::Graphic::PaletteTool*);
     void changeChipset(const QString& chipsetPath);
 private:
-    QGraphicsRectItem* m_selectionRectItem;
     QGraphicsPixmapItem* m_chipset;
     QRect m_currentSelection;
-    bool m_isSelecting;
-    QPoint m_selectionStart;
     DrawingTool::Graphic::PaletteTool* m_paletteTool;
 };
 

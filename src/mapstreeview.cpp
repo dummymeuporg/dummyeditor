@@ -1,4 +1,3 @@
-#include <QAction>
 #include <QDebug>
 #include <QTreeWidgetItem>
 
@@ -6,24 +5,30 @@
 #include "editor/events_layer.hpp"
 #include "editor/graphic_layer.hpp"
 #include "editor/map.hpp"
-#include "editor/floor.hpp"
-#include "editor/project.hpp"
-
-#include "mapstreeview.hpp"
 #include "mapeditdialog.hpp"
+#include "mapstreeview.hpp"
 
-
-MapsTreeView::MapsTreeView(QWidget* parent) : QTreeView(parent),
-    m_project(nullptr),
-    m_newMapAction(nullptr),
-    m_propertiesAction(nullptr)
+MapsTreeView::MapsTreeView(QWidget* parent)
+    : QTreeView(parent)
+    , m_project(nullptr)
+    , m_mapMenu(nullptr)
+    , m_newMapAction(nullptr)
+    , m_propertiesAction(nullptr)
 {
-
 }
 
-void MapsTreeView::_enableActions() {
-    qDebug() << "Enable actions";
+void MapsTreeView::setProject(std::shared_ptr<Editor::Project> project) {
+    m_project = project;
 
+    if (nullptr != project) {
+        enableActions();
+    } else {
+        disableActions();
+    }
+}
+
+void MapsTreeView::enableActions() {
+    qDebug() << "Enable actions";
 
     m_newMapAction = new QAction(tr("Add new map"));
     m_propertiesAction = new QAction(tr("Properties"));
@@ -37,18 +42,17 @@ void MapsTreeView::_enableActions() {
     QObject::connect(m_newMapAction,
                      SIGNAL(triggered()),
                      this,
-                     SLOT(_onNewMapAction()));
+                     SLOT(onNewMapAction()));
     QObject::connect(m_propertiesAction,
                      SIGNAL(triggered()),
                      this,
-                     SLOT(_onPropertiesAction()));
+                     SLOT(onPropertiesAction()));
     connect(this,
             SIGNAL(customContextMenuRequested(const QPoint&)),
-            SLOT(_showContextMenu(const QPoint&)));
+            SLOT(showContextMenu(const QPoint&)));
 }
 
-void MapsTreeView::_showContextMenu(const QPoint& point) {
-
+void MapsTreeView::showContextMenu(const QPoint& point) {
     m_selectedModelIndex = indexAt(point);
 
     if (m_selectedModelIndex.isValid()) {
@@ -60,21 +64,22 @@ void MapsTreeView::_showContextMenu(const QPoint& point) {
     m_mapMenu->exec(viewport()->mapToGlobal(point));
 }
 
-void MapsTreeView::_disableActions() {
-    removeAction(m_newMapAction);
-    QObject::disconnect(m_newMapAction, SIGNAL(triggered()), this,
-                        SLOT(_onNewMapAction()));
-    QObject::disconnect(m_propertiesAction, SIGNAL(trigerred()), this,
-                        SLOT(_onPropertiesAction()));
+void MapsTreeView::disableActions() {
     delete m_newMapAction;
+    m_newMapAction = nullptr;
+
     delete m_propertiesAction;
+    m_propertiesAction = nullptr;
 }
 
-void MapsTreeView::_onNewMapAction() {
+void MapsTreeView::onNewMapAction() {
     MapEditDialog dlg(m_project);
     dlg.exec();
 
     Misc::MapTreeModel* mapModel = m_project->mapsModel();
+    if (nullptr == mapModel) {
+        return;
+    }
 
     QStandardItem* selectedParentMap = nullptr;
 
@@ -82,8 +87,7 @@ void MapsTreeView::_onNewMapAction() {
         selectedParentMap = mapModel->invisibleRootItem();
         qDebug() << "-1";
     } else {
-        selectedParentMap =
-            mapModel->itemFromIndex(m_selectedModelIndex);
+        selectedParentMap =  mapModel->itemFromIndex(m_selectedModelIndex);
         qDebug() << "parent";
     }
 
@@ -139,7 +143,7 @@ void MapsTreeView::_onNewMapAction() {
     }
 }
 
-void MapsTreeView::_onPropertiesAction() {
+void MapsTreeView::onPropertiesAction() {
     QStandardItem* item = m_project
             ->mapsModel()
             ->itemFromIndex(m_selectedModelIndex);

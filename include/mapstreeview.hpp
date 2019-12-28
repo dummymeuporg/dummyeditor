@@ -1,20 +1,25 @@
-#pragma once
-
-#include <QMenu>
-#include <QObject>
-#include <QTreeView>
+#ifndef MAPSTREEVIEW_H
+#define MAPSTREEVIEW_H
 
 #include <exception>
 #include <memory>
 
+#include <QMenu>
+#include <QTreeView>
+
 #include "editor/project.hpp"
+
+//////////////////////////////////////////////////////////////////////////////
+//  pre-declaration
+//////////////////////////////////////////////////////////////////////////////
 
 namespace Dummy {
     class Project;
 }
 
-class QAction;
-
+//////////////////////////////////////////////////////////////////////////////
+//  Error classes
+//////////////////////////////////////////////////////////////////////////////
 
 class MapsTreeViewError : public std::exception {
 };
@@ -26,6 +31,9 @@ public:
     }
 };
 
+//////////////////////////////////////////////////////////////////////////////
+//  MapsTreeView class
+//////////////////////////////////////////////////////////////////////////////
 
 class MapsTreeView : public QTreeView
 {
@@ -34,36 +42,28 @@ class MapsTreeView : public QTreeView
 public:
     MapsTreeView(QWidget* parent=nullptr);
 
-    void setProject(std::shared_ptr<Editor::Project> project) {
-        m_project = project;
+    const Editor::Project& project() const { return *m_project; }
 
-        if (nullptr != project) {
-            _enableActions();
-        } else {
-            _disableActions();
-        }
-    }
+    void setProject(std::shared_ptr<Editor::Project> project);
 
-    const Editor::Project& project() const {
-        return *m_project;
-    }
+private:
+    void enableActions();
+    void disableActions();
 
 signals:
     void chipsetMapChanged(QString);
 
+private slots:
+    void onNewMapAction();
+    void onPropertiesAction();
+    void showContextMenu(const QPoint&);
+
 private:
-
-    void _enableActions();
-    void _disableActions();
-
-
     std::shared_ptr<Editor::Project> m_project;
     QMenu* m_mapMenu;
-    QAction* m_newMapAction, *m_propertiesAction;
+    QAction* m_newMapAction;
+    QAction* m_propertiesAction;
     QModelIndex m_selectedModelIndex;
-
-private slots:
-    void _onNewMapAction();
-    void _onPropertiesAction();
-    void _showContextMenu(const QPoint&);
 };
+
+#endif // MAPSTREEVIEW_H
