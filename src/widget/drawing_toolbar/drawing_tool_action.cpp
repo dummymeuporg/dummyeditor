@@ -5,7 +5,7 @@ namespace Widget {
 namespace DrawingToolbar {
 
 DrawingToolAction::DrawingToolAction(
-    DrawingTool::DrawingTool* drawingTool,
+    DrawingTools::DrawingTool* drawingTool,
     QWidget* parent
 ) : QAction(parent), m_drawingTool(drawingTool)
 {}

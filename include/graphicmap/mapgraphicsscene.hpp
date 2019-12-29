@@ -7,7 +7,7 @@
 #include <memory>
 #include <vector>
 
-namespace DrawingTool {
+namespace DrawingTools {
 class DrawingTool;
 } // namespace DrawingTool
 
@@ -79,8 +79,8 @@ public slots:
         const std::shared_ptr<Misc::MapDocument>& mapDocument
     );
     void unsetDrawingTool();
-    void setDrawingTool(::DrawingTool::DrawingTool*);
-    DrawingTool::DrawingTool* drawingTool() const {
+    void setDrawingTool(::DrawingTools::DrawingTool*);
+    DrawingTools::DrawingTool* drawingTool() const {
         return m_drawingTool;
     }
 
@@ -114,7 +114,7 @@ private:
 
     bool m_isDrawing;
 
-    DrawingTool::DrawingTool* m_drawingTool;
+    DrawingTools::DrawingTool* m_drawingTool;
 
     GraphicLayers m_graphicLayers;
     GraphicLayer* m_currentGraphicLayer;

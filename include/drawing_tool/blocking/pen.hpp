@@ -1,38 +1,51 @@
-#pragma once
+#ifndef BLOCKING_H
+#define BLOCKING_H
 
 #include "drawing_tool/blocking/blocking_tool.hpp"
+
+//////////////////////////////////////////////////////////////////////////////
+//  pre-declaration
+//////////////////////////////////////////////////////////////////////////////
 
 class QGraphicsSceneMouseEvent;
 
 namespace GraphicMap {
-    class BlockingGraphicLayer;
+class BlockingGraphicLayer;
 }
 
-namespace DrawingTool {
+namespace DrawingTools {
 namespace Blocking {
 
-class Pen : public BlockingTool {
+//////////////////////////////////////////////////////////////////////////////
+//  BlockingPen class
+//////////////////////////////////////////////////////////////////////////////
+
+class BlockingPen : public BlockingTool {
     Q_OBJECT
 public:
-    Pen(
+    BlockingPen(
         GraphicMap::MapGraphicsScene&,
         GraphicMap::BlockingGraphicLayer* = nullptr
     );
     void accept(Visitor&) override;
-    void mapMousePressEvent(::QGraphicsSceneMouseEvent*) override;
-    void mapMouseMoveEvent(::QGraphicsSceneMouseEvent*) override;
-    void mapMouseReleaseEvent(::QGraphicsSceneMouseEvent*) override;
-    void mapKeyPressEvent(::QKeyEvent*) override;
-    void mapKeyReleaseEvent(::QKeyEvent*) override;
+    void mapMousePressEvent(QGraphicsSceneMouseEvent*) override;
+    void mapMouseMoveEvent(QGraphicsSceneMouseEvent*) override;
+    void mapMouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
+    void mapKeyPressEvent(QKeyEvent*) override;
+    void mapKeyReleaseEvent(QKeyEvent*) override;
     void mapMouseLeaveEvent() override;
     void emitDrawingToolSelected() override;
     void onUnselected() override;
     void onSelected() override;
+
 signals:
-    void drawingToolSelected(::DrawingTool::DrawingTool*);
+    void drawingToolSelected(::DrawingTools::DrawingTool*);
+
 private:
     bool m_mouseClicked;
 };
 
 } // namespace Blocking
-} // namespace DrawingTool
+} // namespace DrawingTools
+
+#endif // BLOCKING_H

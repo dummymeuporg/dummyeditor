@@ -28,7 +28,7 @@ namespace GraphicMap {
     class BlockingGraphicLayer;
 } // namespace GraphicMap
 
-namespace DrawingTool {
+namespace DrawingTools {
 class DrawingTool;
 
 namespace Blocking {
@@ -87,9 +87,9 @@ private:
     ChipsetGraphicsScene* m_chipsetScene;
     GraphicMap::MapGraphicsScene* m_mapScene;
 
-    DrawingTool::Selection* m_selectionDrawingTool;
-    std::vector<DrawingTool::DrawingTool*> m_graphicTools;
-    std::vector<DrawingTool::DrawingTool*> m_blockingTools;
+    DrawingTools::Selection* m_selectionDrawingTool;
+    std::vector<DrawingTools::DrawingTool*> m_graphicTools;
+    std::vector<DrawingTools::DrawingTool*> m_blockingTools;
 };
 
 #endif // MAINWINDOW_H

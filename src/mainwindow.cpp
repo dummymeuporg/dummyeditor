@@ -23,16 +23,16 @@ MainWindow::MainWindow(QWidget *parent)
     , m_currentProject(nullptr)
     , m_chipsetScene(new ChipsetGraphicsScene())
     , m_mapScene(new GraphicMap::MapGraphicsScene())
-    , m_selectionDrawingTool(new DrawingTool::Selection(*m_mapScene))
+    , m_selectionDrawingTool(new DrawingTools::Selection(*m_mapScene))
     , m_graphicTools({
-        new DrawingTool::Graphic::Pen(*m_mapScene),
-        new DrawingTool::Graphic::Rectangle(*m_mapScene),
-        new DrawingTool::Graphic::Eraser(*m_mapScene),
+        new DrawingTools::Graphic::GraphicPen(*m_mapScene),
+        new DrawingTools::Graphic::GraphicRectangle(*m_mapScene),
+        new DrawingTools::Graphic::GraphicEraser(*m_mapScene),
         m_selectionDrawingTool
     })
     , m_blockingTools({
-        new DrawingTool::Blocking::Pen(*m_mapScene),
-        new DrawingTool::Blocking::Eraser(*m_mapScene)
+        new DrawingTools::Blocking::BlockingPen(*m_mapScene),
+        new DrawingTools::Blocking::BlockingEraser(*m_mapScene)
     })
 {
     m_ui->setupUi(this);
@@ -139,35 +139,6 @@ void MainWindow::connectScenes()
 
 void MainWindow::closeCurrentProject()
 {
-    QObject::disconnect(m_ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
-                        m_chipsetScene, SLOT(changeChipset(QString)));
-    QObject::disconnect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
-                        m_mapScene, SLOT(changeSelection(QRect)));
-
-    QObject::disconnect(m_ui->actionLow_layer_1, SIGNAL(triggered(bool)),
-                        m_mapScene, SLOT(showFirstLayer()));
-    QObject::disconnect(m_ui->actionLow_layer_2, SIGNAL(triggered(bool)),
-                        m_mapScene, SLOT(showSecondLayer()));
-    QObject::disconnect(m_ui->actionHigh_layer_1, SIGNAL(triggered(bool)),
-                        m_mapScene, SLOT(showThirdLayer()));
-    QObject::disconnect(m_ui->actionHigh_layer_2, SIGNAL(triggered(bool)),
-                        m_mapScene, SLOT(showFourthLayer()));
-    QObject::disconnect(m_ui->actionBlocking_layer, SIGNAL(triggered(bool)),
-                        m_mapScene, SLOT(showBlockingLayer()));
-    QObject::disconnect(m_ui->actionStarting_point, SIGNAL(triggered(bool)),
-                        m_mapScene, SLOT(showStartingPointLayer()));
-
-    /*
-    QObject::disconnect(ui->actionPen, SIGNAL(triggered(bool)),
-                        m_mapScene, SLOT(setPenTool()));
-    QObject::disconnect(ui->actionPen, SIGNAL(trigerred(bool)),
-                        m_mapScene, SLOT(setPenTool()));
-
-    QObject::disconnect(ui->actionSelection,
-                        SIGNAL(triggered(bool)),
-                        m_mapScene,
-                        SLOT(setSelectionTool()));
-    */
     delete m_chipsetScene;
     delete m_mapScene;
 }

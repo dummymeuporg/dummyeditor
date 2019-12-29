@@ -1,49 +1,46 @@
-#pragma once
-
-#include <QRect>
+#ifndef GRAPHICRECTANGLE_H
+#define GRAPHICRECTANGLE_H
 
 #include "drawing_tool/graphic/palette_tool.hpp"
 
-class QGraphicsPixmapItem;
-class QGraphicsSceneMouseEvent;
-
-namespace GraphicMap {
-    class VisibleGraphicLayer;
-}
-
-namespace DrawingTool {
-
+namespace DrawingTools {
 namespace Graphic {
 
-class Rectangle : public PaletteTool {
+//////////////////////////////////////////////////////////////////////////////
+//  GraphicTool class
+//////////////////////////////////////////////////////////////////////////////
+
+class GraphicRectangle : public GraphicPaletteTool {
     Q_OBJECT
 public:
-    Rectangle(GraphicMap::MapGraphicsScene&,
+    GraphicRectangle(GraphicMap::MapGraphicsScene&,
               GraphicMap::VisibleGraphicLayer* = nullptr);
     void accept(Visitor&) override;
-    void mapMousePressEvent(::QGraphicsSceneMouseEvent*) override;
-    void mapMouseMoveEvent(::QGraphicsSceneMouseEvent*) override;
-    void mapMouseReleaseEvent(::QGraphicsSceneMouseEvent*) override;
-    void mapKeyPressEvent(::QKeyEvent*) override;
-    void mapKeyReleaseEvent(::QKeyEvent*) override;
+    void mapMousePressEvent(QGraphicsSceneMouseEvent*) override;
+    void mapMouseMoveEvent(QGraphicsSceneMouseEvent*) override;
+    void mapMouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
+    void mapKeyPressEvent(QKeyEvent*) override;
+    void mapKeyReleaseEvent(QKeyEvent*) override;
     void mapMouseLeaveEvent() override;
     void emitDrawingToolSelected() override;
     void onUnselected() override;
+
 signals:
-    void drawingToolSelected(::DrawingTool::DrawingTool*);
+    void drawingToolSelected(::DrawingTools::DrawingTool*);
+
 private:
-    /* Methods. */
     void drawChipsetSelectionInRectangle();
     void applyChipsetSelectionInRectangle();
     void applySelectionToMap(quint16 mapX, quint16 mapY);
 
-    /* Attributes */
+private:
     bool m_mouseClicked;
-    ::QRect m_rectangle;
+    QRect m_rectangle;
     // Rectangle Graphic Item to be drawn on the map edition.
-    ::QGraphicsPixmapItem* m_hoverItem;
+    QGraphicsPixmapItem* m_hoverItem;
 };
 
 } // namespace Graphic
+} // namespace DrawingTools
 
-} // namespace DrawingTool
+#endif // GRAPHICRECTANGLE_H

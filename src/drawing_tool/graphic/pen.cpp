@@ -1,40 +1,33 @@
+#include "drawing_tool/graphic/pen.hpp"
+
 #include <QDebug>
-#include <QEvent>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsPixmapItem>
 
-#include "chipsetgraphicsscene.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
 #include "graphicmap/visiblegraphiclayer.hpp"
 
-#include "drawing_tool/graphic/pen.hpp"
-#include "drawing_tool/visitor.hpp"
-
-namespace DrawingTool {
-
+namespace DrawingTools {
 namespace Graphic {
 
-Pen::Pen(
+GraphicPen::GraphicPen(
         GraphicMap::MapGraphicsScene& mapGraphicsScene,
-        GraphicMap::VisibleGraphicLayer* visibleGraphicLayer
-    ) : Graphic::PaletteTool(
-            QIcon(":/icons/icon_pen.png"),
-            mapGraphicsScene,
-            visibleGraphicLayer
-      ),
-      m_hoverItem(nullptr),
-      m_mousePressed(false)
+        GraphicMap::VisibleGraphicLayer* visibleGraphicLayer)
+    : Graphic::GraphicPaletteTool(QIcon(":/icons/icon_pen.png"),
+                                  mapGraphicsScene,
+                                  visibleGraphicLayer)
+    , m_hoverItem(nullptr)
+    , m_mousePressed(false)
 {}
 
-void Pen::mapMouseMoveEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
+void GraphicPen::mapMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
     QPoint pt(mouseEvent->scenePos().toPoint());
     pt.setX(pt.x() - (pt.x() % 16));
     pt.setY(pt.y() - (pt.y() % 16));
-    if (nullptr != m_selectionItem) {
 
-        if (m_hoverItem == nullptr ||
-                m_hoverItem->pixmap() != m_selectionPixmap)
-        {
+    if (nullptr != m_selectionItem) {
+        if (m_hoverItem == nullptr
+                || m_hoverItem->pixmap() != m_selectionPixmap) {
             m_hoverItem = m_mapGraphicsScene.addPixmap(
                 m_selectionItem->pixmap()
             );
@@ -48,7 +41,7 @@ void Pen::mapMouseMoveEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
     }
 }
 
-void Pen::mapMousePressEvent(::QGraphicsSceneMouseEvent* event) {
+void GraphicPen::mapMousePressEvent(::QGraphicsSceneMouseEvent* event) {
     qDebug() << "Pen press.";
 
     if (nullptr == m_selectionItem || nullptr == m_visibleGraphicLayer) {
@@ -59,39 +52,38 @@ void Pen::mapMousePressEvent(::QGraphicsSceneMouseEvent* event) {
     drawPattern(event);
 }
 
-void Pen::mapMouseReleaseEvent(::QGraphicsSceneMouseEvent* event) {
+void GraphicPen::mapMouseReleaseEvent(::QGraphicsSceneMouseEvent* event) {
     qDebug() << "Pen release.";
     m_mousePressed = false;
 }
 
-void Pen::mapKeyPressEvent(::QKeyEvent* event) {
+void GraphicPen::mapKeyPressEvent(::QKeyEvent* event) {
     qDebug() << "key press.";
 }
 
-void Pen::mapKeyReleaseEvent(::QKeyEvent* event) {
+void GraphicPen::mapKeyReleaseEvent(::QKeyEvent* event) {
     qDebug() << "key release.";
 }
 
-void Pen::mapMouseLeaveEvent() {
+void GraphicPen::mapMouseLeaveEvent() {
     m_mapGraphicsScene.removeItem(m_hoverItem);
     m_hoverItem = nullptr;
 }
 
-void Pen::accept(Visitor& visitor) {
+void GraphicPen::accept(Visitor& visitor) {
     visitor.visitTool(*this);
 }
 
-void Pen::emitDrawingToolSelected() {
-    PaletteTool::emitDrawingToolSelected();
+void GraphicPen::emitDrawingToolSelected() {
+    GraphicPaletteTool::emitDrawingToolSelected();
     emit drawingToolSelected(this);
 }
 
-void Pen::onSelected() {
-
+void GraphicPen::onSelected() {
 }
 
-void Pen::onUnselected() {
-    PaletteTool::onUnselected();
+void GraphicPen::onUnselected() {
+    GraphicPaletteTool::onUnselected();
     if (m_hoverItem != nullptr) {
         m_mapGraphicsScene.removeItem(m_hoverItem);
         m_hoverItem = nullptr;
@@ -103,7 +95,7 @@ void Pen::onUnselected() {
     }
 }
 
-void Pen::drawPattern(::QGraphicsSceneMouseEvent* event) {
+void GraphicPen::drawPattern(QGraphicsSceneMouseEvent* event) {
     const QPoint& point(event->scenePos().toPoint());
     const QRect& selectionRect(m_selectionItem->pixmap().rect());
     int width(selectionRect.width() / 16);
@@ -127,5 +119,4 @@ void Pen::drawPattern(::QGraphicsSceneMouseEvent* event) {
 
 
 } // namespace Graphic
-
-} // namespace DrawingTool
+} // namespace DrawingTools

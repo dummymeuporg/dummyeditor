@@ -55,7 +55,7 @@ public:
 
     Editor::Layer& editorLayer() override;
 
-    std::vector<DrawingTool::DrawingTool*> drawingTools() override;
+    std::vector<DrawingTools::DrawingTool*> drawingTools() override;
 
     std::shared_ptr<LayerClipboard::Clipboard>
     getClipboardRegion(const QRect& clip) override;

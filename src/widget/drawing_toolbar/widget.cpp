@@ -50,7 +50,7 @@ Widget::onLayerSelected(
     const GraphicMap::MapGraphicsScene* mapScene,
     const ::ChipsetGraphicsScene* chipsetScene,
     GraphicMap::GraphicLayer& layer,
-    std::vector<DrawingTool::DrawingTool*>* drawingTools)
+    std::vector<DrawingTools::DrawingTool*>* drawingTools)
 {
     m_mapScene = mapScene;
     m_chipsetGraphicsScene = chipsetScene;
@@ -79,9 +79,9 @@ void Widget::reset() {
         );
         QObject::connect(
             tool,
-            SIGNAL(drawingToolSelected(::DrawingTool::DrawingTool*)),
+            SIGNAL(drawingToolSelected(::DrawingTools::DrawingTool*)),
             m_mapScene,
-            SLOT(setDrawingTool(::DrawingTool::DrawingTool*))
+            SLOT(setDrawingTool(::DrawingTools::DrawingTool*))
         );
         tool->accept(*this);
 
@@ -90,41 +90,41 @@ void Widget::reset() {
     layout()->addWidget(m_toolbar);
 }
 
-void Widget::visitTool(DrawingTool::Graphic::Pen& pen) {
+void Widget::visitTool(DrawingTools::Graphic::GraphicPen& pen) {
     // XXX: connect the pen to the chipset scene.
     // m_chipsetScene
     qDebug() << "visitTool: connect tool.";
     QObject::connect(
         &pen,
-        SIGNAL(drawingToolSelected(::DrawingTool::Graphic::PaletteTool*)),
+        SIGNAL(drawingToolSelected(::DrawingTools::Graphic::GraphicPaletteTool*)),
         m_chipsetGraphicsScene,
-        SLOT(setPaletteTool(::DrawingTool::Graphic::PaletteTool*))
+        SLOT(setPaletteTool(::DrawingTools::Graphic::GraphicPaletteTool*))
     );
 }
 
-void Widget::visitTool(DrawingTool::Graphic::Rectangle& rectangle) {
+void Widget::visitTool(DrawingTools::Graphic::GraphicRectangle& rectangle) {
     qDebug() << "visitTool: connect tool.";
     QObject::connect(
         &rectangle,
-        SIGNAL(drawingToolSelected(::DrawingTool::Graphic::PaletteTool*)),
+        SIGNAL(drawingToolSelected(::DrawingTools::Graphic::GraphicPaletteTool*)),
         m_chipsetGraphicsScene,
-        SLOT(setPaletteTool(::DrawingTool::Graphic::PaletteTool*))
+        SLOT(setPaletteTool(::DrawingTools::Graphic::GraphicPaletteTool*))
     );
 }
 
-void Widget::visitTool(DrawingTool::Graphic::Eraser&) {
+void Widget::visitTool(DrawingTools::Graphic::GraphicEraser&) {
     // Nothing to do!
 }
 
-void Widget::visitTool(DrawingTool::Blocking::Pen&) {
+void Widget::visitTool(DrawingTools::Blocking::BlockingPen&) {
     // Nothing to do!
 }
 
-void Widget::visitTool(DrawingTool::Blocking::Eraser&) {
+void Widget::visitTool(DrawingTools::Blocking::BlockingEraser&) {
     // Nothing to do!
 }
 
-void Widget::visitTool(DrawingTool::Selection&) {
+void Widget::visitTool(DrawingTools::Selection&) {
     // Nothing to do!
 }
 

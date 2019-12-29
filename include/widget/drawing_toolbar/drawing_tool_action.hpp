@@ -2,7 +2,7 @@
 
 #include <QAction>
 
-namespace DrawingTool {
+namespace DrawingTools {
 class DrawingTool;
 } // namespace DrawingTool
 
@@ -12,16 +12,16 @@ namespace DrawingToolbar {
 class DrawingToolAction : public ::QAction {
     Q_OBJECT
 public:
-    DrawingToolAction(DrawingTool::DrawingTool*, QWidget* parent = nullptr);
-    DrawingTool::DrawingTool& drawingTool() const {
+    DrawingToolAction(DrawingTools::DrawingTool*, QWidget* parent = nullptr);
+    DrawingTools::DrawingTool& drawingTool() const {
         return *m_drawingTool;
     }
 signals:
-    void trigerred(DrawingTool::DrawingTool*);
+    void trigerred(DrawingTools::DrawingTool*);
 public slots:
     void setDrawingTool(bool);
 private:
-    DrawingTool::DrawingTool* m_drawingTool;
+    DrawingTools::DrawingTool* m_drawingTool;
 };
 
 } // namespace DrawingToolbar

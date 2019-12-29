@@ -34,7 +34,7 @@ public:
         return m_blockingLayer;
     }
 
-    std::vector<DrawingTool::DrawingTool*> drawingTools() override;
+    std::vector<DrawingTools::DrawingTool*> drawingTools() override;
     void accept(GraphicLayerVisitor&) override;
 
     std::shared_ptr<LayerClipboard::Clipboard>

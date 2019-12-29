@@ -22,7 +22,7 @@ DisplayBlockingTools::visitGraphicLayer(
 ) {
     auto tool = m_widget.mapScene()->drawingTool();
     if (nullptr != tool) {
-        reinterpret_cast<DrawingTool::Blocking::BlockingTool*>(
+        reinterpret_cast<DrawingTools::Blocking::BlockingTool*>(
             tool
         )->setBlockingGraphicLayer(&layer);
     }

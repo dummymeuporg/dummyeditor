@@ -110,7 +110,7 @@ Editor::Layer& VisibleGraphicLayer::editorLayer() {
     return m_graphicLayer;
 }
 
-std::vector<DrawingTool::DrawingTool*>
+std::vector<DrawingTools::DrawingTool*>
 VisibleGraphicLayer::drawingTools() {
     // XXX: fill this.
     return {/*&m_pen, &m_rectangle, &m_eraser*/};

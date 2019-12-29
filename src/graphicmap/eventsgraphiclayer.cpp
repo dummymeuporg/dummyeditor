@@ -49,8 +49,8 @@ MapSceneLayer& EventsGraphicLayer::removeTile(quint16, quint16) {
     return *this;
 }
 
-std::vector<DrawingTool::DrawingTool*> EventsGraphicLayer::drawingTools() {
-    std::vector<DrawingTool::DrawingTool*> tools;
+std::vector<DrawingTools::DrawingTool*> EventsGraphicLayer::drawingTools() {
+    std::vector<DrawingTools::DrawingTool*> tools;
     return tools;
 }
 

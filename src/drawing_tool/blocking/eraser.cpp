@@ -1,87 +1,82 @@
-#include <QDebug>
-#include <QEvent>
-#include <QGraphicsSceneMouseEvent>
-#include <QGraphicsPixmapItem>
+#include "drawing_tool/blocking/eraser.hpp"
 
-#include "chipsetgraphicsscene.hpp"
-#include "graphicmap/mapgraphicsscene.hpp"
+#include <QDebug>
+#include <QGraphicsSceneMouseEvent>
+
 #include "graphicmap/blockinggraphiclayer.hpp"
 
-#include "drawing_tool/blocking/eraser.hpp"
-#include "drawing_tool/visitor.hpp"
-
-namespace DrawingTool {
-
+namespace DrawingTools {
 namespace Blocking {
 
-Eraser::Eraser(
+BlockingEraser::BlockingEraser(
     GraphicMap::MapGraphicsScene& mapGraphicsScene,
-GraphicMap::BlockingGraphicLayer* blockingGraphicLayer
-) : Blocking::BlockingTool(QIcon(":/icons/icon_eraser.png"),
+    GraphicMap::BlockingGraphicLayer* blockingGraphicLayer)
+    : Blocking::BlockingTool(QIcon(":/icons/icon_eraser.png"),
                              mapGraphicsScene,
-                             blockingGraphicLayer),
-      m_mouseClicked(false)
+                             blockingGraphicLayer)
+    , m_mouseClicked(false)
 {}
 
-void Eraser::mapMouseMoveEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
-    if (nullptr != m_blockingGraphicLayer) {
-        QPoint point(mouseEvent->scenePos().toPoint());
-        point.setX(point.x() - (point.x() % 8));
-        point.setY(point.y() - (point.y() % 8));
-
-        if (m_mouseClicked) {
-            m_blockingGraphicLayer->setTile(point.x(), point.y(), false);
-        }
+void BlockingEraser::mapMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
+    if (nullptr == m_blockingGraphicLayer) {
+        return;
     }
-}
 
-void Eraser::mapMousePressEvent(::QGraphicsSceneMouseEvent* event) {
-    qDebug() << "Blocking eraser press.";
-    if (nullptr != m_blockingGraphicLayer) {
-        QPoint point(event->scenePos().toPoint());
-        point.setX(point.x() - (point.x() % 8));
-        point.setY(point.y() - (point.y() % 8));
-        // XXX: set blocking tile.
+    QPoint point(mouseEvent->scenePos().toPoint());
+    point.setX(point.x() - (point.x() % 8));
+    point.setY(point.y() - (point.y() % 8));
+
+    if (m_mouseClicked) {
         m_blockingGraphicLayer->setTile(point.x(), point.y(), false);
-
-        m_mouseClicked = true;
     }
 }
 
-void Eraser::mapMouseReleaseEvent(::QGraphicsSceneMouseEvent* event) {
+void BlockingEraser::mapMousePressEvent(QGraphicsSceneMouseEvent* event) {
+    qDebug() << "Blocking eraser press.";
+    if (nullptr == m_blockingGraphicLayer) {
+        return;
+    }
+
+    QPoint point(event->scenePos().toPoint());
+    point.setX(point.x() - (point.x() % 8));
+    point.setY(point.y() - (point.y() % 8));
+    // XXX: set blocking tile.
+    m_blockingGraphicLayer->setTile(point.x(), point.y(), false);
+
+    m_mouseClicked = true;
+}
+
+void BlockingEraser::mapMouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
     qDebug() << "Blocking eraser release.";
     m_mouseClicked = false;
 }
 
-void Eraser::mapKeyPressEvent(::QKeyEvent* event) {
+void BlockingEraser::mapKeyPressEvent(QKeyEvent* event) {
     qDebug() << "key press.";
 }
 
-void Eraser::mapKeyReleaseEvent(::QKeyEvent* event) {
+void BlockingEraser::mapKeyReleaseEvent(QKeyEvent* event) {
     qDebug() << "key release.";
 }
 
-void Eraser::mapMouseLeaveEvent() {
-
+void BlockingEraser::mapMouseLeaveEvent() {
 }
 
-void Eraser::accept(Visitor& visitor) {
+void BlockingEraser::accept(Visitor& visitor) {
     visitor.visitTool(*this);
 }
 
-void Eraser::emitDrawingToolSelected() {
+void BlockingEraser::emitDrawingToolSelected() {
+    // TODO : check if emiting 2 different signals is really what we want?
     BlockingTool::emitDrawingToolSelected();
     emit drawingToolSelected(this);
 }
 
-void Eraser::onUnselected() {
+void BlockingEraser::onUnselected() {
 }
 
-void Eraser::onSelected() {
-
+void BlockingEraser::onSelected() {
 }
 
-
-} // namespace Graphic
-
-} // namespace DrawingTool
+} // namespace Blocking
+} // namespace DrawingTools

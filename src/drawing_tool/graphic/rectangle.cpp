@@ -1,3 +1,5 @@
+#include "drawing_tool/graphic/rectangle.hpp"
+
 #include <QDebug>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneMouseEvent>
@@ -5,24 +7,22 @@
 
 #include "graphicmap/mapgraphicsscene.hpp"
 #include "graphicmap/visiblegraphiclayer.hpp"
-#include "drawing_tool/graphic/rectangle.hpp"
 
-namespace DrawingTool {
-
+namespace DrawingTools {
 namespace Graphic {
 
-Rectangle::Rectangle(
-    GraphicMap::MapGraphicsScene& mapGraphicsScene,
-    GraphicMap::VisibleGraphicLayer* visibleGraphicLayer
-) : Graphic::PaletteTool(
-    QIcon(":/icons/icon_rect.png"),
-    mapGraphicsScene,
-    visibleGraphicLayer),
-      m_mouseClicked(false),
-      m_hoverItem(nullptr)
+GraphicRectangle::GraphicRectangle(
+        GraphicMap::MapGraphicsScene& mapGraphicsScene,
+        GraphicMap::VisibleGraphicLayer* visibleGraphicLayer)
+    : Graphic::GraphicPaletteTool(QIcon(":/icons/icon_rect.png"),
+                                  mapGraphicsScene,
+                                  visibleGraphicLayer)
+    , m_mouseClicked(false)
+    , m_hoverItem(nullptr)
 {}
 
-void Rectangle::mapMouseMoveEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
+void GraphicRectangle::mapMouseMoveEvent(
+        QGraphicsSceneMouseEvent* mouseEvent) {
     if (m_mouseClicked)
     {
         QPoint pt(mouseEvent->scenePos().toPoint());
@@ -39,10 +39,12 @@ void Rectangle::mapMouseMoveEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
     }
 }
 
-void Rectangle::mapMousePressEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
+void GraphicRectangle::mapMousePressEvent(
+        QGraphicsSceneMouseEvent* mouseEvent) {
     if (nullptr == m_selectionItem) {
         return;
     }
+
     m_mouseClicked = true;
 
     QPoint pt(mouseEvent->scenePos().toPoint());
@@ -53,13 +55,13 @@ void Rectangle::mapMousePressEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
 
     m_rectangle.setTopLeft(pt);
     m_rectangle.setSize(QSize(16, 16));
-   drawChipsetSelectionInRectangle();
-   m_hoverItem->setPos(QPoint(m_rectangle.topLeft()));
-   m_hoverItem->setZValue(88888);
-   m_mapGraphicsScene.addItem(m_hoverItem);
+    drawChipsetSelectionInRectangle();
+    m_hoverItem->setPos(QPoint(m_rectangle.topLeft()));
+    m_hoverItem->setZValue(88888);
+    m_mapGraphicsScene.addItem(m_hoverItem);
 }
 
-void Rectangle::drawChipsetSelectionInRectangle() {
+void GraphicRectangle::drawChipsetSelectionInRectangle() {
     if (nullptr == m_selectionItem)
     {
         return;
@@ -69,13 +71,9 @@ void Rectangle::drawChipsetSelectionInRectangle() {
     QPixmap dstPixmap(m_rectangle.size());
     QPainter painter(&dstPixmap);
 
-    for (int j = 0;
-         j < m_rectangle.height();
-         j += chipsetSelection.height())
+    for (int j = 0; j < m_rectangle.height(); j += chipsetSelection.height())
     {
-        for (int i = 0;
-             i < m_rectangle.width();
-             i += chipsetSelection.width())
+        for (int i = 0; i < m_rectangle.width(); i += chipsetSelection.width())
         {
             painter.drawPixmap(
                 QRect(i, j, chipsetSelection.width(),
@@ -89,11 +87,13 @@ void Rectangle::drawChipsetSelectionInRectangle() {
     m_hoverItem = new QGraphicsPixmapItem(dstPixmap);
 }
 
-void Rectangle::mapMouseReleaseEvent(::QGraphicsSceneMouseEvent* event) {
+void GraphicRectangle::mapMouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
     m_mouseClicked = false;
+
     if (nullptr != m_selectionItem) {
         applyChipsetSelectionInRectangle();
     }
+
     m_rectangle = QRect(0, 0, 0, 0);
 
     if (nullptr != m_hoverItem) {
@@ -102,41 +102,36 @@ void Rectangle::mapMouseReleaseEvent(::QGraphicsSceneMouseEvent* event) {
     }
 }
 
-void Rectangle::mapKeyPressEvent(::QKeyEvent* event) {
+void GraphicRectangle::mapKeyPressEvent(QKeyEvent* event) {
     qDebug() << "key press.";
 }
 
-void Rectangle::mapKeyReleaseEvent(::QKeyEvent* event) {
+void GraphicRectangle::mapKeyReleaseEvent(QKeyEvent* event) {
     qDebug() << "key release.";
 }
 
-void Rectangle::mapMouseLeaveEvent() {
-
+void GraphicRectangle::mapMouseLeaveEvent() {
 }
 
-void Rectangle::accept(Visitor& visitor) {
+void GraphicRectangle::accept(Visitor& visitor) {
     visitor.visitTool(*this);
 }
 
-void Rectangle::emitDrawingToolSelected() {
-    PaletteTool::emitDrawingToolSelected();
+void GraphicRectangle::emitDrawingToolSelected() {
+    GraphicPaletteTool::emitDrawingToolSelected();
     emit drawingToolSelected(this);
 }
 
-void Rectangle::onUnselected() {
-    PaletteTool::onUnselected();
+void GraphicRectangle::onUnselected() {
+    GraphicPaletteTool::onUnselected();
 }
 
-void Rectangle::applyChipsetSelectionInRectangle()
+void GraphicRectangle::applyChipsetSelectionInRectangle()
 {
     const QPixmap& chipsetSelection(m_selectionItem->pixmap());
-    for (quint16 j = 0;
-         j < m_rectangle.height();
-         j += chipsetSelection.height())
+    for (int j = 0; j < m_rectangle.height(); j += chipsetSelection.height())
     {
-        for (quint16 i = 0;
-             i < m_rectangle.width();
-             i += chipsetSelection.width())
+        for (int i = 0; i < m_rectangle.width(); i += chipsetSelection.width())
         {
             applySelectionToMap(quint16(m_rectangle.x() + i),
                                 quint16(m_rectangle.y() + j));
@@ -144,7 +139,7 @@ void Rectangle::applyChipsetSelectionInRectangle()
     }
 }
 
-void Rectangle::applySelectionToMap(quint16 mapX, quint16 mapY)
+void GraphicRectangle::applySelectionToMap(quint16 mapX, quint16 mapY)
 {
     if (nullptr == m_visibleGraphicLayer) {
         return;
@@ -173,5 +168,4 @@ void Rectangle::applySelectionToMap(quint16 mapX, quint16 mapY)
 }
 
 } // namespace Graphic
-
-} // namespace DrawingTool
+} // namespace DrawingTools

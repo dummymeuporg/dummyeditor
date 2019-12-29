@@ -1,17 +1,24 @@
-#pragma once
+#ifndef BLOCKINGTOOL_H
+#define BLOCKINGTOOL_H
 
-#include <QRect>
 #include "drawing_tool/drawing_tool.hpp"
+
+//////////////////////////////////////////////////////////////////////////////
+//  pre-declaration
+//////////////////////////////////////////////////////////////////////////////
 
 namespace GraphicMap {
 class BlockingGraphicLayer;
 } // namespace GraphicMap
 
-namespace DrawingTool {
-
+namespace DrawingTools {
 class Visitor;
 
 namespace Blocking {
+
+//////////////////////////////////////////////////////////////////////////////
+//  BlockingTool class
+//////////////////////////////////////////////////////////////////////////////
 
 class BlockingTool : public DrawingTool {
     Q_OBJECT
@@ -31,10 +38,15 @@ public:
 signals:
     // Note: I have to put the whole namespace shit here, because Qt
     // signals/slots framework is based on textual comparison.
-    void drawingToolSelected(::DrawingTool::Blocking::BlockingTool*);
+    // TODO check if it's still the case now that the namespace has not the
+    // same name as the class
+    void drawingToolSelected(DrawingTools::Blocking::BlockingTool*);
+
 protected:
     GraphicMap::BlockingGraphicLayer* m_blockingGraphicLayer;
 };
 
-} // namespace Graphic
-} // namespace DrawingTool
+} // namespace Blocking
+} // namespace DrawingTools
+
+#endif

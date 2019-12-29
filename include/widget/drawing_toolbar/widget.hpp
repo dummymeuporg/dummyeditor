@@ -15,7 +15,7 @@ class VisibleGraphicLayer;
 class BlockingGraphicLayer;
 } // namespace GraphicMap
 
-namespace DrawingTool {
+namespace DrawingTools {
 class DrawingTool;
 namespace Graphic {
 class GraphicTool;
@@ -30,7 +30,7 @@ class State;
 }
 
 class Widget : public ::QWidget,
-               public DrawingTool::Visitor,
+               public DrawingTools::Visitor,
                public GraphicMap::GraphicLayerVisitor {
     Q_OBJECT
 public:
@@ -41,7 +41,7 @@ public:
     void onLayerSelected(const GraphicMap::MapGraphicsScene*,
                          const ::ChipsetGraphicsScene*,
                          GraphicMap::GraphicLayer&,
-                         std::vector<DrawingTool::DrawingTool*>*);
+                         std::vector<DrawingTools::DrawingTool*>*);
 
     const GraphicMap::MapGraphicsScene* mapScene() {
         return m_mapScene;
@@ -50,12 +50,12 @@ public:
     void setInitialState();
 
     // DrawingTool::Visitor methods:
-    void visitTool(DrawingTool::Graphic::Pen&) override;
-    void visitTool(DrawingTool::Graphic::Rectangle&) override;
-    void visitTool(DrawingTool::Graphic::Eraser&) override;
-    void visitTool(DrawingTool::Blocking::Eraser&) override;
-    void visitTool(DrawingTool::Blocking::Pen&) override;
-    void visitTool(DrawingTool::Selection&) override;
+    void visitTool(DrawingTools::Graphic::GraphicPen&) override;
+    void visitTool(DrawingTools::Graphic::GraphicRectangle&) override;
+    void visitTool(DrawingTools::Graphic::GraphicEraser&) override;
+    void visitTool(DrawingTools::Blocking::BlockingEraser&) override;
+    void visitTool(DrawingTools::Blocking::BlockingPen&) override;
+    void visitTool(DrawingTools::Selection&) override;
 
     // GraphicMap::GraphicLayerVisitor methods:
     void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
@@ -68,7 +68,7 @@ private:
     ::QActionGroup* m_actionGroup;
     const ::ChipsetGraphicsScene* m_chipsetGraphicsScene;
     const GraphicMap::MapGraphicsScene* m_mapScene;
-    std::vector<DrawingTool::DrawingTool*>* m_drawingTools;
+    std::vector<DrawingTools::DrawingTool*>* m_drawingTools;
     std::shared_ptr<State::State> m_state;
 };
 

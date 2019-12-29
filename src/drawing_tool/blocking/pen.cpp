@@ -1,30 +1,23 @@
-#include <QDebug>
-#include <QEvent>
-#include <QGraphicsSceneMouseEvent>
-#include <QGraphicsPixmapItem>
+#include "drawing_tool/blocking/pen.hpp"
 
-#include "chipsetgraphicsscene.hpp"
-#include "graphicmap/mapgraphicsscene.hpp"
+#include <QDebug>
+#include <QGraphicsSceneMouseEvent>
+
 #include "graphicmap/blockinggraphiclayer.hpp"
 
-#include "drawing_tool/blocking/pen.hpp"
-#include "drawing_tool/visitor.hpp"
-
-namespace DrawingTool {
-
+namespace DrawingTools {
 namespace Blocking {
 
-Pen::Pen(
+BlockingPen::BlockingPen(
     GraphicMap::MapGraphicsScene& mapGraphicsScene,
-    GraphicMap::BlockingGraphicLayer* blockingGraphicLayer
-) : Blocking::BlockingTool(QIcon(":/icons/icon_pen_2.png"),
+    GraphicMap::BlockingGraphicLayer* blockingGraphicLayer)
+    : Blocking::BlockingTool(QIcon(":/icons/icon_pen_2.png"),
                            mapGraphicsScene,
-                           blockingGraphicLayer),
-      m_mouseClicked(false)
+                           blockingGraphicLayer)
+    , m_mouseClicked(false)
 {}
 
-void Pen::mapMouseMoveEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
-
+void BlockingPen::mapMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
     if (nullptr != m_blockingGraphicLayer) {
         QPoint point(mouseEvent->scenePos().toPoint());
         point.setX(point.x() - (point.x() % 8));
@@ -37,53 +30,55 @@ void Pen::mapMouseMoveEvent(::QGraphicsSceneMouseEvent* mouseEvent) {
     }
 }
 
-void Pen::mapMousePressEvent(::QGraphicsSceneMouseEvent* event) {
+void BlockingPen::mapMousePressEvent(QGraphicsSceneMouseEvent* event) {
     qDebug() << "Blocking pen press.";
-    if (nullptr != m_blockingGraphicLayer) {
-        QPoint point(event->scenePos().toPoint());
-        point.setX(point.x() - (point.x() % 8));
-        point.setY(point.y() - (point.y() % 8));
-        // XXX: set blocking tile.
-        m_blockingGraphicLayer->setTile(point.x(), point.y(), true);
-
-        m_mouseClicked = true;
+    if (nullptr == m_blockingGraphicLayer) {
+        return;
     }
+
+    QPoint point(event->scenePos().toPoint());
+    point.setX(point.x() - (point.x() % 8));
+    point.setY(point.y() - (point.y() % 8));
+    // XXX: set blocking tile.
+    m_blockingGraphicLayer->setTile(point.x(), point.y(), true);
+
+    m_mouseClicked = true;
 }
 
-void Pen::mapMouseReleaseEvent(::QGraphicsSceneMouseEvent* event) {
+void BlockingPen::mapMouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
     qDebug() << "Pen release.";
     m_mouseClicked = false;
 }
 
-void Pen::mapKeyPressEvent(::QKeyEvent* event) {
+void BlockingPen::mapKeyPressEvent(QKeyEvent* event) {
     qDebug() << "key press.";
 }
 
-void Pen::mapKeyReleaseEvent(::QKeyEvent* event) {
+void BlockingPen::mapKeyReleaseEvent(QKeyEvent* event) {
     qDebug() << "key release.";
 }
 
-void Pen::mapMouseLeaveEvent() {
+void BlockingPen::mapMouseLeaveEvent() {
 
 }
 
-void Pen::accept(Visitor& visitor) {
+void BlockingPen::accept(Visitor& visitor) {
     visitor.visitTool(*this);
 }
 
-void Pen::emitDrawingToolSelected() {
+void BlockingPen::emitDrawingToolSelected() {
+    // TODO : check if emiting 2 different signals is really what we want?
     BlockingTool::emitDrawingToolSelected();
     emit drawingToolSelected(this);
 }
 
-void Pen::onUnselected() {
+void BlockingPen::onUnselected() {
 }
 
-void Pen::onSelected() {
+void BlockingPen::onSelected() {
 
 }
 
 
-} // namespace Graphic
-
-} // namespace DrawingTool
+} // namespace Blocking
+} // namespace DrawingTools

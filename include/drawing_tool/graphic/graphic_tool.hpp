@@ -1,17 +1,24 @@
-#pragma once
+#ifndef GRAPHICTOOL_H
+#define GRAPHICTOOL_H
 
-#include <QRect>
 #include "drawing_tool/drawing_tool.hpp"
+
+//////////////////////////////////////////////////////////////////////////////
+//  pre-declaration
+//////////////////////////////////////////////////////////////////////////////
 
 namespace GraphicMap {
 class VisibleGraphicLayer;
 } // namespace GraphicMap
 
-namespace DrawingTool {
-
+namespace DrawingTools {
 class Visitor;
 
 namespace Graphic {
+
+//////////////////////////////////////////////////////////////////////////////
+//  GraphicTool class
+//////////////////////////////////////////////////////////////////////////////
 
 class GraphicTool : public DrawingTool {
     Q_OBJECT
@@ -35,7 +42,7 @@ public:
 signals:
     // Note: I have to put the whole namespace shit here, because Qt
     // signals/slots framework is based on textual comparison.
-    void drawingToolSelected(::DrawingTool::Graphic::GraphicTool*);
+    void drawingToolSelected(::DrawingTools::Graphic::GraphicTool*);
 
 protected:
     GraphicMap::VisibleGraphicLayer* m_visibleGraphicLayer;
@@ -43,5 +50,6 @@ protected:
 
 
 } // namespace Graphic
+} // namespace DrawingTools
 
-} // namespace DrawingTool
+#endif

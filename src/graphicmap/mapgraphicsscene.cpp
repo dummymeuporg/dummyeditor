@@ -201,7 +201,7 @@ void MapGraphicsScene::redrawGrid() {
     //m_drawingTool->drawGrid();
 }
 
-void MapGraphicsScene::setDrawingTool(::DrawingTool::DrawingTool* drawingTool)
+void MapGraphicsScene::setDrawingTool(::DrawingTools::DrawingTool* drawingTool)
 {
     if (nullptr != m_drawingTool) {
         m_drawingTool->onUnselected();

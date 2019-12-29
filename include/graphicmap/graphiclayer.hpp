@@ -9,7 +9,7 @@
 
 class QGraphicsItem;
 
-namespace DrawingTool {
+namespace DrawingTools {
 class DrawingTool;
 } // namespace DrawingTool
 
@@ -38,7 +38,7 @@ public:
 
     virtual Editor::Layer& editorLayer() = 0;
 
-    virtual std::vector<DrawingTool::DrawingTool*> drawingTools() = 0;
+    virtual std::vector<DrawingTools::DrawingTool*> drawingTools() = 0;
 
     virtual void accept(GraphicLayerVisitor&) = 0;
 

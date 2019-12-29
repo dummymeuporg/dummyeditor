@@ -1,12 +1,12 @@
-#include "graphicmap/mapgraphicsscene.hpp"
 #include "drawing_tool/drawing_tool.hpp"
 
-namespace DrawingTool {
+namespace DrawingTools {
 
 DrawingTool::DrawingTool(
     GraphicMap::MapGraphicsScene& mapGraphicsScene,
-        QIcon&& icon
-) : m_mapGraphicsScene(mapGraphicsScene), m_icon(std::move(icon))
+    QIcon&& icon)
+    : m_mapGraphicsScene(mapGraphicsScene)
+    , m_icon(std::move(icon))
 {}
 
 void DrawingTool::emitDrawingToolSelected() {
@@ -19,4 +19,4 @@ void DrawingTool::setSelected(bool selected) {
     }
 }
 
-} // namespace DrawingTool
+} // namespace DrawingTools
