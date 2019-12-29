@@ -4,7 +4,6 @@
 #include "drawing_tool/graphic/palette_tool.hpp"
 
 namespace DrawingTools {
-namespace Graphic {
 
 //////////////////////////////////////////////////////////////////////////////
 //  GraphicTool class
@@ -40,7 +39,6 @@ private:
     QGraphicsPixmapItem* m_hoverItem;
 };
 
-} // namespace Graphic
 } // namespace DrawingTools
 
 #endif // GRAPHICRECTANGLE_H

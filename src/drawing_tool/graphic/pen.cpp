@@ -8,12 +8,11 @@
 #include "graphicmap/visiblegraphiclayer.hpp"
 
 namespace DrawingTools {
-namespace Graphic {
 
 GraphicPen::GraphicPen(
         GraphicMap::MapGraphicsScene& mapGraphicsScene,
         GraphicMap::VisibleGraphicLayer* visibleGraphicLayer)
-    : Graphic::GraphicPaletteTool(QIcon(":/icons/icon_pen.png"),
+    : GraphicPaletteTool(QIcon(":/icons/icon_pen.png"),
                                   mapGraphicsScene,
                                   visibleGraphicLayer)
     , m_hoverItem(nullptr)
@@ -117,6 +116,4 @@ void GraphicPen::drawPattern(QGraphicsSceneMouseEvent* event) {
     }
 }
 
-
-} // namespace Graphic
 } // namespace DrawingTools

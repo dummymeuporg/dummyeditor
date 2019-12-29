@@ -11,7 +11,6 @@ class QGraphicsRectItem;
 class QGraphicsPixmapItem;
 
 namespace DrawingTools {
-namespace Graphic {
 
 //////////////////////////////////////////////////////////////////////////////
 //  GraphicTool class
@@ -40,7 +39,7 @@ public:
 signals:
     // Note: I have to put the whole namespace shit here, because Qt
     // signals/slots framework is based on textual comparison.
-    void drawingToolSelected(::DrawingTools::Graphic::GraphicPaletteTool*);
+    void drawingToolSelected(::DrawingTools::GraphicPaletteTool*);
 
 protected:
     ChipsetGraphicsScene* m_chipsetGraphicsScene;
@@ -52,7 +51,6 @@ protected:
     QPoint m_selectionStart;
 };
 
-} // namespace Graphic
 } // namespace DrawingTools
 
 #endif GRAPHICPALETTETOOL_H

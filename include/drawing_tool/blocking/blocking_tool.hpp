@@ -14,8 +14,6 @@ class BlockingGraphicLayer;
 namespace DrawingTools {
 class Visitor;
 
-namespace Blocking {
-
 //////////////////////////////////////////////////////////////////////////////
 //  BlockingTool class
 //////////////////////////////////////////////////////////////////////////////
@@ -40,13 +38,12 @@ signals:
     // signals/slots framework is based on textual comparison.
     // TODO check if it's still the case now that the namespace has not the
     // same name as the class
-    void drawingToolSelected(DrawingTools::Blocking::BlockingTool*);
+    void drawingToolSelected(DrawingTools::BlockingTool*);
 
 protected:
     GraphicMap::BlockingGraphicLayer* m_blockingGraphicLayer;
 };
 
-} // namespace Blocking
 } // namespace DrawingTools
 
 #endif

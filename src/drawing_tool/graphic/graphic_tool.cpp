@@ -7,7 +7,6 @@
 #include "graphicmap/visiblegraphiclayer.hpp"
 
 namespace DrawingTools {
-namespace Graphic {
 
 GraphicTool::GraphicTool(
         QIcon&& icon,
@@ -51,5 +50,4 @@ void GraphicTool::visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) {
     // Nothing to do. Not the right kind of tool.
 }
 
-} // namespace Graphic
 } // namespace DrawingTools

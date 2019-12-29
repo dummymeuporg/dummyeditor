@@ -13,9 +13,7 @@ namespace GraphicMap {
     class VisibleGraphicLayer;
 }
 
-
 namespace DrawingTools {
-namespace Graphic {
 
 //////////////////////////////////////////////////////////////////////////////
 //  GraphicEraser class
@@ -46,7 +44,6 @@ private:
     bool m_mouseClicked;
 };
 
-} // namespace Graphic
 } // namespace DrawingTools
 
 #endif // GRAPHICERASER_H

@@ -6,14 +6,13 @@
 #include "graphicmap/blockinggraphiclayer.hpp"
 
 namespace DrawingTools {
-namespace Blocking {
 
 BlockingEraser::BlockingEraser(
     GraphicMap::MapGraphicsScene& mapGraphicsScene,
     GraphicMap::BlockingGraphicLayer* blockingGraphicLayer)
-    : Blocking::BlockingTool(QIcon(":/icons/icon_eraser.png"),
-                             mapGraphicsScene,
-                             blockingGraphicLayer)
+    : BlockingTool(QIcon(":/icons/icon_eraser.png"),
+                   mapGraphicsScene,
+                   blockingGraphicLayer)
     , m_mouseClicked(false)
 {}
 
@@ -78,5 +77,4 @@ void BlockingEraser::onUnselected() {
 void BlockingEraser::onSelected() {
 }
 
-} // namespace Blocking
 } // namespace DrawingTools

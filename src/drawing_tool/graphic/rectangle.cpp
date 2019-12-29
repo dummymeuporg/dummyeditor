@@ -9,12 +9,11 @@
 #include "graphicmap/visiblegraphiclayer.hpp"
 
 namespace DrawingTools {
-namespace Graphic {
 
 GraphicRectangle::GraphicRectangle(
         GraphicMap::MapGraphicsScene& mapGraphicsScene,
         GraphicMap::VisibleGraphicLayer* visibleGraphicLayer)
-    : Graphic::GraphicPaletteTool(QIcon(":/icons/icon_rect.png"),
+    : GraphicPaletteTool(QIcon(":/icons/icon_rect.png"),
                                   mapGraphicsScene,
                                   visibleGraphicLayer)
     , m_mouseClicked(false)
@@ -167,5 +166,4 @@ void GraphicRectangle::applySelectionToMap(quint16 mapX, quint16 mapY)
     }
 }
 
-} // namespace Graphic
 } // namespace DrawingTools

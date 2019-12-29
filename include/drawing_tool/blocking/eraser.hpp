@@ -10,11 +10,10 @@
 class QGraphicsSceneMouseEvent;
 
 namespace GraphicMap {
-    class BlockingGraphicLayer;
+class BlockingGraphicLayer;
 }
 
 namespace DrawingTools {
-namespace Blocking {
 
 //////////////////////////////////////////////////////////////////////////////
 //  BlockingEraser class
@@ -43,7 +42,6 @@ private:
     bool m_mouseClicked;
 };
 
-} // namespace Blocking
 } // namespace DrawingTools
 
 #endif // BLOCKINGERASER_H

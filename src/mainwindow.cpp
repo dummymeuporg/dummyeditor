@@ -25,14 +25,14 @@ MainWindow::MainWindow(QWidget *parent)
     , m_mapScene(new GraphicMap::MapGraphicsScene())
     , m_selectionDrawingTool(new DrawingTools::Selection(*m_mapScene))
     , m_graphicTools({
-        new DrawingTools::Graphic::GraphicPen(*m_mapScene),
-        new DrawingTools::Graphic::GraphicRectangle(*m_mapScene),
-        new DrawingTools::Graphic::GraphicEraser(*m_mapScene),
+        new DrawingTools::GraphicPen(*m_mapScene),
+        new DrawingTools::GraphicRectangle(*m_mapScene),
+        new DrawingTools::GraphicEraser(*m_mapScene),
         m_selectionDrawingTool
     })
     , m_blockingTools({
-        new DrawingTools::Blocking::BlockingPen(*m_mapScene),
-        new DrawingTools::Blocking::BlockingEraser(*m_mapScene)
+        new DrawingTools::BlockingPen(*m_mapScene),
+        new DrawingTools::BlockingEraser(*m_mapScene)
     })
 {
     m_ui->setupUi(this);

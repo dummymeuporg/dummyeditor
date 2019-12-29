@@ -17,9 +17,7 @@ class BlockingGraphicLayer;
 
 namespace DrawingTools {
 class DrawingTool;
-namespace Graphic {
 class GraphicTool;
-} // namespace Graphic
 } // namespace DrawingTool
 
 namespace Widget {
@@ -50,11 +48,11 @@ public:
     void setInitialState();
 
     // DrawingTool::Visitor methods:
-    void visitTool(DrawingTools::Graphic::GraphicPen&) override;
-    void visitTool(DrawingTools::Graphic::GraphicRectangle&) override;
-    void visitTool(DrawingTools::Graphic::GraphicEraser&) override;
-    void visitTool(DrawingTools::Blocking::BlockingEraser&) override;
-    void visitTool(DrawingTools::Blocking::BlockingPen&) override;
+    void visitTool(DrawingTools::GraphicPen&) override;
+    void visitTool(DrawingTools::GraphicRectangle&) override;
+    void visitTool(DrawingTools::GraphicEraser&) override;
+    void visitTool(DrawingTools::BlockingEraser&) override;
+    void visitTool(DrawingTools::BlockingPen&) override;
     void visitTool(DrawingTools::Selection&) override;
 
     // GraphicMap::GraphicLayerVisitor methods:

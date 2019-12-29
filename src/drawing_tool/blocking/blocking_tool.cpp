@@ -7,7 +7,6 @@
 #include "graphicmap/mapgraphicsscene.hpp"
 
 namespace DrawingTools {
-namespace Blocking {
 
 BlockingTool::BlockingTool(
         QIcon&& icon,
@@ -52,5 +51,4 @@ void BlockingTool::visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) {
     // Do nothing. Not the right tool.
 }
 
-} // namespace Blocking
 } // namespace DrawingTools

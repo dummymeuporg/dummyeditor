@@ -90,37 +90,37 @@ void Widget::reset() {
     layout()->addWidget(m_toolbar);
 }
 
-void Widget::visitTool(DrawingTools::Graphic::GraphicPen& pen) {
+void Widget::visitTool(DrawingTools::GraphicPen& pen) {
     // XXX: connect the pen to the chipset scene.
     // m_chipsetScene
     qDebug() << "visitTool: connect tool.";
     QObject::connect(
         &pen,
-        SIGNAL(drawingToolSelected(::DrawingTools::Graphic::GraphicPaletteTool*)),
+        SIGNAL(drawingToolSelected(::DrawingTools::GraphicPaletteTool*)),
         m_chipsetGraphicsScene,
-        SLOT(setPaletteTool(::DrawingTools::Graphic::GraphicPaletteTool*))
+        SLOT(setPaletteTool(::DrawingTools::GraphicPaletteTool*))
     );
 }
 
-void Widget::visitTool(DrawingTools::Graphic::GraphicRectangle& rectangle) {
+void Widget::visitTool(DrawingTools::GraphicRectangle& rectangle) {
     qDebug() << "visitTool: connect tool.";
     QObject::connect(
         &rectangle,
-        SIGNAL(drawingToolSelected(::DrawingTools::Graphic::GraphicPaletteTool*)),
+        SIGNAL(drawingToolSelected(::DrawingTools::GraphicPaletteTool*)),
         m_chipsetGraphicsScene,
-        SLOT(setPaletteTool(::DrawingTools::Graphic::GraphicPaletteTool*))
+        SLOT(setPaletteTool(::DrawingTools::GraphicPaletteTool*))
     );
 }
 
-void Widget::visitTool(DrawingTools::Graphic::GraphicEraser&) {
+void Widget::visitTool(DrawingTools::GraphicEraser&) {
     // Nothing to do!
 }
 
-void Widget::visitTool(DrawingTools::Blocking::BlockingPen&) {
+void Widget::visitTool(DrawingTools::BlockingPen&) {
     // Nothing to do!
 }
 
-void Widget::visitTool(DrawingTools::Blocking::BlockingEraser&) {
+void Widget::visitTool(DrawingTools::BlockingEraser&) {
     // Nothing to do!
 }
 

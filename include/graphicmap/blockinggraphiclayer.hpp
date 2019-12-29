@@ -46,8 +46,8 @@ private:
 
     // Drawing tools
     /*
-    DrawingTool::Blocking::Pen m_pen;
-    DrawingTool::Blocking::Eraser m_eraser;
+    DrawingTool::Pen m_pen;
+    DrawingTool::Eraser m_eraser;
     */
 };
 } // namespace GraphicMap

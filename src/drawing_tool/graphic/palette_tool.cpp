@@ -7,7 +7,6 @@
 #include "chipsetgraphicsscene.hpp"
 
 namespace DrawingTools {
-namespace Graphic {
 
 GraphicPaletteTool::GraphicPaletteTool(
         QIcon&& icon,
@@ -130,5 +129,4 @@ void GraphicPaletteTool::onUnselected() {
 void GraphicPaletteTool::onSelected() {
 }
 
-} // namespace Graphic
 } // namespace DrawingTools

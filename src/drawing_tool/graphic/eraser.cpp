@@ -6,12 +6,11 @@
 #include "graphicmap/visiblegraphiclayer.hpp"
 
 namespace DrawingTools {
-namespace Graphic {
 
 GraphicEraser::GraphicEraser(
     GraphicMap::MapGraphicsScene& mapGraphicsScene,
     GraphicMap::VisibleGraphicLayer* visibleGraphicLayer)
-    : Graphic::GraphicTool(QIcon(":/icons/icon_eraser.png"),
+    : GraphicTool(QIcon(":/icons/icon_eraser.png"),
                          mapGraphicsScene,
                          visibleGraphicLayer)
     , m_mouseClicked(false)
@@ -89,6 +88,4 @@ void GraphicEraser::onSelected() {
 void GraphicEraser::onUnselected() {
 }
 
-
-} // namespace Graphic
 } // namespace DrawingTools

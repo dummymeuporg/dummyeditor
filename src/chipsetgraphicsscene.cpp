@@ -80,7 +80,7 @@ ChipsetGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
 
 void
 ChipsetGraphicsScene::setPaletteTool(
-    ::DrawingTools::Graphic::GraphicPaletteTool* paletteTool
+    ::DrawingTools::GraphicPaletteTool* paletteTool
 ) {
     m_paletteTool = paletteTool;
     m_paletteTool->setChipsetGraphicsScene(this);

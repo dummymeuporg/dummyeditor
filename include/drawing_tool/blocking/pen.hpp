@@ -14,7 +14,6 @@ class BlockingGraphicLayer;
 }
 
 namespace DrawingTools {
-namespace Blocking {
 
 //////////////////////////////////////////////////////////////////////////////
 //  BlockingPen class
@@ -45,7 +44,6 @@ private:
     bool m_mouseClicked;
 };
 
-} // namespace Blocking
 } // namespace DrawingTools
 
 #endif // BLOCKING_H

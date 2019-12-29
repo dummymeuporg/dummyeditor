@@ -31,7 +31,7 @@ DisplayGraphicTools::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer)
 
     if (nullptr != tool) {
         // XXX: Disgusting.
-        reinterpret_cast<DrawingTools::Graphic::GraphicTool*>(
+        reinterpret_cast<DrawingTools::GraphicTool*>(
             tool
         )->setVisibleGraphicLayer(&layer);
     }

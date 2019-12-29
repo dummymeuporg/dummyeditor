@@ -6,14 +6,13 @@
 #include "graphicmap/blockinggraphiclayer.hpp"
 
 namespace DrawingTools {
-namespace Blocking {
 
 BlockingPen::BlockingPen(
     GraphicMap::MapGraphicsScene& mapGraphicsScene,
     GraphicMap::BlockingGraphicLayer* blockingGraphicLayer)
-    : Blocking::BlockingTool(QIcon(":/icons/icon_pen_2.png"),
-                           mapGraphicsScene,
-                           blockingGraphicLayer)
+    : BlockingTool(QIcon(":/icons/icon_pen_2.png"),
+                   mapGraphicsScene,
+                   blockingGraphicLayer)
     , m_mouseClicked(false)
 {}
 
@@ -79,6 +78,4 @@ void BlockingPen::onSelected() {
 
 }
 
-
-} // namespace Blocking
 } // namespace DrawingTools
