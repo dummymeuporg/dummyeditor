@@ -1,8 +1,14 @@
-
-#pragma once
+#ifndef GRAPHICLAYER_H
+#define GRAPHICLAYER_H
 
 #include <cstdint>
 #include <vector>
+
+#include "editor/layer.hpp"
+
+//////////////////////////////////////////////////////////////////////////////
+//  pre-declaration
+//////////////////////////////////////////////////////////////////////////////
 
 namespace Dummy {
 namespace Core {
@@ -10,17 +16,17 @@ class GraphicLayer;
 } // namespace Core
 } // namespace Dummy
 
-#include "editor/layer.hpp"
-
 namespace Editor {
+
+//////////////////////////////////////////////////////////////////////////////
+//  GraphicLayer class
+//////////////////////////////////////////////////////////////////////////////
 
 class GraphicLayer : public Layer {
 public:
     GraphicLayer(Dummy::Core::GraphicLayer&);
-    Dummy::Core::GraphicLayer& layer() {
-        return m_layer;
-    }
 
+    Dummy::Core::GraphicLayer& layer() { return m_layer; }
     std::pair<std::int8_t, std::int8_t>& operator[](std::size_t index);
 
     std::uint16_t width() const;
@@ -32,3 +38,5 @@ private:
 };
 
 } // namespace Editor
+
+#endif // GRAPHICLAYER_H

@@ -1,24 +1,21 @@
+#include "editor/project.hpp"
+
 #include <algorithm>
 
 #include <QDebug>
 #include <QDir>
-#include <QDomNode>
-#include <QFile>
-#include <QString>
-#include <QTextStream>
 
 #include "editor/map.hpp"
 #include "misc/map_tree_model.hpp"
-
-#include "editor/project.hpp"
 #include "editor/starting_point.hpp"
 
 namespace Editor {
-Project::Project(const std::string& projectFolder)
-    : m_coreProject(fs::path(projectFolder)),
-      m_mapsModel(nullptr)
-{
 
+Project::Project(const std::string& projectFolder)
+    : m_coreProject(fs::path(projectFolder))
+    , m_mapsModel(nullptr)
+    , m_startingPoint(nullptr)
+{
     // Try to read the "project.xml" file that should be present in folderPath.
     QFile xmlProjectFile(
         (m_coreProject.projectPath() / "project.xml").string().c_str()
@@ -53,7 +50,6 @@ Project::Project(const std::string& projectFolder)
 }
 
 Project::~Project() {
-
     delete m_mapsModel;
 }
 
@@ -61,27 +57,29 @@ Misc::MapTreeModel* Project::mapsModel() {
     return m_mapsModel;
 }
 
-void Project::setStartingPoint(
-    const StartingPoint& startingPoint)
+QMap<QString, std::shared_ptr<Misc::MapDocument>> Project::openedMaps() const {
+    return m_openedMaps;
+}
+
+void Project::setStartingPoint(const StartingPoint& startingPoint)
 {
     m_startingPoint = std::make_unique<StartingPoint>(startingPoint);
 }
 
 void Project::create(const QString& folder) {
-    _createXmlProjectFile(folder);
-    _createFolders(folder);
-
+    createXmlProjectFile(folder);
+    createFolders(folder);
 }
 
-void Project::_createXmlProjectFile(const QString& folder) {
+void Project::createXmlProjectFile(const QString& folder) {
     QFile projectFile(folder + "/" + "project.xml");
     projectFile.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream out(&projectFile);
-    out << _createXmlProjectTree().toString(4);
+    out << createXmlProjectTree().toString(4);
     projectFile.close();
 }
 
-QDomDocument Project::_createXmlProjectTree() {
+QDomDocument Project::createXmlProjectTree() {
     QDomDocument doc;
     QDomElement project = doc.createElement("project");
     QDomElement maps = doc.createElement("maps");
@@ -92,7 +90,7 @@ QDomDocument Project::_createXmlProjectTree() {
     return doc;
 }
 
-void Project::_createFolders(const QString& baseFolder) {
+void Project::createFolders(const QString& baseFolder) {
     std::vector<QString> folders{"maps", "chipsets", "sounds"};
     std::for_each(folders.begin(), folders.end(),
                   [&baseFolder](const QString& folder) {
@@ -125,7 +123,7 @@ void Project::saveProjectFile() {
         projectNode.appendChild(startingPointNode);
     }
 
-    _dumpToXmlNode(doc, mapsNode, m_mapsModel->invisibleRootItem());
+    dumpToXmlNode(doc, mapsNode, m_mapsModel->invisibleRootItem());
     QString xmlPath(
         (m_coreProject.projectPath() / "project.xml").string().c_str()
     );
@@ -137,7 +135,7 @@ void Project::saveProjectFile() {
     doc.save(stream, 4);
 }
 
-void Project::_dumpToXmlNode(QDomDocument& doc,
+void Project::dumpToXmlNode(QDomDocument& doc,
                              QDomElement& xmlNode,
                              QStandardItem* modelItem) {
 
@@ -149,17 +147,17 @@ void Project::_dumpToXmlNode(QDomDocument& doc,
 
         xmlNode.appendChild(mapNode);
 
-        _dumpToXmlNode(doc, mapNode, mapItem);
+        dumpToXmlNode(doc, mapNode, mapItem);
     }
 }
 
 void Project::cleanMapName(QString& mapName) {
+    mapName.replace("\\", "");
     mapName.replace("/", "");
     mapName.replace("..", "");
 }
 
-std::shared_ptr<Misc::MapDocument>
-Project::document(const QString& mapName) {
+std::shared_ptr<Misc::MapDocument> Project::document(const QString& mapName) {
     QString cleantMapname(mapName);
     cleanMapName(cleantMapname);
 

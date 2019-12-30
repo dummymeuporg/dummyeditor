@@ -13,7 +13,7 @@ class QGraphicsPixmapItem;
 namespace DrawingTools {
 
 //////////////////////////////////////////////////////////////////////////////
-//  GraphicTool class
+//  GraphicPaletteTool class
 //////////////////////////////////////////////////////////////////////////////
 
 class GraphicPaletteTool : public GraphicTool {
@@ -32,7 +32,7 @@ public:
     ChipsetGraphicsScene* chipsetGraphicsScene() const {
         return m_chipsetGraphicsScene;
     }
-    void setChipsetGraphicsScene(::ChipsetGraphicsScene*);
+    void setChipsetGraphicsScene(ChipsetGraphicsScene*);
     void onUnselected() override;
     void onSelected() override;
 

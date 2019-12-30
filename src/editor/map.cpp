@@ -1,20 +1,17 @@
+#include "editor/map.hpp"
+
 #include <QDebug>
 
-#include <dummy/core/blocking_layer.hpp>
-#include <dummy/core/graphic_layer.hpp>
-
-#include <dummy/local/floor.hpp>
 #include <dummy/local/project.hpp>
 
 #include "editor/blocking_layer.hpp"
 #include "editor/events_layer.hpp"
 #include "editor/graphic_layer.hpp"
-#include "editor/floor.hpp"
-#include "editor/map.hpp"
 
 namespace Editor {
 Map::Map(const Dummy::Local::Project& project, const std::string& name)
-    : Dummy::Local::Map(project, name) {}
+    : Dummy::Local::Map(project, name)
+{}
 
 Map::~Map() {}
 
@@ -24,12 +21,12 @@ void Map::load() {
     for (auto& floor: m_floors) {
         m_editorFloors.push_back(std::make_unique<Floor>(floor));
     }
-
 }
 
 void Map::setChipset(const std::string& chipset) {
     m_chipset = chipset;
 }
+
 void Map::setMusic(const std::string& music) {
     m_music = music;
 }
@@ -56,8 +53,7 @@ void Map::saveEventsFile() {
     }
 }
 
-void
-Map::resizeGraphicLayer(
+void Map::resizeGraphicLayer(
     Editor::GraphicLayer& graphicLayer,
     std::uint16_t width,
     std::uint16_t height)
@@ -81,8 +77,7 @@ Map::resizeGraphicLayer(
 void Map::resizeBlockingLayer(
     Editor::BlockingLayer& blockingLayer,
     std::uint16_t width,
-    std::uint16_t height
-)
+    std::uint16_t height)
 {
     Dummy::Core::BlockingLayer newBlockingLayer(width, height);
 
@@ -107,8 +102,7 @@ void Map::resize(std::uint16_t width, std::uint16_t height) {
     m_height = height;
 }
 
-void
-Map::resizeFloor(
+void Map::resizeFloor(
     Editor::Floor& floor,
     std::uint16_t width,
     std::uint16_t height
@@ -193,8 +187,7 @@ void Map::_writeStdString(std::ofstream& ofs,
     }
 }
 
-void
-Map::writeFloor(
+void Map::writeFloor(
     std::ofstream& ofs,
     const Dummy::Local::Floor& floor
 ) const {
@@ -224,6 +217,5 @@ void Map::addFloor(std::unique_ptr<Editor::Floor> floor) {
     m_editorFloors.push_back(std::move(floor));
     ++m_floorsCount;
 }
-
 
 } // namespace Editor

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef EDITORMAP_H
+#define EDITORMAP_H
 
 #include <cstdint>
 #include <memory>
@@ -15,6 +16,10 @@ extern "C" {
 #include <lauxlib.h>
 }
 
+//////////////////////////////////////////////////////////////////////////////
+//  pre-declaration
+//////////////////////////////////////////////////////////////////////////////
+
 namespace Dummy {
 namespace Core {
 class GraphicLayer;
@@ -24,6 +29,10 @@ class GraphicLayer;
 namespace Editor {
 class Floor;
 using Floors = std::vector<std::unique_ptr<Floor>>;
+
+//////////////////////////////////////////////////////////////////////////////
+//  Map class
+//////////////////////////////////////////////////////////////////////////////
 
 class Map : public Dummy::Local::Map {
 public:
@@ -37,17 +46,9 @@ public:
     void save();
     void resize(std::uint16_t, std::uint16_t);
 
-    std::uint8_t floorsCount() const {
-        return m_floorsCount;
-    }
-
-    Floor& floorAt(std::uint8_t index) {
-        return *m_editorFloors[index];
-    }
-
-    const Floors& floors() const {
-        return m_editorFloors;
-    }
+    std::uint8_t floorsCount() const { return m_floorsCount; }
+    Floor& floorAt(std::uint8_t index) { return *m_editorFloors[index]; }
+    const Floors& floors() const { return m_editorFloors; }
 
     void addFloor(std::unique_ptr<Editor::Floor>);
 
@@ -56,6 +57,7 @@ public:
     }
 
     void load();
+
 private:
     void saveBlockingLayers();
     void saveGraphicLayers();
@@ -78,3 +80,5 @@ private:
     Floors m_editorFloors;
 };
 } // namespace Editor
+
+#endif // EDITORMAP_H

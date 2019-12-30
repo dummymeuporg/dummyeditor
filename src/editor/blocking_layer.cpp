@@ -1,5 +1,6 @@
-#include <dummy/core/blocking_layer.hpp>
 #include "editor/blocking_layer.hpp"
+
+#include <dummy/core/blocking_layer.hpp>
 
 namespace Editor {
 
