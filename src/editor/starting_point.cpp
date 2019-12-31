@@ -15,7 +15,7 @@ StartingPoint::StartingPoint(
     , m_floor(floor)
 {}
 /*
-StartingPoint& StartingPoint::setMapName(const char* mapName)
+void StartingPoint::setMapName(const char* mapName)
 {
     m_mapName = mapName;
     return *this;
