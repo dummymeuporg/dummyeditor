@@ -1,3 +1,5 @@
+#include "mainwindow.hpp"
+
 #include <filesystem>
 
 #include <QDebug>
@@ -5,6 +7,8 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 
+#include "drawing_tool/blocking/eraser.hpp"
+#include "drawing_tool/blocking/pen.hpp"
 #include "drawing_tool/selection.hpp"
 #include "editor/map.hpp"
 
@@ -13,7 +17,6 @@
 #include "graphicmap/visiblegraphiclayer.hpp"
 
 #include "chipsetgraphicsscene.hpp"
-#include "mainwindow.hpp"
 #include "ui_mainwindow.h"
 
 

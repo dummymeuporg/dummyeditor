@@ -1,11 +1,15 @@
-#pragma once
+#ifndef GRAPHICLAYER_H
+#define GRAPHICLAYER_H
 
 #include <memory>
 
-#include <QtGlobal>
 #include <QVector>
 
 #include "graphicmap/mapscenelayer.hpp"
+
+//////////////////////////////////////////////////////////////////////////////
+//  forward declaration
+//////////////////////////////////////////////////////////////////////////////
 
 class QGraphicsItem;
 
@@ -22,9 +26,11 @@ class Clipboard;
 } // namespace LayerClipboard
 
 namespace GraphicMap {
-
-class MapGraphicsScene;
 class GraphicLayerVisitor;
+
+//////////////////////////////////////////////////////////////////////////////
+//  GraphicLayer class
+//////////////////////////////////////////////////////////////////////////////
 
 class GraphicLayer : public MapSceneLayer
 {
@@ -32,16 +38,10 @@ class GraphicLayer : public MapSceneLayer
 public:
     GraphicLayer(MapGraphicsScene&, int);
 
-    inline const QVector<QGraphicsItem*>& layerItems() const {
-        return m_layerItems;
-    }
-
+    const QVector<QGraphicsItem*>& layerItems() const { return m_layerItems; }
     virtual Editor::Layer& editorLayer() = 0;
-
     virtual std::vector<DrawingTools::DrawingTool*> drawingTools() = 0;
-
     virtual void accept(GraphicLayerVisitor&) = 0;
-
     virtual std::shared_ptr<LayerClipboard::Clipboard>
     getClipboardRegion(const QRect& clip) = 0;
 
@@ -55,3 +55,5 @@ protected:
     QVector<QGraphicsItem*> m_layerItems;
 };
 } // namespace GraphicMap
+
+#endif // GRAPHICLAYER_H

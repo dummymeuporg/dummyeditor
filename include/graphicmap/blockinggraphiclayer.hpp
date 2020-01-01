@@ -1,12 +1,11 @@
-#pragma once
-
-#include <QtGlobal>
-#include <QVector>
-
-#include "drawing_tool/blocking/pen.hpp"
-#include "drawing_tool/blocking/eraser.hpp"
+#ifndef BLOCKINGGRAPHICLAYER_H
+#define BLOCKINGGRAPHICLAYER_H
 
 #include "graphicmap/graphiclayer.hpp"
+
+//////////////////////////////////////////////////////////////////////////////
+//  forward declaration
+//////////////////////////////////////////////////////////////////////////////
 
 namespace Editor {
 class BlockingLayer;
@@ -14,8 +13,11 @@ class BlockingLayer;
 
 namespace GraphicMap {
 class BlockingSquareItem;
-class MapGraphicsScene;
-class MapSceneLayer;
+
+//////////////////////////////////////////////////////////////////////////////
+//  BlockingGraphicLayer class
+//////////////////////////////////////////////////////////////////////////////
+
 class BlockingGraphicLayer : public GraphicLayer
 {
 public:
@@ -25,29 +27,27 @@ public:
         int zValue
     );
     ~BlockingGraphicLayer() override;
+
+    const Editor::BlockingLayer& layer() const { return m_blockingLayer; }
+
     MapSceneLayer& removeTile(quint16, quint16) override;
     void toggleTile(quint16, quint16);
     void setTile(quint16, quint16, bool);
     Editor::Layer& editorLayer() override;
-
-    inline const Editor::BlockingLayer& layer() const {
-        return m_blockingLayer;
-    }
 
     std::vector<DrawingTools::DrawingTool*> drawingTools() override;
     void accept(GraphicLayerVisitor&) override;
 
     std::shared_ptr<LayerClipboard::Clipboard>
     getClipboardRegion(const QRect& clip) override;
+
 private:
-    void _draw(int, quint16, quint16);
+    void draw(int, quint16, quint16);
+
+private:
     Editor::BlockingLayer& m_blockingLayer;
     QVector<BlockingSquareItem*> m_crossItems;
-
-    // Drawing tools
-    /*
-    DrawingTool::Pen m_pen;
-    DrawingTool::Eraser m_eraser;
-    */
 };
 } // namespace GraphicMap
+
+#endif // BLOCKINGGRAPHICLAYER_H

@@ -1,14 +1,11 @@
-#include <QPainter>
-#include <QStyleOptionGraphicsItem>
-
 #include "graphicmap/eventsquareitem.hpp"
+
+#include <QPainter>
 
 namespace GraphicMap {
 
 EventSquareItem::EventSquareItem()
-{
-
-}
+{}
 
 QRectF EventSquareItem::boundingRect() const {
     return QRectF(0, 0, 16, 16);

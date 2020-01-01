@@ -1,32 +1,38 @@
-#include <QGraphicsRectItem>
-
-#include <dummy/local/floor.hpp>
-#include "editor/events_layer.hpp"
-
-
-#include "graphicmap/eventsquareitem.hpp"
 #include "graphicmap/eventsgraphiclayer.hpp"
-#include "graphicmap/mapgraphicsscene.hpp"
+
+#include "editor/events_layer.hpp"
+#include "graphicmap/eventsquareitem.hpp"
 #include "graphicmap/graphic_layer_visitor.hpp"
+#include "graphicmap/mapgraphicsscene.hpp"
 
 namespace GraphicMap {
 
 EventsGraphicLayer::EventsGraphicLayer(
-    Editor::EventsLayer& eventsLayer,
-    MapGraphicsScene& mapGraphicsScene,
-    int zIndex
-) : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex),
-   m_eventsLayer(eventsLayer)
+        Editor::EventsLayer& eventsLayer,
+        MapGraphicsScene& mapGraphicsScene,
+        int zIndex)
+    : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex)
+    , m_eventsLayer(eventsLayer)
 {
     const auto& touchEvents(eventsLayer.touchEvents());
     const auto& floor(eventsLayer.floor());
     m_layerItems.resize(eventsLayer.width() * eventsLayer.height());
 
-    int index = 0;
-    for (auto it = m_layerItems.begin(); it != m_layerItems.end();
-         ++it, ++index)
+    /*
+
+    for (auto it = m_layerItems.begin(); it != m_layerItems.end(); ++it, ++index)
     {
         *it = nullptr;
+        if (touchEvents.find(index) != std::end(touchEvents))
+        {
+            qreal posX((index % (floor.width())) * 16);
+            qreal posY((index / (floor.width())) * 16);
+            draw(index, quint16(posX), quint16(posY));
+        }
+    }
+     */
+    for (size_t index = 0; index < m_layerItems.size(); ++index)
+    {
         if (touchEvents.find(index) != std::end(touchEvents))
         {
             qreal posX((index % (floor.width())) * 16);

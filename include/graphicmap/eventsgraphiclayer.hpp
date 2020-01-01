@@ -1,6 +1,11 @@
-#pragma once
+#ifndef EVENTSGRAPHICLAYER_H
+#define EVENTSGRAPHICLAYER_H
 
 #include "graphicmap/graphiclayer.hpp"
+
+//////////////////////////////////////////////////////////////////////////////
+//  forward declaration
+//////////////////////////////////////////////////////////////////////////////
 
 namespace Editor {
 class EventsLayer;
@@ -8,9 +13,14 @@ class EventsLayer;
 
 namespace GraphicMap {
 
+//////////////////////////////////////////////////////////////////////////////
+//  EventsGraphicLayer class
+//////////////////////////////////////////////////////////////////////////////
+
 class EventsGraphicLayer : public GraphicLayer {
 public:
     EventsGraphicLayer(Editor::EventsLayer&, MapGraphicsScene&, int);
+
     MapSceneLayer& removeTile(quint16, quint16) override;
     std::vector<DrawingTools::DrawingTool*> drawingTools() override;
     Editor::Layer& editorLayer() override;
@@ -18,10 +28,15 @@ public:
 
     std::shared_ptr<LayerClipboard::Clipboard>
     getClipboardRegion(const QRect& clip) override;
+
 private:
     void draw(int, quint16, quint16);
+
+private:
     Editor::EventsLayer& m_eventsLayer;
     QVector<QGraphicsItem*> m_eventItems;
 };
 
 } // namespace GraphicMap
+
+#endif // EVENTSGRAPHICLAYER_H

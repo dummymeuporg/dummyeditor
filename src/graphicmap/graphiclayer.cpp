@@ -1,12 +1,8 @@
-#include <iostream>
+#include "graphicmap/graphiclayer.hpp"
 
-#include <QDebug>
 #include <QGraphicsItem>
 
 #include "drawing_tool/drawing_tool.hpp"
-#include "editor/map.hpp"
-
-#include "graphicmap/graphiclayer.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
 
 namespace GraphicMap {

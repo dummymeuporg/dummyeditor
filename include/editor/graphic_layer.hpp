@@ -1,5 +1,5 @@
-#ifndef GRAPHICLAYER_H
-#define GRAPHICLAYER_H
+#ifndef EDITORGRAPHICLAYER_H
+#define EDITORGRAPHICLAYER_H
 
 #include <cstdint>
 #include <vector>
@@ -7,7 +7,7 @@
 #include "editor/layer.hpp"
 
 //////////////////////////////////////////////////////////////////////////////
-//  pre-declaration
+//  forward declaration
 //////////////////////////////////////////////////////////////////////////////
 
 namespace Dummy {
@@ -39,4 +39,4 @@ private:
 
 } // namespace Editor
 
-#endif // GRAPHICLAYER_H
+#endif // EDITORGRAPHICLAYER_H

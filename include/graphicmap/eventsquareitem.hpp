@@ -1,11 +1,15 @@
-#pragma once
+#ifndef EVENTSQUAREITEM_H
+#define EVENTSQUAREITEM_H
 
 #include <QGraphicsItem>
-#include <QObject>
 
 namespace GraphicMap {
 
-class EventSquareItem  : public ::QGraphicsItem {
+//////////////////////////////////////////////////////////////////////////////
+//  EventSquareItem class
+//////////////////////////////////////////////////////////////////////////////
+
+class EventSquareItem  : public QGraphicsItem {
 public:
     EventSquareItem();
 
@@ -16,3 +20,5 @@ public:
 };
 
 } // namespace GraphicMap
+
+#endif // EVENTSQUAREITEM_H

@@ -1,33 +1,23 @@
-#include <memory>
-#include <iostream>
+#include "graphicmap/visiblegraphiclayer.hpp"
 
-#include <QDebug>
 #include <QGraphicsPixmapItem>
-
-#include <dummy/core/graphic_layer.hpp>
-
-#include "drawing_tool/graphic/pen.hpp"
 
 #include "editor/map.hpp"
 #include "editor/graphic_layer.hpp"
-
 #include "graphicmap/mapgraphicsscene.hpp"
-#include "graphicmap/visiblegraphiclayer.hpp"
-#include "graphicmap/graphic_layer_visitor.hpp"
 
 #include "layer_clipboard/visible.hpp"
-
 
 namespace GraphicMap {
 
 VisibleGraphicLayer::VisibleGraphicLayer(
-    Editor::GraphicLayer& layer,
-    MapGraphicsScene& mapGraphicsScene,
-    const QPixmap& chipsetPixmap,
-    int zIndex
-) : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex),
-    m_graphicLayer(layer),
-    m_chipsetPixmap(chipsetPixmap)
+        Editor::GraphicLayer& layer,
+        MapGraphicsScene& mapGraphicsScene,
+        const QPixmap& chipsetPixmap,
+        int zIndex)
+    : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex)
+    , m_graphicLayer(layer)
+    , m_chipsetPixmap(chipsetPixmap)
 {
     m_layerItems.resize(m_graphicLayer.width() * m_graphicLayer.height());
 
@@ -65,14 +55,12 @@ MapSceneLayer& VisibleGraphicLayer::removeTile(quint16 x, quint16 y)
     return *this;
 }
 
-VisibleGraphicLayer&
-VisibleGraphicLayer::setTile(
+VisibleGraphicLayer& VisibleGraphicLayer::setTile(
     quint16 x,
     quint16 y,
     qint16 chipsetX,
-    qint16 chipsetY
-) {
-
+    qint16 chipsetY)
+{
     if (x < m_graphicLayer.width() * 16
         && y < m_graphicLayer.height() * 16)
     {

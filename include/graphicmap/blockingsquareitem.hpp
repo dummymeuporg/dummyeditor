@@ -1,11 +1,15 @@
-#pragma once
+#ifndef BLOCKINGSQUAREITEM_H
+#define BLOCKINGSQUAREITEM_H
 
 #include <QGraphicsItem>
-#include <QObject>
 
 namespace GraphicMap {
 
-class BlockingSquareItem : public ::QGraphicsItem
+//////////////////////////////////////////////////////////////////////////////
+//  BlockingSquareItem class
+//////////////////////////////////////////////////////////////////////////////
+
+class BlockingSquareItem : public QGraphicsItem
 {
 public:
     BlockingSquareItem();
@@ -18,3 +22,5 @@ public:
 };
 
 } // namespace GraphicMap
+
+#endif // BLOCKINGSQUAREITEM_H

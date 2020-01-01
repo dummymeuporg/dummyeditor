@@ -1,39 +1,33 @@
-#include <QDebug>
+#include "graphicmap/blockinggraphiclayer.hpp"
 
-#include "drawing_tool/drawing_tool.hpp"
+#include <QDebug>
 
 #include "editor/blocking_layer.hpp"
 #include "editor/map.hpp"
-
 #include "layer_clipboard/blocking.hpp"
-
 #include "graphicmap/blockingsquareitem.hpp"
-#include "graphicmap/blockinggraphiclayer.hpp"
 #include "graphicmap/mapgraphicsscene.hpp"
-#include "graphicmap/graphic_layer_visitor.hpp"
 
 namespace GraphicMap {
-BlockingGraphicLayer::BlockingGraphicLayer(
-    Editor::BlockingLayer& blockingLayer,
-    MapGraphicsScene& mapGraphicsScene,
-    int zIndex
-) : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex),
-    m_blockingLayer(blockingLayer)
-{
 
+BlockingGraphicLayer::BlockingGraphicLayer(
+        Editor::BlockingLayer& blockingLayer,
+        MapGraphicsScene& mapGraphicsScene,
+        int zIndex)
+    : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex)
+    , m_blockingLayer(blockingLayer)
+{
     m_layerItems.resize(m_blockingLayer.width() * m_blockingLayer.height());
 
-    int index = 0;
-    for (auto it = m_blockingLayer.layer().begin();
-         it != m_blockingLayer.layer().end();
-         ++it, ++index)
+    for (size_t index = 0; index < m_blockingLayer.layer().size(); ++index)
     {
-        m_layerItems[index] = nullptr;
+        int intIdx = static_cast<int>(index);
+        m_layerItems[intIdx] = nullptr;
         if (m_blockingLayer[index])
         {
             qreal posX((index % (m_blockingLayer.width())) * 8);
             qreal posY((index / (m_blockingLayer.width())) * 8);
-            _draw(index, quint16(posX), quint16(posY));
+            draw(intIdx, quint16(posX), quint16(posY));
         }
     }
 }
@@ -47,7 +41,6 @@ BlockingGraphicLayer::removeTile(quint16 x, quint16 y)
     qDebug() << "Toggle tile." << x << y;
     if (x < m_blockingLayer.width() * 8 && y < m_blockingLayer.height() * 8)
     {
-
         int index((y/8) * m_blockingLayer.width() + (x/8));
         m_blockingLayer[index] = false;
         if (nullptr != m_layerItems[index])
@@ -74,13 +67,12 @@ void BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
                 m_mapGraphicsScene.removeItem(m_layerItems[index]);
                 m_layerItems[index] = nullptr;
             }
-
         }
         else
         {
             qDebug() << "False!";
             qDebug() << x << y;
-            _draw(index, x, y);
+            draw(index, x, y);
             m_blockingLayer[index] = true;
         }
     }
@@ -101,7 +93,7 @@ void BlockingGraphicLayer::setTile(quint16 x, quint16 y, bool isBlocking)
 
         if (isBlocking)
         {
-            _draw(index, x, y);
+            draw(index, x, y);
             m_blockingLayer[index] = true;
         }
         else
@@ -111,7 +103,7 @@ void BlockingGraphicLayer::setTile(quint16 x, quint16 y, bool isBlocking)
     }
 }
 
-void BlockingGraphicLayer::_draw(int index, quint16 x, quint16 y)
+void BlockingGraphicLayer::draw(int index, quint16 x, quint16 y)
 {
     m_layerItems[index] = new BlockingSquareItem();
     m_layerItems[index]->setZValue(m_zIndex);
@@ -124,8 +116,7 @@ Editor::Layer& BlockingGraphicLayer::editorLayer() {
     return m_blockingLayer;
 }
 
-std::vector<DrawingTools::DrawingTool*>
-BlockingGraphicLayer::drawingTools()
+std::vector<DrawingTools::DrawingTool*> BlockingGraphicLayer::drawingTools()
 {
     // XXX: fill this.
     return {/*&m_pen, &m_eraser*/};

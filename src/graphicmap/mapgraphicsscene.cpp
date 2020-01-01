@@ -1,28 +1,25 @@
+#include "graphicmap/mapgraphicsscene.hpp"
+
 #include <QDebug>
 #include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
 
-#include <dummy/core/graphic_layer.hpp>
-
 #include "editor/map.hpp"
 #include "editor/project.hpp"
-
-#include "graphicmap/visiblegraphiclayer.hpp"
 #include "graphicmap/blockinggraphiclayer.hpp"
 #include "graphicmap/eventsgraphiclayer.hpp"
-#include "graphicmap/mapgraphicsscene.hpp"
-
+#include "graphicmap/visiblegraphiclayer.hpp"
 
 namespace GraphicMap {
 
 MapGraphicsScene::MapGraphicsScene(QObject* parent)
-    : QGraphicsScene(parent),
-      m_mapDocument(nullptr),
-      m_map(nullptr),
-      m_isDrawing(false),
-      m_drawingTool(nullptr),
-      m_currentGraphicLayer(nullptr)
-
+    : QGraphicsScene(parent)
+    , m_mapDocument(nullptr)
+    , m_map(nullptr)
+    , m_darkFilter(nullptr)
+    , m_isDrawing(false)
+    , m_drawingTool(nullptr)
+    , m_currentGraphicLayer(nullptr)
 {
     //m_paintingLayerState = new GraphicMap::NotPaintingState(*this);
     //m_drawingTool = new NoDrawingTool(*this);
@@ -35,11 +32,10 @@ MapGraphicsScene::~MapGraphicsScene()
     //delete m_paintingLayerState;
 }
 
-MapGraphicsScene& MapGraphicsScene::setMapDocument
-(const std::shared_ptr<Misc::MapDocument>& mapDocument) {
+MapGraphicsScene& MapGraphicsScene::setMapDocument(
+        const std::shared_ptr<Misc::MapDocument>& mapDocument) {
     if (m_map != nullptr) {
-        QRect invalidateRegion(0, 0,
-                               m_map->width() * 16, m_map->height() * 16);
+        QRect invalidateRegion(0, 0, m_map->width() * 16, m_map->height() * 16);
         qDebug() << "INVALIDATE " << invalidateRegion;
         invalidate(invalidateRegion);
 
@@ -140,8 +136,7 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument
 }
 
 void MapGraphicsScene::changeMapDocument(
-    const std::shared_ptr<Misc::MapDocument>& mapDocument
-) {
+    const std::shared_ptr<Misc::MapDocument>& mapDocument) {
     setMapDocument(mapDocument);
 }
 
@@ -253,8 +248,7 @@ void MapGraphicsScene::unsetDrawingTool() {
     m_drawingTool = nullptr;
 }
 
-bool MapGraphicsScene::eventFilter(QObject *watched, QEvent *event)
-{
+bool MapGraphicsScene::eventFilter(QObject *watched, QEvent *event){
     Q_UNUSED(watched)
     if (event->type() == QEvent::Leave)
     {

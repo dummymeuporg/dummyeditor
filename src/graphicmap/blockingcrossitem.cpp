@@ -1,12 +1,9 @@
-#include <QPainter>
-#include <QStyleOptionGraphicsItem>
-
 #include "graphicmap/blockingcrossitem.hpp"
 
-GraphicMap::BlockingCrossItem::BlockingCrossItem()
-{
+#include <QPainter>
 
-}
+GraphicMap::BlockingCrossItem::BlockingCrossItem()
+{}
 
 QRectF GraphicMap::BlockingCrossItem::boundingRect() const
 {

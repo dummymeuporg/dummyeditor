@@ -6,9 +6,7 @@
 namespace GraphicMap {
 
 BlockingSquareItem::BlockingSquareItem()
-{
-
-}
+{}
 
 QRectF BlockingSquareItem::boundingRect() const {
     return QRectF(0, 0, 8, 8);
