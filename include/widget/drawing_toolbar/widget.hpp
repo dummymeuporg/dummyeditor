@@ -1,8 +1,14 @@
-#pragma once
+#ifndef DRAWINGTOOLBARWIDGET_H
+#define DRAWINGTOOLBARWIDGET_H
 
 #include <QWidget>
+
 #include "drawing_tool/visitor.hpp"
 #include "graphicmap/graphic_layer_visitor.hpp"
+
+//////////////////////////////////////////////////////////////////////////////
+//  forward declaration
+//////////////////////////////////////////////////////////////////////////////
 
 class QToolBar;
 class QActionGroup;
@@ -11,13 +17,10 @@ class ChipsetGraphicsScene;
 namespace GraphicMap {
 class GraphicLayer;
 class MapGraphicsScene;
-class VisibleGraphicLayer;
-class BlockingGraphicLayer;
 } // namespace GraphicMap
 
 namespace DrawingTools {
 class DrawingTool;
-class GraphicTool;
 } // namespace DrawingTool
 
 namespace Widget {
@@ -27,23 +30,25 @@ namespace State {
 class State;
 }
 
-class Widget : public ::QWidget,
+//////////////////////////////////////////////////////////////////////////////
+//  DrawingToolbarWidget class
+//////////////////////////////////////////////////////////////////////////////
+
+class Widget : public QWidget,
                public DrawingTools::Visitor,
                public GraphicMap::GraphicLayerVisitor {
     Q_OBJECT
 public:
-    Widget(::QWidget* parent = nullptr);
+    Widget(QWidget* parent = nullptr);
     void clear();
     void reset();
     void setState(std::shared_ptr<State::State>);
     void onLayerSelected(const GraphicMap::MapGraphicsScene*,
-                         const ::ChipsetGraphicsScene*,
+                         const ChipsetGraphicsScene*,
                          GraphicMap::GraphicLayer&,
                          std::vector<DrawingTools::DrawingTool*>*);
 
-    const GraphicMap::MapGraphicsScene* mapScene() {
-        return m_mapScene;
-    }
+    const GraphicMap::MapGraphicsScene* mapScene() { return m_mapScene; }
 
     void setInitialState();
 
@@ -60,11 +65,10 @@ public:
     void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
 
 
-
 private:
-    ::QToolBar* m_toolbar;
-    ::QActionGroup* m_actionGroup;
-    const ::ChipsetGraphicsScene* m_chipsetGraphicsScene;
+    QToolBar* m_toolbar;
+    QActionGroup* m_actionGroup;
+    const ChipsetGraphicsScene* m_chipsetGraphicsScene;
     const GraphicMap::MapGraphicsScene* m_mapScene;
     std::vector<DrawingTools::DrawingTool*>* m_drawingTools;
     std::shared_ptr<State::State> m_state;
@@ -72,3 +76,5 @@ private:
 
 } // namespace DrawingToolbar
 } // namespace Widget
+
+#endif // DRAWINGTOOLBARWIDGET_H

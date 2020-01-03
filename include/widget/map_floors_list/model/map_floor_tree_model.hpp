@@ -1,9 +1,13 @@
-#pragma once
+#ifndef MAPFLOORTREEMODEL_H
+#define MAPFLOORTREEMODEL_H
 
 #include <memory>
 
 #include <QStandardItemModel>
-#include <QVariant>
+
+//////////////////////////////////////////////////////////////////////////////
+//  forward declaration
+//////////////////////////////////////////////////////////////////////////////
 
 namespace Editor {
 class Map;
@@ -13,6 +17,11 @@ namespace Widget {
 namespace MapFloorsList {
 namespace Model {
 class MapTreeItem;
+
+//////////////////////////////////////////////////////////////////////////////
+//  MapFloorTreeModel class
+//////////////////////////////////////////////////////////////////////////////
+
 class MapFloorTreeModel : public QStandardItemModel {
 public:
     MapFloorTreeModel(std::shared_ptr<Editor::Map>);
@@ -23,3 +32,5 @@ private:
 } // namespace Model
 } // namespace MapFloorsList
 } // namespace Widget
+
+#endif // MAPFLOORTREEMODEL_H

@@ -1,12 +1,10 @@
-#include "editor/layer.hpp"
-
 #include "widget/map_floors_list/model/map_layer_tree_item.hpp"
+
+#include "editor/layer.hpp"
 
 namespace Widget {
 namespace MapFloorsList {
 namespace Model {
-
-
 
 void MapLayerTreeItem::toggle() {
     setVisible(!layer().visible());

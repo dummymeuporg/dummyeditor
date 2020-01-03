@@ -1,38 +1,28 @@
-#include <QActionGroup>
-#include <QToolBar>
-#include <QHBoxLayout>
-
-#include "drawing_tool/drawing_tool.hpp"
-
-#include "drawing_tool/graphic/eraser.hpp"
-#include "drawing_tool/graphic/pen.hpp"
-#include "drawing_tool/graphic/rectangle.hpp"
-
-#include "graphicmap/mapgraphicsscene.hpp"
-#include "graphicmap/graphiclayer.hpp"
-#include "chipsetgraphicsscene.hpp"
+#include "widget/drawing_toolbar/widget.hpp"
 
 #include <QDebug>
+#include <QHBoxLayout>
+#include <QToolBar>
 
+#include "chipsetgraphicsscene.hpp"
+#include "drawing_tool/graphic/pen.hpp"
+#include "drawing_tool/graphic/rectangle.hpp"
+#include "graphicmap/mapgraphicsscene.hpp"
+#include "graphicmap/graphiclayer.hpp"
 #include "widget/drawing_toolbar/drawing_tool_action.hpp"
-#include "widget/drawing_toolbar/widget.hpp"
-#include "widget/drawing_toolbar/state/state.hpp"
-
 #include "widget/drawing_toolbar/state/no_drawing_tools.hpp"
-#include "widget/drawing_toolbar/state/display_blocking_tools.hpp"
-#include "widget/drawing_toolbar/state/display_graphic_tools.hpp"
-
 
 namespace Widget {
 namespace DrawingToolbar {
 
-Widget::Widget(::QWidget* parent) :
-    QWidget(parent),
-    m_toolbar(new QToolBar(this)),
-    m_actionGroup(new QActionGroup(m_toolbar)),
-    m_chipsetGraphicsScene(nullptr),
-    m_mapScene(nullptr),
-    m_state(std::make_shared<State::NoDrawingTools>(*this))
+Widget::Widget(::QWidget* parent)
+    : QWidget(parent)
+    , m_toolbar(new QToolBar(this))
+    , m_actionGroup(new QActionGroup(m_toolbar))
+    , m_chipsetGraphicsScene(nullptr)
+    , m_mapScene(nullptr)
+    , m_drawingTools(nullptr)
+    , m_state(std::make_shared<State::NoDrawingTools>(*this))
 {
     // Set empty toolbar for the moment.
     setLayout(new QHBoxLayout());
@@ -45,8 +35,7 @@ void Widget::clear() {
     m_toolbar = nullptr;
 }
 
-void
-Widget::onLayerSelected(
+void Widget::onLayerSelected(
     const GraphicMap::MapGraphicsScene* mapScene,
     const ::ChipsetGraphicsScene* chipsetScene,
     GraphicMap::GraphicLayer& layer,

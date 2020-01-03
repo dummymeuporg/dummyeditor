@@ -1,10 +1,15 @@
-#pragma once
+#ifndef MAPTREEITEM_H
+#define MAPTREEITEM_H
 
 #include <QStandardItem>
 
 namespace Widget {
 namespace MapFloorsList {
 namespace Model {
+
+//////////////////////////////////////////////////////////////////////////////
+//  MapTreeItem class
+//////////////////////////////////////////////////////////////////////////////
 
 class MapTreeItem : public QStandardItem {
 public:
@@ -16,3 +21,5 @@ public:
 } // namespace Model
 } // namespace MapFloorsList
 } // namespace Widget
+
+#endif // MAPTREEITEM_H

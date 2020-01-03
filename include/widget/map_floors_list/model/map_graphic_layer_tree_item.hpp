@@ -1,17 +1,24 @@
-#pragma once
-
-#include <cstdint>
+#ifndef MAPGRAPHICLAYERTREEITEM_H
+#define MAPGRAPHICLAYERTREEITEM_H
 
 #include "widget/map_floors_list/model/map_layer_tree_item.hpp"
 
+//////////////////////////////////////////////////////////////////////////////
+//  forward declaration
+//////////////////////////////////////////////////////////////////////////////
+
 namespace Editor {
 class GraphicLayer;
-class Map;
 } // namespace Editor
 
 namespace Widget {
 namespace MapFloorsList {
 namespace Model {
+
+//////////////////////////////////////////////////////////////////////////////
+//  MapGraphicLayerTreeItem class
+//////////////////////////////////////////////////////////////////////////////
+
 class MapGraphicLayerTreeItem : public MapLayerTreeItem {
 public:
     MapGraphicLayerTreeItem(std::int8_t, Editor::GraphicLayer&);
@@ -26,3 +33,5 @@ private:
 } // namespace Model
 } // namespace MapFloorsList
 } // namespace Widget
+
+#endif // MAPGRAPHICLAYERTREEITEM_H

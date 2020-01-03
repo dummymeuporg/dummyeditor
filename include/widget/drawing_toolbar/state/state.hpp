@@ -1,6 +1,11 @@
-#pragma once
+#ifndef DRAWINGTOOLBARSTATE_H
+#define DRAWINGTOOLBARSTATE_H
 
 #include <memory>
+
+//////////////////////////////////////////////////////////////////////////////
+//  forward declaration
+//////////////////////////////////////////////////////////////////////////////
 
 namespace GraphicMap {
 class BlockingGraphicLayer;
@@ -11,6 +16,10 @@ namespace Widget {
 namespace DrawingToolbar {
 class Widget;
 namespace State {
+
+//////////////////////////////////////////////////////////////////////////////
+//  State class
+//////////////////////////////////////////////////////////////////////////////
 
 class State : public std::enable_shared_from_this<State> {
 public:
@@ -24,3 +33,5 @@ protected:
 } // namespace State
 } // namespace DrawingToolbar
 } // namespace Widget
+
+#endif // DRAWINGTOOLBARSTATE_H

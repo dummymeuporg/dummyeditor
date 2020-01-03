@@ -1,16 +1,16 @@
+#include "widget/map_floors_list/model/map_blocking_layer_tree_item.hpp"
+
 #include <QDebug>
 
 #include "editor/blocking_layer.hpp"
-
-#include "widget/map_floors_list/model/map_blocking_layer_tree_item.hpp"
 
 namespace Widget {
 namespace MapFloorsList {
 namespace Model {
 
 MapBlockingLayerTreeItem::MapBlockingLayerTreeItem(
-    Editor::BlockingLayer& blockingLayer
-) : m_blockingLayer(blockingLayer)
+    Editor::BlockingLayer& blockingLayer)
+    : m_blockingLayer(blockingLayer)
 {
     if (m_blockingLayer.visible()) {
         setIcon(QIcon(":/icons/icon_eye.png"));

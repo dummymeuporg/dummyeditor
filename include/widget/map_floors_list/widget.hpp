@@ -1,7 +1,13 @@
-#pragma once
+#ifndef MAPFLOORLISTWIDGET_H
+#define MAPFLOORLISTWIDGET_H
+
 #include <memory>
 
 #include <QWidget>
+
+//////////////////////////////////////////////////////////////////////////////
+//  forward declaration
+//////////////////////////////////////////////////////////////////////////////
 
 namespace GraphicMap {
 class MapGraphicsScene;
@@ -39,22 +45,29 @@ class MapFloorTreeModel;
 // That's it.
 using QModelIndex = ::QModelIndex;
 
-class Widget : public ::QWidget {
+//////////////////////////////////////////////////////////////////////////////
+//  Widget class
+//////////////////////////////////////////////////////////////////////////////
+
+class Widget : public QWidget {
     Q_OBJECT
 public:
-    Widget(::QWidget* parent = nullptr);
+    Widget(QWidget* parent = nullptr);
     void setEditorMap(std::shared_ptr<Editor::Map>);
     const Model::MapFloorTreeModel* mapFloorTreeModel() const {
         return m_mapFloorTreeModel;
     }
+
 signals:
     void selectedLayerChanged();
+
 public slots:
     void selectLayer(QModelIndex);
     void toggleLayerVisibleState(QModelIndex);
+
 private:
     void reset();
-    Ui::MapFloorsList* ui;
+    Ui::MapFloorsList* m_ui;
     std::shared_ptr<Editor::Map> m_editorMap;
     Model::MapFloorTreeModel* m_mapFloorTreeModel;
     GraphicMap::MapGraphicsScene* m_mapScene;
@@ -62,3 +75,5 @@ private:
 
 } // namespace MapFloorsList
 } // namespace Widget
+
+#endif // MAPFLOORLISTWIDGET_H

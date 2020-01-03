@@ -1,16 +1,19 @@
-#pragma once
+#ifndef NODRAWINGTOOLS_H
+#define NODRAWINGTOOLS_H
 
 #include "widget/drawing_toolbar/state/state.hpp"
 
-namespace GraphicMap {
-class BlockingGraphicLayer;
-class VisibleGraphicLayer;
-} // namespace GraphicMap
+//////////////////////////////////////////////////////////////////////////////
+//  forward declaration
+//////////////////////////////////////////////////////////////////////////////
 
 namespace Widget {
 namespace DrawingToolbar {
-class Widget;
 namespace State {
+
+//////////////////////////////////////////////////////////////////////////////
+//  NoDrawingTools state
+//////////////////////////////////////////////////////////////////////////////
 
 class NoDrawingTools : public State {
 public:
@@ -22,3 +25,5 @@ public:
 } // namespace State
 } // namespace DrawingToolbar
 } // namespace Widget
+
+#endif // NODRAWINGTOOLS_H

@@ -1,15 +1,24 @@
-#pragma once
+#ifndef MAPFLOORTREEITEM_H
+#define MAPFLOORTREEITEM_H
 
 #include "widget/map_floors_list/model/map_tree_item.hpp"
 
+//////////////////////////////////////////////////////////////////////////////
+//  forward declaration
+//////////////////////////////////////////////////////////////////////////////
+
 namespace Editor {
 class Floor;
-class Map;
 } // namespace Editor
 
 namespace Widget {
 namespace MapFloorsList {
 namespace Model {
+
+//////////////////////////////////////////////////////////////////////////////
+//  MapFloorTreeItem class
+//////////////////////////////////////////////////////////////////////////////
+
 class MapFloorTreeItem : public MapTreeItem {
 public:
     MapFloorTreeItem(Editor::Floor&, std::size_t index);
@@ -24,3 +33,5 @@ private:
 } // namespace Model
 } // namespace MapFloorsList
 } // namespace Widget
+
+#endif // MAPFLOORTREEITEM_H

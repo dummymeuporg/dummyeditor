@@ -1,16 +1,19 @@
-#pragma once
+#ifndef DISPLAYBLOCKINGTOOLS_H
+#define DISPLAYBLOCKINGTOOLS_H
 
 #include "widget/drawing_toolbar/state/state.hpp"
 
-namespace GraphicMap {
-class BlockingGraphicLayer;
-class VisibleGraphicLayer;
-} // namespace GraphicMap
+//////////////////////////////////////////////////////////////////////////////
+//  forward declaration
+//////////////////////////////////////////////////////////////////////////////
 
 namespace Widget {
 namespace DrawingToolbar {
-class Widget;
 namespace State {
+
+//////////////////////////////////////////////////////////////////////////////
+//  DisplayBlockingTools state
+//////////////////////////////////////////////////////////////////////////////
 
 class DisplayBlockingTools : public State {
 public:
@@ -22,3 +25,5 @@ public:
 } // namespace State
 } // namespace DrawingToolbar
 } // namespace Widget
+
+#endif // DISPLAYBLOCKINGTOOLS_H

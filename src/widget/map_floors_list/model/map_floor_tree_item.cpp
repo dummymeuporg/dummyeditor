@@ -1,17 +1,15 @@
+#include "widget/map_floors_list/model/map_floor_tree_item.hpp"
+
 #include <QDebug>
-#include <QIcon>
 
-#include "editor/blocking_layer.hpp"
-#include "editor/graphic_layer.hpp"
 #include "editor/floor.hpp"
-
 #include "widget/map_floors_list/model/map_blocking_layer_tree_item.hpp"
 #include "widget/map_floors_list/model/map_graphic_layer_tree_item.hpp"
-#include "widget/map_floors_list/model/map_floor_tree_item.hpp"
 
 namespace Widget {
 namespace MapFloorsList {
 namespace Model {
+
 MapFloorTreeItem::MapFloorTreeItem(Editor::Floor& floor, std::size_t index)
     : m_editorFloor(floor), m_index(index)
 {

@@ -1,26 +1,28 @@
+#include "widget/map_floors_list/widget.hpp"
+#include "widget/map_floors_list/ui_widget.h"
+
 #include <QDebug>
 #include "widget/map_floors_list/model/map_floor_tree_item.hpp"
 #include "widget/map_floors_list/model/map_floor_tree_model.hpp"
 
-#include "widget/map_floors_list/widget.hpp"
-#include "widget/map_floors_list/ui_widget.h"
-
 namespace Widget {
 namespace MapFloorsList {
+
 Widget::Widget(QWidget* parent)
-    : QWidget(parent),
-      ui(new Ui::MapFloorsList),
-      m_editorMap(nullptr),
-      m_mapFloorTreeModel(nullptr)
+    : QWidget(parent)
+    , m_ui(new Ui::MapFloorsList)
+    , m_editorMap(nullptr)
+    , m_mapFloorTreeModel(nullptr)
+    , m_mapScene(nullptr)
 {
-    ui->setupUi(this);
+    m_ui->setupUi(this);
 }
 
 void Widget::setEditorMap(std::shared_ptr<Editor::Map> editorMap) {
     m_editorMap = editorMap;
     reset();
     m_mapFloorTreeModel = new Model::MapFloorTreeModel(m_editorMap);
-    ui->treeViewFloors->setModel(m_mapFloorTreeModel);
+    m_ui->treeViewFloors->setModel(m_mapFloorTreeModel);
 }
 
 void Widget::reset() {
@@ -28,7 +30,7 @@ void Widget::reset() {
         delete m_mapFloorTreeModel;
         m_mapFloorTreeModel = nullptr;
     }
-    ui->treeViewFloors->reset();
+    m_ui->treeViewFloors->reset();
 }
 
 void Widget::toggleLayerVisibleState(QModelIndex selectedIndex) {

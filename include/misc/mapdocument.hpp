@@ -1,15 +1,14 @@
-#pragma once
+#ifndef MAPDOCUMENT_H
+#define MAPDOCUMENT_H
 
 #include <memory>
 #include <vector>
 
 #include <QString>
 
-namespace Dummy {
-namespace Core {
-class GraphicMap;
-} // namespace Core
-} // namespace Dummy
+//////////////////////////////////////////////////////////////////////////////
+//  forward declaration
+//////////////////////////////////////////////////////////////////////////////
 
 namespace GraphicMap {
 class GraphicLayer;
@@ -21,29 +20,22 @@ class Project;
 } // namespace Editor
 
 namespace Misc {
-
 using GraphicLayers = std::vector<std::shared_ptr<::GraphicMap::GraphicLayer>>;
+
+//////////////////////////////////////////////////////////////////////////////
+//  MapDocument class
+//////////////////////////////////////////////////////////////////////////////
 
 class MapDocument {
 public:
-    MapDocument(Editor::Project&,
-                const QString&,
-                std::shared_ptr<Editor::Map>);
+    MapDocument(Editor::Project&, const QString&, std::shared_ptr<Editor::Map>);
 
-
-    std::shared_ptr<Editor::Map> map() {
-        return m_map;
-    }
+    std::shared_ptr<Editor::Map> map() { return m_map; }
+    const QString mapName() const { return m_mapName; }
 
     void save();
 
-    Editor::Project& project() {
-        return m_editorProject;
-    }
-
-    inline const QString mapName() const {
-        return m_mapName;
-    }
+    Editor::Project& project() { return m_editorProject; }
 
 private:
     Editor::Project& m_editorProject;
@@ -53,3 +45,5 @@ private:
     GraphicLayers m_graphicLayers;
 };
 } // namespace Misc
+
+#endif // MAPDOCUMENT_H

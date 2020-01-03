@@ -1,6 +1,11 @@
-#pragma once
+#ifndef DRAWINGTOOLACTION_H
+#define DRAWINGTOOLACTION_H
 
 #include <QAction>
+
+//////////////////////////////////////////////////////////////////////////////
+//  forward declaration
+//////////////////////////////////////////////////////////////////////////////
 
 namespace DrawingTools {
 class DrawingTool;
@@ -9,20 +14,28 @@ class DrawingTool;
 namespace Widget {
 namespace DrawingToolbar {
 
-class DrawingToolAction : public ::QAction {
+//////////////////////////////////////////////////////////////////////////////
+//  DrawingToolAction class
+//////////////////////////////////////////////////////////////////////////////
+
+class DrawingToolAction : public QAction {
     Q_OBJECT
 public:
     DrawingToolAction(DrawingTools::DrawingTool*, QWidget* parent = nullptr);
-    DrawingTools::DrawingTool& drawingTool() const {
-        return *m_drawingTool;
-    }
+
+    DrawingTools::DrawingTool& drawingTool() const { return *m_drawingTool; }
+
 signals:
     void trigerred(DrawingTools::DrawingTool*);
+
 public slots:
     void setDrawingTool(bool);
+
 private:
     DrawingTools::DrawingTool* m_drawingTool;
 };
 
 } // namespace DrawingToolbar
 } // namespace Widget
+
+#endif // DRAWINGTOOLACTION_H
