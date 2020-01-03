@@ -22,12 +22,8 @@ class MapFloorsList;
 } // namespace Ui
 
 
-namespace Widget {
 namespace MapFloorsList {
-
-namespace Model {
 class MapFloorTreeModel;
-} // namespace Model
 
 
 // This line shouldn't even exist. Still here is the reason why:
@@ -38,7 +34,7 @@ class MapFloorTreeModel;
 // since Qt Designer does not seem to like it.
 // Instead, one has to set "void toggleLayerVisibleState(QModelIndex);".
 // Though, "QModelIndex" would be considered here to be in the
-// "Widget::MapFloorsList" namespace (if it ever exists). This is ugly.
+// "MapFloorsList" namespace (if it ever exists). This is ugly.
 // So the following directive will create an alias that points on the
 // global namespace's QModelIndex.
 //
@@ -54,7 +50,7 @@ class Widget : public QWidget {
 public:
     Widget(QWidget* parent = nullptr);
     void setEditorMap(std::shared_ptr<Editor::Map>);
-    const Model::MapFloorTreeModel* mapFloorTreeModel() const {
+    const MapFloorTreeModel* mapFloorTreeModel() const {
         return m_mapFloorTreeModel;
     }
 
@@ -69,11 +65,10 @@ private:
     void reset();
     Ui::MapFloorsList* m_ui;
     std::shared_ptr<Editor::Map> m_editorMap;
-    Model::MapFloorTreeModel* m_mapFloorTreeModel;
+    MapFloorTreeModel* m_mapFloorTreeModel;
     GraphicMap::MapGraphicsScene* m_mapScene;
 };
 
 } // namespace MapFloorsList
-} // namespace Widget
 
 #endif // MAPFLOORLISTWIDGET_H

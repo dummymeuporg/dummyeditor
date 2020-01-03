@@ -5,7 +5,6 @@
 #include "widget/map_floors_list/model/map_floor_tree_item.hpp"
 #include "widget/map_floors_list/model/map_floor_tree_model.hpp"
 
-namespace Widget {
 namespace MapFloorsList {
 
 Widget::Widget(QWidget* parent)
@@ -21,7 +20,7 @@ Widget::Widget(QWidget* parent)
 void Widget::setEditorMap(std::shared_ptr<Editor::Map> editorMap) {
     m_editorMap = editorMap;
     reset();
-    m_mapFloorTreeModel = new Model::MapFloorTreeModel(m_editorMap);
+    m_mapFloorTreeModel = new MapFloorTreeModel(m_editorMap);
     m_ui->treeViewFloors->setModel(m_mapFloorTreeModel);
 }
 
@@ -45,4 +44,3 @@ void Widget::selectLayer(QModelIndex selectedIndex) {
 }
 
 } // namespace MapFloorsList
-} // namespace Widget

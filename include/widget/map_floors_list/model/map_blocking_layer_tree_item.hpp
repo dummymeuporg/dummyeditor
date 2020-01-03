@@ -11,9 +11,7 @@ namespace Editor {
 class BlockingLayer;
 } // namespace Editor
 
-namespace Widget {
 namespace MapFloorsList {
-namespace Model {
 
 //////////////////////////////////////////////////////////////////////////////
 //  MapBlockingLayerTreeItem class
@@ -30,8 +28,6 @@ private:
     Editor::BlockingLayer& m_blockingLayer;
 };
 
-} // namespace Model
 } // namespace MapFloorsList
-} // namespace Widget
 
 #endif // MAPBLOCKINGLAYERTREEITEM_H

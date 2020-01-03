@@ -12,10 +12,8 @@ class BlockingGraphicLayer;
 class VisibleGraphicLayer;
 } // namespace GraphicMap
 
-namespace Widget {
 namespace DrawingToolbar {
 class Widget;
-namespace State {
 
 //////////////////////////////////////////////////////////////////////////////
 //  State class
@@ -30,8 +28,6 @@ protected:
     Widget& m_widget;
 };
 
-} // namespace State
 } // namespace DrawingToolbar
-} // namespace Widget
 
 #endif // DRAWINGTOOLBARSTATE_H

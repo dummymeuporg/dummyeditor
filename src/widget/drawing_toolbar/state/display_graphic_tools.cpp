@@ -6,25 +6,23 @@
 #include "widget/drawing_toolbar/state/display_blocking_tools.hpp"
 #include "widget/drawing_toolbar/state/display_graphic_tools.hpp"
 
-namespace Widget {
 namespace DrawingToolbar {
-namespace State {
 
-DisplayGraphicTools::DisplayGraphicTools(Widget& widget)
+DisplayGraphicToolState::DisplayGraphicToolState(Widget& widget)
     : State(widget)
 {}
 
 void
-DisplayGraphicTools::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer)
+DisplayGraphicToolState::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer)
 {
     // Here we will reset tools and change state.
     auto self(shared_from_this());
     m_widget.reset();
-    m_widget.setState(std::make_shared<DisplayBlockingTools>(m_widget));
+    m_widget.setState(std::make_shared<DisplayBlockingToolState>(m_widget));
 }
 
 void
-DisplayGraphicTools::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer)
+DisplayGraphicToolState::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer)
 {
     // Nothing to do here. We are already displaying accurate tools.
     auto tool = m_widget.mapScene()->drawingTool();
@@ -37,6 +35,4 @@ DisplayGraphicTools::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer)
     }
 }
 
-} // namespace State
 } // namespace DrawingToolbar
-} // namespace Widget

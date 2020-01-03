@@ -11,7 +11,6 @@ namespace DrawingTools {
 class DrawingTool;
 } // namespace DrawingTool
 
-namespace Widget {
 namespace DrawingToolbar {
 
 //////////////////////////////////////////////////////////////////////////////
@@ -36,6 +35,5 @@ private:
 };
 
 } // namespace DrawingToolbar
-} // namespace Widget
 
 #endif // DRAWINGTOOLACTION_H

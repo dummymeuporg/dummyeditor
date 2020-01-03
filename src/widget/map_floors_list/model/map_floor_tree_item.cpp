@@ -6,9 +6,7 @@
 #include "widget/map_floors_list/model/map_blocking_layer_tree_item.hpp"
 #include "widget/map_floors_list/model/map_graphic_layer_tree_item.hpp"
 
-namespace Widget {
 namespace MapFloorsList {
-namespace Model {
 
 MapFloorTreeItem::MapFloorTreeItem(Editor::Floor& floor, std::size_t index)
     : m_editorFloor(floor), m_index(index)
@@ -60,6 +58,4 @@ void MapFloorTreeItem::setSelected() {
     qDebug() << "Selected floor.";
 }
 
-} // namespace Model
 } // namespace MapFloorsList
-} // namespace Widget

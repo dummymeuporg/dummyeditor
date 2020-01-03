@@ -13,9 +13,7 @@ namespace Editor {
 class Map;
 } // namespace Editor
 
-namespace Widget {
 namespace MapFloorsList {
-namespace Model {
 class MapTreeItem;
 
 //////////////////////////////////////////////////////////////////////////////
@@ -29,8 +27,7 @@ public:
 private:
     std::shared_ptr<Editor::Map> m_editorMap;
 };
-} // namespace Model
+
 } // namespace MapFloorsList
-} // namespace Widget
 
 #endif // MAPFLOORTREEMODEL_H

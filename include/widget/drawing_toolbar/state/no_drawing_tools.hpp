@@ -7,23 +7,19 @@
 //  forward declaration
 //////////////////////////////////////////////////////////////////////////////
 
-namespace Widget {
 namespace DrawingToolbar {
-namespace State {
 
 //////////////////////////////////////////////////////////////////////////////
 //  NoDrawingTools state
 //////////////////////////////////////////////////////////////////////////////
 
-class NoDrawingTools : public State {
+class NoDrawingToolState : public State {
 public:
-    NoDrawingTools(Widget&);
+    NoDrawingToolState(Widget&);
     void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
     void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
 };
 
-} // namespace State
 } // namespace DrawingToolbar
-} // namespace Widget
 
 #endif // NODRAWINGTOOLS_H

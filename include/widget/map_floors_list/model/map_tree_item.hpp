@@ -3,9 +3,7 @@
 
 #include <QStandardItem>
 
-namespace Widget {
 namespace MapFloorsList {
-namespace Model {
 
 //////////////////////////////////////////////////////////////////////////////
 //  MapTreeItem class
@@ -18,8 +16,6 @@ public:
     virtual void setSelected() = 0;
 };
 
-} // namespace Model
 } // namespace MapFloorsList
-} // namespace Widget
 
 #endif // MAPTREEITEM_H

@@ -11,9 +11,7 @@ namespace Editor {
 class GraphicLayer;
 } // namespace Editor
 
-namespace Widget {
 namespace MapFloorsList {
-namespace Model {
 
 //////////////////////////////////////////////////////////////////////////////
 //  MapGraphicLayerTreeItem class
@@ -30,8 +28,6 @@ private:
     std::int8_t m_position;
     Editor::GraphicLayer& m_graphicLayer;
 };
-} // namespace Model
 } // namespace MapFloorsList
-} // namespace Widget
 
 #endif // MAPGRAPHICLAYERTREEITEM_H

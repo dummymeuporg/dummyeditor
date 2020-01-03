@@ -11,9 +11,7 @@ namespace Editor {
 class Floor;
 } // namespace Editor
 
-namespace Widget {
 namespace MapFloorsList {
-namespace Model {
 
 //////////////////////////////////////////////////////////////////////////////
 //  MapFloorTreeItem class
@@ -30,8 +28,7 @@ private:
     Editor::Floor& m_editorFloor;
     std::size_t m_index;
 };
-} // namespace Model
+
 } // namespace MapFloorsList
-} // namespace Widget
 
 #endif // MAPFLOORTREEITEM_H

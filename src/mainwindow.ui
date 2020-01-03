@@ -427,7 +427,7 @@
      <x>0</x>
      <y>0</y>
      <width>874</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -542,13 +542,13 @@
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
-   <widget class="Widget::MapFloorsList::Widget" name="widgetMapFloorsList"/>
+   <widget class="MapFloorsList::Widget" name="widgetMapFloorsList"/>
   </widget>
   <widget class="QDockWidget" name="dockWidgetDrawingToolbox">
    <attribute name="dockWidgetArea">
     <number>8</number>
    </attribute>
-   <widget class="Widget::DrawingToolbar::Widget" name="widgetDrawingToolbox"/>
+   <widget class="DrawingToolbar::Widget" name="widgetDrawingToolbox"/>
   </widget>
   <action name="actionNew">
    <property name="icon">
@@ -973,13 +973,13 @@
    <header>mapstreeview.hpp</header>
   </customwidget>
   <customwidget>
-   <class>Widget::MapFloorsList::Widget</class>
+   <class>MapFloorsList::Widget</class>
    <extends>QWidget</extends>
    <header>widget/map_floors_list/widget.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>Widget::DrawingToolbar::Widget</class>
+   <class>DrawingToolbar::Widget</class>
    <extends>QWidget</extends>
    <header>widget/drawing_toolbar/widget.hpp</header>
    <container>1</container>

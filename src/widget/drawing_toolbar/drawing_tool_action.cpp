@@ -2,7 +2,6 @@
 
 #include "drawing_tool/drawing_tool.hpp"
 
-namespace Widget {
 namespace DrawingToolbar {
 
 DrawingToolAction::DrawingToolAction(
@@ -20,4 +19,3 @@ void DrawingToolAction::setDrawingTool(bool checked) {
 }
 
 } // namespace DrawingToolbar
-} // namespace Widget

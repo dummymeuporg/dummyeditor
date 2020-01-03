@@ -274,7 +274,7 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex) {
     m_ui->graphicsViewMap->setSceneRect(
                 QRect(0, 0, map->width()*16, map->height()*16));
 
-    auto mapFloorsList = reinterpret_cast<Widget::MapFloorsList::Widget*>(
+    auto mapFloorsList = reinterpret_cast<MapFloorsList::Widget*>(
         m_ui->dockWidgetMapFloorsList->widget()
     );
 

@@ -4,9 +4,7 @@
 
 #include "editor/graphic_layer.hpp"
 
-namespace Widget {
 namespace MapFloorsList {
-namespace Model {
 
 MapGraphicLayerTreeItem::MapGraphicLayerTreeItem(
     std::int8_t position,
@@ -37,6 +35,4 @@ void MapGraphicLayerTreeItem::setSelected() {
     emit m_graphicLayer.setSelected();
 }
 
-} // namespace Model
 } // namespace MapFloorsList
-} // namespace Widget

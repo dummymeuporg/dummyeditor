@@ -23,12 +23,9 @@ namespace DrawingTools {
 class DrawingTool;
 } // namespace DrawingTool
 
-namespace Widget {
 namespace DrawingToolbar {
-
-namespace State {
 class State;
-}
+
 
 //////////////////////////////////////////////////////////////////////////////
 //  DrawingToolbarWidget class
@@ -42,7 +39,7 @@ public:
     Widget(QWidget* parent = nullptr);
     void clear();
     void reset();
-    void setState(std::shared_ptr<State::State>);
+    void setState(std::shared_ptr<State>);
     void onLayerSelected(const GraphicMap::MapGraphicsScene*,
                          const ChipsetGraphicsScene*,
                          GraphicMap::GraphicLayer&,
@@ -71,10 +68,9 @@ private:
     const ChipsetGraphicsScene* m_chipsetGraphicsScene;
     const GraphicMap::MapGraphicsScene* m_mapScene;
     std::vector<DrawingTools::DrawingTool*>* m_drawingTools;
-    std::shared_ptr<State::State> m_state;
+    std::shared_ptr<State> m_state;
 };
 
 } // namespace DrawingToolbar
-} // namespace Widget
 
 #endif // DRAWINGTOOLBARWIDGET_H

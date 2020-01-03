@@ -4,9 +4,7 @@
 
 #include "editor/blocking_layer.hpp"
 
-namespace Widget {
 namespace MapFloorsList {
-namespace Model {
 
 MapBlockingLayerTreeItem::MapBlockingLayerTreeItem(
     Editor::BlockingLayer& blockingLayer)
@@ -35,6 +33,4 @@ void MapBlockingLayerTreeItem::setSelected() {
     emit m_blockingLayer.setSelected();
 }
 
-} // namespace Model
 } // namespace MapFloorsList
-} // namespace Widget

@@ -2,9 +2,7 @@
 
 #include "editor/layer.hpp"
 
-namespace Widget {
 namespace MapFloorsList {
-namespace Model {
 
 void MapLayerTreeItem::toggle() {
     setVisible(!layer().visible());
@@ -19,6 +17,4 @@ void MapLayerTreeItem::setVisible(bool visible) {
     }
 }
 
-} // namespace Model
 } // namespace MapFloorsList
-} // namespace Widget

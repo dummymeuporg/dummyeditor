@@ -12,7 +12,6 @@
 #include "widget/drawing_toolbar/drawing_tool_action.hpp"
 #include "widget/drawing_toolbar/state/no_drawing_tools.hpp"
 
-namespace Widget {
 namespace DrawingToolbar {
 
 Widget::Widget(::QWidget* parent)
@@ -22,7 +21,7 @@ Widget::Widget(::QWidget* parent)
     , m_chipsetGraphicsScene(nullptr)
     , m_mapScene(nullptr)
     , m_drawingTools(nullptr)
-    , m_state(std::make_shared<State::NoDrawingTools>(*this))
+    , m_state(std::make_shared<NoDrawingToolState>(*this))
 {
     // Set empty toolbar for the moment.
     setLayout(new QHBoxLayout());
@@ -125,13 +124,12 @@ void Widget::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer) {
     m_state->visitGraphicLayer(layer);
 }
 
-void Widget::setState(std::shared_ptr<State::State> state) {
+void Widget::setState(std::shared_ptr<State> state) {
     m_state = state;
 }
 
 void Widget::setInitialState() {
-    setState(std::make_shared<State::NoDrawingTools>(*this));
+    setState(std::make_shared<NoDrawingToolState>(*this));
 }
 
 } // namespace DrawingToolbar
-} // namespace Widget

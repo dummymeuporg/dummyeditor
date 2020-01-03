@@ -11,9 +11,7 @@ namespace Editor {
 class Layer;
 } // namespace Editor
 
-namespace Widget {
 namespace MapFloorsList {
-namespace Model {
 
 //////////////////////////////////////////////////////////////////////////////
 //  MapLayerTreeItem class
@@ -25,8 +23,7 @@ public:
     void setVisible(bool) override;
     virtual Editor::Layer& layer() = 0;
 };
-} // namespace Model
+
 } // namespace MapFloorsList
-} // namespace Widget
 
 #endif // MAPLAYERTREEITEM_H
