@@ -1,8 +1,8 @@
 #include <QDebug>
 #include <QGraphicsRectItem>
 
-#include "chipsetgraphicsscene.hpp"
-#include "drawing_tool/graphic/palette_tool.hpp"
+#include "chipsetGraphicsScene.hpp"
+#include "drawingTool/graphicPaletteTool.hpp"
 
 ChipsetGraphicsScene::ChipsetGraphicsScene(QObject* parent)
     : QGraphicsScene(parent)

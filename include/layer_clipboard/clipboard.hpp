@@ -3,7 +3,7 @@
 
 #include <QPoint>
 
-#include "graphicmap/graphic_layer_visitor.hpp"
+#include "graphicMap/graphicLayerVisitor.hpp"
 
 namespace LayerClipboard {
 

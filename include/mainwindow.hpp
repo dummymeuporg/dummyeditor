@@ -6,8 +6,8 @@
 #include <QMainWindow>
 #include <QModelIndex>
 
-#include "drawing_tool/visitor.hpp"
-#include "graphicmap/graphic_layer_visitor.hpp"
+#include "drawingTool/drawingVisitor.hpp"
+#include "graphicMap/graphicLayerVisitor.hpp"
 
 //////////////////////////////////////////////////////////////////////////////
 //  forward declaration

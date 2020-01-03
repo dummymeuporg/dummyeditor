@@ -1,6 +1,6 @@
 #include "layer_clipboard/visible.hpp"
 
-#include "graphicmap/visiblegraphiclayer.hpp"
+#include "graphicMap/layerGraphicVisible.hpp"
 
 using namespace std;
 

@@ -2,9 +2,9 @@
 
 #include <dummy/local/floor.hpp>
 
-#include "editor/blocking_layer.hpp"
-#include "editor/events_layer.hpp"
-#include "editor/graphic_layer.hpp"
+#include "editor/layerBlocking.hpp"
+#include "editor/layerEvents.hpp"
+#include "editor/layerGraphic.hpp"
 
 namespace Editor {
 

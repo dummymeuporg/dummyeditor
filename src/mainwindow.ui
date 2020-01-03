@@ -970,18 +970,18 @@
   <customwidget>
    <class>MapsTreeView</class>
    <extends>QTreeView</extends>
-   <header>mapstreeview.hpp</header>
+   <header>mapsTreeView.hpp</header>
   </customwidget>
   <customwidget>
    <class>MapFloorsList::Widget</class>
    <extends>QWidget</extends>
-   <header>widget/map_floors_list/widget.hpp</header>
+   <header>widget_mapFloorsList/widget.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>DrawingToolbar::Widget</class>
    <extends>QWidget</extends>
-   <header>widget/drawing_toolbar/widget.hpp</header>
+   <header>widget_drawingToolbar/widget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

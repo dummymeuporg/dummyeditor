@@ -2,7 +2,7 @@
 #include <QMessageBox>
 
 #include "editor/map.hpp"
-#include "mapeditdialog.hpp"
+#include "mapEditDialog.hpp"
 #include "ui_mapeditdialog.h"
 
 MapEditDialog::MapEditDialog(

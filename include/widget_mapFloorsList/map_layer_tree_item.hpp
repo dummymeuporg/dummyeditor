@@ -1,0 +1,29 @@
+#ifndef MAPLAYERTREEITEM_H
+#define MAPLAYERTREEITEM_H
+
+#include "widget_mapFloorsList/map_tree_item.hpp"
+
+//////////////////////////////////////////////////////////////////////////////
+//  forward declaration
+//////////////////////////////////////////////////////////////////////////////
+
+namespace Editor {
+class Layer;
+} // namespace Editor
+
+namespace MapFloorsList {
+
+//////////////////////////////////////////////////////////////////////////////
+//  MapLayerTreeItem class
+//////////////////////////////////////////////////////////////////////////////
+
+class MapLayerTreeItem : public MapTreeItem {
+public:
+    void toggle() override;
+    void setVisible(bool) override;
+    virtual Editor::Layer& layer() = 0;
+};
+
+} // namespace MapFloorsList
+
+#endif // MAPLAYERTREEITEM_H

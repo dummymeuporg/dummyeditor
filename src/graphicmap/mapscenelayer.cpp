@@ -1,4 +1,4 @@
-#include "graphicmap/mapscenelayer.hpp"
+#include "graphicMap/mapSceneLayer.hpp"
 
 namespace GraphicMap {
 

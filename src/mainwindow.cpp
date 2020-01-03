@@ -1,4 +1,4 @@
-#include "mainwindow.hpp"
+#include "mainWindow.hpp"
 
 #include <filesystem>
 
@@ -7,16 +7,16 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 
-#include "drawing_tool/blocking/eraser.hpp"
-#include "drawing_tool/blocking/pen.hpp"
-#include "drawing_tool/selection.hpp"
+#include "drawingTool/blockingEraser.hpp"
+#include "drawingTool/blockingPen.hpp"
+#include "drawingTool/drawingSelection.hpp"
 #include "editor/map.hpp"
 
-#include "graphicmap/blockinggraphiclayer.hpp"
-#include "graphicmap/mapgraphicsscene.hpp"
-#include "graphicmap/visiblegraphiclayer.hpp"
+#include "graphicMap/layerGraphicBlocking.hpp"
+#include "graphicMap/mapGraphicsScene.hpp"
+#include "graphicMap/layerGraphicVisible.hpp"
 
-#include "chipsetgraphicsscene.hpp"
+#include "chipsetGraphicsScene.hpp"
 #include "ui_mainwindow.h"
 
 

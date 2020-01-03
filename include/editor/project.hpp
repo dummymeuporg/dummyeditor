@@ -7,8 +7,8 @@
 
 #include <dummy/local/project.hpp>
 
-#include "misc/mapdocument.hpp"
-#include "misc/map_tree_model.hpp"
+#include "mapDocument.hpp"
+#include "mapsTreeModel.hpp"
 
 //////////////////////////////////////////////////////////////////////////////
 //  forward declaration

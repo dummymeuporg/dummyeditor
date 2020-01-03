@@ -1,0 +1,25 @@
+#ifndef NODRAWINGTOOLS_H
+#define NODRAWINGTOOLS_H
+
+#include "widget_drawingToolbar/state.hpp"
+
+//////////////////////////////////////////////////////////////////////////////
+//  forward declaration
+//////////////////////////////////////////////////////////////////////////////
+
+namespace DrawingToolbar {
+
+//////////////////////////////////////////////////////////////////////////////
+//  NoDrawingTools state
+//////////////////////////////////////////////////////////////////////////////
+
+class NoDrawingToolState : public State {
+public:
+    NoDrawingToolState(Widget&);
+    void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
+    void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
+};
+
+} // namespace DrawingToolbar
+
+#endif // NODRAWINGTOOLS_H

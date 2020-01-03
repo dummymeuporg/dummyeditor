@@ -6,8 +6,8 @@
 #include <QDir>
 
 #include "editor/map.hpp"
-#include "misc/map_tree_model.hpp"
-#include "editor/starting_point.hpp"
+#include "editor/startingPoint.hpp"
+#include "mapsTreeModel.hpp"
 
 namespace Editor {
 

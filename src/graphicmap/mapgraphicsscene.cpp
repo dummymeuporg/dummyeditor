@@ -1,4 +1,4 @@
-#include "graphicmap/mapgraphicsscene.hpp"
+#include "graphicMap/mapGraphicsScene.hpp"
 
 #include <QDebug>
 #include <QGraphicsItem>
@@ -6,9 +6,9 @@
 
 #include "editor/map.hpp"
 #include "editor/project.hpp"
-#include "graphicmap/blockinggraphiclayer.hpp"
-#include "graphicmap/eventsgraphiclayer.hpp"
-#include "graphicmap/visiblegraphiclayer.hpp"
+#include "graphicMap/layerGraphicBlocking.hpp"
+#include "graphicMap/layerGraphicEvents.hpp"
+#include "graphicMap/layerGraphicVisible.hpp"
 
 namespace GraphicMap {
 
