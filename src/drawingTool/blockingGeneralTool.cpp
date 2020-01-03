@@ -8,7 +8,7 @@
 
 namespace DrawingTools {
 
-BlockingTool::BlockingTool(
+BlockingGeneralTool::BlockingGeneralTool(
         QIcon&& icon,
         GraphicMap::MapGraphicsScene& mapGraphicsScene,
         GraphicMap::BlockingGraphicLayer* blockingGraphicLayer)
@@ -16,14 +16,14 @@ BlockingTool::BlockingTool(
     , m_blockingGraphicLayer(blockingGraphicLayer)
 {}
 
-void BlockingTool::emitDrawingToolSelected() {
+void BlockingGeneralTool::emitDrawingToolSelected() {
     // TODO : check if emiting 2 different signals is really what we want?
     DrawingTool::emitDrawingToolSelected();
     qDebug() << "Emit drawing tool selected.";
     emit drawingToolSelected(this);
 }
 
-void BlockingTool::drawGrid() {
+void BlockingGeneralTool::drawGrid() {
     if (nullptr == m_blockingGraphicLayer) {
         return;
     }
@@ -35,19 +35,19 @@ void BlockingTool::drawGrid() {
     );
 }
 
-void BlockingTool::setBlockingGraphicLayer(
+void BlockingGeneralTool::setBlockingGraphicLayer(
     GraphicMap::BlockingGraphicLayer* layer)
 {
     m_blockingGraphicLayer = layer;
     m_mapGraphicsScene.redrawGrid(); // TODO : this call a commented method... is that the intended purpose?
 }
 
-void BlockingTool::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer) {
+void BlockingGeneralTool::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer) {
     qDebug() << "Visit blocking layer";
     setBlockingGraphicLayer(&layer);
 }
 
-void BlockingTool::visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) {
+void BlockingGeneralTool::visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) {
     // Do nothing. Not the right tool.
 }
 

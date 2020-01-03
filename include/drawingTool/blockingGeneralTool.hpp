@@ -12,16 +12,16 @@ class BlockingGraphicLayer;
 } // namespace GraphicMap
 
 namespace DrawingTools {
-class Visitor;
+class DrawingVisitor;
 
 //////////////////////////////////////////////////////////////////////////////
 //  BlockingTool class
 //////////////////////////////////////////////////////////////////////////////
 
-class BlockingTool : public DrawingTool {
+class BlockingGeneralTool : public DrawingTool {
     Q_OBJECT
 public:
-    BlockingTool(
+    BlockingGeneralTool(
         QIcon&&,
         GraphicMap::MapGraphicsScene& mapGraphicsScene,
         GraphicMap::BlockingGraphicLayer* = nullptr
@@ -38,7 +38,7 @@ signals:
     // signals/slots framework is based on textual comparison.
     // TODO check if it's still the case now that the namespace has not the
     // same name as the class
-    void drawingToolSelected(DrawingTools::BlockingTool*);
+    void drawingToolSelected(DrawingTools::BlockingGeneralTool*);
 
 protected:
     GraphicMap::BlockingGraphicLayer* m_blockingGraphicLayer;

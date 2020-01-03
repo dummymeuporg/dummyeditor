@@ -10,7 +10,7 @@ namespace DrawingTools {
 GraphicEraser::GraphicEraser(
     GraphicMap::MapGraphicsScene& mapGraphicsScene,
     GraphicMap::VisibleGraphicLayer* visibleGraphicLayer)
-    : GraphicTool(QIcon(":/icons/icon_eraser.png"),
+    : GraphicGeneralTool(QIcon(":/icons/icon_eraser.png"),
                          mapGraphicsScene,
                          visibleGraphicLayer)
     , m_mouseClicked(false)
@@ -72,13 +72,13 @@ void GraphicEraser::mapKeyReleaseEvent(::QKeyEvent*) {
 void GraphicEraser::mapMouseLeaveEvent() {
 }
 
-void GraphicEraser::accept(Visitor& visitor) {
+void GraphicEraser::accept(DrawingVisitor& visitor) {
     visitor.visitTool(*this);
 }
 
 void GraphicEraser::emitDrawingToolSelected() {
     // TODO : check if emiting 2 different signals is really what we want?
-    GraphicTool::emitDrawingToolSelected();
+    GraphicGeneralTool::emitDrawingToolSelected();
     emit drawingToolSelected(this);
 }
 

@@ -14,11 +14,11 @@ namespace DrawingTools {
 //  DrawingTool class
 //////////////////////////////////////////////////////////////////////////////
 
-class Selection : public DrawingTool {
+class SelectionTool : public DrawingTool {
     Q_OBJECT
 public:
-    Selection(GraphicMap::MapGraphicsScene&);
-    void accept(Visitor&) override;
+    SelectionTool(GraphicMap::MapGraphicsScene&);
+    void accept(DrawingVisitor&) override;
     void mapMousePressEvent(QGraphicsSceneMouseEvent*) override;
     void mapMouseMoveEvent(QGraphicsSceneMouseEvent*) override;
     void mapMouseReleaseEvent(QGraphicsSceneMouseEvent*) override;

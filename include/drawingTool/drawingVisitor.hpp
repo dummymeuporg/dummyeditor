@@ -6,7 +6,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
 namespace DrawingTools {
-class Selection;
+class SelectionTool;
 
 class BlockingEraser;
 class BlockingPen;
@@ -19,12 +19,12 @@ class GraphicEraser;
 //  DrawingTools::Visitor interface
 //////////////////////////////////////////////////////////////////////////////
 
-class Visitor {
+class DrawingVisitor {
 public:
     virtual void visitTool(GraphicPen&) = 0;
     virtual void visitTool(GraphicRectangle&) = 0;
     virtual void visitTool(GraphicEraser&) = 0;
-    virtual void visitTool(Selection&) = 0;
+    virtual void visitTool(SelectionTool&) = 0;
     virtual void visitTool(BlockingPen&) = 0;
     virtual void visitTool(BlockingEraser&) = 0;
 };

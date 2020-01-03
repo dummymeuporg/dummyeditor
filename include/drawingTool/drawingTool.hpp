@@ -18,7 +18,7 @@ class MapGraphicsScene;
 } // namespace GraphicMap
 
 namespace DrawingTools {
-class Visitor;
+class DrawingVisitor;
 
 //////////////////////////////////////////////////////////////////////////////
 //  DrawingTool class
@@ -41,7 +41,7 @@ public:
 
     const QIcon& icon() const { return m_icon; }
 
-    virtual void accept(Visitor&) = 0;
+    virtual void accept(DrawingVisitor&) = 0;
     virtual void emitDrawingToolSelected();
 
     void setSelected(bool selected);

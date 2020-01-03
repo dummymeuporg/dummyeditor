@@ -12,16 +12,16 @@ class VisibleGraphicLayer;
 } // namespace GraphicMap
 
 namespace DrawingTools {
-class Visitor;
+class DrawingVisitor;
 
 //////////////////////////////////////////////////////////////////////////////
 //  GraphicTool class
 //////////////////////////////////////////////////////////////////////////////
 
-class GraphicTool : public DrawingTool {
+class GraphicGeneralTool : public DrawingTool {
     Q_OBJECT
 public:
-    GraphicTool(
+    GraphicGeneralTool(
         QIcon&&,
         GraphicMap::MapGraphicsScene&,
         GraphicMap::VisibleGraphicLayer* = nullptr
@@ -40,7 +40,7 @@ public:
 signals:
     // Note: I have to put the whole namespace shit here, because Qt
     // signals/slots framework is based on textual comparison.
-    void drawingToolSelected(::DrawingTools::GraphicTool*);
+    void drawingToolSelected(::DrawingTools::GraphicGeneralTool*);
 
 protected:
     GraphicMap::VisibleGraphicLayer* m_visibleGraphicLayer;

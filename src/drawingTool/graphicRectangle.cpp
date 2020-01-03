@@ -112,7 +112,7 @@ void GraphicRectangle::mapKeyReleaseEvent(QKeyEvent* event) {
 void GraphicRectangle::mapMouseLeaveEvent() {
 }
 
-void GraphicRectangle::accept(Visitor& visitor) {
+void GraphicRectangle::accept(DrawingVisitor& visitor) {
     visitor.visitTool(*this);
 }
 

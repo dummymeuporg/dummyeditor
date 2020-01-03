@@ -8,7 +8,7 @@
 
 namespace DrawingTools {
 
-GraphicTool::GraphicTool(
+GraphicGeneralTool::GraphicGeneralTool(
         QIcon&& icon,
         GraphicMap::MapGraphicsScene& mapGraphicsScene,
         GraphicMap::VisibleGraphicLayer* visibleGraphicLayer)
@@ -16,13 +16,13 @@ GraphicTool::GraphicTool(
     , m_visibleGraphicLayer(visibleGraphicLayer)
 {}
 
-void GraphicTool::emitDrawingToolSelected() {
+void GraphicGeneralTool::emitDrawingToolSelected() {
     DrawingTool::emitDrawingToolSelected();
     qDebug() << "Emit drawing tool selected.";
     emit drawingToolSelected(this);
 }
 
-void GraphicTool::drawGrid() {
+void GraphicGeneralTool::drawGrid() {
     if (nullptr == m_visibleGraphicLayer) {
         return;
     }
@@ -35,18 +35,18 @@ void GraphicTool::drawGrid() {
 }
 
 void
-GraphicTool::setVisibleGraphicLayer(GraphicMap::VisibleGraphicLayer* layer)
+GraphicGeneralTool::setVisibleGraphicLayer(GraphicMap::VisibleGraphicLayer* layer)
 {
     m_visibleGraphicLayer = layer;
     m_mapGraphicsScene.redrawGrid();
 }
 
-void GraphicTool::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer) {
+void GraphicGeneralTool::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer) {
     qDebug() << "Visit visible graphic layer";
     setVisibleGraphicLayer(&layer);
 }
 
-void GraphicTool::visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) {
+void GraphicGeneralTool::visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) {
     // Nothing to do. Not the right kind of tool.
 }
 

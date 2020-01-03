@@ -16,7 +16,7 @@ namespace DrawingTools {
 //  GraphicPaletteTool class
 //////////////////////////////////////////////////////////////////////////////
 
-class GraphicPaletteTool : public GraphicTool {
+class GraphicPaletteTool : public GraphicGeneralTool {
     Q_OBJECT
 public:
     GraphicPaletteTool(

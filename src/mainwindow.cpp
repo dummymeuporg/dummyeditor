@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
     , m_currentProject(nullptr)
     , m_chipsetScene(new ChipsetGraphicsScene())
     , m_mapScene(new GraphicMap::MapGraphicsScene())
-    , m_selectionDrawingTool(new DrawingTools::Selection(*m_mapScene))
+    , m_selectionDrawingTool(new DrawingTools::SelectionTool(*m_mapScene))
     , m_graphicTools({
         new DrawingTools::GraphicPen(*m_mapScene),
         new DrawingTools::GraphicRectangle(*m_mapScene),

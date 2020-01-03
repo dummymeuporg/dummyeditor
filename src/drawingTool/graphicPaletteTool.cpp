@@ -12,7 +12,7 @@ GraphicPaletteTool::GraphicPaletteTool(
         QIcon&& icon,
         GraphicMap::MapGraphicsScene& mapGraphicsScene,
         GraphicMap::VisibleGraphicLayer* visibleGraphicLayer)
-    : GraphicTool(std::move(icon), mapGraphicsScene, visibleGraphicLayer)
+    : GraphicGeneralTool(std::move(icon), mapGraphicsScene, visibleGraphicLayer)
     , m_chipsetGraphicsScene(nullptr)
     , m_selectionRectItem(nullptr)
     , m_selectionItem(nullptr)
@@ -20,7 +20,7 @@ GraphicPaletteTool::GraphicPaletteTool(
 {}
 
 void GraphicPaletteTool::emitDrawingToolSelected() {
-    GraphicTool::emitDrawingToolSelected();
+    GraphicGeneralTool::emitDrawingToolSelected();
     qDebug() << "Emit drawing tool selected.";
     emit drawingToolSelected(this);
 }

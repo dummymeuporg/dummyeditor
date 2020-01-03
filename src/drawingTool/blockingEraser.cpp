@@ -10,7 +10,7 @@ namespace DrawingTools {
 BlockingEraser::BlockingEraser(
     GraphicMap::MapGraphicsScene& mapGraphicsScene,
     GraphicMap::BlockingGraphicLayer* blockingGraphicLayer)
-    : BlockingTool(QIcon(":/icons/icon_eraser.png"),
+    : BlockingGeneralTool(QIcon(":/icons/icon_eraser.png"),
                    mapGraphicsScene,
                    blockingGraphicLayer)
     , m_mouseClicked(false)
@@ -61,13 +61,13 @@ void BlockingEraser::mapKeyReleaseEvent(QKeyEvent* event) {
 void BlockingEraser::mapMouseLeaveEvent() {
 }
 
-void BlockingEraser::accept(Visitor& visitor) {
+void BlockingEraser::accept(DrawingVisitor& visitor) {
     visitor.visitTool(*this);
 }
 
 void BlockingEraser::emitDrawingToolSelected() {
     // TODO : check if emiting 2 different signals is really what we want?
-    BlockingTool::emitDrawingToolSelected();
+    BlockingGeneralTool::emitDrawingToolSelected();
     emit drawingToolSelected(this);
 }
 

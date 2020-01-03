@@ -10,17 +10,17 @@
 
 namespace DrawingTools {
 
-Selection::Selection(GraphicMap::MapGraphicsScene& mapGraphicsScene)
+SelectionTool::SelectionTool(GraphicMap::MapGraphicsScene& mapGraphicsScene)
     : DrawingTool(mapGraphicsScene, QIcon(":/icons/icon_selection.png"))
     , m_mouseClicked(false)
     , m_selectionRectItem(nullptr)
 {}
 
-void Selection::accept(Visitor& visitor) {
+void SelectionTool::accept(DrawingVisitor& visitor) {
     visitor.visitTool(*this);
 }
 
-void Selection::mapMousePressEvent(QGraphicsSceneMouseEvent* event) {
+void SelectionTool::mapMousePressEvent(QGraphicsSceneMouseEvent* event) {
     QPoint pt(event->scenePos().toPoint());
     m_startSelection.setX(pt.x() - (pt.x() % 16));
     m_startSelection.setY(pt.y() - (pt.y() % 16));
@@ -36,7 +36,7 @@ void Selection::mapMousePressEvent(QGraphicsSceneMouseEvent* event) {
     drawSelection();
 }
 
-void Selection::drawSelection() {
+void SelectionTool::drawSelection() {
     // Remove current selection, if any.
 
     QPoint start, end;
@@ -67,7 +67,7 @@ void Selection::drawSelection() {
     m_selectionRectItem->setOpacity(0.5);
 }
 
-void Selection::drawGrid() {
+void SelectionTool::drawGrid() {
     auto map = m_mapGraphicsScene.map();
     if (nullptr != map) {
         m_mapGraphicsScene.drawGrid(
@@ -78,7 +78,7 @@ void Selection::drawGrid() {
     }
 }
 
-void Selection::mapMouseMoveEvent(QGraphicsSceneMouseEvent* event) {
+void SelectionTool::mapMouseMoveEvent(QGraphicsSceneMouseEvent* event) {
     if (m_mouseClicked) {
         QPoint pt(event->scenePos().toPoint());
         m_endSelection.setX(pt.x() - (pt.x() % 16));
@@ -93,13 +93,13 @@ void Selection::mapMouseMoveEvent(QGraphicsSceneMouseEvent* event) {
     }
 }
 
-void Selection::mapMouseReleaseEvent(QGraphicsSceneMouseEvent*) {
+void SelectionTool::mapMouseReleaseEvent(QGraphicsSceneMouseEvent*) {
     m_mouseClicked = false;
 
     // XXX: Set in memory selected zone.
 }
 
-void Selection::mapKeyPressEvent(QKeyEvent* event) {
+void SelectionTool::mapKeyPressEvent(QKeyEvent* event) {
     // If ctrl+c, copy
     if (event->type() == QKeyEvent::KeyPress) {
         if (event->matches(QKeySequence::Copy)) {
@@ -110,7 +110,7 @@ void Selection::mapKeyPressEvent(QKeyEvent* event) {
     }
 }
 
-void Selection::onCopyKeyPressed(QKeyEvent* event) {
+void SelectionTool::onCopyKeyPressed(QKeyEvent* event) {
     qDebug() << "Copy";
     m_layers.clear();
     for (const auto& layer: m_mapGraphicsScene.graphicLayers()) {
@@ -119,11 +119,11 @@ void Selection::onCopyKeyPressed(QKeyEvent* event) {
     }
 }
 
-void Selection::onCutKeyPressed(QKeyEvent* event) {
+void SelectionTool::onCutKeyPressed(QKeyEvent* event) {
     qDebug() << "Cut";
 }
 
-void Selection::onPasteKeyPressed(QKeyEvent* event) {
+void SelectionTool::onPasteKeyPressed(QKeyEvent* event) {
     qDebug() << "Paste\r\n layers count: " << m_layers.size() << "\r\n";
     for (auto& [layer, clip] : m_layers) {
         qDebug() << layer << "\r\n";
@@ -132,31 +132,31 @@ void Selection::onPasteKeyPressed(QKeyEvent* event) {
     }
 }
 
-void Selection::mapKeyReleaseEvent(QKeyEvent*) {
+void SelectionTool::mapKeyReleaseEvent(QKeyEvent*) {
 
 }
 
-void Selection::mapMouseLeaveEvent() {
+void SelectionTool::mapMouseLeaveEvent() {
 
 }
 
-void Selection::onSelected() {
+void SelectionTool::onSelected() {
 }
 
-void Selection::onUnselected() {
+void SelectionTool::onUnselected() {
 }
 
-void Selection::emitDrawingToolSelected() {
+void SelectionTool::emitDrawingToolSelected() {
     // TODO : check if emiting 2 different signals is really what we want?
     DrawingTool::emitDrawingToolSelected();
     emit drawingToolSelected(this);
 }
 
-void Selection::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer) {
+void SelectionTool::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer) {
     m_mapGraphicsScene.redrawGrid();
 }
 
-void Selection::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer) {
+void SelectionTool::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer) {
     m_mapGraphicsScene.redrawGrid();
 }
 

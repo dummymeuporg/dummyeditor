@@ -69,7 +69,7 @@ void GraphicPen::mapMouseLeaveEvent() {
     m_hoverItem = nullptr;
 }
 
-void GraphicPen::accept(Visitor& visitor) {
+void GraphicPen::accept(DrawingVisitor& visitor) {
     visitor.visitTool(*this);
 }
 

@@ -32,7 +32,7 @@ class State;
 //////////////////////////////////////////////////////////////////////////////
 
 class Widget : public QWidget,
-               public DrawingTools::Visitor,
+               public DrawingTools::DrawingVisitor,
                public GraphicMap::GraphicLayerVisitor {
     Q_OBJECT
 public:
@@ -55,7 +55,7 @@ public:
     void visitTool(DrawingTools::GraphicEraser&) override;
     void visitTool(DrawingTools::BlockingEraser&) override;
     void visitTool(DrawingTools::BlockingPen&) override;
-    void visitTool(DrawingTools::Selection&) override;
+    void visitTool(DrawingTools::SelectionTool&) override;
 
     // GraphicMap::GraphicLayerVisitor methods:
     void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;

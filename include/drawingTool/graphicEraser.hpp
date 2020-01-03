@@ -19,14 +19,14 @@ namespace DrawingTools {
 //  GraphicEraser class
 //////////////////////////////////////////////////////////////////////////////
 
-class GraphicEraser : public GraphicTool {
+class GraphicEraser : public GraphicGeneralTool {
     Q_OBJECT
 public:
     GraphicEraser(
             GraphicMap::MapGraphicsScene&,
             GraphicMap::VisibleGraphicLayer* = nullptr
     );
-    void accept(Visitor&) override;
+    void accept(DrawingVisitor&) override;
     void mapMousePressEvent(QGraphicsSceneMouseEvent*) override;
     void mapMouseMoveEvent(QGraphicsSceneMouseEvent*) override;
     void mapMouseReleaseEvent(QGraphicsSceneMouseEvent*) override;

@@ -112,7 +112,7 @@ void Widget::visitTool(DrawingTools::BlockingEraser&) {
     // Nothing to do!
 }
 
-void Widget::visitTool(DrawingTools::Selection&) {
+void Widget::visitTool(DrawingTools::SelectionTool&) {
     // Nothing to do!
 }
 

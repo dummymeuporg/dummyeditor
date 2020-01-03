@@ -10,7 +10,7 @@ namespace DrawingTools {
 BlockingPen::BlockingPen(
     GraphicMap::MapGraphicsScene& mapGraphicsScene,
     GraphicMap::BlockingGraphicLayer* blockingGraphicLayer)
-    : BlockingTool(QIcon(":/icons/icon_pen_2.png"),
+    : BlockingGeneralTool(QIcon(":/icons/icon_pen_2.png"),
                    mapGraphicsScene,
                    blockingGraphicLayer)
     , m_mouseClicked(false)
@@ -61,13 +61,13 @@ void BlockingPen::mapMouseLeaveEvent() {
 
 }
 
-void BlockingPen::accept(Visitor& visitor) {
+void BlockingPen::accept(DrawingVisitor& visitor) {
     visitor.visitTool(*this);
 }
 
 void BlockingPen::emitDrawingToolSelected() {
     // TODO : check if emiting 2 different signals is really what we want?
-    BlockingTool::emitDrawingToolSelected();
+    BlockingGeneralTool::emitDrawingToolSelected();
     emit drawingToolSelected(this);
 }
 

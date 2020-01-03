@@ -16,7 +16,7 @@ void DisplayBlockingToolState::visitGraphicLayer(
 ) {
     auto tool = m_widget.mapScene()->drawingTool();
     if (nullptr != tool) {
-        reinterpret_cast<DrawingTools::BlockingTool*>(
+        reinterpret_cast<DrawingTools::BlockingGeneralTool*>(
             tool
         )->setBlockingGraphicLayer(&layer);
     }
