@@ -26,7 +26,6 @@ class MapEditDialog;
 class MapEditDialog : public QDialog
 {
     Q_OBJECT
-
 public:
     explicit MapEditDialog(
         std::shared_ptr<const Editor::Project> project,
