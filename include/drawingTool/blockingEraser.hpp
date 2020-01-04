@@ -19,11 +19,12 @@ namespace DrawingTools {
 //  BlockingEraser class
 //////////////////////////////////////////////////////////////////////////////
 
-class BlockingEraser : public BlockingGeneralTool {
+class BlockingEraser : public BlockingGeneralTool
+{
     Q_OBJECT
 public:
     BlockingEraser(GraphicMap::MapGraphicsScene&,
-           GraphicMap::BlockingGraphicLayer* = nullptr);
+                   GraphicMap::BlockingGraphicLayer* = nullptr);
     void accept(DrawingVisitor&) override;
     void mapMousePressEvent(QGraphicsSceneMouseEvent*) override;
     void mapMouseMoveEvent(QGraphicsSceneMouseEvent*) override;

@@ -7,13 +7,14 @@
 
 #include <dummy/local/map.hpp>
 
-#include "editor/layer.hpp"
 #include "editor/floor.hpp"
+#include "editor/layer.hpp"
 
-extern "C" {
+extern "C"
+{
+#include <lauxlib.h>
 #include <lua.h>
 #include <lualib.h>
-#include <lauxlib.h>
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -34,7 +35,8 @@ using Floors = std::vector<std::unique_ptr<Floor>>;
 //  Map class
 //////////////////////////////////////////////////////////////////////////////
 
-class Map : public Dummy::Local::Map {
+class Map : public Dummy::Local::Map
+{
 public:
     Map(const Dummy::Local::Project&, const std::string&);
     virtual ~Map();
@@ -52,7 +54,8 @@ public:
 
     void addFloor(std::unique_ptr<Editor::Floor>);
 
-    GraphicLayer& graphicLayerAt(std::uint8_t floor, std::int8_t position) {
+    GraphicLayer& graphicLayerAt(std::uint8_t floor, std::int8_t position)
+    {
         return m_editorFloors[floor]->graphicLayerAt(position);
     }
 
@@ -64,16 +67,10 @@ private:
     void saveEventsFile();
 
     void resizeFloor(Editor::Floor&, std::uint16_t, std::uint16_t);
-    void resizeBlockingLayer(
-        Editor::BlockingLayer&,
-        std::uint16_t,
-        std::uint16_t
-    );
-    void resizeGraphicLayer(
-        Editor::GraphicLayer&,
-        std::uint16_t,
-        std::uint16_t
-    );
+    void resizeBlockingLayer(Editor::BlockingLayer&, std::uint16_t,
+                             std::uint16_t);
+    void resizeGraphicLayer(Editor::GraphicLayer&, std::uint16_t,
+                            std::uint16_t);
 
     static void _writeStdString(std::ofstream&, const std::string&);
     void writeFloor(std::ofstream&, const Dummy::Local::Floor&) const;

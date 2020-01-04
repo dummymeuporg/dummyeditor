@@ -17,7 +17,8 @@ namespace GraphicMap {
 //  EventsGraphicLayer class
 //////////////////////////////////////////////////////////////////////////////
 
-class EventsGraphicLayer : public GraphicLayer {
+class EventsGraphicLayer : public GraphicLayer
+{
 public:
     EventsGraphicLayer(Editor::EventsLayer&, MapGraphicsScene&, int);
 

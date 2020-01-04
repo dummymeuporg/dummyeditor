@@ -1,8 +1,8 @@
 #ifndef MAPGRAPHICSSCENE_H
 #define MAPGRAPHICSSCENE_H
 
-#include <memory>
 #include <QGraphicsScene>
+#include <memory>
 
 //////////////////////////////////////////////////////////////////////////////
 //  forward declaration
@@ -10,7 +10,7 @@
 
 namespace DrawingTools {
 class DrawingTool;
-} // namespace DrawingTool
+} // namespace DrawingTools
 
 namespace Editor {
 class Map;
@@ -42,11 +42,14 @@ public:
     virtual ~MapGraphicsScene() override;
 
     const std::shared_ptr<Editor::Map> map() const { return m_map; }
-    const std::shared_ptr<Misc::MapDocument> mapDocument() const { return m_mapDocument; }
+    const std::shared_ptr<Misc::MapDocument> mapDocument() const
+    {
+        return m_mapDocument;
+    }
     const QRect& chipsetSelection() const { return m_chipsetSelection; }
 
-    MapGraphicsScene& setMapDocument(
-        const std::shared_ptr<Misc::MapDocument>& mapDocument);
+    MapGraphicsScene&
+    setMapDocument(const std::shared_ptr<Misc::MapDocument>& mapDocument);
     DrawingTools::DrawingTool* drawingTool() const { return m_drawingTool; }
 
     const GraphicLayers& graphicLayers() const { return m_graphicLayers; }
@@ -62,9 +65,8 @@ public:
     void redrawGrid();
 
 public slots:
-    void changeMapDocument(
-            const std::shared_ptr<Misc::MapDocument>& mapDocument
-    );
+    void
+    changeMapDocument(const std::shared_ptr<Misc::MapDocument>& mapDocument);
     void unsetDrawingTool();
     void setDrawingTool(::DrawingTools::DrawingTool*);
     void adjustLayers() const;
@@ -75,11 +77,8 @@ private:
     void drawMap();
     void drawGrid();
     void drawLayer(const Dummy::Core::BlockingLayer&);
-    void setTile(QVector<QGraphicsPixmapItem*>& layer,
-                  quint16 x,
-                  quint16 y,
-                  qint16 chipsetX,
-                  qint16 chipsetY);
+    void setTile(QVector<QGraphicsPixmapItem*>& layer, quint16 x, quint16 y,
+                 qint16 chipsetX, qint16 chipsetY);
     void drawDarkFilter();
 
 private:

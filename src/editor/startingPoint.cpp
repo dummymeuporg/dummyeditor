@@ -1,14 +1,10 @@
 #include "editor/startingPoint.hpp"
 
 namespace Editor {
-StartingPoint::StartingPoint()
-{}
+StartingPoint::StartingPoint() {}
 
-StartingPoint::StartingPoint(
-        const char* mapName,
-        std::uint16_t x,
-        std::uint16_t y,
-        std::uint8_t floor)
+StartingPoint::StartingPoint(const char* mapName, std::uint16_t x,
+                             std::uint16_t y, std::uint8_t floor)
     : m_mapName(mapName)
     , m_x(x)
     , m_y(y)
@@ -21,7 +17,7 @@ void StartingPoint::setMapName(const char* mapName)
     return *this;
 }*/
 
-void  StartingPoint::setX(std::uint16_t x)
+void StartingPoint::setX(std::uint16_t x)
 {
     m_x = x;
 }
@@ -31,7 +27,8 @@ void StartingPoint::setY(std::uint16_t y)
     m_y = y;
 }
 
-void StartingPoint::setFloor(std::uint8_t floor) {
+void StartingPoint::setFloor(std::uint8_t floor)
+{
     m_floor = floor;
 }
 } // namespace Editor

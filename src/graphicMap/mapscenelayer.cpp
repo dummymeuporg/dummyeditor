@@ -7,6 +7,5 @@ MapSceneLayer::MapSceneLayer(MapGraphicsScene& mapGraphicsScene, int zIndex)
     , m_zIndex(zIndex)
 {}
 
-MapSceneLayer::~MapSceneLayer()
-{}
+MapSceneLayer::~MapSceneLayer() {}
 } // namespace GraphicMap

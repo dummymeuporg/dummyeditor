@@ -18,6 +18,6 @@ public:
     virtual void paint(QPainter*, const QStyleOptionGraphicsItem*,
                        QWidget* = nullptr) override;
 };
-}
+} // namespace GraphicMap
 
 #endif // BLOCKINGCROSSITEM_H

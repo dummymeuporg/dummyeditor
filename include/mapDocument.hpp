@@ -12,7 +12,7 @@
 
 namespace GraphicMap {
 class GraphicLayer;
-} // namespace GraphicMap;
+} // namespace GraphicMap
 
 namespace Editor {
 class Map;
@@ -26,7 +26,8 @@ using GraphicLayers = std::vector<std::shared_ptr<::GraphicMap::GraphicLayer>>;
 //  MapDocument class
 //////////////////////////////////////////////////////////////////////////////
 
-class MapDocument {
+class MapDocument
+{
 public:
     MapDocument(Editor::Project&, const QString&, std::shared_ptr<Editor::Map>);
 

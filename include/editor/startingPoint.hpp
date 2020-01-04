@@ -13,14 +13,14 @@ class StartingPoint
 {
 public:
     StartingPoint();
-    StartingPoint(const char*, std::uint16_t, std::uint16_t, std::uint8_t );
+    StartingPoint(const char*, std::uint16_t, std::uint16_t, std::uint8_t);
 
     const char* mapName() const { return m_mapName.c_str(); }
     std::uint16_t x() const { return m_x; }
     std::uint16_t y() const { return m_y; }
     std::uint8_t floor() const { return m_floor; }
 
-    //void setMapName(const char* mapName);
+    // void setMapName(const char* mapName);
     void setX(std::uint16_t);
     void setY(std::uint16_t);
     void setFloor(std::uint8_t);

@@ -20,7 +20,8 @@ using GraphicLayers = std::map<std::int8_t, std::unique_ptr<GraphicLayer>>;
 //  Floor class
 //////////////////////////////////////////////////////////////////////////////
 
-class Floor{
+class Floor
+{
 public:
     Floor(Dummy::Local::Floor&);
 
@@ -32,7 +33,7 @@ public:
     BlockingLayer& blockingLayer() { return *m_blockingLayer; }
     EventsLayer& eventsLayer() { return *m_eventsLayer; }
     GraphicLayers& graphicLayers() { return m_graphicLayers; }
-    Dummy::Local::Floor& localFloor()  { return m_floor; }
+    Dummy::Local::Floor& localFloor() { return m_floor; }
 
     /*
      * I comment this one, it is unused and may become problematic if

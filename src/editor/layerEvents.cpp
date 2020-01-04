@@ -9,11 +9,13 @@ EventsLayer::EventsLayer(Dummy::Local::Floor& floor)
     : m_floor(floor)
 {}
 
-std::uint16_t EventsLayer::width() const {
+std::uint16_t EventsLayer::width() const
+{
     return m_floor.width();
 }
 
-std::uint16_t EventsLayer::height() const {
+std::uint16_t EventsLayer::height() const
+{
     return m_floor.height();
 }
 

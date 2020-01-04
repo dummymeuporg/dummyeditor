@@ -9,11 +9,12 @@ namespace DrawingTools {
 //  GraphicRectangle class
 //////////////////////////////////////////////////////////////////////////////
 
-class GraphicRectangle : public GraphicPaletteTool {
+class GraphicRectangle : public GraphicPaletteTool
+{
     Q_OBJECT
 public:
     GraphicRectangle(GraphicMap::MapGraphicsScene&,
-              GraphicMap::VisibleGraphicLayer* = nullptr);
+                     GraphicMap::VisibleGraphicLayer* = nullptr);
     void accept(DrawingVisitor&) override;
     void mapMousePressEvent(QGraphicsSceneMouseEvent*) override;
     void mapMouseMoveEvent(QGraphicsSceneMouseEvent*) override;

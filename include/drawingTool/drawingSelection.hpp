@@ -14,7 +14,8 @@ namespace DrawingTools {
 //  DrawingTool class
 //////////////////////////////////////////////////////////////////////////////
 
-class SelectionTool : public DrawingTool {
+class SelectionTool : public DrawingTool
+{
     Q_OBJECT
 public:
     SelectionTool(GraphicMap::MapGraphicsScene&);
@@ -50,9 +51,10 @@ private:
     QPoint m_startSelection;
     QPoint m_endSelection;
     std::map<GraphicMap::GraphicLayer*,
-             std::shared_ptr<LayerClipboard::Clipboard>> m_layers;
+             std::shared_ptr<LayerClipboard::Clipboard>>
+        m_layers;
 };
 
-} // namespace DrawingTool
+} // namespace DrawingTools
 
 #endif // SELECTION_H

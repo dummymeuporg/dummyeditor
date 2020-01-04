@@ -21,11 +21,10 @@ class MapGraphicsScene;
 
 namespace DrawingTools {
 class DrawingTool;
-} // namespace DrawingTool
+} // namespace DrawingTools
 
 namespace DrawingToolbar {
 class State;
-
 
 //////////////////////////////////////////////////////////////////////////////
 //  DrawingToolbarWidget class
@@ -33,7 +32,8 @@ class State;
 
 class Widget : public QWidget,
                public DrawingTools::DrawingVisitor,
-               public GraphicMap::GraphicLayerVisitor {
+               public GraphicMap::GraphicLayerVisitor
+{
     Q_OBJECT
 public:
     Widget(QWidget* parent = nullptr);
@@ -41,8 +41,7 @@ public:
     void reset();
     void setState(std::shared_ptr<State>);
     void onLayerSelected(const GraphicMap::MapGraphicsScene*,
-                         const ChipsetGraphicsScene*,
-                         GraphicMap::GraphicLayer&,
+                         const ChipsetGraphicsScene*, GraphicMap::GraphicLayer&,
                          std::vector<DrawingTools::DrawingTool*>*);
 
     const GraphicMap::MapGraphicsScene* mapScene() { return m_mapScene; }
@@ -60,7 +59,6 @@ public:
     // GraphicMap::GraphicLayerVisitor methods:
     void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
     void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
-
 
 private:
     QToolBar* m_toolbar;

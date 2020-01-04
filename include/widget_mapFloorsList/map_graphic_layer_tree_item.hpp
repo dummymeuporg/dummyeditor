@@ -17,7 +17,8 @@ namespace MapFloorsList {
 //  MapGraphicLayerTreeItem class
 //////////////////////////////////////////////////////////////////////////////
 
-class MapGraphicLayerTreeItem : public MapLayerTreeItem {
+class MapGraphicLayerTreeItem : public MapLayerTreeItem
+{
 public:
     MapGraphicLayerTreeItem(std::int8_t, Editor::GraphicLayer&);
     Editor::Layer& layer() override;

@@ -22,7 +22,8 @@ namespace Editor {
 //  BlockingLayer class
 //////////////////////////////////////////////////////////////////////////////
 
-class BlockingLayer : public Layer {
+class BlockingLayer : public Layer
+{
 public:
     BlockingLayer(Dummy::Core::BlockingLayer&);
 

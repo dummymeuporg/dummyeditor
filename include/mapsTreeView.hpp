@@ -14,19 +14,21 @@
 //////////////////////////////////////////////////////////////////////////////
 
 namespace Dummy {
-    class Project;
+class Project;
 }
 
 //////////////////////////////////////////////////////////////////////////////
 //  Error classes
 //////////////////////////////////////////////////////////////////////////////
 
-class MapsTreeViewError : public std::exception {
-};
+class MapsTreeViewError : public std::exception
+{};
 
-class ProjectNotSet : public MapsTreeViewError {
+class ProjectNotSet : public MapsTreeViewError
+{
 public:
-    const char* what() const noexcept override {
+    const char* what() const noexcept override
+    {
         return "the project is not set";
     }
 };
@@ -40,7 +42,7 @@ class MapsTreeView : public QTreeView
     Q_OBJECT
 
 public:
-    MapsTreeView(QWidget* parent=nullptr);
+    MapsTreeView(QWidget* parent = nullptr);
 
     const Editor::Project& project() const { return *m_project; }
 

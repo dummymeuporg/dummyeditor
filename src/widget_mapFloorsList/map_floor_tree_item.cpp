@@ -9,7 +9,8 @@
 namespace MapFloorsList {
 
 MapFloorTreeItem::MapFloorTreeItem(Editor::Floor& floor, std::size_t index)
-    : m_editorFloor(floor), m_index(index)
+    : m_editorFloor(floor)
+    , m_index(index)
 {
     if (m_editorFloor.visible()) {
         setIcon(QIcon(":/icons/icon_eye.png"));
@@ -20,25 +21,27 @@ MapFloorTreeItem::MapFloorTreeItem(Editor::Floor& floor, std::size_t index)
     // Put blocking layer at the top.
     appendRow(new MapBlockingLayerTreeItem(floor.blockingLayer()));
 
-    for(auto it = floor.graphicLayers().rbegin();
-        it != floor.graphicLayers().rend(); ++it)
-    {
+    for (auto it = floor.graphicLayers().rbegin();
+         it != floor.graphicLayers().rend(); ++it) {
         appendRow(new MapGraphicLayerTreeItem(it->first, *(it->second)));
     }
 }
 
-QVariant MapFloorTreeItem::data(int role) const {
+QVariant MapFloorTreeItem::data(int role) const
+{
     if (role == Qt::DisplayRole) {
         return QStringLiteral("Floor %1").arg(m_index);
     }
     return QStandardItem::data(role);
 }
 
-void MapFloorTreeItem::toggle() {
-    setVisible(!m_editorFloor.visible());
+void MapFloorTreeItem::toggle()
+{
+    setVisible(! m_editorFloor.visible());
 }
 
-void MapFloorTreeItem::setVisible(bool visible) {
+void MapFloorTreeItem::setVisible(bool visible)
+{
     m_editorFloor.setVisible(visible);
     if (m_editorFloor.visible()) {
         setIcon(QIcon(":/icons/icon_eye.png"));
@@ -53,7 +56,8 @@ void MapFloorTreeItem::setVisible(bool visible) {
     }
 }
 
-void MapFloorTreeItem::setSelected() {
+void MapFloorTreeItem::setSelected()
+{
     // Nothing to do.
     qDebug() << "Selected floor.";
 }

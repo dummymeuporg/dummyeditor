@@ -19,11 +19,13 @@ class Widget;
 //  State class
 //////////////////////////////////////////////////////////////////////////////
 
-class State : public std::enable_shared_from_this<State> {
+class State : public std::enable_shared_from_this<State>
+{
 public:
     State(Widget&);
     virtual void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) = 0;
-    virtual void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) = 0;
+    virtual void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&)  = 0;
+
 protected:
     Widget& m_widget;
 };

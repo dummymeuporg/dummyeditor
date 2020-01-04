@@ -45,12 +45,14 @@ using QModelIndex = ::QModelIndex;
 //  Widget class
 //////////////////////////////////////////////////////////////////////////////
 
-class Widget : public QWidget {
+class Widget : public QWidget
+{
     Q_OBJECT
 public:
     Widget(QWidget* parent = nullptr);
     void setEditorMap(std::shared_ptr<Editor::Map>);
-    const MapFloorTreeModel* mapFloorTreeModel() const {
+    const MapFloorTreeModel* mapFloorTreeModel() const
+    {
         return m_mapFloorTreeModel;
     }
 

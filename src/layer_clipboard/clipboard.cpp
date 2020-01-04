@@ -6,7 +6,8 @@ Clipboard::Clipboard()
     : m_target(0, 0)
 {}
 
-void Clipboard::setTarget(const QPoint& target) {
+void Clipboard::setTarget(const QPoint& target)
+{
     m_target = target;
 }
 

@@ -2,18 +2,19 @@
 
 namespace DrawingTools {
 
-DrawingTool::DrawingTool(
-    GraphicMap::MapGraphicsScene& mapGraphicsScene,
-    QIcon&& icon)
+DrawingTool::DrawingTool(GraphicMap::MapGraphicsScene& mapGraphicsScene,
+                         QIcon&& icon)
     : m_mapGraphicsScene(mapGraphicsScene)
     , m_icon(std::move(icon))
 {}
 
-void DrawingTool::emitDrawingToolSelected() {
+void DrawingTool::emitDrawingToolSelected()
+{
     emit drawingToolSelected(this);
 }
 
-void DrawingTool::setSelected(bool selected) {
+void DrawingTool::setSelected(bool selected)
+{
     if (selected) {
         emitDrawingToolSelected();
     }

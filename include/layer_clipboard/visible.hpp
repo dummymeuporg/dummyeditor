@@ -23,12 +23,10 @@ namespace LayerClipboard {
 //////////////////////////////////////////////////////////////////////////////
 
 // TODO rename it with a more specific name
-class Visible : public Clipboard {
+class Visible : public Clipboard
+{
 public:
-    Visible(
-        const QRect&,
-        const std::vector<std::pair<int8_t, int8_t>>&
-    );
+    Visible(const QRect&, const std::vector<std::pair<int8_t, int8_t>>&);
     Visible(QRect&&, std::vector<std::pair<int8_t, int8_t>>&&);
     void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
 

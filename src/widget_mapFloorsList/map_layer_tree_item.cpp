@@ -4,11 +4,13 @@
 
 namespace MapFloorsList {
 
-void MapLayerTreeItem::toggle() {
-    setVisible(!layer().visible());
+void MapLayerTreeItem::toggle()
+{
+    setVisible(! layer().visible());
 }
 
-void MapLayerTreeItem::setVisible(bool visible) {
+void MapLayerTreeItem::setVisible(bool visible)
+{
     layer().setVisible(visible);
     if (layer().visible()) {
         setIcon(QIcon(":/icons/icon_eye.png"));

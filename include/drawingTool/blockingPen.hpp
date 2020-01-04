@@ -19,13 +19,12 @@ namespace DrawingTools {
 //  BlockingPen class
 //////////////////////////////////////////////////////////////////////////////
 
-class BlockingPen : public BlockingGeneralTool {
+class BlockingPen : public BlockingGeneralTool
+{
     Q_OBJECT
 public:
-    BlockingPen(
-        GraphicMap::MapGraphicsScene&,
-        GraphicMap::BlockingGraphicLayer* = nullptr
-    );
+    BlockingPen(GraphicMap::MapGraphicsScene&,
+                GraphicMap::BlockingGraphicLayer* = nullptr);
     void accept(DrawingVisitor&) override;
     void mapMousePressEvent(QGraphicsSceneMouseEvent*) override;
     void mapMouseMoveEvent(QGraphicsSceneMouseEvent*) override;

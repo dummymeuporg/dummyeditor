@@ -18,17 +18,16 @@ class DrawingVisitor;
 //  GraphicTool class
 //////////////////////////////////////////////////////////////////////////////
 
-class GraphicGeneralTool : public DrawingTool {
+class GraphicGeneralTool : public DrawingTool
+{
     Q_OBJECT
 public:
-    GraphicGeneralTool(
-        QIcon&&,
-        GraphicMap::MapGraphicsScene&,
-        GraphicMap::VisibleGraphicLayer* = nullptr
-    );
+    GraphicGeneralTool(QIcon&&, GraphicMap::MapGraphicsScene&,
+                       GraphicMap::VisibleGraphicLayer* = nullptr);
     void emitDrawingToolSelected() override;
     void drawGrid() override;
-    GraphicMap::VisibleGraphicLayer* visibleGraphicLayer() const {
+    GraphicMap::VisibleGraphicLayer* visibleGraphicLayer() const
+    {
         return m_visibleGraphicLayer;
     }
     void setVisibleGraphicLayer(GraphicMap::VisibleGraphicLayer*);

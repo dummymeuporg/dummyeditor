@@ -7,8 +7,7 @@
 
 MapEditDialog::MapEditDialog(
     const std::shared_ptr<const Editor::Project> project,
-    std::shared_ptr<Misc::MapDocument> mapDocument,
-    QWidget *parent)
+    std::shared_ptr<Misc::MapDocument> mapDocument, QWidget* parent)
     : QDialog(parent)
     , m_ui(new Ui::MapEditDialog)
     , m_project(project)
@@ -30,30 +29,35 @@ MapEditDialog::~MapEditDialog()
     delete m_ui;
 }
 
-QString MapEditDialog::getMapName() const {
+QString MapEditDialog::getMapName() const
+{
     return m_ui->lineEditMapName->text();
 }
 
-quint16 MapEditDialog::getWidth() const {
+quint16 MapEditDialog::getWidth() const
+{
     return m_ui->spinBoxMapWidth->value();
 }
 
-quint16 MapEditDialog::getHeight() const {
+quint16 MapEditDialog::getHeight() const
+{
     return m_ui->spinBoxMapHeight->value();
 }
 
-QString MapEditDialog::getChipset() const {
+QString MapEditDialog::getChipset() const
+{
     return m_ui->lineEditChipset->text();
 }
 
-QString MapEditDialog::getMusic() const {
+QString MapEditDialog::getMusic() const
+{
     return m_ui->lineEditMusic->text();
 }
 
-void MapEditDialog::onChipsetBrowse() {
+void MapEditDialog::onChipsetBrowse()
+{
     QString chipsetPath = QString::fromStdString(
-                (m_project->coreProject().projectPath() / "chipsets")
-                .string());
+        (m_project->coreProject().projectPath() / "chipsets").string());
 
     // On Windows, fs::pash puts some backslashes. That sucks.
     // Clean path uses slashes, remove weird paths as "folder/../folder"
@@ -65,12 +69,11 @@ void MapEditDialog::onChipsetBrowse() {
 
     if (dlg.result() == QDialog::Accepted) {
         QStringList selectedFiles = dlg.selectedFiles();
-        QString selectedChipset = selectedFiles.at(0);
-        int index = selectedChipset.indexOf(chipsetPath);
+        QString selectedChipset   = selectedFiles.at(0);
+        int index                 = selectedChipset.indexOf(chipsetPath);
         if (index < 0) {
             QMessageBox::critical(
-                this,
-                tr("Error"),
+                this, tr("Error"),
                 tr("Please select a chipset inside the 'chipset' folder."));
         } else {
             m_ui->lineEditChipset->setText(
@@ -79,26 +82,21 @@ void MapEditDialog::onChipsetBrowse() {
     }
 }
 
-void MapEditDialog::onOK() {
+void MapEditDialog::onOK()
+{
     if (m_ui->lineEditMapName->text() == "") {
+        QMessageBox::critical(this, tr("Error"),
+                              tr("You must enter a map name."));
+    } else if (m_ui->lineEditChipset->text() == "") {
+        QMessageBox::critical(this, tr("Error"),
+                              tr("You must enter a chipset filename."));
+    } else if (m_ui->spinBoxMapHeight->value() < 1) {
         QMessageBox::critical(
-            this,
-            tr("Error"),
-            tr("You must enter a map name."));
-    } else if(m_ui->lineEditChipset->text() == "") {
-        QMessageBox::critical(
-            this,
-            tr("Error"),
-            tr("You must enter a chipset filename."));
-    } else if(m_ui->spinBoxMapHeight->value() < 1) {
-        QMessageBox::critical(
-            this,
-            tr("Error"),
+            this, tr("Error"),
             tr("You map's height must be above or equal to 1."));
-    } else if(m_ui->spinBoxMapWidth->value() < 1) {
+    } else if (m_ui->spinBoxMapWidth->value() < 1) {
         QMessageBox::critical(
-            this,
-            tr("Error"),
+            this, tr("Error"),
             tr("You map's width must be above or equal to 1."));
     } else {
         accept();

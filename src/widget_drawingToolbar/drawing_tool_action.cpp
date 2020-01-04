@@ -4,14 +4,14 @@
 
 namespace DrawingToolbar {
 
-DrawingToolAction::DrawingToolAction(
-    DrawingTools::DrawingTool* drawingTool,
-    QWidget* parent)
+DrawingToolAction::DrawingToolAction(DrawingTools::DrawingTool* drawingTool,
+                                     QWidget* parent)
     : QAction(parent)
     , m_drawingTool(drawingTool)
 {}
 
-void DrawingToolAction::setDrawingTool(bool checked) {
+void DrawingToolAction::setDrawingTool(bool checked)
+{
     if (checked) {
         // Forward the drawing tool.
         m_drawingTool->emitDrawingToolSelected();

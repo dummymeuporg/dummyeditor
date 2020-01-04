@@ -1,17 +1,16 @@
 #include "drawingTool/graphicPaletteTool.hpp"
 
 #include <QDebug>
-#include <QGraphicsSceneMouseEvent>
 #include <QGraphicsPixmapItem>
+#include <QGraphicsSceneMouseEvent>
 
 #include "chipsetgraphicsscene.hpp"
 
 namespace DrawingTools {
 
 GraphicPaletteTool::GraphicPaletteTool(
-        QIcon&& icon,
-        GraphicMap::MapGraphicsScene& mapGraphicsScene,
-        GraphicMap::VisibleGraphicLayer* visibleGraphicLayer)
+    QIcon&& icon, GraphicMap::MapGraphicsScene& mapGraphicsScene,
+    GraphicMap::VisibleGraphicLayer* visibleGraphicLayer)
     : GraphicGeneralTool(std::move(icon), mapGraphicsScene, visibleGraphicLayer)
     , m_chipsetGraphicsScene(nullptr)
     , m_selectionRectItem(nullptr)
@@ -19,28 +18,27 @@ GraphicPaletteTool::GraphicPaletteTool(
     , m_isSelecting(false)
 {}
 
-void GraphicPaletteTool::emitDrawingToolSelected() {
+void GraphicPaletteTool::emitDrawingToolSelected()
+{
     GraphicGeneralTool::emitDrawingToolSelected();
     qDebug() << "Emit drawing tool selected.";
     emit drawingToolSelected(this);
 }
 
-void
-GraphicPaletteTool::paletteMousePressEvent(::QGraphicsSceneMouseEvent* mouseEvent)
+void GraphicPaletteTool::paletteMousePressEvent(
+    ::QGraphicsSceneMouseEvent* mouseEvent)
 {
     if (nullptr == m_chipsetGraphicsScene
-            || !mouseEvent->buttons().testFlag(Qt::LeftButton)
-            || m_isSelecting){
+        || ! mouseEvent->buttons().testFlag(Qt::LeftButton) || m_isSelecting) {
         return;
     }
 
-    m_isSelecting = true;
+    m_isSelecting    = true;
     m_selectionStart = mouseEvent->scenePos().toPoint();
 
     if (m_selectionStart.x() >= m_chipsetGraphicsScene->width()
-            || m_selectionStart.y() >= m_chipsetGraphicsScene->height()
-            || m_selectionStart.x() < 0
-            || m_selectionStart.y() < 0) {
+        || m_selectionStart.y() >= m_chipsetGraphicsScene->height()
+        || m_selectionStart.x() < 0 || m_selectionStart.y() < 0) {
         return;
     }
 
@@ -53,18 +51,17 @@ GraphicPaletteTool::paletteMousePressEvent(::QGraphicsSceneMouseEvent* mouseEven
     QBrush brush(QColor(66, 135, 245));
     int x = m_selectionStart.x() - (m_selectionStart.x() % 16);
     int y = m_selectionStart.y() - (m_selectionStart.y() % 16);
-    setSelection(
-        QRect(x, y, 16, 16),
-        m_chipsetGraphicsScene->chipset()->pixmap()
-    );
+    setSelection(QRect(x, y, 16, 16),
+                 m_chipsetGraphicsScene->chipset()->pixmap());
     m_selectionRectItem = m_chipsetGraphicsScene->addRect(m_rectSelection);
     m_selectionRectItem->setBrush(brush);
     m_selectionRectItem->setOpacity(0.5);
 }
 
 void GraphicPaletteTool::paletteMouseMoveEvent(
-        QGraphicsSceneMouseEvent* mouseEvent) {
-    if (nullptr == m_selectionRectItem || !m_isSelecting) {
+    QGraphicsSceneMouseEvent* mouseEvent)
+{
+    if (nullptr == m_selectionRectItem || ! m_isSelecting) {
         return;
     }
 
@@ -85,48 +82,49 @@ void GraphicPaletteTool::paletteMouseMoveEvent(
 
     QBrush brush(QColor(66, 135, 245));
 
-    int x = m_selectionStart.x() - (m_selectionStart.x() % 16);
-    int y = m_selectionStart.y() - (m_selectionStart.y() % 16);
+    int x    = m_selectionStart.x() - (m_selectionStart.x() % 16);
+    int y    = m_selectionStart.y() - (m_selectionStart.y() % 16);
     int xEnd = pt.x();
     int yEnd = pt.y();
     qDebug() << x << y << xEnd << yEnd;
 
-    setSelection(
-        QRect(x, y, xEnd - x, yEnd - y),
-        m_chipsetGraphicsScene->chipset()->pixmap()
-    );
+    setSelection(QRect(x, y, xEnd - x, yEnd - y),
+                 m_chipsetGraphicsScene->chipset()->pixmap());
     m_selectionRectItem = m_chipsetGraphicsScene->addRect(m_rectSelection);
     m_selectionRectItem->setBrush(brush);
     m_selectionRectItem->setOpacity(0.5);
 }
 
 void GraphicPaletteTool::paletteMouseReleaseEvent(
-        QGraphicsSceneMouseEvent* mouseEvent) {
+    QGraphicsSceneMouseEvent* mouseEvent)
+{
     if (nullptr != m_selectionItem) {
         m_isSelecting = false;
     }
 }
 
-void GraphicPaletteTool::setSelection(
-        const QRect& selection, const QPixmap& chipsetPixmap) {
-    m_rectSelection = selection;
+void GraphicPaletteTool::setSelection(const QRect& selection,
+                                      const QPixmap& chipsetPixmap)
+{
+    m_rectSelection   = selection;
     m_selectionPixmap = chipsetPixmap.copy(selection);
-    m_selectionItem = new ::QGraphicsPixmapItem(m_selectionPixmap);
+    m_selectionItem   = new ::QGraphicsPixmapItem(m_selectionPixmap);
 }
 
 void GraphicPaletteTool::setChipsetGraphicsScene(
-        ChipsetGraphicsScene* chipsetGraphicsScene) {
+    ChipsetGraphicsScene* chipsetGraphicsScene)
+{
     m_chipsetGraphicsScene = chipsetGraphicsScene;
 }
 
-void GraphicPaletteTool::onUnselected() {
+void GraphicPaletteTool::onUnselected()
+{
     if (nullptr != m_chipsetGraphicsScene) {
         m_chipsetGraphicsScene->removeItem(m_selectionRectItem);
         m_selectionItem = nullptr;
     }
 }
 
-void GraphicPaletteTool::onSelected() {
-}
+void GraphicPaletteTool::onSelected() {}
 
 } // namespace DrawingTools

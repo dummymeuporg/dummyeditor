@@ -17,7 +17,8 @@ namespace MapFloorsList {
 //  MapLayerTreeItem class
 //////////////////////////////////////////////////////////////////////////////
 
-class MapLayerTreeItem : public MapTreeItem {
+class MapLayerTreeItem : public MapTreeItem
+{
 public:
     void toggle() override;
     void setVisible(bool) override;

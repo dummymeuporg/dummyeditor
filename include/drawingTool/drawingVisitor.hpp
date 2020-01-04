@@ -19,16 +19,17 @@ class GraphicEraser;
 //  DrawingTools::Visitor interface
 //////////////////////////////////////////////////////////////////////////////
 
-class DrawingVisitor {
+class DrawingVisitor
+{
 public:
-    virtual void visitTool(GraphicPen&) = 0;
+    virtual void visitTool(GraphicPen&)       = 0;
     virtual void visitTool(GraphicRectangle&) = 0;
-    virtual void visitTool(GraphicEraser&) = 0;
-    virtual void visitTool(SelectionTool&) = 0;
-    virtual void visitTool(BlockingPen&) = 0;
-    virtual void visitTool(BlockingEraser&) = 0;
+    virtual void visitTool(GraphicEraser&)    = 0;
+    virtual void visitTool(SelectionTool&)    = 0;
+    virtual void visitTool(BlockingPen&)      = 0;
+    virtual void visitTool(BlockingEraser&)   = 0;
 };
 
-} // namespace DrawingTool
+} // namespace DrawingTools
 
 #endif DRAWINGTOOLVISITOR_H

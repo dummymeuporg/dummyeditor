@@ -4,11 +4,11 @@
 #include <QHBoxLayout>
 #include <QToolBar>
 
-#include "chipsetgraphicsscene.hpp"
+#include "chipsetGraphicsScene.hpp"
 #include "drawingTool/graphicPen.hpp"
 #include "drawingTool/graphicRectangle.hpp"
-#include "graphicMap/mapGraphicsScene.hpp"
 #include "graphicMap/layerGraphic.hpp"
+#include "graphicMap/mapGraphicsScene.hpp"
 #include "widget_drawingToolbar/drawing_tool_action.hpp"
 #include "widget_drawingToolbar/state_no_drawing_tools.hpp"
 
@@ -28,7 +28,8 @@ Widget::Widget(::QWidget* parent)
     layout()->addWidget(m_toolbar);
 }
 
-void Widget::clear() {
+void Widget::clear()
+{
     layout()->removeWidget(m_toolbar);
     delete m_toolbar;
     m_toolbar = nullptr;
@@ -36,99 +37,98 @@ void Widget::clear() {
 
 void Widget::onLayerSelected(
     const GraphicMap::MapGraphicsScene* mapScene,
-    const ::ChipsetGraphicsScene* chipsetScene,
-    GraphicMap::GraphicLayer& layer,
+    const ::ChipsetGraphicsScene* chipsetScene, GraphicMap::GraphicLayer& layer,
     std::vector<DrawingTools::DrawingTool*>* drawingTools)
 {
-    m_mapScene = mapScene;
+    m_mapScene             = mapScene;
     m_chipsetGraphicsScene = chipsetScene;
-    m_drawingTools = drawingTools;
+    m_drawingTools         = drawingTools;
 
     layer.accept(*this);
 }
 
-void Widget::reset() {
+void Widget::reset()
+{
     clear();
-    m_toolbar = new QToolBar(this);
+    m_toolbar     = new QToolBar(this);
     m_actionGroup = new QActionGroup(m_toolbar);
 
-    for (auto& tool: *m_drawingTools) {
+    for (auto& tool : *m_drawingTools) {
         auto action(new DrawingToolAction(tool, this));
         action->setIcon(tool->icon());
         action->setText(tr("Tool"));
         action->setCheckable(true);
         m_actionGroup->addAction(action);
 
+        QObject::connect(action, SIGNAL(triggered(bool)), action,
+                         SLOT(setDrawingTool(bool)));
         QObject::connect(
-            action,
-            SIGNAL(triggered(bool)),
-            action,
-            SLOT(setDrawingTool(bool))
-        );
-        QObject::connect(
-            tool,
-            SIGNAL(drawingToolSelected(::DrawingTools::DrawingTool*)),
-            m_mapScene,
-            SLOT(setDrawingTool(::DrawingTools::DrawingTool*))
-        );
+            tool, SIGNAL(drawingToolSelected(::DrawingTools::DrawingTool*)),
+            m_mapScene, SLOT(setDrawingTool(::DrawingTools::DrawingTool*)));
         tool->accept(*this);
-
     }
     m_toolbar->addActions(m_actionGroup->actions());
     layout()->addWidget(m_toolbar);
 }
 
-void Widget::visitTool(DrawingTools::GraphicPen& pen) {
+void Widget::visitTool(DrawingTools::GraphicPen& pen)
+{
     // XXX: connect the pen to the chipset scene.
     // m_chipsetScene
     qDebug() << "visitTool: connect tool.";
     QObject::connect(
-        &pen,
-        SIGNAL(drawingToolSelected(::DrawingTools::GraphicPaletteTool*)),
+        &pen, SIGNAL(drawingToolSelected(::DrawingTools::GraphicPaletteTool*)),
         m_chipsetGraphicsScene,
-        SLOT(setPaletteTool(::DrawingTools::GraphicPaletteTool*))
-    );
+        SLOT(setPaletteTool(::DrawingTools::GraphicPaletteTool*)));
 }
 
-void Widget::visitTool(DrawingTools::GraphicRectangle& rectangle) {
+void Widget::visitTool(DrawingTools::GraphicRectangle& rectangle)
+{
     qDebug() << "visitTool: connect tool.";
     QObject::connect(
         &rectangle,
         SIGNAL(drawingToolSelected(::DrawingTools::GraphicPaletteTool*)),
         m_chipsetGraphicsScene,
-        SLOT(setPaletteTool(::DrawingTools::GraphicPaletteTool*))
-    );
+        SLOT(setPaletteTool(::DrawingTools::GraphicPaletteTool*)));
 }
 
-void Widget::visitTool(DrawingTools::GraphicEraser&) {
+void Widget::visitTool(DrawingTools::GraphicEraser&)
+{
     // Nothing to do!
 }
 
-void Widget::visitTool(DrawingTools::BlockingPen&) {
+void Widget::visitTool(DrawingTools::BlockingPen&)
+{
     // Nothing to do!
 }
 
-void Widget::visitTool(DrawingTools::BlockingEraser&) {
+void Widget::visitTool(DrawingTools::BlockingEraser&)
+{
     // Nothing to do!
 }
 
-void Widget::visitTool(DrawingTools::SelectionTool&) {
+void Widget::visitTool(DrawingTools::SelectionTool&)
+{
     // Nothing to do!
 }
 
-void Widget::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer) {
+void Widget::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer)
+{
     m_state->visitGraphicLayer(layer);
 }
 
-void Widget::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer) {
+void Widget::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer)
+{
     m_state->visitGraphicLayer(layer);
 }
 
-void Widget::setState(std::shared_ptr<State> state) {
+void Widget::setState(std::shared_ptr<State> state)
+{
     m_state = state;
 }
 
-void Widget::setInitialState() {
+void Widget::setInitialState()
+{
     setState(std::make_shared<NoDrawingToolState>(*this));
 }
 

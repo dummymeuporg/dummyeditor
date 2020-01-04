@@ -13,7 +13,8 @@ namespace DrawingToolbar {
 //  DisplayBlockingTools state
 //////////////////////////////////////////////////////////////////////////////
 
-class DisplayBlockingToolState : public State {
+class DisplayBlockingToolState : public State
+{
 public:
     DisplayBlockingToolState(Widget&);
     void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;

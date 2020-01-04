@@ -17,18 +17,21 @@ MapBlockingLayerTreeItem::MapBlockingLayerTreeItem(
     }
 }
 
-Editor::Layer& MapBlockingLayerTreeItem::layer() {
+Editor::Layer& MapBlockingLayerTreeItem::layer()
+{
     return m_blockingLayer;
 }
 
-QVariant MapBlockingLayerTreeItem::data(int role) const {
+QVariant MapBlockingLayerTreeItem::data(int role) const
+{
     if (role == Qt::DisplayRole) {
         return QStringLiteral("Blocking layer");
     }
     return QStandardItem::data(role);
 }
 
-void MapBlockingLayerTreeItem::setSelected() {
+void MapBlockingLayerTreeItem::setSelected()
+{
     qDebug() << "Selected blocking layer.";
     emit m_blockingLayer.setSelected();
 }

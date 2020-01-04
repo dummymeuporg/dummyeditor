@@ -15,7 +15,7 @@ class QGraphicsItem;
 
 namespace DrawingTools {
 class DrawingTool;
-} // namespace DrawingTool
+} // namespace DrawingTools
 
 namespace Editor {
 class Layer;
@@ -39,9 +39,9 @@ public:
     GraphicLayer(MapGraphicsScene&, int);
 
     const QVector<QGraphicsItem*>& layerItems() const { return m_layerItems; }
-    virtual Editor::Layer& editorLayer() = 0;
+    virtual Editor::Layer& editorLayer()                           = 0;
     virtual std::vector<DrawingTools::DrawingTool*> drawingTools() = 0;
-    virtual void accept(GraphicLayerVisitor&) = 0;
+    virtual void accept(GraphicLayerVisitor&)                      = 0;
     virtual std::shared_ptr<LayerClipboard::Clipboard>
     getClipboardRegion(const QRect& clip) = 0;
 
@@ -51,6 +51,7 @@ signals:
 public slots:
     void setVisibility(bool);
     void setSelected();
+
 protected:
     QVector<QGraphicsItem*> m_layerItems;
 };

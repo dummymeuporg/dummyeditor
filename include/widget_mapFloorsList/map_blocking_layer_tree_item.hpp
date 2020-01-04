@@ -17,7 +17,8 @@ namespace MapFloorsList {
 //  MapBlockingLayerTreeItem class
 //////////////////////////////////////////////////////////////////////////////
 
-class MapBlockingLayerTreeItem : public MapLayerTreeItem {
+class MapBlockingLayerTreeItem : public MapLayerTreeItem
+{
 public:
     MapBlockingLayerTreeItem(Editor::BlockingLayer&);
     Editor::Layer& layer() override;

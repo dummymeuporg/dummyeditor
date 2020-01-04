@@ -9,7 +9,7 @@
 
 namespace DrawingTools {
 class DrawingTool;
-} // namespace DrawingTool
+} // namespace DrawingTools
 
 namespace DrawingToolbar {
 
@@ -17,7 +17,8 @@ namespace DrawingToolbar {
 //  DrawingToolAction class
 //////////////////////////////////////////////////////////////////////////////
 
-class DrawingToolAction : public QAction {
+class DrawingToolAction : public QAction
+{
     Q_OBJECT
 public:
     DrawingToolAction(DrawingTools::DrawingTool*, QWidget* parent = nullptr);

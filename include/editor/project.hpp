@@ -21,11 +21,14 @@ class StartingPoint;
 //  Errors
 //////////////////////////////////////////////////////////////////////////////
 
-class ProjectError : public std::exception {};
+class ProjectError : public std::exception
+{};
 
-class NoStartingPoint : public ProjectError {
+class NoStartingPoint : public ProjectError
+{
 public:
-    const char* what() const noexcept override {
+    const char* what() const noexcept override
+    {
         return "the project has no starting point";
     }
 };
@@ -45,7 +48,8 @@ public:
     std::shared_ptr<Misc::MapDocument> document(const QString& mapName);
     void setModified(bool isModified) { m_isModified = isModified; }
 
-    const StartingPoint& startingPoint() const {
+    const StartingPoint& startingPoint() const
+    {
         if (m_startingPoint == nullptr) {
             throw NoStartingPoint();
         }
@@ -61,9 +65,8 @@ public:
     static void cleanMapName(QString& mapName);
 
 private:
-    void dumpToXmlNode(QDomDocument& document,
-                        QDomElement& xmlNode,
-                        QStandardItem* modelItem);
+    void dumpToXmlNode(QDomDocument& document, QDomElement& xmlNode,
+                       QStandardItem* modelItem);
 
     static QDomDocument createXmlProjectTree();
     static void createXmlProjectFile(const QString&);

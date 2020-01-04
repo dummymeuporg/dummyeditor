@@ -11,7 +11,8 @@ namespace Editor {
 //  EventsLayer class
 //////////////////////////////////////////////////////////////////////////////
 
-class EventsLayer : public Layer {
+class EventsLayer : public Layer
+{
 public:
     EventsLayer(Dummy::Local::Floor&);
     Dummy::Local::Events& touchEvents() { return m_floor.touchEvents(); }

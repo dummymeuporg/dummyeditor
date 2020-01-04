@@ -9,13 +9,12 @@ namespace DrawingTools {
 //  GraphicPen class
 //////////////////////////////////////////////////////////////////////////////
 
-class GraphicPen : public GraphicPaletteTool {
+class GraphicPen : public GraphicPaletteTool
+{
     Q_OBJECT
 public:
-    GraphicPen(
-        GraphicMap::MapGraphicsScene&,
-        GraphicMap::VisibleGraphicLayer* = nullptr
-    );
+    GraphicPen(GraphicMap::MapGraphicsScene&,
+               GraphicMap::VisibleGraphicLayer* = nullptr);
     void accept(DrawingVisitor&) override;
     void mapMousePressEvent(QGraphicsSceneMouseEvent*) override;
     void mapMouseMoveEvent(QGraphicsSceneMouseEvent*) override;

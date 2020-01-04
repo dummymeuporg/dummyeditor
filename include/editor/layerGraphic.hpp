@@ -22,7 +22,8 @@ namespace Editor {
 //  GraphicLayer class
 //////////////////////////////////////////////////////////////////////////////
 
-class GraphicLayer : public Layer {
+class GraphicLayer : public Layer
+{
 public:
     GraphicLayer(Dummy::Core::GraphicLayer&);
 
@@ -34,7 +35,6 @@ public:
 
 private:
     Dummy::Core::GraphicLayer& m_layer;
-
 };
 
 } // namespace Editor

@@ -21,11 +21,7 @@ class BlockingSquareItem;
 class BlockingGraphicLayer : public GraphicLayer
 {
 public:
-    BlockingGraphicLayer(
-        Editor::BlockingLayer&,
-        MapGraphicsScene&,
-        int zValue
-    );
+    BlockingGraphicLayer(Editor::BlockingLayer&, MapGraphicsScene&, int zValue);
     ~BlockingGraphicLayer() override;
 
     const Editor::BlockingLayer& layer() const { return m_blockingLayer; }

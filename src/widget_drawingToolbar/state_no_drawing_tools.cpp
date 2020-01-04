@@ -10,14 +10,18 @@ NoDrawingToolState::NoDrawingToolState(Widget& widget)
     : State(widget)
 {}
 
-void NoDrawingToolState::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer) {
+void NoDrawingToolState::visitGraphicLayer(
+    GraphicMap::BlockingGraphicLayer& layer)
+{
     // Here we will reset tools and change state.
     auto self(shared_from_this());
     m_widget.reset();
     m_widget.setState(std::make_shared<DisplayBlockingToolState>(m_widget));
 }
 
-void NoDrawingToolState::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer) {
+void NoDrawingToolState::visitGraphicLayer(
+    GraphicMap::VisibleGraphicLayer& layer)
+{
     // Here we will reset tools and change state.
     auto self(shared_from_this());
     m_widget.reset();

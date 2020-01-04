@@ -10,9 +10,8 @@ MapFloorTreeModel::MapFloorTreeModel(std::shared_ptr<Editor::Map> editorMap)
 {
 
     for (int i = m_editorMap->floorsCount() - 1; i >= 0; --i) {
-        QList<QStandardItem*> floorItem {
-            new MapFloorTreeItem(m_editorMap->floorAt(i), i)
-        };
+        QList<QStandardItem*> floorItem{
+            new MapFloorTreeItem(m_editorMap->floorAt(i), i)};
         appendRow(floorItem);
     }
 }

@@ -1,9 +1,9 @@
 #include "widget_mapFloorsList/widget.hpp"
 #include "widget_mapFloorsList/ui_widget.h"
 
-#include <QDebug>
 #include "widget_mapFloorsList/map_floor_tree_item.hpp"
 #include "widget_mapFloorsList/map_floor_tree_model.hpp"
+#include <QDebug>
 
 namespace MapFloorsList {
 
@@ -17,14 +17,16 @@ Widget::Widget(QWidget* parent)
     m_ui->setupUi(this);
 }
 
-void Widget::setEditorMap(std::shared_ptr<Editor::Map> editorMap) {
+void Widget::setEditorMap(std::shared_ptr<Editor::Map> editorMap)
+{
     m_editorMap = editorMap;
     reset();
     m_mapFloorTreeModel = new MapFloorTreeModel(m_editorMap);
     m_ui->treeViewFloors->setModel(m_mapFloorTreeModel);
 }
 
-void Widget::reset() {
+void Widget::reset()
+{
     if (m_mapFloorTreeModel != nullptr) {
         delete m_mapFloorTreeModel;
         m_mapFloorTreeModel = nullptr;
@@ -32,12 +34,14 @@ void Widget::reset() {
     m_ui->treeViewFloors->reset();
 }
 
-void Widget::toggleLayerVisibleState(QModelIndex selectedIndex) {
+void Widget::toggleLayerVisibleState(QModelIndex selectedIndex)
+{
     qDebug() << "selectedIndex: " << selectedIndex;
-   m_mapFloorTreeModel->mapTreeItemFromIndex(selectedIndex)->toggle();
+    m_mapFloorTreeModel->mapTreeItemFromIndex(selectedIndex)->toggle();
 }
 
-void Widget::selectLayer(QModelIndex selectedIndex) {
+void Widget::selectLayer(QModelIndex selectedIndex)
+{
     auto item = m_mapFloorTreeModel->mapTreeItemFromIndex(selectedIndex);
     // This line will trigger a signal:
     item->setSelected();

@@ -24,20 +24,21 @@ class DrawingVisitor;
 //  DrawingTool class
 //////////////////////////////////////////////////////////////////////////////
 
-class DrawingTool : public QObject, public GraphicMap::GraphicLayerVisitor {
+class DrawingTool : public QObject, public GraphicMap::GraphicLayerVisitor
+{
     Q_OBJECT
 public:
     DrawingTool(GraphicMap::MapGraphicsScene&, QIcon&&);
 
-    virtual void mapMousePressEvent(QGraphicsSceneMouseEvent*) = 0;
-    virtual void mapMouseMoveEvent(QGraphicsSceneMouseEvent*) = 0;
+    virtual void mapMousePressEvent(QGraphicsSceneMouseEvent*)   = 0;
+    virtual void mapMouseMoveEvent(QGraphicsSceneMouseEvent*)    = 0;
     virtual void mapMouseReleaseEvent(QGraphicsSceneMouseEvent*) = 0;
-    virtual void mapKeyPressEvent(QKeyEvent*) = 0;
-    virtual void mapKeyReleaseEvent(QKeyEvent*) = 0;
-    virtual void mapMouseLeaveEvent() = 0;
-    virtual void drawGrid() = 0;
-    virtual void onSelected() = 0;
-    virtual void onUnselected() = 0;
+    virtual void mapKeyPressEvent(QKeyEvent*)                    = 0;
+    virtual void mapKeyReleaseEvent(QKeyEvent*)                  = 0;
+    virtual void mapMouseLeaveEvent()                            = 0;
+    virtual void drawGrid()                                      = 0;
+    virtual void onSelected()                                    = 0;
+    virtual void onUnselected()                                  = 0;
 
     const QIcon& icon() const { return m_icon; }
 
@@ -56,6 +57,6 @@ private:
     QIcon m_icon;
 };
 
-} // namespace DrawingTool
+} // namespace DrawingTools
 
 #endif // DRAWINGTOOL_H

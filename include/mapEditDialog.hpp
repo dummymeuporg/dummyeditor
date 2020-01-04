@@ -12,7 +12,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
 namespace Dummy {
-    class Map;
+class Map;
 }
 
 namespace Ui {
@@ -27,10 +27,9 @@ class MapEditDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit MapEditDialog(
-        std::shared_ptr<const Editor::Project> project,
-        std::shared_ptr<Misc::MapDocument> = nullptr,
-        QWidget *parent = nullptr);
+    explicit MapEditDialog(std::shared_ptr<const Editor::Project> project,
+                           std::shared_ptr<Misc::MapDocument> = nullptr,
+                           QWidget* parent                    = nullptr);
     ~MapEditDialog() override;
 
     QString getMapName() const;
@@ -44,7 +43,7 @@ private slots:
     void onOK();
 
 private:
-    Ui::MapEditDialog *m_ui;
+    Ui::MapEditDialog* m_ui;
     const std::shared_ptr<const Editor::Project> m_project;
 };
 

@@ -2,8 +2,7 @@
 
 #include <QPainter>
 
-GraphicMap::BlockingCrossItem::BlockingCrossItem()
-{}
+GraphicMap::BlockingCrossItem::BlockingCrossItem() {}
 
 QRectF GraphicMap::BlockingCrossItem::boundingRect() const
 {
@@ -11,9 +10,7 @@ QRectF GraphicMap::BlockingCrossItem::boundingRect() const
 }
 
 void GraphicMap::BlockingCrossItem::paint(
-    QPainter* painter,
-    const QStyleOptionGraphicsItem* option,
-    QWidget* widget)
+    QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
     Q_UNUSED(option)
     Q_UNUSED(widget)

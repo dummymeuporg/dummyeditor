@@ -13,7 +13,8 @@ namespace DrawingToolbar {
 //  NoDrawingTools state
 //////////////////////////////////////////////////////////////////////////////
 
-class NoDrawingToolState : public State {
+class NoDrawingToolState : public State
+{
 public:
     NoDrawingToolState(Widget&);
     void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;

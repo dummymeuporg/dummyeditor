@@ -10,7 +10,7 @@
 class QGraphicsSceneMouseEvent;
 
 namespace GraphicMap {
-    class VisibleGraphicLayer;
+class VisibleGraphicLayer;
 }
 
 namespace DrawingTools {
@@ -19,13 +19,12 @@ namespace DrawingTools {
 //  GraphicEraser class
 //////////////////////////////////////////////////////////////////////////////
 
-class GraphicEraser : public GraphicGeneralTool {
+class GraphicEraser : public GraphicGeneralTool
+{
     Q_OBJECT
 public:
-    GraphicEraser(
-            GraphicMap::MapGraphicsScene&,
-            GraphicMap::VisibleGraphicLayer* = nullptr
-    );
+    GraphicEraser(GraphicMap::MapGraphicsScene&,
+                  GraphicMap::VisibleGraphicLayer* = nullptr);
     void accept(DrawingVisitor&) override;
     void mapMousePressEvent(QGraphicsSceneMouseEvent*) override;
     void mapMouseMoveEvent(QGraphicsSceneMouseEvent*) override;

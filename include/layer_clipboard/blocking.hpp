@@ -1,8 +1,8 @@
 #ifndef LAYERBLOCKING_H
 #define LAYERBLOCKING_H
 
-#include <vector>
 #include <QRect>
+#include <vector>
 
 #include "layer_clipboard/clipboard.hpp"
 
@@ -21,7 +21,8 @@ namespace LayerClipboard {
 //////////////////////////////////////////////////////////////////////////////
 
 // TODO rename it with a more specific name
-class Blocking : public Clipboard {
+class Blocking : public Clipboard
+{
 public:
     Blocking(const QRect&, const std::vector<uint8_t>&);
     Blocking(QRect&&, std::vector<uint8_t>&&);

@@ -14,7 +14,8 @@ Blocking::Blocking(QRect&& clip, std::vector<std::uint8_t>&& content)
     , m_content(std::move(content))
 {}
 
-void Blocking::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer) {
+void Blocking::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer)
+{
     // apply clipboard to layer.
     auto clipIndex(0);
     for (auto j = 0; j <= m_clip.height() + 8; j += 8) {

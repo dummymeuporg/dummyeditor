@@ -20,10 +20,12 @@ class MapTreeItem;
 //  MapFloorTreeModel class
 //////////////////////////////////////////////////////////////////////////////
 
-class MapFloorTreeModel : public QStandardItemModel {
+class MapFloorTreeModel : public QStandardItemModel
+{
 public:
     MapFloorTreeModel(std::shared_ptr<Editor::Map>);
     MapTreeItem* mapTreeItemFromIndex(const QModelIndex&) const;
+
 private:
     std::shared_ptr<Editor::Map> m_editorMap;
 };

@@ -12,17 +12,18 @@ DisplayBlockingToolState::DisplayBlockingToolState(Widget& widget)
 {}
 
 void DisplayBlockingToolState::visitGraphicLayer(
-    GraphicMap::BlockingGraphicLayer& layer
-) {
+    GraphicMap::BlockingGraphicLayer& layer)
+{
     auto tool = m_widget.mapScene()->drawingTool();
     if (nullptr != tool) {
-        reinterpret_cast<DrawingTools::BlockingGeneralTool*>(
-            tool
-        )->setBlockingGraphicLayer(&layer);
+        reinterpret_cast<DrawingTools::BlockingGeneralTool*>(tool)
+            ->setBlockingGraphicLayer(&layer);
     }
 }
 
-void DisplayBlockingToolState::visitGraphicLayer(GraphicMap::VisibleGraphicLayer&){
+void DisplayBlockingToolState::visitGraphicLayer(
+    GraphicMap::VisibleGraphicLayer&)
+{
     // Here we will reset tools and change state.
     auto self(shared_from_this());
     m_widget.reset();

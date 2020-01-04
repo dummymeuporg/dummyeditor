@@ -18,14 +18,12 @@ class DrawingVisitor;
 //  BlockingTool class
 //////////////////////////////////////////////////////////////////////////////
 
-class BlockingGeneralTool : public DrawingTool {
+class BlockingGeneralTool : public DrawingTool
+{
     Q_OBJECT
 public:
-    BlockingGeneralTool(
-        QIcon&&,
-        GraphicMap::MapGraphicsScene& mapGraphicsScene,
-        GraphicMap::BlockingGraphicLayer* = nullptr
-    );
+    BlockingGeneralTool(QIcon&&, GraphicMap::MapGraphicsScene& mapGraphicsScene,
+                        GraphicMap::BlockingGraphicLayer* = nullptr);
     void emitDrawingToolSelected() override;
     void drawGrid() override;
     void setBlockingGraphicLayer(GraphicMap::BlockingGraphicLayer*);

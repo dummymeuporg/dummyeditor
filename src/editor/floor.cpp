@@ -21,14 +21,15 @@ Floor::Floor(Dummy::Local::Floor& floor)
     // so this is a wrongly implicit "give of ownership" of the referenced obj
     m_eventsLayer = std::make_unique<EventsLayer>(m_floor);
 
-    for (auto& [position, layer]: m_floor.graphicLayers()) {
+    for (auto& [position, layer] : m_floor.graphicLayers()) {
         // TODO same here, make_unique takes ownership, I'm not sure this is
         // intented (nor explicit) here
         m_graphicLayers[position] = std::make_unique<GraphicLayer>(layer);
     }
 }
 
-void Floor::setVisible(bool visible) {
+void Floor::setVisible(bool visible)
+{
     m_visible = visible;
 }
 

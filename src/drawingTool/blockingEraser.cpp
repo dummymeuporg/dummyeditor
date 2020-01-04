@@ -10,13 +10,13 @@ namespace DrawingTools {
 BlockingEraser::BlockingEraser(
     GraphicMap::MapGraphicsScene& mapGraphicsScene,
     GraphicMap::BlockingGraphicLayer* blockingGraphicLayer)
-    : BlockingGeneralTool(QIcon(":/icons/icon_eraser.png"),
-                   mapGraphicsScene,
-                   blockingGraphicLayer)
+    : BlockingGeneralTool(QIcon(":/icons/icon_eraser.png"), mapGraphicsScene,
+                          blockingGraphicLayer)
     , m_mouseClicked(false)
 {}
 
-void BlockingEraser::mapMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
+void BlockingEraser::mapMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
+{
     if (nullptr == m_blockingGraphicLayer) {
         return;
     }
@@ -30,7 +30,8 @@ void BlockingEraser::mapMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
     }
 }
 
-void BlockingEraser::mapMousePressEvent(QGraphicsSceneMouseEvent* event) {
+void BlockingEraser::mapMousePressEvent(QGraphicsSceneMouseEvent* event)
+{
     qDebug() << "Blocking eraser press.";
     if (nullptr == m_blockingGraphicLayer) {
         return;
@@ -45,36 +46,38 @@ void BlockingEraser::mapMousePressEvent(QGraphicsSceneMouseEvent* event) {
     m_mouseClicked = true;
 }
 
-void BlockingEraser::mapMouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
+void BlockingEraser::mapMouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+{
     qDebug() << "Blocking eraser release.";
     m_mouseClicked = false;
 }
 
-void BlockingEraser::mapKeyPressEvent(QKeyEvent* event) {
+void BlockingEraser::mapKeyPressEvent(QKeyEvent* event)
+{
     qDebug() << "key press.";
 }
 
-void BlockingEraser::mapKeyReleaseEvent(QKeyEvent* event) {
+void BlockingEraser::mapKeyReleaseEvent(QKeyEvent* event)
+{
     qDebug() << "key release.";
 }
 
-void BlockingEraser::mapMouseLeaveEvent() {
-}
+void BlockingEraser::mapMouseLeaveEvent() {}
 
-void BlockingEraser::accept(DrawingVisitor& visitor) {
+void BlockingEraser::accept(DrawingVisitor& visitor)
+{
     visitor.visitTool(*this);
 }
 
-void BlockingEraser::emitDrawingToolSelected() {
+void BlockingEraser::emitDrawingToolSelected()
+{
     // TODO : check if emiting 2 different signals is really what we want?
     BlockingGeneralTool::emitDrawingToolSelected();
     emit drawingToolSelected(this);
 }
 
-void BlockingEraser::onUnselected() {
-}
+void BlockingEraser::onUnselected() {}
 
-void BlockingEraser::onSelected() {
-}
+void BlockingEraser::onSelected() {}
 
 } // namespace DrawingTools

@@ -5,17 +5,16 @@
 
 namespace GraphicMap {
 
-BlockingSquareItem::BlockingSquareItem()
-{}
+BlockingSquareItem::BlockingSquareItem() {}
 
-QRectF BlockingSquareItem::boundingRect() const {
+QRectF BlockingSquareItem::boundingRect() const
+{
     return QRectF(0, 0, 8, 8);
 }
 
-void BlockingSquareItem::paint(
-    QPainter* painter,
-    const QStyleOptionGraphicsItem* option,
-    QWidget* widget)
+void BlockingSquareItem::paint(QPainter* painter,
+                               const QStyleOptionGraphicsItem* option,
+                               QWidget* widget)
 {
     Q_UNUSED(option)
     Q_UNUSED(widget)

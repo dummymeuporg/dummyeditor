@@ -16,20 +16,19 @@ namespace DrawingTools {
 //  GraphicPaletteTool class
 //////////////////////////////////////////////////////////////////////////////
 
-class GraphicPaletteTool : public GraphicGeneralTool {
+class GraphicPaletteTool : public GraphicGeneralTool
+{
     Q_OBJECT
 public:
-    GraphicPaletteTool(
-        QIcon&&,
-        GraphicMap::MapGraphicsScene&,
-        GraphicMap::VisibleGraphicLayer* = nullptr
-    );
+    GraphicPaletteTool(QIcon&&, GraphicMap::MapGraphicsScene&,
+                       GraphicMap::VisibleGraphicLayer* = nullptr);
     void paletteMousePressEvent(QGraphicsSceneMouseEvent*);
     void paletteMouseMoveEvent(QGraphicsSceneMouseEvent*);
     void paletteMouseReleaseEvent(QGraphicsSceneMouseEvent*);
     void emitDrawingToolSelected() override;
     void setSelection(const QRect&, const QPixmap&);
-    ChipsetGraphicsScene* chipsetGraphicsScene() const {
+    ChipsetGraphicsScene* chipsetGraphicsScene() const
+    {
         return m_chipsetGraphicsScene;
     }
     void setChipsetGraphicsScene(ChipsetGraphicsScene*);

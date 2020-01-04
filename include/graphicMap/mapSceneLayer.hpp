@@ -27,6 +27,6 @@ protected:
     MapGraphicsScene& m_mapGraphicsScene;
     int m_zIndex;
 };
-} // namespace MapSceneLayer
+} // namespace GraphicMap
 
 #endif // MAPSCENELAYER_H

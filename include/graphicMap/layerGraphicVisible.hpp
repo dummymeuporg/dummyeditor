@@ -1,9 +1,9 @@
 #ifndef VISIBLEGRAPHICLAYER_H
 #define VISIBLEGRAPHICLAYER_H
 
-#include <memory>
 #include <QGraphicsScene>
 #include <QPixmap>
+#include <memory>
 
 #include "drawingTool/graphicEraser.hpp"
 #include "drawingTool/graphicPen.hpp"
@@ -29,17 +29,13 @@ class MapGraphicsScene;
 class VisibleGraphicLayer : public GraphicLayer
 {
 public:
-    VisibleGraphicLayer(Editor::GraphicLayer&,
-                        MapGraphicsScene&,
-                        const QPixmap&,
-                        int);
+    VisibleGraphicLayer(Editor::GraphicLayer&, MapGraphicsScene&,
+                        const QPixmap&, int);
     ~VisibleGraphicLayer() override;
     const QPixmap& chipsetPixmap() const { return m_chipsetPixmap; }
     const Editor::GraphicLayer& layer() const { return m_graphicLayer; }
 
-    VisibleGraphicLayer& setTile(quint16 x,
-                                 quint16 y,
-                                 qint16 chipsetX,
+    VisibleGraphicLayer& setTile(quint16 x, quint16 y, qint16 chipsetX,
                                  qint16 chipsetY);
     VisibleGraphicLayer& setChipsetPixmap(const QPixmap*);
 
@@ -53,6 +49,7 @@ public:
     getClipboardRegion(const QRect& clip) override;
 
     void accept(GraphicLayerVisitor&) override;
+
 private:
     Editor::GraphicLayer& m_graphicLayer;
     const QPixmap& m_chipsetPixmap;

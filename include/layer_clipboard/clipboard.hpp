@@ -11,7 +11,8 @@ namespace LayerClipboard {
 //  Clipboard class
 //////////////////////////////////////////////////////////////////////////////
 
-class Clipboard : public GraphicMap::GraphicLayerVisitor {
+class Clipboard : public GraphicMap::GraphicLayerVisitor
+{
 public:
     Clipboard();
 

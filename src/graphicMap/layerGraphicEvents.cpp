@@ -7,10 +7,9 @@
 
 namespace GraphicMap {
 
-EventsGraphicLayer::EventsGraphicLayer(
-        Editor::EventsLayer& eventsLayer,
-        MapGraphicsScene& mapGraphicsScene,
-        int zIndex)
+EventsGraphicLayer::EventsGraphicLayer(Editor::EventsLayer& eventsLayer,
+                                       MapGraphicsScene& mapGraphicsScene,
+                                       int zIndex)
     : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex)
     , m_eventsLayer(eventsLayer)
 {
@@ -20,7 +19,8 @@ EventsGraphicLayer::EventsGraphicLayer(
 
     /*
 
-    for (auto it = m_layerItems.begin(); it != m_layerItems.end(); ++it, ++index)
+    for (auto it = m_layerItems.begin(); it != m_layerItems.end(); ++it,
+    ++index)
     {
         *it = nullptr;
         if (touchEvents.find(index) != std::end(touchEvents))
@@ -31,10 +31,8 @@ EventsGraphicLayer::EventsGraphicLayer(
         }
     }
      */
-    for (size_t index = 0; index < m_layerItems.size(); ++index)
-    {
-        if (touchEvents.find(index) != std::end(touchEvents))
-        {
+    for (size_t index = 0; index < m_layerItems.size(); ++index) {
+        if (touchEvents.find(index) != std::end(touchEvents)) {
             qreal posX((index % (floor.width())) * 16);
             qreal posY((index / (floor.width())) * 16);
             draw(index, quint16(posX), quint16(posY));
@@ -42,7 +40,8 @@ EventsGraphicLayer::EventsGraphicLayer(
     }
 }
 
-void EventsGraphicLayer::draw(int index, quint16 x, quint16 y) {
+void EventsGraphicLayer::draw(int index, quint16 x, quint16 y)
+{
     m_layerItems[index] = new EventSquareItem();
     m_layerItems[index]->setZValue(m_zIndex);
 
@@ -51,26 +50,31 @@ void EventsGraphicLayer::draw(int index, quint16 x, quint16 y) {
     m_mapGraphicsScene.addItem(m_layerItems[index]);
 }
 
-MapSceneLayer& EventsGraphicLayer::removeTile(quint16, quint16) {
+MapSceneLayer& EventsGraphicLayer::removeTile(quint16, quint16)
+{
     return *this;
 }
 
-std::vector<DrawingTools::DrawingTool*> EventsGraphicLayer::drawingTools() {
+std::vector<DrawingTools::DrawingTool*> EventsGraphicLayer::drawingTools()
+{
     std::vector<DrawingTools::DrawingTool*> tools;
     return tools;
 }
 
-Editor::Layer& EventsGraphicLayer::editorLayer() {
+Editor::Layer& EventsGraphicLayer::editorLayer()
+{
     return m_eventsLayer;
 }
 
-void EventsGraphicLayer::accept(GraphicLayerVisitor& visitor) {
+void EventsGraphicLayer::accept(GraphicLayerVisitor& visitor)
+{
     visitor.visitGraphicLayer(*this);
 }
 
 std::shared_ptr<LayerClipboard::Clipboard>
-EventsGraphicLayer::getClipboardRegion(const QRect& clip) {
-    //XXX: Todo later.
+EventsGraphicLayer::getClipboardRegion(const QRect& clip)
+{
+    // XXX: Todo later.
     return nullptr;
 }
 

@@ -13,11 +13,12 @@ namespace DrawingToolbar {
 //  DrawingToolAction state
 //////////////////////////////////////////////////////////////////////////////
 
-class DisplayGraphicToolState : public State {
+class DisplayGraphicToolState : public State
+{
 public:
     DisplayGraphicToolState(Widget&);
     void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
-    void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&layer) override;
+    void visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer) override;
 };
 
 } // namespace DrawingToolbar

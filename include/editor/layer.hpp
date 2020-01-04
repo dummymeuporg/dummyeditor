@@ -9,7 +9,8 @@ namespace Editor {
 //  Layer class
 //////////////////////////////////////////////////////////////////////////////
 
-class Layer : public QObject {
+class Layer : public QObject
+{
     Q_OBJECT
 public:
     Layer();

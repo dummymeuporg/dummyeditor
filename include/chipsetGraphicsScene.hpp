@@ -9,11 +9,10 @@
 
 namespace DrawingTools {
 class GraphicPaletteTool;
-} // namespace DrawingTool
+} // namespace DrawingTools
 
 class QGraphicsPixmapItem;
 class QGraphicsSceneMouseEvent;
-
 
 //////////////////////////////////////////////////////////////////////////////
 //  ChipsetGraphicsScene class
@@ -45,6 +44,7 @@ signals:
 public slots:
     void setPaletteTool(::DrawingTools::GraphicPaletteTool*);
     void changeChipset(const QString& chipsetPath);
+
 private:
     QGraphicsPixmapItem* m_chipset;
     QRect m_currentSelection;

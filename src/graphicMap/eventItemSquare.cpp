@@ -4,17 +4,16 @@
 
 namespace GraphicMap {
 
-EventSquareItem::EventSquareItem()
-{}
+EventSquareItem::EventSquareItem() {}
 
-QRectF EventSquareItem::boundingRect() const {
+QRectF EventSquareItem::boundingRect() const
+{
     return QRectF(0, 0, 16, 16);
 }
 
-void EventSquareItem::paint(
-    QPainter* painter,
-    const QStyleOptionGraphicsItem* option,
-    QWidget* widget)
+void EventSquareItem::paint(QPainter* painter,
+                            const QStyleOptionGraphicsItem* option,
+                            QWidget* widget)
 {
     Q_UNUSED(option)
     Q_UNUSED(widget)
