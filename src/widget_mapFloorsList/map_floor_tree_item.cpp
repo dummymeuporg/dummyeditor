@@ -3,63 +3,64 @@
 #include <QDebug>
 
 #include "editor/floor.hpp"
-#include "widget_mapFloorsList/map_blocking_layer_tree_item.hpp"
-#include "widget_mapFloorsList/map_graphic_layer_tree_item.hpp"
+#include "editor/layerBlocking.hpp"
+#include "editor/layerGraphic.hpp"
+#include "widget_mapFloorsList/map_layer_tree_item.hpp"
 
 namespace MapFloorsList {
 
-MapFloorTreeItem::MapFloorTreeItem(Editor::Floor& floor, std::size_t index)
+FloorTreeItem::FloorTreeItem(Editor::Floor& floor, std::size_t index)
     : m_editorFloor(floor)
     , m_index(index)
 {
-    if (m_editorFloor.visible()) {
-        setIcon(QIcon(":/icons/icon_eye.png"));
-    } else {
-        setIcon(QIcon(":/icons/icon_eye_crossed.png"));
-    }
+    updateVisibilityIcon();
 
     // Put blocking layer at the top.
-    appendRow(new MapBlockingLayerTreeItem(floor.blockingLayer()));
+    appendRow(new LayerTreeItem(floor.blockingLayer(), BlockingLayer));
 
-    for (auto it = floor.graphicLayers().rbegin();
-         it != floor.graphicLayers().rend(); ++it) {
-        appendRow(new MapGraphicLayerTreeItem(it->first, *(it->second)));
+    auto& layersMap = floor.graphicLayers();
+    for (auto it = layersMap.rbegin(); it != layersMap.rend(); ++it) {
+        appendRow(new LayerTreeItem(*(it->second), GraphicLayer, it->first));
     }
 }
 
-QVariant MapFloorTreeItem::data(int role) const
+QVariant FloorTreeItem::data(int role) const
 {
     if (role == Qt::DisplayRole) {
-        return QStringLiteral("Floor %1").arg(m_index);
+        return QObject::tr("Floor %1").arg(m_index);
     }
     return QStandardItem::data(role);
 }
 
-void MapFloorTreeItem::toggle()
+void FloorTreeItem::toggle()
 {
     setVisible(! m_editorFloor.visible());
 }
 
-void MapFloorTreeItem::setVisible(bool visible)
+void FloorTreeItem::setVisible(bool visible)
 {
     m_editorFloor.setVisible(visible);
+    updateVisibilityIcon();
+
+    for (int i = 0; i < rowCount(); ++i) {
+        auto* layerItem = reinterpret_cast<LayerTreeItem*>(child(i));
+        layerItem->setVisible(visible);
+    }
+}
+
+void FloorTreeItem::setSelected()
+{
+    // Nothing to do.
+    qDebug() << "Selected floor.";
+}
+
+void FloorTreeItem::updateVisibilityIcon()
+{
     if (m_editorFloor.visible()) {
         setIcon(QIcon(":/icons/icon_eye.png"));
     } else {
         setIcon(QIcon(":/icons/icon_eye_crossed.png"));
     }
-
-    for (int i = 0; i < rowCount(); ++i) {
-        MapLayerTreeItem* layerItem =
-            reinterpret_cast<MapLayerTreeItem*>(child(i));
-        layerItem->setVisible(visible);
-    }
-}
-
-void MapFloorTreeItem::setSelected()
-{
-    // Nothing to do.
-    qDebug() << "Selected floor.";
 }
 
 } // namespace MapFloorsList

@@ -12,17 +12,36 @@ class Layer;
 } // namespace Editor
 
 namespace MapFloorsList {
+enum tLayerType
+{
+    GraphicLayer,
+    BlockingLayer
+};
 
 //////////////////////////////////////////////////////////////////////////////
-//  MapLayerTreeItem class
+//  MapLayerTreeItem class.
+// This class is the model (data) of a layer
 //////////////////////////////////////////////////////////////////////////////
 
-class MapLayerTreeItem : public MapTreeItem
+class LayerTreeItem : public MapTreeItem
 {
 public:
+    LayerTreeItem(Editor::Layer& layer, tLayerType type, int8_t index = 0);
+
+    QVariant data(int role = Qt::UserRole + 1) const override;
+
     void toggle() override;
-    void setVisible(bool) override;
-    virtual Editor::Layer& layer() = 0;
+    void setVisible(bool isVisible) override;
+    void setSelected() override;
+
+
+protected:
+    void updateVisibilityIcon();
+
+protected:
+    Editor::Layer& m_layer;
+    tLayerType m_type;
+    int8_t m_index;
 };
 
 } // namespace MapFloorsList

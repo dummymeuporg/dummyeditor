@@ -1510,7 +1510,7 @@
                         </DElement>
                        </base-DElement>
                        <text>Widget drawing toolbar</text>
-                       <pos>x:950;y:1135</pos>
+                       <pos>x:950;y:1015</pos>
                        <rect>x:-255;y:-125;w:510;h:250</rect>
                       </DBoundary>
                      </instance>
@@ -1528,7 +1528,7 @@
                          <object>{382e36bc-1f58-4c45-b784-9a937a09a1e6}</object>
                          <context>Widget DrawingToolbar</context>
                          <name>Widget</name>
-                         <pos>x:780;y:1095</pos>
+                         <pos>x:780;y:975</pos>
                          <rect>x:-60;y:-40;w:120;h:80</rect>
                          <auto-sized>false</auto-sized>
                          <visual-role>5</visual-role>
@@ -1587,7 +1587,7 @@
                          <object>{750819a3-eb7f-4506-af10-9a4857faff09}</object>
                          <context>Widget DrawingToolbar</context>
                          <name>State</name>
-                         <pos>x:955;y:1115</pos>
+                         <pos>x:955;y:995</pos>
                          <rect>x:-40;y:-35;w:80;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1609,7 +1609,7 @@
                          <object>{f4cd57e6-43f4-4405-8280-f548ab03ba76}</object>
                          <context>Widget DrawingToolbar</context>
                          <name>DrawingToolAction</name>
-                         <pos>x:1100;y:1095</pos>
+                         <pos>x:1100;y:975</pos>
                          <rect>x:-55;y:-35;w:110;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1631,7 +1631,7 @@
                          <object>{29b39687-87c4-4f08-8b91-5a55967f70f0}</object>
                          <context>Widget DrawingToolbar</context>
                          <name>DisplayBlockingToolState</name>
-                         <pos>x:795;y:1215</pos>
+                         <pos>x:795;y:1095</pos>
                          <rect>x:-70;y:-35;w:140;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1671,7 +1671,7 @@
                          <object>{d022eba4-7ad0-46e8-b370-9c08506729e7}</object>
                          <context>Widget DrawingToolbar</context>
                          <name>DisplayGraphicToolState</name>
-                         <pos>x:950;y:1215</pos>
+                         <pos>x:950;y:1095</pos>
                          <rect>x:-70;y:-35;w:140;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1711,7 +1711,7 @@
                          <object>{c7ec7a39-1835-4e56-a49c-cda22a887f0a}</object>
                          <context>Widget DrawingToolbar</context>
                          <name>NoDrawingToolState</name>
-                         <pos>x:1095;y:1215</pos>
+                         <pos>x:1095;y:1095</pos>
                          <rect>x:-60;y:-35;w:120;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1747,8 +1747,8 @@
                         </DElement>
                        </base-DElement>
                        <text>Widget Map Floors list</text>
-                       <pos>x:955;y:830</pos>
-                       <rect>x:-255;y:-150;w:510;h:300</rect>
+                       <pos>x:950;y:780</pos>
+                       <rect>x:-255;y:-100;w:510;h:200</rect>
                       </DBoundary>
                      </instance>
                     </item>
@@ -1765,7 +1765,7 @@
                          <object>{d5f59ee5-305b-4cca-a7a1-5d02b5483f9d}</object>
                          <context>Widget MapFloorsList</context>
                          <name>Widget</name>
-                         <pos>x:775;y:725</pos>
+                         <pos>x:770;y:725</pos>
                          <rect>x:-55;y:-35;w:110;h:70</rect>
                          <auto-sized>false</auto-sized>
                          <visual-role>5</visual-role>
@@ -1824,7 +1824,7 @@
                          <object>{2dbfbac1-1fbe-43f8-be3a-642cb3621ae7}</object>
                          <context>Widget MapFloorsList</context>
                          <name>MapFloorTreeModel</name>
-                         <pos>x:1115;y:735</pos>
+                         <pos>x:1110;y:735</pos>
                          <rect>x:-60;y:-35;w:120;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1846,7 +1846,7 @@
                          <object>{b3f37573-3715-4235-a565-63e943a016bc}</object>
                          <context>Widget MapFloorsList</context>
                          <name>MapTreeItem</name>
-                         <pos>x:950;y:750</pos>
+                         <pos>x:945;y:750</pos>
                          <rect>x:-55;y:-35;w:110;h:70</rect>
                          <auto-sized>false</auto-sized>
                          <visual-role>0</visual-role>
@@ -1869,7 +1869,7 @@
                          <object>{4d28dc15-638b-4f41-b20f-93a8a6c03c24}</object>
                          <context>Widget MapFloorsList</context>
                          <name>MapLayerTreeItem</name>
-                         <pos>x:885;y:835</pos>
+                         <pos>x:880;y:835</pos>
                          <rect>x:-55;y:-35;w:110;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1909,7 +1909,7 @@
                          <object>{2038beb8-7d1a-4482-8ae3-55a101c1bb05}</object>
                          <context>Widget MapFloorsList</context>
                          <name>MapFloorTreeItem</name>
-                         <pos>x:1010;y:835</pos>
+                         <pos>x:1005;y:835</pos>
                          <rect>x:-55;y:-35;w:110;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1936,89 +1936,9 @@
                       </DInheritance>
                      </instance>
                     </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{bc6f19ae-2ed5-425a-9f29-d11ace22ed5c}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{bfb737dc-3685-422b-8946-c3a8a7de6615}</object>
-                         <context>Widget MapFloorsList</context>
-                         <name>MapBlockingLayerTreeItem</name>
-                         <pos>x:800;y:925</pos>
-                         <rect>x:-75;y:-35;w:150;h:70</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>MapFloorsList</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{261de3d7-f228-4223-a50e-f4fbcc80dba2}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{2a44a0b0-2e39-4aef-a75b-164a7b9c1192}</object>
-                         <context>Widget MapFloorsList</context>
-                         <name>MapGraphicLayerTreeItem</name>
-                         <pos>x:960;y:925</pos>
-                         <rect>x:-75;y:-35;w:150;h:70</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>MapFloorsList</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{4968502c-b87a-4136-ac6c-c77b68e868da}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{34797457-c111-4e37-888a-3dbed4473a4f}</object>
-                         <a>{261de3d7-f228-4223-a50e-f4fbcc80dba2}</a>
-                         <b>{99d9b6e3-eb5c-45a6-b063-49d9d5126cd8}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{1b2718e4-675e-4f1c-ae96-0fcadc957fbb}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{c81c995a-4e07-4472-aede-92ecf1e61fdb}</object>
-                         <a>{bc6f19ae-2ed5-425a-9f29-d11ace22ed5c}</a>
-                         <b>{99d9b6e3-eb5c-45a6-b063-49d9d5126cd8}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
-                     </instance>
-                    </item>
                    </qlist>
                   </elements>
-                  <last-modified>1578090378448</last-modified>
+                  <last-modified>1578241654997</last-modified>
                   <toolbarid>General</toolbarid>
                  </MDiagram>
                 </base-MDiagram>
@@ -6094,7 +6014,7 @@
                                           <flags>1</flags>
                                          </MElement>
                                         </base-MElement>
-                                        <name>MapBlockingLayerTreeItem</name>
+                                        <name>MapBlockingLayerTreeIte</name>
                                         <relations>
                                          <handles>
                                           <handles>

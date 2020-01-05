@@ -542,7 +542,7 @@
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
-   <widget class="MapFloorsList::Widget" name="widgetMapFloorsList"/>
+   <widget class="MapFloorsList::FloorTreeWidget" name="widgetMapFloorsList"/>
   </widget>
   <widget class="QDockWidget" name="dockWidgetDrawingToolbox">
    <attribute name="dockWidgetArea">
@@ -973,7 +973,7 @@
    <header>mapsTreeView.hpp</header>
   </customwidget>
   <customwidget>
-   <class>MapFloorsList::Widget</class>
+   <class>MapFloorsList::FloorTreeWidget</class>
    <extends>QWidget</extends>
    <header>widget_mapFloorsList/widget.hpp</header>
    <container>1</container>

@@ -6,18 +6,15 @@
 namespace MapFloorsList {
 
 MapFloorTreeModel::MapFloorTreeModel(std::shared_ptr<Editor::Map> editorMap)
-    : m_editorMap(editorMap)
 {
-
-    for (int i = m_editorMap->floorsCount() - 1; i >= 0; --i) {
-        QList<QStandardItem*> floorItem{
-            new MapFloorTreeItem(m_editorMap->floorAt(i), i)};
+    for (int i = editorMap->floorsCount() - 1; i >= 0; --i) {
+        size_t uiIdx    = static_cast<size_t>(i);
+        auto* floorItem = new FloorTreeItem(editorMap->floorAt(uiIdx), uiIdx);
         appendRow(floorItem);
     }
 }
 
-MapTreeItem*
-MapFloorTreeModel::mapTreeItemFromIndex(const QModelIndex& index) const
+MapTreeItem* MapFloorTreeModel::floorItemFromIdx(const QModelIndex& index) const
 {
     return reinterpret_cast<MapTreeItem*>(itemFromIndex(index));
 }

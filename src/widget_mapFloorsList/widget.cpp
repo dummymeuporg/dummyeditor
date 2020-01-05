@@ -7,44 +7,46 @@
 
 namespace MapFloorsList {
 
-Widget::Widget(QWidget* parent)
+FloorTreeWidget::FloorTreeWidget(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::MapFloorsList)
-    , m_editorMap(nullptr)
-    , m_mapFloorTreeModel(nullptr)
-    , m_mapScene(nullptr)
+    , m_floorTreeModel(nullptr)
 {
     m_ui->setupUi(this);
 }
 
-void Widget::setEditorMap(std::shared_ptr<Editor::Map> editorMap)
+const MapFloorTreeModel* FloorTreeWidget::mapFloorTreeModel() const
 {
-    m_editorMap = editorMap;
-    reset();
-    m_mapFloorTreeModel = new MapFloorTreeModel(m_editorMap);
-    m_ui->treeViewFloors->setModel(m_mapFloorTreeModel);
+  return m_floorTreeModel;
 }
 
-void Widget::reset()
+void FloorTreeWidget::setEditorMap(std::shared_ptr<Editor::Map> editorMap)
 {
-    if (m_mapFloorTreeModel != nullptr) {
-        delete m_mapFloorTreeModel;
-        m_mapFloorTreeModel = nullptr;
+    reset();
+
+    m_floorTreeModel = new MapFloorTreeModel(editorMap);
+    m_ui->treeViewFloors->setModel(m_floorTreeModel);
+}
+
+void FloorTreeWidget::reset()
+{
+    if (m_floorTreeModel != nullptr) {
+        delete m_floorTreeModel;
+        m_floorTreeModel = nullptr;
     }
     m_ui->treeViewFloors->reset();
 }
 
-void Widget::toggleLayerVisibleState(QModelIndex selectedIndex)
+void FloorTreeWidget::toggleLayerVisibleState(QModelIndex selectedIndex)
 {
-    qDebug() << "selectedIndex: " << selectedIndex;
-    m_mapFloorTreeModel->mapTreeItemFromIndex(selectedIndex)->toggle();
+    qDebug() << "Toggle Layer visibility: selectedIndex: " << selectedIndex;
+    m_floorTreeModel->floorItemFromIdx(selectedIndex)->toggle();
 }
 
-void Widget::selectLayer(QModelIndex selectedIndex)
+void FloorTreeWidget::selectLayer(QModelIndex selectedIndex)
 {
-    auto item = m_mapFloorTreeModel->mapTreeItemFromIndex(selectedIndex);
-    // This line will trigger a signal:
-    item->setSelected();
+    auto* toSelect = m_floorTreeModel->floorItemFromIdx(selectedIndex);
+    toSelect->setSelected(); // This line will trigger a signal:
 }
 
 } // namespace MapFloorsList

@@ -18,16 +18,14 @@ class MapTreeItem;
 
 //////////////////////////////////////////////////////////////////////////////
 //  MapFloorTreeModel class
+// This class is the model (data) of the list of all floors of a map
 //////////////////////////////////////////////////////////////////////////////
 
 class MapFloorTreeModel : public QStandardItemModel
 {
 public:
     MapFloorTreeModel(std::shared_ptr<Editor::Map>);
-    MapTreeItem* mapTreeItemFromIndex(const QModelIndex&) const;
-
-private:
-    std::shared_ptr<Editor::Map> m_editorMap;
+    MapTreeItem* floorItemFromIdx(const QModelIndex&) const;
 };
 
 } // namespace MapFloorsList

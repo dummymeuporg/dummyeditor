@@ -9,10 +9,6 @@
 //  forward declaration
 //////////////////////////////////////////////////////////////////////////////
 
-namespace GraphicMap {
-class MapGraphicsScene;
-} // namespace GraphicMap
-
 namespace Editor {
 class Map;
 } // namespace Editor
@@ -43,21 +39,18 @@ using QModelIndex = ::QModelIndex;
 
 //////////////////////////////////////////////////////////////////////////////
 //  Widget class
+// This widget display a tree-view of the list of all floors of a map
 //////////////////////////////////////////////////////////////////////////////
 
-class Widget : public QWidget
+class FloorTreeWidget : public QWidget
 {
     Q_OBJECT
 public:
-    Widget(QWidget* parent = nullptr);
-    void setEditorMap(std::shared_ptr<Editor::Map>);
-    const MapFloorTreeModel* mapFloorTreeModel() const
-    {
-        return m_mapFloorTreeModel;
-    }
+    FloorTreeWidget(QWidget* parent = nullptr);
 
-signals:
-    void selectedLayerChanged();
+    const MapFloorTreeModel* mapFloorTreeModel() const;
+
+    void setEditorMap(std::shared_ptr<Editor::Map>);
 
 public slots:
     void selectLayer(QModelIndex);
@@ -65,10 +58,10 @@ public slots:
 
 private:
     void reset();
+
+private:
     Ui::MapFloorsList* m_ui;
-    std::shared_ptr<Editor::Map> m_editorMap;
-    MapFloorTreeModel* m_mapFloorTreeModel;
-    GraphicMap::MapGraphicsScene* m_mapScene;
+    MapFloorTreeModel* m_floorTreeModel;
 };
 
 } // namespace MapFloorsList

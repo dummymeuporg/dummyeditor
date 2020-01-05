@@ -14,7 +14,7 @@ namespace Editor {
 class BlockingLayer;
 class EventsLayer;
 class GraphicLayer;
-using GraphicLayers = std::map<std::int8_t, std::unique_ptr<GraphicLayer>>;
+using GraphicLayers = std::map<int8_t, std::unique_ptr<GraphicLayer>>;
 
 //////////////////////////////////////////////////////////////////////////////
 //  Floor class
@@ -25,7 +25,7 @@ class Floor
 public:
     Floor(Dummy::Local::Floor&);
 
-    GraphicLayer& graphicLayerAt(std::int8_t position); //< unimplemented...
+    GraphicLayer& graphicLayerAt(int8_t position); //< unimplemented...
     const GraphicLayers& graphicLayers() const { return m_graphicLayers; }
     bool visible() const { return m_visible; }
     void setVisible(bool);

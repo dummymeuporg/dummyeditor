@@ -15,16 +15,22 @@ namespace MapFloorsList {
 
 //////////////////////////////////////////////////////////////////////////////
 //  MapFloorTreeItem class
+// This class is the model (data) of a floor (containing several layers)
 //////////////////////////////////////////////////////////////////////////////
 
-class MapFloorTreeItem : public MapTreeItem
+class FloorTreeItem : public MapTreeItem
 {
 public:
-    MapFloorTreeItem(Editor::Floor&, std::size_t index);
+    FloorTreeItem(Editor::Floor& floor, std::size_t index);
+
     QVariant data(int role = Qt::UserRole + 1) const override;
+
     void toggle() override;
     void setVisible(bool) override;
     void setSelected() override;
+
+private:
+    void updateVisibilityIcon();
 
 private:
     Editor::Floor& m_editorFloor;

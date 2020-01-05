@@ -49,7 +49,7 @@ public:
     void resize(std::uint16_t, std::uint16_t);
 
     std::uint8_t floorsCount() const { return m_floorsCount; }
-    Floor& floorAt(std::uint8_t index) { return *m_editorFloors[index]; }
+    Floor& floorAt(size_t index) { return *m_editorFloors[index]; }
     const Floors& floors() const { return m_editorFloors; }
 
     void addFloor(std::unique_ptr<Editor::Floor>);
