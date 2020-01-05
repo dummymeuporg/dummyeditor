@@ -4,7 +4,6 @@
 #include <QIcon>
 
 #include "graphicMap/graphicLayerVisitor.hpp"
-#include "widget_drawingToolbar/widget.hpp"
 
 //////////////////////////////////////////////////////////////////////////////
 //  forward declaration
@@ -45,6 +44,7 @@ public:
     virtual void accept(DrawingVisitor&) = 0;
     virtual void emitDrawingToolSelected();
 
+public slots:
     void setSelected(bool selected);
 
 signals:

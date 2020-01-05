@@ -1,7 +1,7 @@
 #ifndef DRAWINGTOOLBARWIDGET_H
 #define DRAWINGTOOLBARWIDGET_H
 
-#include <QWidget>
+#include <QToolBar>
 
 #include "drawingTool/drawingVisitor.hpp"
 #include "graphicMap/graphicLayerVisitor.hpp"
@@ -10,8 +10,6 @@
 //  forward declaration
 //////////////////////////////////////////////////////////////////////////////
 
-class QToolBar;
-class QActionGroup;
 class ChipsetGraphicsScene;
 
 namespace GraphicMap {
@@ -23,23 +21,28 @@ namespace DrawingTools {
 class DrawingTool;
 } // namespace DrawingTools
 
-namespace DrawingToolbar {
-class State;
-
 //////////////////////////////////////////////////////////////////////////////
 //  DrawingToolbarWidget class
 //////////////////////////////////////////////////////////////////////////////
 
-class Widget : public QWidget,
-               public DrawingTools::DrawingVisitor,
-               public GraphicMap::GraphicLayerVisitor
+class DrawingToolBarWidget : public QWidget,
+                             public DrawingTools::DrawingVisitor,
+                             public GraphicMap::GraphicLayerVisitor
 {
     Q_OBJECT
 public:
-    Widget(QWidget* parent = nullptr);
+    DrawingToolBarWidget(QWidget* parent = nullptr);
+
+    enum tToolBarState
+    {
+        NoDrawingToolState,
+        BlockingToolsState,
+        GraphicToolsState
+    };
+
     void clear();
     void reset();
-    void setState(std::shared_ptr<State>);
+    void setState(tToolBarState state);
     void onLayerSelected(const GraphicMap::MapGraphicsScene*,
                          const ChipsetGraphicsScene*, GraphicMap::GraphicLayer&,
                          std::vector<DrawingTools::DrawingTool*>*);
@@ -62,13 +65,12 @@ public:
 
 private:
     QToolBar* m_toolbar;
-    QActionGroup* m_actionGroup;
+    QActionGroup* m_actionGrp;
+
     const ChipsetGraphicsScene* m_chipsetGraphicsScene;
     const GraphicMap::MapGraphicsScene* m_mapScene;
     std::vector<DrawingTools::DrawingTool*>* m_drawingTools;
-    std::shared_ptr<State> m_state;
+    tToolBarState m_state;
 };
-
-} // namespace DrawingToolbar
 
 #endif // DRAWINGTOOLBARWIDGET_H

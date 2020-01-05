@@ -42,11 +42,11 @@ using QModelIndex = ::QModelIndex;
 // This widget display a tree-view of the list of all floors of a map
 //////////////////////////////////////////////////////////////////////////////
 
-class FloorTreeWidget : public QWidget
+class FloorListWidget : public QWidget
 {
     Q_OBJECT
 public:
-    FloorTreeWidget(QWidget* parent = nullptr);
+    FloorListWidget(QWidget* parent = nullptr);
 
     const MapFloorTreeModel* mapFloorTreeModel() const;
 

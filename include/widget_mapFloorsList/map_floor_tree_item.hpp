@@ -30,7 +30,7 @@ public:
     void setSelected() override;
 
 private:
-    void updateVisibilityIcon();
+    void updateVisibilityDisplay();
 
 private:
     Editor::Floor& m_editorFloor;

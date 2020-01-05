@@ -5,6 +5,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 
+#include "drawingTool/drawingVisitor.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
 

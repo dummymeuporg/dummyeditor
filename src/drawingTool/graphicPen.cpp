@@ -4,6 +4,7 @@
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneMouseEvent>
 
+#include "drawingTool/drawingVisitor.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
 
@@ -25,7 +26,7 @@ void GraphicPen::mapMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 
     if (nullptr != m_selectionItem) {
         if (m_hoverItem == nullptr
-            || m_hoverItem->pixmap() != m_selectionPixmap) {
+            || m_hoverItem->pixmap().toImage() != m_selectionPixmap.toImage()) {
             m_hoverItem =
                 m_mapGraphicsScene.addPixmap(m_selectionItem->pixmap());
             m_hoverItem->setZValue(99999);

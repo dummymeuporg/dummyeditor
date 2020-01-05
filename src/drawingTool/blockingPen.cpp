@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 
+#include "drawingTool/drawingVisitor.hpp"
 #include "graphicMap/layerGraphicBlocking.hpp"
 
 namespace DrawingTools {

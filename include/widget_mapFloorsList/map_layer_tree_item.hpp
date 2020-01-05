@@ -36,7 +36,7 @@ public:
 
 
 protected:
-    void updateVisibilityIcon();
+    void updateVisibilityDisplay();
 
 protected:
     Editor::Layer& m_layer;

@@ -13,7 +13,7 @@ FloorTreeItem::FloorTreeItem(Editor::Floor& floor, std::size_t index)
     : m_editorFloor(floor)
     , m_index(index)
 {
-    updateVisibilityIcon();
+    updateVisibilityDisplay();
 
     // Put blocking layer at the top.
     appendRow(new LayerTreeItem(floor.blockingLayer(), BlockingLayer));
@@ -40,7 +40,7 @@ void FloorTreeItem::toggle()
 void FloorTreeItem::setVisible(bool visible)
 {
     m_editorFloor.setVisible(visible);
-    updateVisibilityIcon();
+    updateVisibilityDisplay();
 
     for (int i = 0; i < rowCount(); ++i) {
         auto* layerItem = reinterpret_cast<LayerTreeItem*>(child(i));
@@ -54,8 +54,9 @@ void FloorTreeItem::setSelected()
     qDebug() << "Selected floor.";
 }
 
-void FloorTreeItem::updateVisibilityIcon()
+void FloorTreeItem::updateVisibilityDisplay()
 {
+    setEnabled(m_editorFloor.visible());
     if (m_editorFloor.visible()) {
         setIcon(QIcon(":/icons/icon_eye.png"));
     } else {

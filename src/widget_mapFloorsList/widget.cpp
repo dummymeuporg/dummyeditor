@@ -7,7 +7,7 @@
 
 namespace MapFloorsList {
 
-FloorTreeWidget::FloorTreeWidget(QWidget* parent)
+FloorListWidget::FloorListWidget(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::MapFloorsList)
     , m_floorTreeModel(nullptr)
@@ -15,12 +15,12 @@ FloorTreeWidget::FloorTreeWidget(QWidget* parent)
     m_ui->setupUi(this);
 }
 
-const MapFloorTreeModel* FloorTreeWidget::mapFloorTreeModel() const
+const MapFloorTreeModel* FloorListWidget::mapFloorTreeModel() const
 {
   return m_floorTreeModel;
 }
 
-void FloorTreeWidget::setEditorMap(std::shared_ptr<Editor::Map> editorMap)
+void FloorListWidget::setEditorMap(std::shared_ptr<Editor::Map> editorMap)
 {
     reset();
 
@@ -28,7 +28,7 @@ void FloorTreeWidget::setEditorMap(std::shared_ptr<Editor::Map> editorMap)
     m_ui->treeViewFloors->setModel(m_floorTreeModel);
 }
 
-void FloorTreeWidget::reset()
+void FloorListWidget::reset()
 {
     if (m_floorTreeModel != nullptr) {
         delete m_floorTreeModel;
@@ -37,13 +37,13 @@ void FloorTreeWidget::reset()
     m_ui->treeViewFloors->reset();
 }
 
-void FloorTreeWidget::toggleLayerVisibleState(QModelIndex selectedIndex)
+void FloorListWidget::toggleLayerVisibleState(QModelIndex selectedIndex)
 {
     qDebug() << "Toggle Layer visibility: selectedIndex: " << selectedIndex;
     m_floorTreeModel->floorItemFromIdx(selectedIndex)->toggle();
 }
 
-void FloorTreeWidget::selectLayer(QModelIndex selectedIndex)
+void FloorListWidget::selectLayer(QModelIndex selectedIndex)
 {
     auto* toSelect = m_floorTreeModel->floorItemFromIdx(selectedIndex);
     toSelect->setSelected(); // This line will trigger a signal:

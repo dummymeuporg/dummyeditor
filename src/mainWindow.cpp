@@ -259,7 +259,7 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex)
     m_ui->graphicsViewMap->setSceneRect(
         QRect(0, 0, map->width() * 16, map->height() * 16));
 
-    auto mapFloorsList = reinterpret_cast<MapFloorsList::FloorTreeWidget*>(
+    auto mapFloorsList = reinterpret_cast<MapFloorsList::FloorListWidget*>(
         m_ui->dockWidgetMapFloorsList->widget());
 
     mapFloorsList->setEditorMap(map);

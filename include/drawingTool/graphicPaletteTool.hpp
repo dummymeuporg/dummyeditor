@@ -10,6 +10,8 @@
 class QGraphicsRectItem;
 class QGraphicsPixmapItem;
 
+class ChipsetGraphicsScene;
+
 namespace DrawingTools {
 
 //////////////////////////////////////////////////////////////////////////////

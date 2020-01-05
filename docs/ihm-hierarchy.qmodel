@@ -1506,243 +1506,6 @@
                       <DBoundary>
                        <base-DElement>
                         <DElement>
-                         <uid>{acf56a83-f8ca-4a9f-b3e8-460d489a74b1}</uid>
-                        </DElement>
-                       </base-DElement>
-                       <text>Widget drawing toolbar</text>
-                       <pos>x:950;y:1015</pos>
-                       <rect>x:-255;y:-125;w:510;h:250</rect>
-                      </DBoundary>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{ad4354bb-bf7c-4f8d-b3cf-5d8b48dccd27}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{382e36bc-1f58-4c45-b784-9a937a09a1e6}</object>
-                         <context>Widget DrawingToolbar</context>
-                         <name>Widget</name>
-                         <pos>x:780;y:975</pos>
-                         <rect>x:-60;y:-40;w:120;h:80</rect>
-                         <auto-sized>false</auto-sized>
-                         <visual-role>5</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>DrawingToolbar</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{299631e9-0856-4e39-b47b-c414065b7982}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{bb4d0c02-65f7-425c-8200-3960b7290cce}</object>
-                         <a>{ad4354bb-bf7c-4f8d-b3cf-5d8b48dccd27}</a>
-                         <b>{b802a4fa-211b-4954-b6dc-51f066b9459d}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{9707a4a2-403a-498b-b8c3-7dfbf4aefedf}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{2610b030-94b8-4396-91ef-48b20b424ff4}</object>
-                         <a>{ad4354bb-bf7c-4f8d-b3cf-5d8b48dccd27}</a>
-                         <b>{3922c61e-0b1c-4aa8-acec-0f398b8014fe}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{8c38290c-a88a-441f-97ac-0aecc1a99c51}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{750819a3-eb7f-4506-af10-9a4857faff09}</object>
-                         <context>Widget DrawingToolbar</context>
-                         <name>State</name>
-                         <pos>x:955;y:995</pos>
-                         <rect>x:-40;y:-35;w:80;h:70</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>DrawingToolbar</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{1d3c1919-0afc-4a85-bc22-b4808967ea5f}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{f4cd57e6-43f4-4405-8280-f548ab03ba76}</object>
-                         <context>Widget DrawingToolbar</context>
-                         <name>DrawingToolAction</name>
-                         <pos>x:1100;y:975</pos>
-                         <rect>x:-55;y:-35;w:110;h:70</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>DrawingToolbar</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{a73530a6-46d9-4c85-bf19-9e5cb621e76f}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{29b39687-87c4-4f08-8b91-5a55967f70f0}</object>
-                         <context>Widget DrawingToolbar</context>
-                         <name>DisplayBlockingToolState</name>
-                         <pos>x:795;y:1095</pos>
-                         <rect>x:-70;y:-35;w:140;h:70</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>DrawingToolbar</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{be333c21-83d6-4e7c-8d6e-cf9ed60ffca1}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{8bf24f5b-b2b1-4d33-827b-fbd63bbef4b6}</object>
-                         <a>{a73530a6-46d9-4c85-bf19-9e5cb621e76f}</a>
-                         <b>{8c38290c-a88a-441f-97ac-0aecc1a99c51}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{6998a0f0-c2c1-46fc-a0c4-c2c54b1e3de3}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{d022eba4-7ad0-46e8-b370-9c08506729e7}</object>
-                         <context>Widget DrawingToolbar</context>
-                         <name>DisplayGraphicToolState</name>
-                         <pos>x:950;y:1095</pos>
-                         <rect>x:-70;y:-35;w:140;h:70</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>DrawingToolbar</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{7eacc358-ccfd-4fc0-a54c-28122952ae10}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{02e66f7e-86aa-4f77-9de4-9dbd264ce90f}</object>
-                         <a>{6998a0f0-c2c1-46fc-a0c4-c2c54b1e3de3}</a>
-                         <b>{8c38290c-a88a-441f-97ac-0aecc1a99c51}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{105444c1-1c14-46be-b9f8-34000b8044e7}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{c7ec7a39-1835-4e56-a49c-cda22a887f0a}</object>
-                         <context>Widget DrawingToolbar</context>
-                         <name>NoDrawingToolState</name>
-                         <pos>x:1095;y:1095</pos>
-                         <rect>x:-60;y:-35;w:120;h:70</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>DrawingToolbar</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{ecf3817e-4c8e-4272-b7ec-bf4955e23d46}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{ae10ea7d-329a-4631-9d98-df7bd8991a69}</object>
-                         <a>{105444c1-1c14-46be-b9f8-34000b8044e7}</a>
-                         <b>{8c38290c-a88a-441f-97ac-0aecc1a99c51}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DBoundary">
-                      <DBoundary>
-                       <base-DElement>
-                        <DElement>
                          <uid>{a9b48f32-7dce-41aa-ad92-b12ab0872d5e}</uid>
                         </DElement>
                        </base-DElement>
@@ -1936,9 +1699,66 @@
                       </DInheritance>
                      </instance>
                     </item>
+                    <item>
+                     <instance type="DClass">
+                      <DClass>
+                       <base-DObject>
+                        <DObject>
+                         <base-DElement>
+                          <DElement>
+                           <uid>{88049d83-a757-4ead-8d81-b9c2ef58fd4a}</uid>
+                          </DElement>
+                         </base-DElement>
+                         <object>{8ecc250f-7928-4147-a89c-c35fa84189a6}</object>
+                         <context>Include</context>
+                         <name>DrawingToolBarWidget</name>
+                         <pos>x:590;y:715</pos>
+                         <rect>x:-65;y:-30;w:130;h:60</rect>
+                         <visual-role>5</visual-role>
+                        </DObject>
+                       </base-DObject>
+                      </DClass>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DInheritance">
+                      <DInheritance>
+                       <base-DRelation>
+                        <DRelation>
+                         <base-DElement>
+                          <DElement>
+                           <uid>{a788f49a-f6d7-44b1-9096-e73f12619f1a}</uid>
+                          </DElement>
+                         </base-DElement>
+                         <object>{d6c66f4f-c9df-4df4-95a4-34e6a4e87aee}</object>
+                         <a>{88049d83-a757-4ead-8d81-b9c2ef58fd4a}</a>
+                         <b>{b802a4fa-211b-4954-b6dc-51f066b9459d}</b>
+                        </DRelation>
+                       </base-DRelation>
+                      </DInheritance>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DInheritance">
+                      <DInheritance>
+                       <base-DRelation>
+                        <DRelation>
+                         <base-DElement>
+                          <DElement>
+                           <uid>{0ff467a9-50cc-45a5-8226-11473121be77}</uid>
+                          </DElement>
+                         </base-DElement>
+                         <object>{72e5f6d8-0148-4d4a-8933-88dfb1008ae1}</object>
+                         <a>{88049d83-a757-4ead-8d81-b9c2ef58fd4a}</a>
+                         <b>{3922c61e-0b1c-4aa8-acec-0f398b8014fe}</b>
+                        </DRelation>
+                       </base-DRelation>
+                      </DInheritance>
+                     </instance>
+                    </item>
                    </qlist>
                   </elements>
-                  <last-modified>1578241654997</last-modified>
+                  <last-modified>1578260680451</last-modified>
                   <toolbarid>General</toolbarid>
                  </MDiagram>
                 </base-MDiagram>
@@ -5598,7 +5418,7 @@
                                           <flags>1</flags>
                                          </MElement>
                                         </base-MElement>
-                                        <name>DisplayBlockingToolState</name>
+                                        <name>DisplayBlckingToolState</name>
                                         <relations>
                                          <handles>
                                           <handles>
@@ -6113,6 +5933,80 @@
                             </MObject>
                            </base-MObject>
                           </MPackage>
+                         </instance>
+                        </target>
+                       </handle>
+                      </item>
+                      <item>
+                       <handle>
+                        <uid>{8ecc250f-7928-4147-a89c-c35fa84189a6}</uid>
+                        <target>
+                         <instance type="MClass">
+                          <MClass>
+                           <base-MObject>
+                            <MObject>
+                             <base-MElement>
+                              <MElement>
+                               <uid>{8ecc250f-7928-4147-a89c-c35fa84189a6}</uid>
+                               <flags>1</flags>
+                              </MElement>
+                             </base-MElement>
+                             <name>DrawingToolBarWidget</name>
+                             <relations>
+                              <handles>
+                               <handles>
+                                <qlist>
+                                 <item>
+                                  <handle>
+                                   <uid>{d6c66f4f-c9df-4df4-95a4-34e6a4e87aee}</uid>
+                                   <target>
+                                    <instance type="MInheritance">
+                                     <MInheritance>
+                                      <base-MRelation>
+                                       <MRelation>
+                                        <base-MElement>
+                                         <MElement>
+                                          <uid>{d6c66f4f-c9df-4df4-95a4-34e6a4e87aee}</uid>
+                                         </MElement>
+                                        </base-MElement>
+                                        <a>{8ecc250f-7928-4147-a89c-c35fa84189a6}</a>
+                                        <b>{f94d9df5-7aec-4ab8-b76a-6010bcd3a4b9}</b>
+                                       </MRelation>
+                                      </base-MRelation>
+                                     </MInheritance>
+                                    </instance>
+                                   </target>
+                                  </handle>
+                                 </item>
+                                 <item>
+                                  <handle>
+                                   <uid>{72e5f6d8-0148-4d4a-8933-88dfb1008ae1}</uid>
+                                   <target>
+                                    <instance type="MInheritance">
+                                     <MInheritance>
+                                      <base-MRelation>
+                                       <MRelation>
+                                        <base-MElement>
+                                         <MElement>
+                                          <uid>{72e5f6d8-0148-4d4a-8933-88dfb1008ae1}</uid>
+                                         </MElement>
+                                        </base-MElement>
+                                        <a>{8ecc250f-7928-4147-a89c-c35fa84189a6}</a>
+                                        <b>{adbc3003-cd3e-4352-a289-eb0b379d2edd}</b>
+                                       </MRelation>
+                                      </base-MRelation>
+                                     </MInheritance>
+                                    </instance>
+                                   </target>
+                                  </handle>
+                                 </item>
+                                </qlist>
+                               </handles>
+                              </handles>
+                             </relations>
+                            </MObject>
+                           </base-MObject>
+                          </MClass>
                          </instance>
                         </target>
                        </handle>

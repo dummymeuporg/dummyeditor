@@ -9,7 +9,7 @@ LayerTreeItem::LayerTreeItem(Editor::Layer& layer, tLayerType type, int8_t idx)
     , m_type(type)
     , m_index(idx)
 {
-    updateVisibilityIcon();
+    updateVisibilityDisplay();
 }
 
 QVariant LayerTreeItem::data(int role) const
@@ -36,7 +36,7 @@ void LayerTreeItem::toggle()
 void LayerTreeItem::setVisible(bool visible)
 {
     m_layer.setVisible(visible);
-    updateVisibilityIcon();
+    updateVisibilityDisplay();
 }
 
 void LayerTreeItem::setSelected()
@@ -44,8 +44,9 @@ void LayerTreeItem::setSelected()
     emit m_layer.setSelected();
 }
 
-void LayerTreeItem::updateVisibilityIcon()
+void LayerTreeItem::updateVisibilityDisplay()
 {
+    setEnabled(m_layer.visible());
     if (m_layer.visible()) {
         setIcon(QIcon(":/icons/icon_eye.png"));
     } else {

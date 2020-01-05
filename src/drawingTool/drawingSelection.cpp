@@ -4,6 +4,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QKeyEvent>
 
+#include "drawingTool/drawingVisitor.hpp"
 #include "editor/map.hpp"
 #include "graphicMap/layerGraphic.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"

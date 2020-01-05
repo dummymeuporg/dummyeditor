@@ -542,13 +542,13 @@
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
-   <widget class="MapFloorsList::FloorTreeWidget" name="widgetMapFloorsList"/>
+   <widget class="MapFloorsList::FloorListWidget" name="widgetMapFloorsList"/>
   </widget>
   <widget class="QDockWidget" name="dockWidgetDrawingToolbox">
    <attribute name="dockWidgetArea">
     <number>8</number>
    </attribute>
-   <widget class="DrawingToolbar::Widget" name="widgetDrawingToolbox"/>
+   <widget class="DrawingToolBarWidget" name="widgetDrawingToolbox"/>
   </widget>
   <action name="actionNew">
    <property name="icon">
@@ -973,15 +973,15 @@
    <header>mapsTreeView.hpp</header>
   </customwidget>
   <customwidget>
-   <class>MapFloorsList::FloorTreeWidget</class>
+   <class>MapFloorsList::FloorListWidget</class>
    <extends>QWidget</extends>
    <header>widget_mapFloorsList/widget.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>DrawingToolbar::Widget</class>
+   <class>DrawingToolBarWidget</class>
    <extends>QWidget</extends>
-   <header>widget_drawingToolbar/widget.hpp</header>
+   <header>drawingToolbarWidget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
