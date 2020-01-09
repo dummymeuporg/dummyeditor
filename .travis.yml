@@ -54,7 +54,7 @@ install:
   - cd ${TRAVIS_BUILD_DIR}
   #
   #Install Lua
-  - sudo apt-get install lua5.1 lua5.1-dev
+  - sudo apt-get install lua5.3 lua5.3-dev
   #
   # - find / -iname "Qt5CoreConfig.cmake" 2>/dev/null  ==> /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfig.cmake
   # - sudo find / -iname "qmake" ==> /usr/lib/x86_64-linux-gnu/qt5/
