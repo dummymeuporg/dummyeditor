@@ -55,9 +55,7 @@ install:
   #
   #Install Lua
   # - sudo apt-get install lua5.3 lua5.3-dev
-  - mkdir lua_build
-  - cd lua_build
-  - curl -R -O https://sourceforge.net/projects/luabinaries/files/5.3.5/Linux%20Libraries/lua-5.3.5_Linux313_64_lib.tar.gz/download
+  - sudo wget -O lua-5.3.5_Linux313_64_lib.tar.gz https://sourceforge.net/projects/luabinaries/files/5.3.5/Linux%20Libraries/lua-5.3.5_Linux313_64_lib.tar.gz/download
   - tar -zxf lua-5.3.5_Linux313_64_lib.tar.gz
   - cd ${TRAVIS_BUILD_DIR}
   #
