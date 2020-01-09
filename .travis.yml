@@ -45,12 +45,13 @@ install:
   - sudo apt-get install qt5-default qttools5-dev-tools
   #
   #Install boost 
-  #- sudo wget -O boost_1_69_0.tar.gz http://sourceforge.net/projects/boost/files/boost/1.69.0/boost_1_69_0.tar.gz/download
-  #- sudo tar xzf boost_1_69_0.tar.gz
-  #- cd boost_1_69_0/
-  #- sudo ./bootstrap.sh --prefix=/usr/local
-  #- sudo ./b2
-  #- sudo ./b2 install &> /dev/null
+  - sudo wget -O boost_1_69_0.tar.gz http://sourceforge.net/projects/boost/files/boost/1.69.0/boost_1_69_0.tar.gz/download
+  - sudo tar xzf boost_1_69_0.tar.gz
+  - cd boost_1_69_0/
+  - sudo ./bootstrap.sh --prefix=/usr/local
+  # Here on compile ONLY needed boost libraries. To see all available boost lib to compile : ./b2 --show-libraries
+  - sudo ./b2 --with-date_time --with-test install > /dev/null
+  - cd ${TRAVIS_BUILD_DIR}
   #
   #Install Lua
   - sudo apt-get install lua5.1 lua5.1-dev
