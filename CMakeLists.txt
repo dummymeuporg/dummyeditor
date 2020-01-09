@@ -19,9 +19,6 @@ add_subdirectory("vendor/libdummy")
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
-export LUA_INCLUDE_DIR=${DEPS_DIR}/lua-5.3.5_Linux313_64_lib/include
-export LUA_LIBRARIES=${DEPS_DIR}/lua-5.3.5_Linux313_64_lib/lua53.a
-export LUA_LIBRARY=${DEPS_DIR}/lua-5.3.5_Linux313_64_lib/lua53.a
 
 # depedencies Qt, Boost and Lua
 find_package(Qt5Core REQUIRED)
