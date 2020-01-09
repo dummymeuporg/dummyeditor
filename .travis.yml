@@ -1,7 +1,69 @@
 language: cpp
 
-script:
-        - cmake .
-        - cmake --build .
+# Trusty Build Environment, to let us use SonarQube https://docs.travis-ci.com/user/reference/trusty/
+dist: trusty
 
+# Handle git submodules yourself
+git:
+        submodules: false
+
+# SonarCloud code analysis
+addons:
+  sonarcloud:
+    organization: "ptiluky" # token is set in Travis build env variable
+
+
+before_install:
+        # Use sed to replace the SSH URL with the public URL, then initialize submodules
+        - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+        - git submodule update --init --recursive
+        - sudo apt-get update -qq
+
+        
+# Here we fetch pre-built binaries of dependencies        
+install:   
+  #
+  # Install Cmake v 3.16
+  # first we create a directory for the CMake binaries
+  - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
+  - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
+  # we use wget to fetch the cmake binaries
+  - travis_retry wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.16.2/cmake-3.16.2-Linux-x86_64.tar.gz
+  # this is optional, but useful:  do a quick sha256 check to ensure that the archive we downloaded did not get compromised
+  - echo "0641046b4c35ac5119cd2f24f16246bfb242b47c89cbad19a9162ccbfb247d47 *cmake-3.16.2-Linux-x86_64.tar.gz" > cmake_sha256.txt
+  - sha256sum -c cmake_sha256.txt
+  - tar -xvf cmake-3.16.2-Linux-x86_64.tar.gz > /dev/null
+  # extract the binaries; the output here is quite lengthy, so we swallow it to not clutter up the travis console
+  - mv cmake-3.16.2-Linux-x86_64 cmake-install
+  # add both the top-level directory and the bin directory from the archive  to the system PATH. By adding it to the front of the path we hide the  preinstalled CMake with our own.
+  - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
+  # don't forget to switch back to the main build directory once you are done
+  - cd ${TRAVIS_BUILD_DIR}
+  #
+  #Install Qt
+  - sudo apt-get install qtbase5-dev qtdeclarative5-dev libqt5webkit5-dev libsqlite3-dev
+  - sudo apt-get install qt5-default qttools5-dev-tools
+  #
+  #Install boost 
+  - sudo wget -O boost_1_69_0.tar.gz http://sourceforge.net/projects/boost/files/boost/1.69.0/boost_1_69_0.tar.gz/download
+  - sudo tar xzf boost_1_69_0.tar.gz
+  - cd boost_1_69_0/
+  - sudo ./bootstrap.sh --prefix=/usr/local
+  # Here on compile ONLY needed boost libraries. To see all available boost lib to compile : ./b2 --show-libraries
+  - sudo ./b2 --with-date_time --with-test install > /dev/null
+  - cd ${TRAVIS_BUILD_DIR}
+  #
+  #Install Lua
+  - sudo apt-get install lua5.1 lua5.1-dev
+  #
+  # - find / -iname "Qt5CoreConfig.cmake" 2>/dev/null  ==> /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfig.cmake
+  # - sudo find / -iname "qmake" ==> /usr/lib/x86_64-linux-gnu/qt5/
+
+  
+script:
+        #- cmake -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/qt5/ .
+        - cmake .
+        - make clean
+        - build-wrapper-linux-x86-64 --out-dir bw-outputs make all
+        - sonar-scanner
  
