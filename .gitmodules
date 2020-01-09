@@ -1,6 +1,6 @@
 [submodule "vendor/--force"]
 	path = vendor/--force
-	url = git@github.com:dummymeuporg/libdummy.git
+	url = git@github.com:PtiLuky/libdummy.git
 [submodule "vendor/libdummy"]
 	path = vendor/libdummy
-	url = git@github.com:dummymeuporg/libdummy.git
+	url = git@github.com:PtiLuky/libdummy.git

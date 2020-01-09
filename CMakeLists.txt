@@ -1,25 +1,34 @@
-cmake_minimum_required(VERSION 3.10.0)
+cmake_minimum_required(VERSION 3.13.0)
+
 project(dummyeditor)
+
+# where to find #include files
 include_directories(
     include
     vendor/libdummy/include
 )
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+# Specify C++ version
+set(CMAKE_CXX_STANDARD 17)
+
+# enable a sub-cmake
+add_subdirectory("vendor/libdummy")
+
+#set(CMAKE_INCLUDE_CURRENT_DIR ON)
+# Qt pre-compilation activation
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
-set(CMAKE_CXX_STANDARD 17)
 
-add_subdirectory("vendor/libdummy")
-include_directories(include vendor/libdummy/include)
-
+# depedencies Qt, Boost and Lua
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Xml REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Boost 1.69.0 REQUIRED)
-find_package(Lua 5.1 REQUIRED)
+find_package(Lua 5.3 REQUIRED)
 
+# Silence an annoying Boost/C++17 warning
 add_definitions(-D_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING)
 
 macro(GroupSources curdir)
