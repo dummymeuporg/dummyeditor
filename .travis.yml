@@ -49,12 +49,21 @@ install:
   - sudo tar xzf boost_1_69_0.tar.gz
   - cd boost_1_69_0/
   - sudo ./bootstrap.sh --prefix=/usr/local
+  - cd ${TRAVIS_BUILD_DIR}
   # Here on compile ONLY needed boost libraries. To see all available boost lib to compile : ./b2 --show-libraries
   - sudo ./b2 --with-date_time --with-test install > /dev/null
   - cd ${TRAVIS_BUILD_DIR}
   #
   #Install Lua
-  - sudo apt-get install lua5.3 liblua5.3-dev
+  # - sudo apt-get install lua5.3 lua5.3-dev
+  - mkdir lua_build
+  - cd lua_build
+  - curl -R -O http://www.lua.org/ftp/lua-5.3.4.tar.gz
+  - tar -zxf lua-5.3.4.tar.gz
+  - cd lua-5.3.4
+  - make linux test
+  - sudo make install
+  - cd ${TRAVIS_BUILD_DIR}
   #
   # - find / -iname "Qt5CoreConfig.cmake" 2>/dev/null  ==> /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfig.cmake
   # - sudo find / -iname "qmake" ==> /usr/lib/x86_64-linux-gnu/qt5/
