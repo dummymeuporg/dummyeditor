@@ -64,7 +64,7 @@ install:
 
   
 script:
-        - cmake -DLUA_INCLUDE_DIR=${DEPS_DIR}/lua-5.3.5_Linux313_64_lib/include -DLUA_LIBRARIES=${DEPS_DIR}/lua-5.3.5_Linux313_64_lib/lua53.a -DLUA_LIBRARY=${DEPS_DIR}/lua-5.3.5_Linux313_64_lib/lua53.a .
+        - cmake -DLUA_INCLUDE_DIR=${DEPS_DIR}/lua-5.3.5_Linux313_64_lib/include/ -DLUA_LIBRARIES=${DEPS_DIR}/lua-5.3.5_Linux313_64_lib/lua53.a -DLUA_LIBRARY=${DEPS_DIR}/lua-5.3.5_Linux313_64_lib/lua53.a .
         #- cmake -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/qt5/ .
         #- cmake .
         - make clean
