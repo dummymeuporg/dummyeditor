@@ -1,5 +1,7 @@
 #include "drawingToolbarWidget.hpp"
 
+#include <QAction>
+#include <QActionGroup>
 #include <QDebug>
 #include <QHBoxLayout>
 
