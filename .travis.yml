@@ -54,9 +54,10 @@ install:
   - cd ${TRAVIS_BUILD_DIR}
   #
   #Install Lua
+  - mkdir lua
   # - sudo apt-get install lua5.3 lua5.3-dev
   - sudo wget -O lua-5.3.5_Linux313_64_lib.tar.gz https://sourceforge.net/projects/luabinaries/files/5.3.5/Linux%20Libraries/lua-5.3.5_Linux313_64_lib.tar.gz/download
-  - tar -zxf lua-5.3.5_Linux313_64_lib.tar.gz
+  - tar -C /lua -zxf lua-5.3.5_Linux313_64_lib.tar.gz
   - cd ${TRAVIS_BUILD_DIR}
   #
   # - find / -iname "Qt5CoreConfig.cmake" 2>/dev/null  ==> /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfig.cmake
@@ -64,8 +65,8 @@ install:
 
   
 script:
-        - ls ${TRAVIS_BUILD_DIR}
-        - cmake -DLUA_INCLUDE_DIR=${DEPS_DIR}/lua-5.3.5_Linux313_64_lib/include/ -DLUA_LIBRARIES=${DEPS_DIR}/lua-5.3.5_Linux313_64_lib/lua53.a -DLUA_LIBRARY=${DEPS_DIR}/lua-5.3.5_Linux313_64_lib/lua53.a .
+        - ls ${TRAVIS_BUILD_DIR}/lua
+        - cmake -DLUA_INCLUDE_DIR=${TRAVIS_BUILD_DIR}/lua/include/ -DLUA_LIBRARIES=${TRAVIS_BUILD_DIR}/lua-5.3.5_Linux313_64_lib/lua53.a -DLUA_LIBRARY=${TRAVIS_BUILD_DIR}/lua-5.3.5_Linux313_64_lib/lua53.a .
         #- cmake -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/qt5/ .
         #- cmake .
         - make clean
