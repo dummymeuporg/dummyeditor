@@ -1,6 +1,7 @@
 #ifndef LAYERCLIPBOARDVISIBLE_H
 #define LAYERCLIPBOARDVISIBLE_H
 
+#include <cstdint>
 #include <utility>
 #include <vector>
 
