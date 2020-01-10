@@ -57,7 +57,7 @@ install:
   - mkdir lua
   # - sudo apt-get install lua5.3 lua5.3-dev
   - sudo wget -O lua-5.3.5_Linux313_64_lib.tar.gz https://sourceforge.net/projects/luabinaries/files/5.3.5/Linux%20Libraries/lua-5.3.5_Linux313_64_lib.tar.gz/download
-  - tar -C /lua -zxf lua-5.3.5_Linux313_64_lib.tar.gz
+  - tar -C lua -zxf lua-5.3.5_Linux313_64_lib.tar.gz
   - cd ${TRAVIS_BUILD_DIR}
   #
   # - find / -iname "Qt5CoreConfig.cmake" 2>/dev/null  ==> /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfig.cmake
