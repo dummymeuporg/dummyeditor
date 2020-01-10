@@ -1,7 +1,17 @@
 language: cpp
+ompiler: gcc
 
 # Trusty Build Environment, to let us use SonarQube https://docs.travis-ci.com/user/reference/trusty/
 dist: trusty
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-7
+      - g++-7
+      - cmake
 
 # Handle git submodules yourself
 git:
@@ -65,7 +75,14 @@ install:
 
   
 script:
-        - ls ${TRAVIS_BUILD_DIR}/lua
+        # Link gcc-6 and g++-6 to their standard commands
+        - ln -s /usr/bin/gcc-6 /usr/local/bin/gcc
+        - ln -s /usr/bin/g++-6 /usr/local/bin/g++
+        # Export CC and CXX to tell cmake which compiler to use
+        - export CC=/usr/bin/gcc-6
+        - export CXX=/usr/bin/g++-6
+        # Check versions of gcc, g++ and cmake
+        - gcc -v && g++ -v && cmake --version
         - cmake -DLUA_INCLUDE_DIR=${TRAVIS_BUILD_DIR}/lua/include/ -DLUA_LIBRARIES=${TRAVIS_BUILD_DIR}/lua-5.3.5_Linux313_64_lib/lua53.a -DLUA_LIBRARY=${TRAVIS_BUILD_DIR}/lua-5.3.5_Linux313_64_lib/lua53.a .
         #- cmake -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/qt5/ .
         #- cmake .
