@@ -21,7 +21,7 @@
     <item>
      <widget class="QTabWidget" name="tabObjects">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tabGeneral">
        <property name="layoutDirection">
@@ -563,9 +563,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
-   </property>
-   <property name="shortcutVisibleInContextMenu">
-    <bool>false</bool>
    </property>
   </action>
   <action name="actionOpen">
