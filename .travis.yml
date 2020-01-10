@@ -25,8 +25,8 @@ before_install:
 # Here we fetch pre-built binaries of dependencies        
 install:
   # C++17
-  - sudo apt-get install -qq g++-6
-  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
+  - sudo apt-get install -qq g++-8
+  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 90
   #
   # Install Cmake v 3.16
   # first we create a directory for the CMake binaries
