@@ -39,7 +39,7 @@ public:
                                  qint16 chipsetY);
     VisibleGraphicLayer& setChipsetPixmap(const QPixmap*);
 
-    virtual MapSceneLayer& removeTile(quint16, quint16) override;
+    //virtual MapSceneLayer& removeTile(quint16, quint16) override;
 
     Editor::Layer& editorLayer() override;
 

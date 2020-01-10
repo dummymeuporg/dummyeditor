@@ -3,8 +3,6 @@
 
 #include <memory>
 
-#include <QVector>
-
 #include "graphicMap/mapSceneLayer.hpp"
 
 //////////////////////////////////////////////////////////////////////////////
@@ -38,7 +36,7 @@ class GraphicLayer : public MapSceneLayer
 public:
     GraphicLayer(MapGraphicsScene&, int);
 
-    const QVector<QGraphicsItem*>& layerItems() const { return m_layerItems; }
+    //const QVector<QGraphicsItem*>& layerItems() const { return m_layerItems; }
     virtual Editor::Layer& editorLayer()                           = 0;
     virtual std::vector<DrawingTools::DrawingTool*> drawingTools() = 0;
     virtual void accept(GraphicLayerVisitor&)                      = 0;
@@ -53,7 +51,7 @@ public slots:
     void setSelected();
 
 protected:
-    QVector<QGraphicsItem*> m_layerItems;
+  std::vector<QGraphicsItem*> m_layerItems;
 };
 } // namespace GraphicMap
 

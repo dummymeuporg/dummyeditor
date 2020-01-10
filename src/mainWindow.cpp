@@ -17,6 +17,7 @@
 #include "graphicMap/mapGraphicsScene.hpp"
 
 #include "chipsetGraphicsScene.hpp"
+#include "mapDocument.hpp"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget* parent)
@@ -219,7 +220,7 @@ void MainWindow::saveProject()
         return;
     }
 
-    QMap<QString, Misc::MapDocument>::iterator i;
+    QMap<QString, MapDocument>::iterator i;
 
     for (auto e : m_currentProject->openedMaps().keys()) {
         qDebug() << e;
@@ -234,7 +235,7 @@ void MainWindow::initializeProject(const QString& projectDirectory)
 
 void MainWindow::selectCurrentMap(QModelIndex selectedIndex)
 {
-    Misc::MapTreeModel* mapModel = m_currentProject->mapsModel();
+    MapTreeModel* mapModel = m_currentProject->mapsModel();
 
     QString mapName(mapModel->itemFromIndex(selectedIndex)->text());
     qDebug() << mapName;

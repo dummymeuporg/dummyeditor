@@ -2,12 +2,13 @@
 #include <QMessageBox>
 
 #include "editor/map.hpp"
+#include "mapDocument.hpp"
 #include "mapEditDialog.hpp"
 #include "ui_mapeditdialog.h"
 
 MapEditDialog::MapEditDialog(
     const std::shared_ptr<const Editor::Project> project,
-    std::shared_ptr<Misc::MapDocument> mapDocument, QWidget* parent)
+    std::shared_ptr<MapDocument> mapDocument, QWidget* parent)
     : QDialog(parent)
     , m_ui(new Ui::MapEditDialog)
     , m_project(project)

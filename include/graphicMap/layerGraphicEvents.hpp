@@ -2,6 +2,7 @@
 #define EVENTSGRAPHICLAYER_H
 
 #include "graphicMap/layerGraphic.hpp"
+#include <QVector>
 
 //////////////////////////////////////////////////////////////////////////////
 //  forward declaration
@@ -22,7 +23,7 @@ class EventsGraphicLayer : public GraphicLayer
 public:
     EventsGraphicLayer(Editor::EventsLayer&, MapGraphicsScene&, int);
 
-    MapSceneLayer& removeTile(quint16, quint16) override;
+    //MapSceneLayer& removeTile(quint16, quint16) override;
     std::vector<DrawingTools::DrawingTool*> drawingTools() override;
     Editor::Layer& editorLayer() override;
     void accept(GraphicLayerVisitor&) override;

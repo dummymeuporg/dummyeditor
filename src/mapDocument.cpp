@@ -4,7 +4,7 @@
 
 #include "editor/map.hpp"
 
-Misc::MapDocument::MapDocument(Editor::Project& project, const QString& name,
+MapDocument::MapDocument(Editor::Project& project, const QString& name,
                                std::shared_ptr<Editor::Map> map)
     : m_editorProject(project)
     , m_isModified(false)
@@ -14,7 +14,7 @@ Misc::MapDocument::MapDocument(Editor::Project& project, const QString& name,
     // XXX: build graphic layers
 }
 
-void Misc::MapDocument::save()
+void MapDocument::save()
 {
     qDebug() << "Save " << m_mapName;
     m_map->save();

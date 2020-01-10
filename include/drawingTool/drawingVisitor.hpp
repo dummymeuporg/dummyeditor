@@ -32,4 +32,4 @@ public:
 
 } // namespace DrawingTools
 
-#endif DRAWINGTOOLVISITOR_H
+#endif // DRAWINGTOOLVISITOR_H
