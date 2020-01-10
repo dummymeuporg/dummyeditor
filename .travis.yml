@@ -81,7 +81,7 @@ script:
         - export CC=gcc-7
         - export CXX=g++-7
         # Check versions of gcc, g++ and cmake
-        - gcc-7 -v && g++-7 -v && cmake --version
+        - cmake --version
         - cmake -DLUA_INCLUDE_DIR=${TRAVIS_BUILD_DIR}/lua/include/ -DLUA_LIBRARIES=${TRAVIS_BUILD_DIR}/lua-5.3.5_Linux313_64_lib/lua53.a -DLUA_LIBRARY=${TRAVIS_BUILD_DIR}/lua-5.3.5_Linux313_64_lib/lua53.a .
         #- cmake -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/qt5/ .
         #- cmake .
