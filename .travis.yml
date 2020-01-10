@@ -65,8 +65,6 @@ install:
   - cd ${TRAVIS_BUILD_DIR}
   
 script:
-        - nproc --all
-        - echo "Threads/core: $(nproc --all)"
         # Check versions of gcc, g++ and cmake
         - cmake -DLUA_INCLUDE_DIR=${TRAVIS_BUILD_DIR}/lua/include/ -DLUA_LIBRARIES=${TRAVIS_BUILD_DIR}/lua/liblua53.so -DLUA_LIBRARY=${TRAVIS_BUILD_DIR}/lua/liblua53.so .
         - make clean
