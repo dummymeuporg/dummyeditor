@@ -77,6 +77,7 @@ script:
         # Link gcc-7 and g++-7 to their standard commands
         #- sudo ln -s /usr/bin/gcc-7 /usr/local/bin/gcc
         #- sudo ln -s /usr/bin/g++-7 /usr/local/bin/g++
+        - ls /usr/bin
         # Export CC and CXX to tell cmake which compiler to use
         - export CC=gcc-7
         - export CXX=g++-7
