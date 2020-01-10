@@ -71,7 +71,7 @@ install:
 script:
         # Check versions of gcc, g++ and cmake
         - cmake --version
-        - cmake -DLUA_INCLUDE_DIR=${TRAVIS_BUILD_DIR}/lua/include/ -DLUA_LIBRARIES=${TRAVIS_BUILD_DIR}/lua-5.3.5_Linux313_64_lib/lua53.a -DLUA_LIBRARY=${TRAVIS_BUILD_DIR}/lua-5.3.5_Linux313_64_lib/lua53.a .
+        - cmake -DLUA_INCLUDE_DIR=${TRAVIS_BUILD_DIR}/lua/include/ -DLUA_LIBRARIES=${TRAVIS_BUILD_DIR}/lua/liblua53.so -DLUA_LIBRARY=${TRAVIS_BUILD_DIR}/lua/liblua53.so .
         #- cmake -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/qt5/ .
         #- cmake .
         - make clean
