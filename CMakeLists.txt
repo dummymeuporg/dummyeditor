@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13.0)
 
 project(dummyeditor)
-message(${LUA_LIBRARY})
+
 # where to find #include files
 include_directories(
     include
@@ -112,7 +112,6 @@ IF (WIN32)
     endif (CMAKE_BUILD_TYPE MATCHES Release)
 ENDIF (WIN32)
 
-message(${DUMMYEDITOR_LINK_LIBRARIES})
 
 target_link_libraries(dummyeditor
     ${DUMMYEDITOR_LINK_LIBRARIES}
