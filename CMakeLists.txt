@@ -31,6 +31,9 @@ find_package(Lua 5.3 REQUIRED)
 # Silence an annoying Boost/C++17 warning
 add_definitions(-D_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING)
 
+file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.ui")
+file(GLOB_RECURSE HEADERS "include/*.hpp")
+
 macro(GroupSources curdir)
     file(
         GLOB children RELATIVE ${PROJECT_SOURCE_DIR}/${curdir}
@@ -40,20 +43,17 @@ macro(GroupSources curdir)
         if(IS_DIRECTORY ${PROJECT_SOURCE_DIR}/${curdir}/${child})
             GroupSources(${curdir}/${child})
         else()
-            string(REPLACE "/" "\\" groupname ${curdir})
+            string(REGEX REPLACE "^(src|include)/?" "" curdirsimple ${curdir})
+            string(REPLACE "/" "\\" groupname "${curdirsimple}")
+            #string(REPLACE "/" "\\" groupname "${curdir}")
             source_group(
-                ${groupname}
+                "${groupname}"
                 FILES
                 ${PROJECT_SOURCE_DIR}/${curdir}/${child}
             )
         endif()
     endforeach()
 endmacro()
-
-link_directories(${Boost_LIBRARY_DIRS} ${LUA_LIBRARIES})
-
-file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.ui")
-file(GLOB_RECURSE HEADERS "include/*.hpp")
 
 GroupSources(include)
 GroupSources(src)
@@ -74,6 +74,8 @@ if (UNIX)
         stdc++fs
     )
 endif (UNIX)
+
+link_directories(${Boost_LIBRARY_DIRS} ${LUA_LIBRARIES})
 
 add_executable(dummyeditor ${SOURCES} ${HEADERS} icons.qrc)
 

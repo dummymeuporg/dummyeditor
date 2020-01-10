@@ -11,6 +11,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
 class ChipsetGraphicsScene;
+class QActionGroup;
 
 namespace GraphicMap {
 class GraphicLayer;

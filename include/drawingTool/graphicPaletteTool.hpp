@@ -54,4 +54,4 @@ protected:
 
 } // namespace DrawingTools
 
-#endif GRAPHICPALETTETOOL_H
+#endif//  GRAPHICPALETTETOOL_H

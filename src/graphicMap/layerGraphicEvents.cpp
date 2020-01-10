@@ -49,12 +49,12 @@ void EventsGraphicLayer::draw(int index, quint16 x, quint16 y)
 
     m_mapGraphicsScene.addItem(m_layerItems[index]);
 }
-
+/*
 MapSceneLayer& EventsGraphicLayer::removeTile(quint16, quint16)
 {
     return *this;
 }
-
+*/
 std::vector<DrawingTools::DrawingTool*> EventsGraphicLayer::drawingTools()
 {
     std::vector<DrawingTools::DrawingTool*> tools;

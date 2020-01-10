@@ -9,6 +9,7 @@
 #include "graphicMap/layerGraphicBlocking.hpp"
 #include "graphicMap/layerGraphicEvents.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
+#include "mapDocument.hpp"
 
 namespace GraphicMap {
 
@@ -31,9 +32,13 @@ MapGraphicsScene::~MapGraphicsScene()
     // delete m_drawingTool;
     // delete m_paintingLayerState;
 }
+const std::shared_ptr<MapDocument> MapGraphicsScene::mapDocument() const
+{
+    return m_mapDocument;
+}
 
 MapGraphicsScene& MapGraphicsScene::setMapDocument(
-    const std::shared_ptr<Misc::MapDocument>& mapDocument)
+    const std::shared_ptr<MapDocument>& mapDocument)
 {
     if (m_map != nullptr) {
         QRect invalidateRegion(0, 0, m_map->width() * 16, m_map->height() * 16);
@@ -105,7 +110,7 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument(
 }
 
 void MapGraphicsScene::changeMapDocument(
-    const std::shared_ptr<Misc::MapDocument>& mapDocument)
+    const std::shared_ptr<MapDocument>& mapDocument)
 {
     setMapDocument(mapDocument);
 }

@@ -43,13 +43,13 @@ VisibleGraphicLayer::VisibleGraphicLayer(Editor::GraphicLayer& layer,
 
 VisibleGraphicLayer::~VisibleGraphicLayer() {}
 
-
+/*
 MapSceneLayer& VisibleGraphicLayer::removeTile(quint16 x, quint16 y)
 {
     setTile(x, y, -1, -1);
     return *this;
 }
-
+*/
 VisibleGraphicLayer& VisibleGraphicLayer::setTile(quint16 x, quint16 y,
                                                   qint16 chipsetX,
                                                   qint16 chipsetY)

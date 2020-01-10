@@ -2,12 +2,12 @@
 
 #include <QDomNode>
 
-Misc::MapTreeModel::MapTreeModel(const QDomNode& mapsNode)
+MapTreeModel::MapTreeModel(const QDomNode& mapsNode)
 {
     setupModelData(mapsNode, invisibleRootItem());
 }
 
-void Misc::MapTreeModel::setupModelData(const QDomNode& node,
+void MapTreeModel::setupModelData(const QDomNode& node,
                                         QStandardItem* parent)
 {
     for (QDomNode n = node.firstChild(); ! n.isNull(); n = n.nextSibling()) {
@@ -20,7 +20,7 @@ void Misc::MapTreeModel::setupModelData(const QDomNode& node,
     }
 }
 
-QVariant Misc::MapTreeModel::headerData(int section,
+QVariant MapTreeModel::headerData(int section,
                                         Qt::Orientation orientation,
                                         int role) const
 {

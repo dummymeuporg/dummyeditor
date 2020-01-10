@@ -2,6 +2,7 @@
 #define SELECTION_H
 
 #include <map>
+#include <memory>
 
 #include <QGraphicsRectItem>
 
