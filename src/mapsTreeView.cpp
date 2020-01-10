@@ -1,3 +1,6 @@
+#include "mapsTreeView.hpp"
+
+#include <QAction>
 #include <QDebug>
 #include <QTreeWidgetItem>
 
@@ -7,7 +10,7 @@
 #include "editor/map.hpp"
 #include "mapDocument.hpp"
 #include "mapEditDialog.hpp"
-#include "mapsTreeView.hpp"
+
 
 MapsTreeView::MapsTreeView(QWidget* parent)
     : QTreeView(parent)
@@ -32,8 +35,8 @@ void MapsTreeView::enableActions()
 {
     qDebug() << "Enable actions";
 
-    m_newMapAction     = new QAction(tr("Add new map"));
-    m_propertiesAction = new QAction(tr("Properties"));
+    m_newMapAction     = new QAction(tr("Add new map"), this);
+    m_propertiesAction = new QAction(tr("Properties"), this);
 
     m_mapMenu = new QMenu();
     m_mapMenu->addAction(m_newMapAction);
