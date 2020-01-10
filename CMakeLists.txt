@@ -55,6 +55,8 @@ macro(GroupSources curdir)
     endforeach()
 endmacro()
 
+link_directories(${Boost_LIBRARY_DIRS} ${LUA_LIBRARIES})
+
 GroupSources(include)
 GroupSources(src)
 GroupSources(ui)
@@ -74,8 +76,6 @@ if (UNIX)
         stdc++fs
     )
 endif (UNIX)
-
-link_directories(${Boost_LIBRARY_DIRS} ${LUA_LIBRARIES})
 
 add_executable(dummyeditor ${SOURCES} ${HEADERS} icons.qrc)
 
@@ -111,7 +111,6 @@ IF (WIN32)
         )
     endif (CMAKE_BUILD_TYPE MATCHES Release)
 ENDIF (WIN32)
-
 
 
 target_link_libraries(dummyeditor
