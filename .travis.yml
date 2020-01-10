@@ -4,14 +4,6 @@ compiler: gcc
 # Trusty Build Environment, to let us use SonarQube https://docs.travis-ci.com/user/reference/trusty/
 dist: trusty
 
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - gcc-7
-      - g++-7
-
 # Handle git submodules yourself
 git:
         submodules: false
@@ -26,11 +18,15 @@ before_install:
         # Use sed to replace the SSH URL with the public URL, then initialize submodules
         - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
         - git submodule update --init --recursive
+        - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
         - sudo apt-get update -qq
 
         
 # Here we fetch pre-built binaries of dependencies        
-install:   
+install:
+  # C++17
+  - sudo apt-get install -qq g++-6
+  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
   #
   # Install Cmake v 3.16
   # first we create a directory for the CMake binaries
@@ -71,17 +67,8 @@ install:
   #
   # - find / -iname "Qt5CoreConfig.cmake" 2>/dev/null  ==> /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfig.cmake
   # - sudo find / -iname "qmake" ==> /usr/lib/x86_64-linux-gnu/qt5/
-  - sudo apt-get install -qq g++-7
-  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
   
 script:
-        # Link gcc-7 and g++-7 to their standard commands
-        - sudo ln -s /usr/bin/gcc-7 /usr/local/bin/gcc
-        - sudo ln -s /usr/bin/g++-7 /usr/local/bin/g++
-        - ls /usr/bin
-        # Export CC and CXX to tell cmake which compiler to use
-        - export CC=gcc-7
-        - export CXX=g++-7
         # Check versions of gcc, g++ and cmake
         - cmake --version
         - cmake -DLUA_INCLUDE_DIR=${TRAVIS_BUILD_DIR}/lua/include/ -DLUA_LIBRARIES=${TRAVIS_BUILD_DIR}/lua-5.3.5_Linux313_64_lib/lua53.a -DLUA_LIBRARY=${TRAVIS_BUILD_DIR}/lua-5.3.5_Linux313_64_lib/lua53.a .
