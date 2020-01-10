@@ -4,7 +4,7 @@
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneMouseEvent>
 
-#include "chipsetgraphicsscene.hpp"
+#include "chipsetGraphicsScene.hpp"
 
 namespace DrawingTools {
 
