@@ -60,8 +60,8 @@ private:
     void reset();
 
 private:
-    Ui::MapFloorsList* m_ui;
-    MapFloorTreeModel* m_floorTreeModel;
+    Ui::MapFloorsList* m_ui             = nullptr;
+    MapFloorTreeModel* m_floorTreeModel = nullptr;
 };
 
 } // namespace MapFloorsList

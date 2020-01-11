@@ -34,11 +34,9 @@ public:
     void setVisible(bool isVisible) override;
     void setSelected() override;
 
-
-protected:
+private:
     void updateVisibilityDisplay();
 
-protected:
     Editor::Layer& m_layer;
     tLayerType m_type;
     int8_t m_index;

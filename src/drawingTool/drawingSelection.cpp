@@ -13,8 +13,6 @@ namespace DrawingTools {
 
 SelectionTool::SelectionTool(GraphicMap::MapGraphicsScene& mapGraphicsScene)
     : DrawingTool(mapGraphicsScene, QIcon(":/icons/icon_selection.png"))
-    , m_mouseClicked(false)
-    , m_selectionRectItem(nullptr)
 {}
 
 void SelectionTool::accept(DrawingVisitor& visitor)
@@ -32,8 +30,8 @@ void SelectionTool::mapMousePressEvent(QGraphicsSceneMouseEvent* event)
     m_mouseClicked = true;
 
     if (nullptr != m_selectionRectItem) {
-        m_mapGraphicsScene.invalidate(m_selectionRectItem->rect());
-        m_mapGraphicsScene.removeItem(m_selectionRectItem);
+        mapGraphScene().invalidate(m_selectionRectItem->rect());
+        mapGraphScene().removeItem(m_selectionRectItem);
     }
 
     drawSelection();
@@ -58,7 +56,7 @@ void SelectionTool::drawSelection()
 
     QBrush brush(QColor(66, 135, 245));
 
-    m_selectionRectItem = m_mapGraphicsScene.addRect(rectSelection);
+    m_selectionRectItem = mapGraphScene().addRect(rectSelection);
     m_selectionRectItem->setZValue(99999);
     m_selectionRectItem->setBrush(brush);
     m_selectionRectItem->setOpacity(0.5);
@@ -66,9 +64,9 @@ void SelectionTool::drawSelection()
 
 void SelectionTool::drawGrid()
 {
-    auto map = m_mapGraphicsScene.map();
+    auto map = mapGraphScene().map();
     if (nullptr != map) {
-        m_mapGraphicsScene.drawGrid(map->width(), map->height(), 16);
+        mapGraphScene().drawGrid(map->width(), map->height(), 16);
     }
 }
 
@@ -80,8 +78,8 @@ void SelectionTool::mapMouseMoveEvent(QGraphicsSceneMouseEvent* event)
         m_endSelection.setY(pt.y() - (pt.y() % 16));
 
         if (nullptr != m_selectionRectItem) {
-            m_mapGraphicsScene.invalidate(m_selectionRectItem->rect());
-            m_mapGraphicsScene.removeItem(m_selectionRectItem);
+            mapGraphScene().invalidate(m_selectionRectItem->rect());
+            mapGraphScene().removeItem(m_selectionRectItem);
         }
 
         drawSelection();
@@ -111,7 +109,7 @@ void SelectionTool::onCopyKeyPressed(QKeyEvent* event)
 {
     qDebug() << "Copy";
     m_layers.clear();
-    for (const auto& layer : m_mapGraphicsScene.graphicLayers()) {
+    for (const auto& layer : mapGraphScene().graphicLayers()) {
         QRect clip(m_startSelection, m_endSelection);
         m_layers[layer] = layer->getClipboardRegion(clip);
     }
@@ -149,12 +147,12 @@ void SelectionTool::emitDrawingToolSelected()
 
 void SelectionTool::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer)
 {
-    m_mapGraphicsScene.redrawGrid();
+    mapGraphScene().redrawGrid();
 }
 
 void SelectionTool::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer)
 {
-    m_mapGraphicsScene.redrawGrid();
+    mapGraphScene().redrawGrid();
 }
 
 } // namespace DrawingTools

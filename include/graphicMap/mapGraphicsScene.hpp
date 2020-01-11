@@ -22,7 +22,7 @@ class BlockingLayer;
 } // namespace Core
 } // namespace Dummy
 
-class MapDocument;
+struct MapDocument;
 
 namespace GraphicMap {
 class GraphicLayer;
@@ -77,16 +77,16 @@ private:
 private:
     std::shared_ptr<MapDocument> m_mapDocument;
     std::shared_ptr<Editor::Map> m_map;
-    QGraphicsRectItem* m_darkFilter;
+    QGraphicsRectItem* m_darkFilter = nullptr;
     QPixmap m_mapChipset;
     QRect m_chipsetSelection;
 
-    bool m_isDrawing;
+    bool m_isDrawing = false;
 
-    DrawingTools::DrawingTool* m_drawingTool;
+    DrawingTools::DrawingTool* m_drawingTool = nullptr;
 
     GraphicLayers m_graphicLayers;
-    GraphicLayer* m_currentGraphicLayer;
+    GraphicLayer* m_currentGraphicLayer = nullptr;
 
     QVector<QGraphicsItem*> m_gridItems;
 };

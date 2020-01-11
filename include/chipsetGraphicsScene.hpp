@@ -43,9 +43,9 @@ public slots:
     void changeChipset(const QString& chipsetPath);
 
 private:
-    QGraphicsPixmapItem* m_chipset;
+    QGraphicsPixmapItem* m_chipset = nullptr;
     QRect m_currentSelection;
-    DrawingTools::GraphicPaletteTool* m_paletteTool;
+    DrawingTools::GraphicPaletteTool* m_paletteTool = nullptr;
 };
 
 #endif // CHIPSETGRAPHICSCENE_H

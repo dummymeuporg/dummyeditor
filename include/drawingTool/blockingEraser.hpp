@@ -40,7 +40,7 @@ signals:
     void drawingToolSelected(::DrawingTools::DrawingTool*);
 
 private:
-    bool m_mouseClicked;
+    bool m_mouseClicked = false;
 };
 
 } // namespace DrawingTools

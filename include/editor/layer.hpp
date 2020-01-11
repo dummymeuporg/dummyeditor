@@ -22,7 +22,7 @@ signals:
     void setSelected();
 
 private:
-    bool m_visible;
+    bool m_visible = true;
 };
 } // namespace Editor
 

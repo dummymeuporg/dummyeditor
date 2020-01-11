@@ -10,9 +10,6 @@ namespace Editor {
 
 Floor::Floor(Dummy::Local::Floor& floor)
     : m_floor(floor)
-    , m_blockingLayer(nullptr)
-    , m_eventsLayer(nullptr)
-    , m_visible(true)
 {
     m_blockingLayer = std::make_unique<BlockingLayer>(m_floor.blockingLayer());
 

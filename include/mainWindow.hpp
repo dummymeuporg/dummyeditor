@@ -60,8 +60,6 @@ public:
     void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
 
 private:
-    void initializeDrawingTools();
-    void initializeProject(const QString&);
     void initializeScenes();
     void connectScenes();
     void enableMapCreation();
@@ -82,14 +80,13 @@ private slots:
     void publishTools(GraphicMap::GraphicLayer*);
 
 private:
-    Ui::MainWindow* m_ui;
+    Ui::MainWindow* m_ui                     = nullptr;
+    ChipsetGraphicsScene* m_chipsetScene     = nullptr;
+    GraphicMap::MapGraphicsScene* m_mapScene = nullptr;
     std::shared_ptr<Editor::Project> m_currentProject;
-    ChipsetGraphicsScene* m_chipsetScene;
-    GraphicMap::MapGraphicsScene* m_mapScene;
 
-    DrawingTools::SelectionTool* m_selectionDrawingTool;
-    std::vector<DrawingTools::DrawingTool*> m_graphicTools;
-    std::vector<DrawingTools::DrawingTool*> m_blockingTools;
+    std::vector<DrawingTools::DrawingTool*> m_graphicTools {};
+    std::vector<DrawingTools::DrawingTool*> m_blockingTools {};
 };
 
 #endif // MAINWINDOW_H

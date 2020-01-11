@@ -46,10 +46,10 @@ public:
 
 private:
     Dummy::Local::Floor& m_floor;
+    GraphicLayers m_graphicLayers;
     std::unique_ptr<BlockingLayer> m_blockingLayer;
     std::unique_ptr<EventsLayer> m_eventsLayer;
-    GraphicLayers m_graphicLayers;
-    bool m_visible;
+    bool m_visible = true;
 };
 
 } // namespace Editor

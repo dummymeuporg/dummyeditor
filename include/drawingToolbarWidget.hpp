@@ -65,12 +65,12 @@ public:
     void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
 
 private:
-    QToolBar* m_toolbar;
-    QActionGroup* m_actionGrp;
+    QToolBar* m_toolbar       = nullptr;
+    QActionGroup* m_actionGrp = nullptr;
 
-    const ChipsetGraphicsScene* m_chipsetGraphicsScene;
-    const GraphicMap::MapGraphicsScene* m_mapScene;
-    std::vector<DrawingTools::DrawingTool*>* m_drawingTools;
+    const ChipsetGraphicsScene* m_chipsetGraphicsScene      = nullptr;
+    const GraphicMap::MapGraphicsScene* m_mapScene          = nullptr;
+    std::vector<DrawingTools::DrawingTool*>* m_drawingTools = nullptr;
     tToolBarState m_state;
 };
 

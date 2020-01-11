@@ -13,12 +13,11 @@ BlockingEraser::BlockingEraser(
     GraphicMap::BlockingGraphicLayer* blockingGraphicLayer)
     : BlockingGeneralTool(QIcon(":/icons/icon_eraser.png"), mapGraphicsScene,
                           blockingGraphicLayer)
-    , m_mouseClicked(false)
 {}
 
 void BlockingEraser::mapMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
-    if (nullptr == m_blockingGraphicLayer) {
+    if (nullptr == blockingLayer()) {
         return;
     }
 
@@ -27,14 +26,14 @@ void BlockingEraser::mapMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
     point.setY(point.y() - (point.y() % 8));
 
     if (m_mouseClicked) {
-        m_blockingGraphicLayer->setTile(point.x(), point.y(), false);
+        blockingLayer()->setTile(point.x(), point.y(), false);
     }
 }
 
 void BlockingEraser::mapMousePressEvent(QGraphicsSceneMouseEvent* event)
 {
     qDebug() << "Blocking eraser press.";
-    if (nullptr == m_blockingGraphicLayer) {
+    if (nullptr == blockingLayer()) {
         return;
     }
 
@@ -42,7 +41,7 @@ void BlockingEraser::mapMousePressEvent(QGraphicsSceneMouseEvent* event)
     point.setX(point.x() - (point.x() % 8));
     point.setY(point.y() - (point.y() % 8));
     // XXX: set blocking tile.
-    m_blockingGraphicLayer->setTile(point.x(), point.y(), false);
+    blockingLayer()->setTile(point.x(), point.y(), false);
 
     m_mouseClicked = true;
 }

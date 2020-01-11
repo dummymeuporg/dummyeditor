@@ -12,10 +12,6 @@ GraphicPaletteTool::GraphicPaletteTool(
     QIcon&& icon, GraphicMap::MapGraphicsScene& mapGraphicsScene,
     GraphicMap::VisibleGraphicLayer* visibleGraphicLayer)
     : GraphicGeneralTool(std::move(icon), mapGraphicsScene, visibleGraphicLayer)
-    , m_chipsetGraphicsScene(nullptr)
-    , m_selectionRectItem(nullptr)
-    , m_selectionItem(nullptr)
-    , m_isSelecting(false)
 {}
 
 void GraphicPaletteTool::emitDrawingToolSelected()

@@ -13,7 +13,7 @@ GraphicLayer::GraphicLayer(MapGraphicsScene& mapGraphicsScene, int zIndex)
 
 void GraphicLayer::setVisibility(bool visible)
 {
-    for (auto* layerIt : m_layerItems) {
+    for (auto* layerIt : layerItems()) {
         if (layerIt != nullptr) {
             layerIt->setVisible(visible);
         }
@@ -25,12 +25,12 @@ void GraphicLayer::setSelected()
     emit layerSelected(this);
 
     // Bind the tool to this graphic layer
-    auto* drawingTool = m_mapGraphicsScene.drawingTool();
+    auto* drawingTool = mapGraphicsScene().drawingTool();
     if (nullptr != drawingTool) {
         accept(*drawingTool);
     }
 
-    m_mapGraphicsScene.setCurrentGraphicLayer(this);
+    mapGraphicsScene().setCurrentGraphicLayer(this);
 }
 
 } // namespace GraphicMap

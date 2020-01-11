@@ -2,9 +2,7 @@
 
 namespace Editor {
 
-Layer::Layer()
-    : m_visible(true)
-{}
+Layer::Layer() {}
 
 void Layer::setVisible(bool visible)
 {

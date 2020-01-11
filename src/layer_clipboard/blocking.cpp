@@ -21,7 +21,7 @@ void Blocking::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer)
     for (auto j = 0; j <= m_clip.height() + 8; j += 8) {
         for (auto i = 0; i <= m_clip.width() + 8; i += 8) {
             auto value = m_content.at(clipIndex++);
-            layer.setTile(m_target.x() + i, m_target.y() + j, value);
+            layer.setTile(target().x() + i, target().y() + j, value);
         }
     }
 }
