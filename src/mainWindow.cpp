@@ -323,24 +323,25 @@ toolbox->reset(m_mapScene, m_chipsetScene, tools);
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    // TODO check if there is a project before asking to save...
-    QMessageBox::StandardButton resBtn = QMessageBox::question(
-        this, "DummyEditor", tr("Do you want to save before you quit ?\n"),
-        QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
-        QMessageBox::Cancel);
-    switch (resBtn) {
-    case QMessageBox::Yes:
-        saveProject();
-        event->accept();
-        break;
-    case QMessageBox::No:
-        event->accept();
-        break;
-    case QMessageBox::Cancel:
-        event->ignore();
-        break;
-    default:
-        break;
+    if (nullptr != m_currentProject) {
+        QMessageBox::StandardButton resBtn = QMessageBox::question(
+            this, "DummyEditor", tr("Do you want to save before you quit ?\n"),
+            QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
+            QMessageBox::Cancel);
+        switch (resBtn) {
+        case QMessageBox::Yes:
+            saveProject();
+            event->accept();
+            break;
+        case QMessageBox::No:
+            event->accept();
+            break;
+        case QMessageBox::Cancel:
+            event->ignore();
+            break;
+        default:
+            break;
+        }
     }
 }
 
