@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneMouseEvent>
+#include <algorithm>
 
 #include "chipsetGraphicsScene.hpp"
 
