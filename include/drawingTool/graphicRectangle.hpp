@@ -29,12 +29,14 @@ signals:
     void drawingToolSelected(::DrawingTools::DrawingTool*);
 
 private:
-    void drawChipsetSelectionInRectangle();
+    void drawHoverPreviewItem();
     void applyChipsetSelectionInRectangle();
     void applySelectionToMap(quint16 mapX, quint16 mapY);
+    QRect adjustedRectFromP1P2(const QPoint& p1, const QPoint& p2);
 
 private:
     bool m_mouseClicked = false;
+    QPoint m_firstClickPos;
     QRect m_rectangle;
     // Rectangle Graphic Item to be drawn on the map edition.
     QGraphicsPixmapItem* m_hoverItem = nullptr;
