@@ -3,7 +3,6 @@
 #include <QDebug>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneMouseEvent>
-#include <algorithm>
 
 #include "chipsetGraphicsScene.hpp"
 
@@ -64,13 +63,6 @@ void GraphicPaletteTool::paletteMouseMoveEvent(
 
     QPoint pt = mouseEvent->scenePos().toPoint();
 
-    /*
-    pt.setX(std::min(pt.x(), m_selectionItem->pixmap().width() - 16));
-    pt.setY(std::min(pt.y(), m_selectionItem->pixmap().height() - 16));
-    pt.setX(pt.x() + (16 - (pt.x() % 16)));
-    pt.setY(pt.y() + (16 - (pt.y() % 16)));
-    */
-
 
     if (m_selectionRectItem != nullptr) {
         m_chipsetGraphicsScene->removeItem(m_selectionRectItem);
@@ -79,21 +71,16 @@ void GraphicPaletteTool::paletteMouseMoveEvent(
 
     QBrush brush(QColor(66, 135, 245));
 
-    //get the top-left and bottom-right corners of the selected area
-    int x1 = (int)std::min(m_selectionStart.x(),pt.x());
-    int y1 = (int)std::min(m_selectionStart.y(),pt.y());
-    int x2 = (int)std::max(m_selectionStart.x(),pt.x());
-    int y2 = (int)std::max(m_selectionStart.y(),pt.y());
-    qDebug() << "real square " << x1 << y1 << x2 << y2;
+    //normalize selection rectangle in order accept any direction of selection
+    QRect realRect = QRect(m_selectionStart, pt).normalized();
 
-    //expend it to the full squares selected
-    x1 = x1 - (x1 % 16);
-    y1 = y1 - (y1 % 16);
-    x2 = ((int)(x2 / 16) + 1) * 16;
-    y2 = ((int)(y2 / 16) + 1) * 16;
-    qDebug() << "extended square " << x1 << y1 << x2 << y2;
+    //extend the rectangle to catch the complete border tiles
+    realRect.setLeft(realRect.left()-(realRect.left() % 16));
+    realRect.setTop(realRect.top()-(realRect.top() % 16));
+    realRect.setRight(((realRect.right() / 16) + 1) * 16);
+    realRect.setBottom(((realRect.bottom() / 16) + 1) * 16);
 
-    setSelection(QRect(x1, y1, x2 - x1, y2 - y1),
+    setSelection(realRect,
                  m_chipsetGraphicsScene->chipset()->pixmap());
     m_selectionRectItem = m_chipsetGraphicsScene->addRect(m_rectSelection);
     m_selectionRectItem->setBrush(brush);
