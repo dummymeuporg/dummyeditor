@@ -15,18 +15,17 @@
 
 ## Configurer projet
 
-- Ouvrir git bash et cloner le projet
+- Ouvrir git bash et cloner le projet et initialiser les sous-modules
 ```
-    git clone https://github.com/dummymeuporg/dummyeditor.git
+    git clone --recursive https://github.com/dummymeuporg/dummyeditor.git
 ```
 - Ouvrir le dossier cloné
 ```
     cd dummueditor
 ```
-- Et initialiser les sous-modules
+- Plus tard, pour mettre à jour le projet et ses sous-modules:
 ```
-    git submodule init
-    git submodule update
+git pull --recurse-submodules
 ```
 
 - Configurer QtCreator: Tools -> options -> Kits, trouverou créer un Kit pour complier avec MSVC. Le kit sélectionné ne dois pas avoir un icône rouge. Si c'est le cas, survoler l'icône pour connaître le problème.

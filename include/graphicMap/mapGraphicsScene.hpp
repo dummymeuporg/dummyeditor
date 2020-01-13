@@ -22,9 +22,7 @@ class BlockingLayer;
 } // namespace Core
 } // namespace Dummy
 
-namespace Misc {
 class MapDocument;
-}
 
 namespace GraphicMap {
 class GraphicLayer;
@@ -42,17 +40,13 @@ public:
     virtual ~MapGraphicsScene() override;
 
     const std::shared_ptr<Editor::Map> map() const { return m_map; }
-    const std::shared_ptr<Misc::MapDocument> mapDocument() const
-    {
-        return m_mapDocument;
-    }
+    const std::shared_ptr<MapDocument> mapDocument() const;
+    DrawingTools::DrawingTool* drawingTool() const { return m_drawingTool; }
     const QRect& chipsetSelection() const { return m_chipsetSelection; }
+    const GraphicLayers& graphicLayers() const { return m_graphicLayers; }
 
     MapGraphicsScene&
-    setMapDocument(const std::shared_ptr<Misc::MapDocument>& mapDocument);
-    DrawingTools::DrawingTool* drawingTool() const { return m_drawingTool; }
-
-    const GraphicLayers& graphicLayers() const { return m_graphicLayers; }
+    setMapDocument(const std::shared_ptr<MapDocument>& mapDocument);
 
     void mousePressEvent(QGraphicsSceneMouseEvent*) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent*) override;
@@ -65,8 +59,7 @@ public:
     void redrawGrid();
 
 public slots:
-    void
-    changeMapDocument(const std::shared_ptr<Misc::MapDocument>& mapDocument);
+    void changeMapDocument(const std::shared_ptr<MapDocument>& mapDocument);
     void unsetDrawingTool();
     void setDrawingTool(::DrawingTools::DrawingTool*);
     void adjustLayers() const;
@@ -82,7 +75,7 @@ private:
     void drawDarkFilter();
 
 private:
-    std::shared_ptr<Misc::MapDocument> m_mapDocument;
+    std::shared_ptr<MapDocument> m_mapDocument;
     std::shared_ptr<Editor::Map> m_map;
     QGraphicsRectItem* m_darkFilter;
     QPixmap m_mapChipset;

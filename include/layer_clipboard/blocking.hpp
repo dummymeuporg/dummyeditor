@@ -2,6 +2,7 @@
 #define LAYERBLOCKING_H
 
 #include <QRect>
+#include <cstdint>
 #include <vector>
 
 #include "layer_clipboard/clipboard.hpp"
@@ -31,7 +32,7 @@ public:
 
 private:
     QRect m_clip;
-    std::vector<std::uint8_t> m_content;
+    std::vector<uint8_t> m_content;
 };
 
 } // namespace LayerClipboard

@@ -9,8 +9,6 @@
 
 class QDomNode;
 
-namespace Misc {
-
 //////////////////////////////////////////////////////////////////////////////
 //  MapTreeModel class
 //////////////////////////////////////////////////////////////////////////////
@@ -25,6 +23,5 @@ public:
 private:
     void setupModelData(const QDomNode& mapsNode, QStandardItem* parent);
 };
-} // namespace Misc
 
 #endif // MAPTREEMODEL_H

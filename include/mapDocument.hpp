@@ -19,7 +19,6 @@ class Map;
 class Project;
 } // namespace Editor
 
-namespace Misc {
 using GraphicLayers = std::vector<std::shared_ptr<::GraphicMap::GraphicLayer>>;
 
 //////////////////////////////////////////////////////////////////////////////
@@ -32,11 +31,11 @@ public:
     MapDocument(Editor::Project&, const QString&, std::shared_ptr<Editor::Map>);
 
     std::shared_ptr<Editor::Map> map() { return m_map; }
+    Editor::Project& project() { return m_editorProject; }
     const QString mapName() const { return m_mapName; }
 
     void save();
 
-    Editor::Project& project() { return m_editorProject; }
 
 private:
     Editor::Project& m_editorProject;
@@ -45,6 +44,5 @@ private:
     std::shared_ptr<Editor::Map> m_map;
     GraphicLayers m_graphicLayers;
 };
-} // namespace Misc
 
 #endif // MAPDOCUMENT_H

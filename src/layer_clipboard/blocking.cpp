@@ -4,12 +4,12 @@
 
 namespace LayerClipboard {
 
-Blocking::Blocking(const QRect& clip, const std::vector<std::uint8_t>& content)
+Blocking::Blocking(const QRect& clip, const std::vector<uint8_t>& content)
     : m_clip(clip)
     , m_content(content)
 {}
 
-Blocking::Blocking(QRect&& clip, std::vector<std::uint8_t>&& content)
+Blocking::Blocking(QRect&& clip, std::vector<uint8_t>&& content)
     : m_clip(std::move(clip))
     , m_content(std::move(content))
 {}
