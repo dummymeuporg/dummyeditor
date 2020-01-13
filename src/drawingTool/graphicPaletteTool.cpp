@@ -63,13 +63,6 @@ void GraphicPaletteTool::paletteMouseMoveEvent(
 
     QPoint pt = mouseEvent->scenePos().toPoint();
 
-    /*
-    pt.setX(std::min(pt.x(), m_selectionItem->pixmap().width() - 16));
-    pt.setY(std::min(pt.y(), m_selectionItem->pixmap().height() - 16));
-    */
-    pt.setX(pt.x() + (16 - (pt.x() % 16)));
-    pt.setY(pt.y() + (16 - (pt.y() % 16)));
-
 
     if (m_selectionRectItem != nullptr) {
         m_chipsetGraphicsScene->removeItem(m_selectionRectItem);
@@ -78,13 +71,16 @@ void GraphicPaletteTool::paletteMouseMoveEvent(
 
     QBrush brush(QColor(66, 135, 245));
 
-    int x    = m_selectionStart.x() - (m_selectionStart.x() % 16);
-    int y    = m_selectionStart.y() - (m_selectionStart.y() % 16);
-    int xEnd = pt.x();
-    int yEnd = pt.y();
-    qDebug() << x << y << xEnd << yEnd;
+    //normalize selection rectangle in order accept any direction of selection
+    QRect realRect = QRect(m_selectionStart, pt).normalized();
 
-    setSelection(QRect(x, y, xEnd - x, yEnd - y),
+    //extend the rectangle to catch the complete border tiles
+    realRect.setLeft(realRect.left()-(realRect.left() % 16));
+    realRect.setTop(realRect.top()-(realRect.top() % 16));
+    realRect.setRight(((realRect.right() / 16) + 1) * 16);
+    realRect.setBottom(((realRect.bottom() / 16) + 1) * 16);
+
+    setSelection(realRect,
                  m_chipsetGraphicsScene->chipset()->pixmap());
     m_selectionRectItem = m_chipsetGraphicsScene->addRect(m_rectSelection);
     m_selectionRectItem->setBrush(brush);

@@ -18,23 +18,6 @@ GraphicRectangle::GraphicRectangle(
                          visibleGraphicLayer)
 {}
 
-void GraphicRectangle::mapMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
-{
-    if (m_mouseClicked) {
-        QPoint pt(mouseEvent->scenePos().toPoint());
-        pt.setX(pt.x() + (16 - (pt.x() % 16)));
-        pt.setY(pt.y() + (16 - (pt.y() % 16)));
-        qDebug() << m_rectangle;
-        m_rectangle.setBottomRight(pt);
-
-        mapGraphScene().removeItem(selectionItem());
-        drawChipsetSelectionInRectangle();
-        m_hoverItem->setPos(QPoint(m_rectangle.topLeft()));
-        m_hoverItem->setZValue(88888);
-        mapGraphScene().addItem(m_hoverItem);
-    }
-}
-
 void GraphicRectangle::mapMousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
     if (nullptr == selectionItem()) {
@@ -43,42 +26,27 @@ void GraphicRectangle::mapMousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 
     m_mouseClicked = true;
 
-    QPoint pt(mouseEvent->scenePos().toPoint());
+    m_firstClickPos = QPoint(mouseEvent->scenePos().toPoint());
+    m_rectangle     = adjustedRectFromP1P2(m_firstClickPos, m_firstClickPos);
 
-    // Translate the coordinate to get the top upper corner of the tile.
-    pt.setX(pt.x() - (pt.x() % 16));
-    pt.setY(pt.y() - (pt.y() % 16));
-
-    m_rectangle.setTopLeft(pt);
-    m_rectangle.setSize(QSize(16, 16));
-    drawChipsetSelectionInRectangle();
+    drawHoverPreviewItem();
     m_hoverItem->setPos(QPoint(m_rectangle.topLeft()));
     m_hoverItem->setZValue(88888);
     mapGraphScene().addItem(m_hoverItem);
 }
 
-void GraphicRectangle::drawChipsetSelectionInRectangle()
+void GraphicRectangle::mapMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
-    if (nullptr == selectionItem()) {
-        return;
-    }
+    if (m_mouseClicked) {
+        QPoint pt(mouseEvent->scenePos().toPoint());
 
-    const QPixmap& chipsetSelection(selectionItem()->pixmap());
-    QPixmap dstPixmap(m_rectangle.size());
-    QPainter painter(&dstPixmap);
+        m_rectangle = adjustedRectFromP1P2(m_firstClickPos, pt);
 
-    for (int j = 0; j < m_rectangle.height(); j += chipsetSelection.height()) {
-        for (int i = 0; i < m_rectangle.width();
-             i += chipsetSelection.width()) {
-            painter.drawPixmap(QRect(i, j, chipsetSelection.width(),
-                                     chipsetSelection.height()),
-                               chipsetSelection);
-        }
+        drawHoverPreviewItem();
+        m_hoverItem->setPos(QPoint(m_rectangle.topLeft()));
+        m_hoverItem->setZValue(88888);
+        mapGraphScene().addItem(m_hoverItem);
     }
-    if (nullptr != m_hoverItem) {
-        mapGraphScene().removeItem(m_hoverItem);
-    }
-    m_hoverItem = new QGraphicsPixmapItem(dstPixmap);
 }
 
 void GraphicRectangle::mapMouseReleaseEvent(QGraphicsSceneMouseEvent* event)
@@ -125,6 +93,31 @@ void GraphicRectangle::onUnselected()
     GraphicPaletteTool::onUnselected();
 }
 
+void GraphicRectangle::drawHoverPreviewItem()
+{
+    if (nullptr == selectionItem()) {
+        return;
+    }
+
+    const QPixmap& chipsetSelection(selectionItem()->pixmap());
+    QPixmap dstPixmap(m_rectangle.size());
+    QPainter painter(&dstPixmap);
+
+    for (int j = 0; j < m_rectangle.height(); j += chipsetSelection.height()) {
+        for (int i = 0; i < m_rectangle.width();
+             i += chipsetSelection.width()) {
+            painter.drawPixmap(QRect(i, j, chipsetSelection.width(),
+                                     chipsetSelection.height()),
+                               chipsetSelection);
+        }
+    }
+    if (nullptr != m_hoverItem) {
+        mapGraphScene().removeItem(m_hoverItem);
+        delete m_hoverItem; // we take ownership from Qt, we need it destroy it
+    }
+    m_hoverItem = new QGraphicsPixmapItem(dstPixmap);
+}
+
 void GraphicRectangle::applyChipsetSelectionInRectangle()
 {
     const QPixmap& chipsetSelection(selectionItem()->pixmap());
@@ -159,6 +152,19 @@ void GraphicRectangle::applySelectionToMap(quint16 mapX, quint16 mapY)
                 (chipsetX + i) * 16, (chipsetY + j) * 16);
         }
     }
+}
+
+QRect GraphicRectangle::adjustedRectFromP1P2(const QPoint& p1, const QPoint& p2)
+{
+    QRect rect(p1, p2);
+    rect      = rect.normalized();
+    QPoint q1 = rect.topLeft();
+    QPoint q2 = rect.bottomRight();
+    QPoint trueQ1((q1.x() / 16) * 16, (q1.y() / 16) * 16);         // round down
+    QPoint trueQ2((q2.x() / 16 + 1) * 16, (q2.y() / 16 + 1) * 16); // round up
+
+    // adjust because rect EXCLUDE its bottom-right point
+    return QRect(trueQ1, trueQ2).adjusted(0, 0, -1, -1);
 }
 
 } // namespace DrawingTools
