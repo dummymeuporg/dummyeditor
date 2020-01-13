@@ -1,4 +1,5 @@
-#pragma once
+#ifndef EDITORMAP_H
+#define EDITORMAP_H
 
 #include <cstdint>
 #include <memory>
@@ -6,14 +7,19 @@
 
 #include <dummy/local/map.hpp>
 
-#include "editor/layer.hpp"
 #include "editor/floor.hpp"
+#include "editor/layer.hpp"
 
-extern "C" {
+extern "C"
+{
+#include <lauxlib.h>
 #include <lua.h>
 #include <lualib.h>
-#include <lauxlib.h>
 }
+
+//////////////////////////////////////////////////////////////////////////////
+//  forward declaration
+//////////////////////////////////////////////////////////////////////////////
 
 namespace Dummy {
 namespace Core {
@@ -25,7 +31,12 @@ namespace Editor {
 class Floor;
 using Floors = std::vector<std::unique_ptr<Floor>>;
 
-class Map : public Dummy::Local::Map {
+//////////////////////////////////////////////////////////////////////////////
+//  Map class
+//////////////////////////////////////////////////////////////////////////////
+
+class Map : public Dummy::Local::Map
+{
 public:
     Map(const Dummy::Local::Project&, const std::string&);
     virtual ~Map();
@@ -37,44 +48,34 @@ public:
     void save();
     void resize(std::uint16_t, std::uint16_t);
 
-    std::uint8_t floorsCount() const {
-        return m_floorsCount;
-    }
-
-    Floor& floorAt(std::uint8_t index) {
-        return *m_editorFloors[index];
-    }
-
-    const Floors& floors() const {
-        return m_editorFloors;
-    }
+    std::uint8_t floorsCount() const { return m_floorsCount; }
+    Floor& floorAt(size_t index) { return *m_editorFloors[index]; }
+    const Floors& floors() const { return m_editorFloors; }
 
     void addFloor(std::unique_ptr<Editor::Floor>);
 
-    GraphicLayer& graphicLayerAt(std::uint8_t floor, std::int8_t position) {
+    GraphicLayer& graphicLayerAt(std::uint8_t floor, std::int8_t position)
+    {
         return m_editorFloors[floor]->graphicLayerAt(position);
     }
 
     void load();
+
 private:
     void saveBlockingLayers();
     void saveGraphicLayers();
     void saveEventsFile();
 
     void resizeFloor(Editor::Floor&, std::uint16_t, std::uint16_t);
-    void resizeBlockingLayer(
-        Editor::BlockingLayer&,
-        std::uint16_t,
-        std::uint16_t
-    );
-    void resizeGraphicLayer(
-        Editor::GraphicLayer&,
-        std::uint16_t,
-        std::uint16_t
-    );
+    void resizeBlockingLayer(Editor::BlockingLayer&, std::uint16_t,
+                             std::uint16_t);
+    void resizeGraphicLayer(Editor::GraphicLayer&, std::uint16_t,
+                            std::uint16_t);
 
     static void _writeStdString(std::ofstream&, const std::string&);
     void writeFloor(std::ofstream&, const Dummy::Local::Floor&) const;
     Floors m_editorFloors;
 };
 } // namespace Editor
+
+#endif // EDITORMAP_H

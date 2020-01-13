@@ -1,47 +1,49 @@
-#pragma once
+#ifndef FLOORLAYER_H
+#define FLOORLAYER_H
+
 #include <map>
 #include <memory>
 
 #include <dummy/local/floor.hpp>
 
+//////////////////////////////////////////////////////////////////////////////
+//  forward declaration
+//////////////////////////////////////////////////////////////////////////////
+
 namespace Editor {
 class BlockingLayer;
 class EventsLayer;
 class GraphicLayer;
-using GraphicLayers = std::map<std::int8_t, std::unique_ptr<GraphicLayer>>;
+using GraphicLayers = std::map<int8_t, std::unique_ptr<GraphicLayer>>;
 
-class Floor{
+//////////////////////////////////////////////////////////////////////////////
+//  Floor class
+//////////////////////////////////////////////////////////////////////////////
+
+class Floor
+{
 public:
     Floor(Dummy::Local::Floor&);
-    GraphicLayer& graphicLayerAt(std::int8_t position);
 
-    const GraphicLayers& graphicLayers() const {
-        return m_graphicLayers;
-    }
-    bool visible() const {
-        return m_visible;
-    }
+    GraphicLayer& graphicLayerAt(int8_t position); //< unimplemented...
+    const GraphicLayers& graphicLayers() const { return m_graphicLayers; }
+    bool visible() const { return m_visible; }
     void setVisible(bool);
 
-    BlockingLayer& blockingLayer() {
-        return *m_blockingLayer;
-    }
+    BlockingLayer& blockingLayer() { return *m_blockingLayer; }
+    EventsLayer& eventsLayer() { return *m_eventsLayer; }
+    GraphicLayers& graphicLayers() { return m_graphicLayers; }
+    Dummy::Local::Floor& localFloor() { return m_floor; }
 
-    EventsLayer& eventsLayer() {
-        return *m_eventsLayer;
-    }
+    /*
+     * I comment this one, it is unused and may become problematic if
+     * m_graphicLayers.at(position) returns nullptr
 
     GraphicLayer& graphicLayer(std::int8_t position) {
         return *(m_graphicLayers.at(position));
     }
+    */
 
-    GraphicLayers& graphicLayers() {
-        return m_graphicLayers;
-    }
-
-    Dummy::Local::Floor& localFloor()  {
-        return m_floor;
-    }
 private:
     Dummy::Local::Floor& m_floor;
     std::unique_ptr<BlockingLayer> m_blockingLayer;
@@ -51,3 +53,5 @@ private:
 };
 
 } // namespace Editor
+
+#endif // FLOORLAYER_H
