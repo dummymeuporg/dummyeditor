@@ -43,15 +43,21 @@ signals:
     void drawingToolSelected(::DrawingTools::GraphicPaletteTool*);
 
 protected:
-    ChipsetGraphicsScene* m_chipsetGraphicsScene;
+    QGraphicsPixmapItem* selectionItem() const { return m_selectionItem; }
+    void setSelectionItem(QGraphicsPixmapItem* i) { m_selectionItem = i; }
+    const QRect& rectSelection() const { return m_rectSelection; }
+    const QPixmap& selectionPixmap() const { return m_selectionPixmap; }
+
+private:
+    ChipsetGraphicsScene* m_chipsetGraphicsScene = nullptr;
+    QGraphicsRectItem* m_selectionRectItem       = nullptr;
+    QGraphicsPixmapItem* m_selectionItem         = nullptr;
+    bool m_isSelecting                           = false;
     QRect m_rectSelection;
     QPixmap m_selectionPixmap;
-    QGraphicsRectItem* m_selectionRectItem;
-    QGraphicsPixmapItem* m_selectionItem;
-    bool m_isSelecting;
     QPoint m_selectionStart;
 };
 
 } // namespace DrawingTools
 
-#endif//  GRAPHICPALETTETOOL_H
+#endif //  GRAPHICPALETTETOOL_H

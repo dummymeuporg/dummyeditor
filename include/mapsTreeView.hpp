@@ -35,6 +35,9 @@ public:
 
 //////////////////////////////////////////////////////////////////////////////
 //  MapsTreeView class
+// a MapsTreeView represents a visual list of maps.
+// It contains only the graphical representation and interactions. Data are
+// kept in MapsTreeModel.
 //////////////////////////////////////////////////////////////////////////////
 
 class MapsTreeView : public QTreeView
@@ -44,13 +47,7 @@ class MapsTreeView : public QTreeView
 public:
     MapsTreeView(QWidget* parent = nullptr);
 
-    const Editor::Project& project() const { return *m_project; }
-
     void setProject(std::shared_ptr<Editor::Project> project);
-
-private:
-    void enableActions();
-    void disableActions();
 
 signals:
     void chipsetMapChanged(QString);
@@ -62,9 +59,9 @@ private slots:
 
 private:
     std::shared_ptr<Editor::Project> m_project;
-    QMenu* m_mapMenu;
-    QAction* m_newMapAction;
-    QAction* m_propertiesAction;
+    QMenu* m_mapMenu            = nullptr;
+    QAction* m_newMapAction     = nullptr;
+    QAction* m_propertiesAction = nullptr;
     QModelIndex m_selectedModelIndex;
 };
 

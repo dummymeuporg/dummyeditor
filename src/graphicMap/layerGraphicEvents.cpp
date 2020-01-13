@@ -1,7 +1,7 @@
 #include "graphicMap/layerGraphicEvents.hpp"
 
 #include "editor/layerEvents.hpp"
-#include "graphicMap/eventItemSquare.hpp"
+#include "graphicMap/graphicItem.hpp"
 #include "graphicMap/graphicLayerVisitor.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
 
@@ -15,7 +15,7 @@ EventsGraphicLayer::EventsGraphicLayer(Editor::EventsLayer& eventsLayer,
 {
     const auto& touchEvents(eventsLayer.touchEvents());
     const auto& floor(eventsLayer.floor());
-    m_layerItems.resize(eventsLayer.width() * eventsLayer.height());
+    layerItems().resize(eventsLayer.width() * eventsLayer.height());
 
     /*
 
@@ -31,7 +31,7 @@ EventsGraphicLayer::EventsGraphicLayer(Editor::EventsLayer& eventsLayer,
         }
     }
      */
-    for (size_t index = 0; index < m_layerItems.size(); ++index) {
+    for (size_t index = 0; index < layerItems().size(); ++index) {
         if (touchEvents.find(index) != std::end(touchEvents)) {
             qreal posX((index % (floor.width())) * 16);
             qreal posY((index / (floor.width())) * 16);
@@ -42,12 +42,12 @@ EventsGraphicLayer::EventsGraphicLayer(Editor::EventsLayer& eventsLayer,
 
 void EventsGraphicLayer::draw(int index, quint16 x, quint16 y)
 {
-    m_layerItems[index] = new EventSquareItem();
-    m_layerItems[index]->setZValue(m_zIndex);
+    layerItems()[index] = new GraphicItem(GraphicItem::eEventItem);
+    layerItems()[index]->setZValue(zIndex());
 
-    m_layerItems[index]->setPos(QPointF(x - (x % 16), y - (y % 16)));
+    layerItems()[index]->setPos(QPointF(x - (x % 16), y - (y % 16)));
 
-    m_mapGraphicsScene.addItem(m_layerItems[index]);
+    mapGraphicsScene().addItem(layerItems()[index]);
 }
 /*
 MapSceneLayer& EventsGraphicLayer::removeTile(quint16, quint16)

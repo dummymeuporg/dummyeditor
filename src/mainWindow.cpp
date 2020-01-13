@@ -23,18 +23,18 @@
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
     , m_ui(new Ui::MainWindow)
-    , m_currentProject(nullptr)
     , m_chipsetScene(new ChipsetGraphicsScene())
     , m_mapScene(new GraphicMap::MapGraphicsScene())
-    , m_selectionDrawingTool(new DrawingTools::SelectionTool(*m_mapScene))
-    , m_graphicTools({new DrawingTools::GraphicPen(*m_mapScene),
-                      new DrawingTools::GraphicRectangle(*m_mapScene),
-                      new DrawingTools::GraphicEraser(*m_mapScene),
-                      m_selectionDrawingTool})
-    , m_blockingTools({new DrawingTools::BlockingPen(*m_mapScene),
-                       new DrawingTools::BlockingEraser(*m_mapScene)})
 {
     m_ui->setupUi(this);
+
+    m_graphicTools.push_back(new DrawingTools::GraphicPen(*m_mapScene));
+    m_graphicTools.push_back(new DrawingTools::GraphicRectangle(*m_mapScene));
+    m_graphicTools.push_back(new DrawingTools::GraphicEraser(*m_mapScene));
+    m_graphicTools.push_back(new DrawingTools::SelectionTool(*m_mapScene));
+
+    m_blockingTools.push_back(new DrawingTools::BlockingPen(*m_mapScene));
+    m_blockingTools.push_back(new DrawingTools::BlockingEraser(*m_mapScene));
 
     /*----------------------tab GENERAL---------------------------------- */
 
@@ -81,7 +81,6 @@ MainWindow::MainWindow(QWidget* parent)
 
     m_ui->tabGeneral->layout()->setMenuBar(tabGeneralToolBar);
     initializeScenes();
-    initializeDrawingTools();
 
     QObject::connect(m_ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
                      m_chipsetScene, SLOT(changeChipset(QString)));
@@ -93,16 +92,11 @@ QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
     m_ui->graphicsViewChipset->scale(2.0, 2.0);
     m_ui->graphicsViewMap->scale(2.0, 2.0);
 
-    QList<int> desktopSizeListWidth{width() / 5, 3 * width() / 5};
+    QList<int> desktopSizeListWidth {width() / 5, 3 * width() / 5};
     m_ui->splitter_2->setSizes(desktopSizeListWidth);
 
-    QList<int> desktopSizeListHeight{3 * height() / 5, height() / 5};
+    QList<int> desktopSizeListHeight {3 * height() / 5, height() / 5};
     m_ui->splitter->setSizes(desktopSizeListHeight);
-}
-
-void MainWindow::initializeDrawingTools()
-{
-    // TODO: Remove this.
 }
 
 void MainWindow::initializeScenes()
@@ -136,6 +130,7 @@ QObject::connect(ui->actionSelection,
 
 void MainWindow::closeCurrentProject()
 {
+    // TODO clean currently loaded project
     delete m_chipsetScene;
     delete m_mapScene;
 }
@@ -161,14 +156,12 @@ void MainWindow::newProject()
         return;
     }
 
-    // TODO clean currently loaded project
-
-    // Initialize a project into this directory
-    initializeProject(projectDirectory);
-
     if (nullptr != m_currentProject) {
         closeCurrentProject();
     }
+
+    // Initialize a project into this directory
+    Editor::Project::create(projectDirectory);
 
     loadProject(projectDirectory);
 }
@@ -192,7 +185,6 @@ void MainWindow::openProject()
 
 void MainWindow::loadProject(const QString& projectDirectory)
 {
-
     connectScenes();
 
     m_currentProject = std::make_shared<Editor::Project>(
@@ -214,33 +206,23 @@ void MainWindow::saveProject()
     }
 
     m_currentProject->saveProjectFile();
-    qDebug() << m_currentProject->openedMaps().count();
 
     if (m_currentProject->openedMaps().count() <= 0) {
         return;
     }
 
-    QMap<QString, MapDocument>::iterator i;
-
     for (auto e : m_currentProject->openedMaps().keys()) {
-        qDebug() << e;
-        m_currentProject->document(e)->save();
+        m_currentProject->document(e)->map->save();
     }
-}
-
-void MainWindow::initializeProject(const QString& projectDirectory)
-{
-    Editor::Project::create(projectDirectory);
 }
 
 void MainWindow::selectCurrentMap(QModelIndex selectedIndex)
 {
-    MapTreeModel* mapModel = m_currentProject->mapsModel();
+    const MapsTreeModel* mapModel = m_currentProject->mapsModel();
 
     QString mapName(mapModel->itemFromIndex(selectedIndex)->text());
     qDebug() << mapName;
-    std::shared_ptr<Editor::Map> map(
-        m_currentProject->document(mapName)->map());
+    std::shared_ptr<Editor::Map> map(m_currentProject->document(mapName)->map);
     m_chipsetScene->setChipset((m_currentProject->coreProject().projectPath()
                                 / "chipsets" / map->chipset())
                                    .string()
@@ -341,24 +323,25 @@ toolbox->reset(m_mapScene, m_chipsetScene, tools);
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    // TODO check if there is a project before asking to save...
-    QMessageBox::StandardButton resBtn = QMessageBox::question(
-        this, "DummyEditor", tr("Do you want to save before you quit ?\n"),
-        QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
-        QMessageBox::Cancel);
-    switch (resBtn) {
-    case QMessageBox::Yes:
-        saveProject();
-        event->accept();
-        break;
-    case QMessageBox::No:
-        event->accept();
-        break;
-    case QMessageBox::Cancel:
-        event->ignore();
-        break;
-    default:
-        break;
+    if (nullptr != m_currentProject) {
+        QMessageBox::StandardButton resBtn = QMessageBox::question(
+            this, "DummyEditor", tr("Do you want to save before you quit ?\n"),
+            QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
+            QMessageBox::Cancel);
+        switch (resBtn) {
+        case QMessageBox::Yes:
+            saveProject();
+            event->accept();
+            break;
+        case QMessageBox::No:
+            event->accept();
+            break;
+        case QMessageBox::Cancel:
+            event->ignore();
+            break;
+        default:
+            break;
+        }
     }
 }
 

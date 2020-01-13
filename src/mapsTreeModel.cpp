@@ -2,27 +2,25 @@
 
 #include <QDomNode>
 
-MapTreeModel::MapTreeModel(const QDomNode& mapsNode)
+MapsTreeModel::MapsTreeModel(const QDomNode& mapsNode)
 {
-    setupModelData(mapsNode, invisibleRootItem());
+    XmlMapToQItem(mapsNode, invisibleRootItem());
 }
 
-void MapTreeModel::setupModelData(const QDomNode& node,
-                                        QStandardItem* parent)
+void MapsTreeModel::XmlMapToQItem(const QDomNode& node, QStandardItem* parent)
 {
     for (QDomNode n = node.firstChild(); ! n.isNull(); n = n.nextSibling()) {
         if (n.nodeName() == "map") {
-            QList<QStandardItem*> preparedRow{new QStandardItem(
-                n.attributes().namedItem("name").nodeValue())};
-            parent->appendRow(preparedRow);
-            setupModelData(n, preparedRow.first());
+            QString mapName = n.attributes().namedItem("name").nodeValue();
+            QStandardItem* mapItem = new QStandardItem(mapName);
+            parent->appendRow(mapItem);
+            XmlMapToQItem(n, mapItem);
         }
     }
 }
 
-QVariant MapTreeModel::headerData(int section,
-                                        Qt::Orientation orientation,
-                                        int role) const
+QVariant MapsTreeModel::headerData(int section, Qt::Orientation orientation,
+                                   int role) const
 {
     if (role == Qt::DisplayRole) {
         if (orientation == Qt::Horizontal) {

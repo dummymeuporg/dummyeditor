@@ -15,12 +15,6 @@ namespace GraphicMap {
 
 MapGraphicsScene::MapGraphicsScene(QObject* parent)
     : QGraphicsScene(parent)
-    , m_mapDocument(nullptr)
-    , m_map(nullptr)
-    , m_darkFilter(nullptr)
-    , m_isDrawing(false)
-    , m_drawingTool(nullptr)
-    , m_currentGraphicLayer(nullptr)
 {
     // m_paintingLayerState = new GraphicMap::NotPaintingState(*this);
     // m_drawingTool = new NoDrawingTool(*this);
@@ -56,9 +50,9 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument(
     clear();
 
     m_mapDocument = mapDocument;
-    m_map         = m_mapDocument->map();
+    m_map         = m_mapDocument->map;
 
-    const Editor::Project& project = m_mapDocument->project();
+    const Editor::Project& project = m_mapDocument->project;
     m_mapChipset                   = QPixmap(QString(
         (project.coreProject().projectPath() / "chipsets" / m_map->chipset())
             .string()

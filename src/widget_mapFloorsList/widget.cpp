@@ -10,7 +10,6 @@ namespace MapFloorsList {
 FloorListWidget::FloorListWidget(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::MapFloorsList)
-    , m_floorTreeModel(nullptr)
 {
     m_ui->setupUi(this);
 }

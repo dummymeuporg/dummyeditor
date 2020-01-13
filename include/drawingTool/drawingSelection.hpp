@@ -58,8 +58,8 @@ signals:
     void drawingToolSelected(::DrawingTools::DrawingTool*);
 
 private:
-    bool m_mouseClicked;
-    QGraphicsRectItem* m_selectionRectItem;
+    bool m_mouseClicked                    = false;
+    QGraphicsRectItem* m_selectionRectItem = nullptr;
     QPoint m_startSelection;
     QPoint m_endSelection;
     std::map<GraphicMap::GraphicLayer*,

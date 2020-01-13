@@ -92,6 +92,9 @@
        </item>
        <item>
         <widget class="QLineEdit" name="lineEditMusic">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="readOnly">
           <bool>true</bool>
          </property>
@@ -99,6 +102,9 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButtonBrowseMusic">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string>Browse...</string>
          </property>

@@ -22,21 +22,26 @@ void GraphicGeneralTool::emitDrawingToolSelected()
     emit drawingToolSelected(this);
 }
 
+GraphicMap::VisibleGraphicLayer* GraphicGeneralTool::visibleGraphicLayer()
+{
+    return m_visibleGraphicLayer;
+}
+
 void GraphicGeneralTool::drawGrid()
 {
     if (nullptr == m_visibleGraphicLayer) {
         return;
     }
 
-    m_mapGraphicsScene.drawGrid(m_visibleGraphicLayer->layer().width(),
-                                m_visibleGraphicLayer->layer().height(), 16);
+    mapGraphScene().drawGrid(m_visibleGraphicLayer->layer().width(),
+                             m_visibleGraphicLayer->layer().height(), 16);
 }
 
 void GraphicGeneralTool::setVisibleGraphicLayer(
     GraphicMap::VisibleGraphicLayer* layer)
 {
     m_visibleGraphicLayer = layer;
-    m_mapGraphicsScene.redrawGrid();
+    mapGraphScene().redrawGrid();
 }
 
 void GraphicGeneralTool::visitGraphicLayer(

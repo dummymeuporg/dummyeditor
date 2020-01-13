@@ -34,10 +34,10 @@ private:
     void applySelectionToMap(quint16 mapX, quint16 mapY);
 
 private:
-    bool m_mouseClicked;
+    bool m_mouseClicked = false;
     QRect m_rectangle;
     // Rectangle Graphic Item to be drawn on the map edition.
-    QGraphicsPixmapItem* m_hoverItem;
+    QGraphicsPixmapItem* m_hoverItem = nullptr;
 };
 
 } // namespace DrawingTools

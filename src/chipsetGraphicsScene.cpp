@@ -7,8 +7,6 @@
 
 ChipsetGraphicsScene::ChipsetGraphicsScene(QObject* parent)
     : QGraphicsScene(parent)
-    , m_chipset(nullptr)
-    , m_paletteTool(nullptr)
 {}
 
 void ChipsetGraphicsScene::drawGrid()

@@ -13,7 +13,7 @@
 //  forward declaration
 //////////////////////////////////////////////////////////////////////////////
 
-class MapDocument;
+struct MapDocument;
 
 namespace Editor {
 class StartingPoint;
@@ -36,7 +36,7 @@ public:
     virtual ~Project();
 
     // Getters
-    MapTreeModel* mapsModel();
+    MapsTreeModel* mapsModel();
     const Dummy::Local::Project& coreProject() const { return m_coreProject; }
     std::shared_ptr<MapDocument> document(const QString& mapName);
     QMap<QString, std::shared_ptr<MapDocument>> openedMaps() const;
@@ -60,8 +60,8 @@ private:
 private:
     Dummy::Local::Project m_coreProject;
     QDomDocument m_domDocument;
-    MapTreeModel* m_mapsModel;
-    bool m_isModified;
+    MapsTreeModel* m_mapsModel = nullptr;
+    bool m_isModified          = false;
     std::unique_ptr<StartingPoint> m_startingPoint;
 
     QMap<QString, std::shared_ptr<MapDocument>> m_openedMaps;

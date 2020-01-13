@@ -15,10 +15,6 @@
 DrawingToolBarWidget::DrawingToolBarWidget(::QWidget* parent)
     : QWidget(parent)
     , m_toolbar(new QToolBar(this))
-    , m_actionGrp(nullptr)
-    , m_chipsetGraphicsScene(nullptr)
-    , m_mapScene(nullptr)
-    , m_drawingTools(nullptr)
     , m_state(NoDrawingToolState)
 {
     // Set empty toolbar for the moment.

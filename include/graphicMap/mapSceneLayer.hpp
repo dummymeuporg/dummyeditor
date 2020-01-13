@@ -21,9 +21,13 @@ public:
     MapSceneLayer(MapGraphicsScene&, int zIndex);
     virtual ~MapSceneLayer();
 
-    //virtual MapSceneLayer& removeTile(quint16, quint16) = 0;
+    // virtual MapSceneLayer& removeTile(quint16, quint16) = 0;
 
 protected:
+    int zIndex() { return m_zIndex; }
+    MapGraphicsScene& mapGraphicsScene() { return m_mapGraphicsScene; }
+
+private:
     MapGraphicsScene& m_mapGraphicsScene;
     int m_zIndex;
 };

@@ -2,9 +2,7 @@
 
 namespace LayerClipboard {
 
-Clipboard::Clipboard()
-    : m_target(0, 0)
-{}
+Clipboard::Clipboard() {}
 
 void Clipboard::setTarget(const QPoint& target)
 {

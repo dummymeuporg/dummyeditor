@@ -23,22 +23,27 @@ void BlockingGeneralTool::emitDrawingToolSelected()
     emit drawingToolSelected(this);
 }
 
+GraphicMap::BlockingGraphicLayer* BlockingGeneralTool::blockingLayer()
+{
+    return m_blockingGraphicLayer;
+}
+
 void BlockingGeneralTool::drawGrid()
 {
     if (nullptr == m_blockingGraphicLayer) {
         return;
     }
 
-    m_mapGraphicsScene.drawGrid(m_blockingGraphicLayer->layer().width(),
-                                m_blockingGraphicLayer->layer().height(), 8);
+    mapGraphScene().drawGrid(m_blockingGraphicLayer->layer().width(),
+                             m_blockingGraphicLayer->layer().height(), 8);
 }
 
 void BlockingGeneralTool::setBlockingGraphicLayer(
     GraphicMap::BlockingGraphicLayer* layer)
 {
     m_blockingGraphicLayer = layer;
-    m_mapGraphicsScene.redrawGrid(); // TODO : this call a commented method...
-                                     // is that the intended purpose?
+    mapGraphScene().redrawGrid(); // TODO : this call a commented method...
+                                  // is that the intended purpose?
 }
 
 void BlockingGeneralTool::visitGraphicLayer(

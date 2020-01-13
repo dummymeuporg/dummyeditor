@@ -31,8 +31,9 @@ signals:
 
 private:
     void drawPattern(QGraphicsSceneMouseEvent*);
-    QGraphicsPixmapItem* m_hoverItem;
-    bool m_mousePressed;
+
+    QGraphicsPixmapItem* m_hoverItem = nullptr;
+    bool m_mousePressed              = false;
 };
 
 } // namespace DrawingTools

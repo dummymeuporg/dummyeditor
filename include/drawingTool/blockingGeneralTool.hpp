@@ -24,8 +24,12 @@ class BlockingGeneralTool : public DrawingTool
 public:
     BlockingGeneralTool(QIcon&&, GraphicMap::MapGraphicsScene& mapGraphicsScene,
                         GraphicMap::BlockingGraphicLayer* = nullptr);
+
+    GraphicMap::BlockingGraphicLayer* blockingLayer();
+
     void emitDrawingToolSelected() override;
     void drawGrid() override;
+
     void setBlockingGraphicLayer(GraphicMap::BlockingGraphicLayer*);
 
     void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
@@ -38,8 +42,8 @@ signals:
     // same name as the class
     void drawingToolSelected(DrawingTools::BlockingGeneralTool*);
 
-protected:
-    GraphicMap::BlockingGraphicLayer* m_blockingGraphicLayer;
+private:
+    GraphicMap::BlockingGraphicLayer* m_blockingGraphicLayer = nullptr;
 };
 
 } // namespace DrawingTools

@@ -20,8 +20,8 @@ public:
     const QPoint& target() const { return m_target; }
     void setTarget(const QPoint&);
 
-protected:
-    QPoint m_target;
+private:
+    QPoint m_target = QPoint(0, 0);
 };
 
 } // namespace LayerClipboard

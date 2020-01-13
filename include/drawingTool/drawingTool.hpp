@@ -51,9 +51,10 @@ signals:
     void drawingToolSelected(DrawingTool*);
 
 protected:
-    GraphicMap::MapGraphicsScene& m_mapGraphicsScene;
+    GraphicMap::MapGraphicsScene& mapGraphScene() { return m_mapGraphicsScene; }
 
 private:
+    GraphicMap::MapGraphicsScene& m_mapGraphicsScene;
     QIcon m_icon;
 };
 

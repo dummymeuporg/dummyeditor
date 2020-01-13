@@ -23,7 +23,7 @@ void Visible::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer)
     for (auto j = 0; j < m_clip.height(); j += 16) {
         for (auto i = 0; i < m_clip.width(); i += 16) {
             auto value = m_content.at(clipIndex++);
-            layer.setTile(m_target.x() + i, m_target.y() + j, value.first * 16,
+            layer.setTile(target().x() + i, target().y() + j, value.first * 16,
                           value.second * 16);
         }
     }
