@@ -80,10 +80,10 @@ void GraphicPaletteTool::paletteMouseMoveEvent(
     QBrush brush(QColor(66, 135, 245));
 
     //get the top-left and bottom-right corners of the selected area
-    int x1 = (int)std::fmin(m_selectionStart.x(),pt.x());
-    int y1 = (int)std::fmin(m_selectionStart.y(),pt.y());
-    int x2 = (int)std::fmax(m_selectionStart.x(),pt.x());
-    int y2 = (int)std::fmax(m_selectionStart.y(),pt.y());
+    int x1 = (int)std::min(m_selectionStart.x(),pt.x());
+    int y1 = (int)std::min(m_selectionStart.y(),pt.y());
+    int x2 = (int)std::max(m_selectionStart.x(),pt.x());
+    int y2 = (int)std::max(m_selectionStart.y(),pt.y());
     qDebug() << "real square " << x1 << y1 << x2 << y2;
 
     //expend it to the full squares selected
