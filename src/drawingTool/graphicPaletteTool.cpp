@@ -66,9 +66,9 @@ void GraphicPaletteTool::paletteMouseMoveEvent(
     /*
     pt.setX(std::min(pt.x(), m_selectionItem->pixmap().width() - 16));
     pt.setY(std::min(pt.y(), m_selectionItem->pixmap().height() - 16));
-    */
     pt.setX(pt.x() + (16 - (pt.x() % 16)));
     pt.setY(pt.y() + (16 - (pt.y() % 16)));
+    */
 
 
     if (m_selectionRectItem != nullptr) {
@@ -78,13 +78,21 @@ void GraphicPaletteTool::paletteMouseMoveEvent(
 
     QBrush brush(QColor(66, 135, 245));
 
-    int x    = m_selectionStart.x() - (m_selectionStart.x() % 16);
-    int y    = m_selectionStart.y() - (m_selectionStart.y() % 16);
-    int xEnd = pt.x();
-    int yEnd = pt.y();
-    qDebug() << x << y << xEnd << yEnd;
+    //get the top-left and bottom-right corners of the selected area
+    int x1 = (int)fmin(m_selectionStart.x(),pt.x());
+    int y1 = (int)fmin(m_selectionStart.y(),pt.y());
+    int x2 = (int)fmax(m_selectionStart.x(),pt.x());
+    int y2 = (int)fmax(m_selectionStart.y(),pt.y());
+    qDebug() << "real square " << x1 << y1 << x2 << y2;
 
-    setSelection(QRect(x, y, xEnd - x, yEnd - y),
+    //expend it to the full squares selected
+    x1 = x1 - (x1 % 16);
+    y1 = y1 - (y1 % 16);
+    x2 = ((int)(x2 / 16) + 1) * 16;
+    y2 = ((int)(y2 / 16) + 1) * 16;
+    qDebug() << "extended square " << x1 << y1 << x2 << y2;
+
+    setSelection(QRect(x1, y1, x2 - x1, y2 - y1),
                  m_chipsetGraphicsScene->chipset()->pixmap());
     m_selectionRectItem = m_chipsetGraphicsScene->addRect(m_rectSelection);
     m_selectionRectItem->setBrush(brush);
