@@ -120,7 +120,6 @@ void DrawingToolBarWidget::visitGraphicLayer(
     DrawingTools::DrawingTool* tool;
 
     switch (m_state) {
-
     case GraphicToolsState:
         tool = mapScene()->drawingTool();
         if (nullptr != tool) {
@@ -145,7 +144,6 @@ void DrawingToolBarWidget::visitGraphicLayer(
     DrawingTools::DrawingTool* tool;
 
     switch (m_state) {
-
     case BlockingToolsState:
         // TODO: clean this
         tool = mapScene()->drawingTool();
