@@ -21,8 +21,8 @@ before_install:
         - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
         - sudo apt-get update -qq
 
-        
-# Here we fetch pre-built binaries of dependencies        
+
+# Here we fetch pre-built binaries of dependencies
 install:
   # C++17
   - sudo apt-get install -qq g++-8
@@ -63,11 +63,10 @@ install:
   - sudo wget -O lua-5.3.5_Linux313_64_lib.tar.gz https://sourceforge.net/projects/luabinaries/files/5.3.5/Linux%20Libraries/lua-5.3.5_Linux313_64_lib.tar.gz/download
   - tar -C lua -zxf lua-5.3.5_Linux313_64_lib.tar.gz
   - cd ${TRAVIS_BUILD_DIR}
-  
+
 script:
         # Check versions of gcc, g++ and cmake
         - cmake -DLUA_INCLUDE_DIR=${TRAVIS_BUILD_DIR}/lua/include/ -DLUA_LIBRARIES=${TRAVIS_BUILD_DIR}/lua/liblua53.so -DLUA_LIBRARY=${TRAVIS_BUILD_DIR}/lua/liblua53.so .
         - make clean
         - build-wrapper-linux-x86-64 --out-dir bw-outputs make -j 2 dummyeditor
         - sonar-scanner
- 

@@ -168,7 +168,6 @@ void MainWindow::newProject()
 
 void MainWindow::openProject()
 {
-
     if (nullptr != m_currentProject) {
         closeCurrentProject();
     }
