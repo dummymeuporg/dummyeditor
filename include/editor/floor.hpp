@@ -23,7 +23,7 @@ using GraphicLayers = std::map<int8_t, std::unique_ptr<GraphicLayer>>;
 class Floor
 {
 public:
-    Floor(Dummy::Local::Floor&);
+    explicit Floor(Dummy::Local::Floor&);
 
     GraphicLayer& graphicLayerAt(int8_t position); //< unimplemented...
     const GraphicLayers& graphicLayers() const { return m_graphicLayers; }

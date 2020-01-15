@@ -14,7 +14,7 @@ namespace Editor {
 class EventsLayer : public Layer
 {
 public:
-    EventsLayer(Dummy::Local::Floor&);
+    explicit EventsLayer(Dummy::Local::Floor&);
     Dummy::Local::Events& touchEvents() { return m_floor.touchEvents(); }
     std::uint16_t width() const;
     std::uint16_t height() const;

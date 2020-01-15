@@ -88,11 +88,6 @@ void GraphicRectangle::emitDrawingToolSelected()
     emit drawingToolSelected(this);
 }
 
-void GraphicRectangle::onUnselected()
-{
-    GraphicPaletteTool::onUnselected();
-}
-
 void GraphicRectangle::drawHoverPreviewItem()
 {
     if (nullptr == selectionItem()) {

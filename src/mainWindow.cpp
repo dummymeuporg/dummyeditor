@@ -43,17 +43,6 @@ MainWindow::MainWindow(QWidget* parent)
     QToolBar* tabGeneralToolBar = new QToolBar();
     tabGeneralToolBar->setStyleSheet("QToolBar{background-color: #ABABAB;}");
 
-    // create a group action to regroup action tools
-    QActionGroup* toolsGroup = new QActionGroup(this);
-    toolsGroup->addAction("Working tool");
-    // toolsGroup->addAction(ui->actionSelection);
-    // toolsGroup->addAction(ui->actionPen);
-    // toolsGroup->addAction(ui->actionRectangle);
-    // toolsGroup->addAction(ui->actionPath);
-    tabGeneralToolBar->addActions(toolsGroup->actions());
-
-    tabGeneralToolBar->addSeparator();
-
     // create a group action to regroup action layers
     QActionGroup* layersGroup = new QActionGroup(this);
     layersGroup->addAction("Working layer");
@@ -85,10 +74,6 @@ MainWindow::MainWindow(QWidget* parent)
 
     QObject::connect(m_ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
                      m_chipsetScene, SLOT(changeChipset(QString)));
-    /*
-QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
-                 m_mapScene, SLOT(changeSelection(QRect)));
-*/
 
     m_ui->graphicsViewChipset->scale(2.0, 2.0);
     m_ui->graphicsViewMap->scale(2.0, 2.0);
@@ -108,42 +93,6 @@ QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
     m_ui->actionQuit->setShortcutContext(Qt::ApplicationShortcut);
 }
 
-void MainWindow::initializeScenes()
-{
-    m_ui->graphicsViewChipset->setScene(m_chipsetScene);
-    m_ui->graphicsViewMap->setScene(m_mapScene);
-}
-
-void MainWindow::connectScenes()
-{
-    QObject::connect(m_ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
-                     m_chipsetScene, SLOT(changeChipset(QString)));
-    /*
-QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
-                 m_mapScene, SLOT(changeSelection(QRect)));
-*/
-
-    /*
-QObject::connect(ui->actionPen, SIGNAL(triggered(bool)),
-                 m_mapScene, SLOT(setPenTool()));
-QObject::connect(ui->actionRectangle,
-                 SIGNAL(triggered(bool)),
-                 m_mapScene,
-                 SLOT(setRectangleTool()));
-QObject::connect(ui->actionSelection,
-                 SIGNAL(triggered(bool)),
-                 m_mapScene,
-                 SLOT(setSelectionTool()));
-*/
-}
-
-void MainWindow::closeCurrentProject()
-{
-    // TODO clean currently loaded project
-    delete m_chipsetScene;
-    delete m_mapScene;
-}
-
 MainWindow::~MainWindow()
 {
     if (m_currentProject != nullptr) {
@@ -157,6 +106,87 @@ MainWindow::~MainWindow()
         delete tool;
     }
     delete m_ui;
+}
+
+void MainWindow::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer)
+{
+    // Publish visible/graphic related tools
+    m_ui->widgetDrawingToolbox->onLayerSelected(m_mapScene, m_chipsetScene,
+                                                layer, &m_graphicTools);
+}
+
+void MainWindow::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer)
+{
+    // Publish blocking related tools
+    m_ui->widgetDrawingToolbox->onLayerSelected(m_mapScene, m_chipsetScene,
+                                                layer, &m_blockingTools);
+}
+
+void MainWindow::initializeScenes()
+{
+    m_ui->graphicsViewChipset->setScene(m_chipsetScene);
+    m_ui->graphicsViewMap->setScene(m_mapScene);
+}
+
+void MainWindow::connectScenes()
+{
+    QObject::connect(m_ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
+                     m_chipsetScene, SLOT(changeChipset(QString)));
+}
+
+void MainWindow::closeCurrentProject()
+{
+    // TODO clean currently loaded project
+    delete m_chipsetScene;
+    delete m_mapScene;
+}
+
+void MainWindow::loadProject(const QString& projectDirectory)
+{
+    connectScenes();
+
+    m_currentProject = std::make_shared<Editor::Project>(
+        std::filesystem::path(projectDirectory.toStdString()).string());
+
+    m_ui->treeViewMaps->setModel(
+        static_cast<QAbstractItemModel*>(m_currentProject->mapsModel()));
+
+    m_ui->treeViewMaps->setProject(m_currentProject);
+
+    // Enable the first layer drawing by default.
+    m_ui->actionLow_layer_1->trigger();
+}
+
+void MainWindow::removeTools()
+{
+    qDebug() << "Remove tools";
+    m_mapScene->unsetDrawingTool();
+    m_chipsetScene->unsetPaletteTool();
+    m_ui->widgetDrawingToolbox->clear();
+}
+
+void MainWindow::closeEvent(QCloseEvent* event)
+{
+    if (nullptr != m_currentProject) {
+        QMessageBox::StandardButton resBtn = QMessageBox::question(
+            this, "DummyEditor", tr("Do you want to save before you quit ?\n"),
+            QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
+            QMessageBox::Cancel);
+        switch (resBtn) {
+        case QMessageBox::Yes:
+            m_currentProject->saveProject();
+            event->accept();
+            break;
+        case QMessageBox::No:
+            event->accept();
+            break;
+        case QMessageBox::Cancel:
+            event->ignore();
+            break;
+        default:
+            break;
+        }
+    }
 }
 
 void MainWindow::on_actionNew_triggered()
@@ -193,22 +223,6 @@ void MainWindow::on_actionOpen_triggered()
     }
 
     loadProject(projectDirectory);
-}
-
-void MainWindow::loadProject(const QString& projectDirectory)
-{
-    connectScenes();
-
-    m_currentProject = std::make_shared<Editor::Project>(
-        std::filesystem::path(projectDirectory.toStdString()).string());
-
-    m_ui->treeViewMaps->setModel(
-        static_cast<QAbstractItemModel*>(m_currentProject->mapsModel()));
-
-    m_ui->treeViewMaps->setProject(m_currentProject);
-
-    // Enable the first layer drawing by default.
-    m_ui->actionLow_layer_1->trigger();
 }
 
 void MainWindow::on_actionSave_triggered()
@@ -252,9 +266,9 @@ void MainWindow::on_treeViewMaps_doubleClicked(const QModelIndex& selectedIndex)
 }
 
 
-void MainWindow::on_actionCancel_triggered()
+void MainWindow::on_actionUndo_triggered()
 {
-    qDebug() << "Cancel.";
+    qDebug() << "Undo. Not implemented";
 }
 
 void MainWindow::on_actionCut_triggered()
@@ -296,14 +310,6 @@ void MainWindow::on_actionPaste_triggered()
     QCoreApplication::postEvent(m_mapScene, keyEvent);
 }
 
-void MainWindow::removeTools()
-{
-    qDebug() << "Remove tools";
-    m_mapScene->unsetDrawingTool();
-    m_chipsetScene->unsetPaletteTool();
-    m_ui->widgetDrawingToolbox->clear();
-}
-
 void MainWindow::publishTools(GraphicMap::GraphicLayer* layer)
 {
     qDebug() << "Publish tools!";
@@ -315,48 +321,10 @@ void MainWindow::publishTools(GraphicMap::GraphicLayer* layer)
     // m_chipsetScene->unsetPaletteTool();
 
     /*
-std::vector<DrawingTool::DrawingTool*>&& tools(layer->drawingTools());
-auto toolbox = ui->widgetDrawingToolbox;
-toolbox->reset(m_mapScene, m_chipsetScene, tools);
-*/
+  std::vector<DrawingTool::DrawingTool*>&& tools(layer->drawingTools());
+  auto toolbox = ui->widgetDrawingToolbox;
+  toolbox->reset(m_mapScene, m_chipsetScene, tools);
+  */
 
     layer->accept(*this);
-}
-
-void MainWindow::closeEvent(QCloseEvent* event)
-{
-    if (nullptr != m_currentProject) {
-        QMessageBox::StandardButton resBtn = QMessageBox::question(
-            this, "DummyEditor", tr("Do you want to save before you quit ?\n"),
-            QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
-            QMessageBox::Cancel);
-        switch (resBtn) {
-        case QMessageBox::Yes:
-            m_currentProject->saveProject();
-            event->accept();
-            break;
-        case QMessageBox::No:
-            event->accept();
-            break;
-        case QMessageBox::Cancel:
-            event->ignore();
-            break;
-        default:
-            break;
-        }
-    }
-}
-
-void MainWindow::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer)
-{
-    // Publish visible/graphic related tools
-    m_ui->widgetDrawingToolbox->onLayerSelected(m_mapScene, m_chipsetScene,
-                                                layer, &m_graphicTools);
-}
-
-void MainWindow::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer)
-{
-    // Publish blocking related tools
-    m_ui->widgetDrawingToolbox->onLayerSelected(m_mapScene, m_chipsetScene,
-                                                layer, &m_blockingTools);
 }

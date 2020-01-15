@@ -41,7 +41,9 @@ void SelectionTool::drawSelection()
 {
     // Remove current selection, if any.
 
-    QPoint start, end;
+    QPoint start;
+    QPoint end;
+
     if (m_startSelection.x() <= m_endSelection.x()
         && m_startSelection.y() <= m_endSelection.y()) {
         start = m_startSelection;

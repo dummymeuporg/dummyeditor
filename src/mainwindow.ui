@@ -454,7 +454,7 @@
     <property name="title">
      <string>Edit</string>
     </property>
-    <addaction name="actionCancel"/>
+    <addaction name="actionUndo"/>
     <addaction name="separator"/>
     <addaction name="actionCut"/>
     <addaction name="actionCopy"/>
@@ -533,7 +533,7 @@
    <addaction name="actionSave"/>
    <addaction name="actionQuit"/>
    <addaction name="separator"/>
-   <addaction name="actionCancel"/>
+   <addaction name="actionUndo"/>
    <addaction name="actionCopy"/>
    <addaction name="actionPaste"/>
    <addaction name="separator"/>
@@ -620,7 +620,7 @@
     <string>Ctrl+Q</string>
    </property>
   </action>
-  <action name="actionCancel">
+  <action name="actionUndo">
    <property name="icon">
     <iconset resource="../icons.qrc">
      <normaloff>:/icons/cancel_Icon.png</normaloff>:/icons/cancel_Icon.png</iconset>

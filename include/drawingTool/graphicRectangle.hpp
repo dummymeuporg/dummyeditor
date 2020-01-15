@@ -23,7 +23,6 @@ public:
     void mapKeyReleaseEvent(QKeyEvent*) override;
     void mapMouseLeaveEvent() override;
     void emitDrawingToolSelected() override;
-    void onUnselected() override;
 
 signals:
     void drawingToolSelected(::DrawingTools::DrawingTool*);

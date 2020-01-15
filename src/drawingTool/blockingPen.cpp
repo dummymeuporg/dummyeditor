@@ -60,7 +60,10 @@ void BlockingPen::mapKeyReleaseEvent(QKeyEvent* event)
     qDebug() << "key release.";
 }
 
-void BlockingPen::mapMouseLeaveEvent() {}
+void BlockingPen::mapMouseLeaveEvent()
+{
+    //
+}
 
 void BlockingPen::accept(DrawingVisitor& visitor)
 {
@@ -74,8 +77,14 @@ void BlockingPen::emitDrawingToolSelected()
     emit drawingToolSelected(this);
 }
 
-void BlockingPen::onUnselected() {}
+void BlockingPen::onUnselected()
+{
+    //
+}
 
-void BlockingPen::onSelected() {}
+void BlockingPen::onSelected()
+{
+    //
+}
 
 } // namespace DrawingTools

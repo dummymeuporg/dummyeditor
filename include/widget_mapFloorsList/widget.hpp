@@ -46,7 +46,7 @@ class FloorListWidget : public QWidget
 {
     Q_OBJECT
 public:
-    FloorListWidget(QWidget* parent = nullptr);
+    explicit FloorListWidget(QWidget* parent = nullptr);
 
     const MapFloorTreeModel* mapFloorTreeModel() const;
 

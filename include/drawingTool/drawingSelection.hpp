@@ -30,7 +30,7 @@ class SelectionTool : public DrawingTool
 {
     Q_OBJECT
 public:
-    SelectionTool(GraphicMap::MapGraphicsScene&);
+    explicit SelectionTool(GraphicMap::MapGraphicsScene&);
     void accept(DrawingVisitor&) override;
     void mapMousePressEvent(QGraphicsSceneMouseEvent*) override;
     void mapMouseMoveEvent(QGraphicsSceneMouseEvent*) override;

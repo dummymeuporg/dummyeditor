@@ -21,7 +21,7 @@ namespace MapFloorsList {
 class FloorTreeItem : public MapTreeItem
 {
 public:
-    FloorTreeItem(Editor::Floor& floor, std::size_t index);
+    explicit FloorTreeItem(Editor::Floor& floor, std::size_t index);
 
     QVariant data(int role = Qt::UserRole + 1) const override;
 

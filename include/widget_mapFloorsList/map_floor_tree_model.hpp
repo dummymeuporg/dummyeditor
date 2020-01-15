@@ -24,7 +24,7 @@ class MapTreeItem;
 class MapFloorTreeModel : public QStandardItemModel
 {
 public:
-    MapFloorTreeModel(std::shared_ptr<Editor::Map>);
+    explicit MapFloorTreeModel(std::shared_ptr<Editor::Map>);
     MapTreeItem* floorItemFromIdx(const QModelIndex&) const;
 };
 

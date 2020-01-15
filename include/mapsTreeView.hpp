@@ -45,7 +45,7 @@ class MapsTreeView : public QTreeView
     Q_OBJECT
 
 public:
-    MapsTreeView(QWidget* parent = nullptr);
+    explicit MapsTreeView(QWidget* parent = nullptr);
 
     void setProject(std::shared_ptr<Editor::Project> project);
 

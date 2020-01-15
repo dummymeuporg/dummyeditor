@@ -32,7 +32,7 @@ class ProjectError : public std::exception
 class Project
 {
 public:
-    Project(const std::string& folder);
+    explicit Project(const std::string& folder);
     virtual ~Project();
 
     // Getters

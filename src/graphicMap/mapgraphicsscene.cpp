@@ -59,7 +59,9 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument(
             .c_str()));
 
     m_currentGraphicLayer = nullptr;
-    for (auto& graphicLayer : m_graphicLayers) { delete graphicLayer; }
+    for (auto& graphicLayer : m_graphicLayers) {
+        delete graphicLayer;
+    }
     m_graphicLayers.clear();
 
     int zindex = 0;
@@ -98,7 +100,6 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument(
                          graphicLayer, SLOT(setSelected()));
     }
 
-    // changeSelection(QRect(0,0,0,0));
     m_drawingTool = nullptr;
     return *this;
 }
