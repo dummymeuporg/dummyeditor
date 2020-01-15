@@ -4,6 +4,7 @@
 
 #include <QCloseEvent>
 #include <QDebug>
+#include <QShortcut>
 #include <QFileDialog>
 #include <QMessageBox>
 
@@ -97,6 +98,15 @@ QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
 
     QList<int> desktopSizeListHeight {3 * height() / 5, height() / 5};
     m_ui->splitter->setSizes(desktopSizeListHeight);
+
+    /******************************************************
+     * MainWindows items connection and shortcut setting  *
+     ******************************************************/
+
+    connect (m_ui->actionQuit, SIGNAL(triggered()) , this, SLOT(close()));
+    m_ui->actionQuit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
+    m_ui->actionQuit->setShortcutContext(Qt::ApplicationShortcut);
+
 }
 
 void MainWindow::initializeScenes()
