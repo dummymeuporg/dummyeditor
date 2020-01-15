@@ -69,14 +69,16 @@ private:
     void closeEvent(QCloseEvent* event);
 
 private slots:
-    void newProject();
-    void openProject();
-    void saveProject();
-    void selectCurrentMap(QModelIndex);
-    void onCancel();
-    void onCut();
-    void onCopy();
-    void onPaste();
+    // automatic connexions
+    void on_treeViewMaps_doubleClicked(const QModelIndex& index);
+    void on_actionNew_triggered();
+    void on_actionOpen_triggered();
+    void on_actionSave_triggered();
+    void on_actionCancel_triggered();
+    void on_actionCut_triggered();
+    void on_actionCopy_triggered();
+    void on_actionPaste_triggered();
+    // manual connexions
     void publishTools(GraphicMap::GraphicLayer*);
 
 private:

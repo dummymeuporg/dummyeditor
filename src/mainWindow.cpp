@@ -4,9 +4,9 @@
 
 #include <QCloseEvent>
 #include <QDebug>
-#include <QShortcut>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QShortcut>
 
 #include "drawingTool/blockingEraser.hpp"
 #include "drawingTool/blockingPen.hpp"
@@ -103,10 +103,9 @@ QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
      * MainWindows items connection and shortcut setting  *
      ******************************************************/
 
-    connect (m_ui->actionQuit, SIGNAL(triggered()) , this, SLOT(close()));
+    connect(m_ui->actionQuit, SIGNAL(triggered()), this, SLOT(close()));
     m_ui->actionQuit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
     m_ui->actionQuit->setShortcutContext(Qt::ApplicationShortcut);
-
 }
 
 void MainWindow::initializeScenes()
@@ -151,12 +150,16 @@ MainWindow::~MainWindow()
         closeCurrentProject();
         m_currentProject.reset();
     }
-    for (auto tool : m_blockingTools) { delete tool; }
-    for (auto tool : m_graphicTools) { delete tool; }
+    for (auto tool : m_blockingTools) {
+        delete tool;
+    }
+    for (auto tool : m_graphicTools) {
+        delete tool;
+    }
     delete m_ui;
 }
 
-void MainWindow::newProject()
+void MainWindow::on_actionNew_triggered()
 {
     // Open a file dialog to select a folder
     QString projectDirectory = QFileDialog::getExistingDirectory(
@@ -176,7 +179,7 @@ void MainWindow::newProject()
     loadProject(projectDirectory);
 }
 
-void MainWindow::openProject()
+void MainWindow::on_actionOpen_triggered()
 {
     if (nullptr != m_currentProject) {
         closeCurrentProject();
@@ -208,24 +211,13 @@ void MainWindow::loadProject(const QString& projectDirectory)
     m_ui->actionLow_layer_1->trigger();
 }
 
-void MainWindow::saveProject()
+void MainWindow::on_actionSave_triggered()
 {
-    if (nullptr == m_currentProject) {
-        return;
-    }
-
-    m_currentProject->saveProjectFile();
-
-    if (m_currentProject->openedMaps().count() <= 0) {
-        return;
-    }
-
-    for (auto e : m_currentProject->openedMaps().keys()) {
-        m_currentProject->document(e)->map->save();
-    }
+    if (m_currentProject)
+        m_currentProject->saveProject();
 }
 
-void MainWindow::selectCurrentMap(QModelIndex selectedIndex)
+void MainWindow::on_treeViewMaps_doubleClicked(const QModelIndex& selectedIndex)
 {
     const MapsTreeModel* mapModel = m_currentProject->mapsModel();
 
@@ -259,12 +251,13 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex)
     m_ui->widgetDrawingToolbox->setInitialState();
 }
 
-void MainWindow::onCancel()
+
+void MainWindow::on_actionCancel_triggered()
 {
     qDebug() << "Cancel.";
 }
 
-void MainWindow::onCut()
+void MainWindow::on_actionCut_triggered()
 {
     qDebug() << "Cut.";
     // TODO it's not the best way to manage event.
@@ -277,7 +270,7 @@ void MainWindow::onCut()
     QCoreApplication::postEvent(m_mapScene, keyEvent);
 }
 
-void MainWindow::onCopy()
+void MainWindow::on_actionCopy_triggered()
 {
     qDebug() << "Copy.";
     // TODO it's not the best way to manage event.
@@ -290,7 +283,7 @@ void MainWindow::onCopy()
     QCoreApplication::postEvent(m_mapScene, keyEvent);
 }
 
-void MainWindow::onPaste()
+void MainWindow::on_actionPaste_triggered()
 {
     qDebug() << "Paste.";
     // TODO: it's not the best way to manage event.
@@ -339,7 +332,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
             QMessageBox::Cancel);
         switch (resBtn) {
         case QMessageBox::Yes:
-            saveProject();
+            m_currentProject->saveProject();
             event->accept();
             break;
         case QMessageBox::No:
