@@ -68,27 +68,26 @@ QString MapEditDialog::getMusic() const
 
 bool MapEditDialog::inputsAreValid(QString* errorMessage)
 {
-
     if (m_ui->lineEditMapName->text().isEmpty()) {
-        if (errorMessage)
+        if (errorMessage != nullptr)
             *errorMessage = tr("You must enter a map name.");
 
         return false;
 
     } else if (m_ui->lineEditChipset->text().isEmpty()) {
-        if (errorMessage)
+        if (errorMessage != nullptr)
             *errorMessage = tr("You must enter a chipset filename.");
 
         return false;
 
     } else if (m_ui->spinBoxMapHeight->value() < 1) { // should not happen
-        if (errorMessage)
+        if (errorMessage != nullptr)
             *errorMessage = tr("You map's height must be above or equal to 1.");
 
         return false;
 
     } else if (m_ui->spinBoxMapWidth->value() < 1) { // should not happen
-        if (errorMessage)
+        if (errorMessage != nullptr)
             *errorMessage = tr("You map's width must be above or equal to 1.");
 
         return false;

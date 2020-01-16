@@ -248,7 +248,7 @@ void MainWindow::on_actionOpen_triggered()
 
 void MainWindow::on_actionSave_triggered()
 {
-    if (m_currentProject)
+    if (m_currentProject != nullptr)
         m_currentProject->saveProject();
 }
 
