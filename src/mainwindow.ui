@@ -427,7 +427,7 @@
      <x>0</x>
      <y>0</y>
      <width>874</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -624,8 +624,8 @@
   </action>
   <action name="actionUndo">
    <property name="icon">
-    <iconset>
-     <normaloff>../icons/Undo_icon.png</normaloff>../icons/Undo_icon.png</iconset>
+    <iconset resource="../icons.qrc">
+     <normaloff>:/icons/Undo_icon.png</normaloff>:/icons/Undo_icon.png</iconset>
    </property>
    <property name="text">
     <string>Cancel</string>
@@ -940,8 +940,8 @@
   </action>
   <action name="actionCut">
    <property name="icon">
-    <iconset>
-     <normaloff>../icons/Cut_icon.png</normaloff>../icons/Cut_icon.png</iconset>
+    <iconset resource="../icons.qrc">
+     <normaloff>:/icons/Cut_icon.png</normaloff>:/icons/Cut_icon.png</iconset>
    </property>
    <property name="text">
     <string>Cut</string>
@@ -970,8 +970,8 @@
   </action>
   <action name="actionRedo">
    <property name="icon">
-    <iconset>
-     <normaloff>../icons/Redo_icon.png</normaloff>../icons/Redo_icon.png</iconset>
+    <iconset resource="../icons.qrc">
+     <normaloff>:/icons/Redo_icon.png</normaloff>:/icons/Redo_icon.png</iconset>
    </property>
    <property name="text">
     <string>actionRedo</string>
