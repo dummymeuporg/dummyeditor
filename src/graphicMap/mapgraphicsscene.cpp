@@ -193,38 +193,12 @@ void MapGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
     }
 }
 
-void MapGraphicsScene::keyPressEvent(QKeyEvent* event)
-{
-    if (nullptr != m_drawingTool) {
-        m_drawingTool->mapKeyPressEvent(event);
-    }
-}
-
-void MapGraphicsScene::keyReleaseEvent(QKeyEvent* event)
-{
-    if (nullptr != m_drawingTool) {
-        m_drawingTool->mapKeyReleaseEvent(event);
-    }
-}
-
 void MapGraphicsScene::unsetDrawingTool()
 {
     if (nullptr != m_drawingTool) {
         m_drawingTool->onUnselected();
     }
     m_drawingTool = nullptr;
-}
-
-bool MapGraphicsScene::eventFilter(QObject* watched, QEvent* event)
-{
-    Q_UNUSED(watched)
-    if (event->type() == QEvent::Leave) {
-        qDebug() << "Mouse left the scene";
-        if (nullptr != m_drawingTool) {
-            m_drawingTool->mapMouseLeaveEvent();
-        }
-    }
-    return false;
 }
 
 void MapGraphicsScene::setCurrentGraphicLayer(GraphicLayer* layer)

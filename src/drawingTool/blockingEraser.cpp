@@ -52,18 +52,6 @@ void BlockingEraser::mapMouseReleaseEvent(QGraphicsSceneMouseEvent* event)
     m_mouseClicked = false;
 }
 
-void BlockingEraser::mapKeyPressEvent(QKeyEvent* event)
-{
-    qDebug() << "key press.";
-}
-
-void BlockingEraser::mapKeyReleaseEvent(QKeyEvent* event)
-{
-    qDebug() << "key release.";
-}
-
-void BlockingEraser::mapMouseLeaveEvent() {}
-
 void BlockingEraser::accept(DrawingVisitor& visitor)
 {
     visitor.visitTool(*this);

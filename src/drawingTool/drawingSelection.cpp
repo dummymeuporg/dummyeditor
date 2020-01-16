@@ -95,19 +95,7 @@ void SelectionTool::mapMouseReleaseEvent(QGraphicsSceneMouseEvent*)
     // XXX: Set in memory selected zone.
 }
 
-void SelectionTool::mapKeyPressEvent(QKeyEvent* event)
-{
-    // If ctrl+c, copy
-    if (event->type() == QKeyEvent::KeyPress) {
-        if (event->matches(QKeySequence::Copy)) {
-            onCopyKeyPressed(event);
-        } else if (event->matches(QKeySequence::Paste)) {
-            onPasteKeyPressed(event);
-        }
-    }
-}
-
-void SelectionTool::onCopyKeyPressed(QKeyEvent* event)
+void SelectionTool::doCopy()
 {
     qDebug() << "Copy";
     m_layers.clear();
@@ -117,12 +105,12 @@ void SelectionTool::onCopyKeyPressed(QKeyEvent* event)
     }
 }
 
-void SelectionTool::onCutKeyPressed(QKeyEvent* event)
+void SelectionTool::doCut()
 {
     qDebug() << "Cut";
 }
 
-void SelectionTool::onPasteKeyPressed(QKeyEvent* event)
+void SelectionTool::doPaste()
 {
     qDebug() << "Paste\r\n layers count: " << m_layers.size() << "\r\n";
     for (auto& [layer, clip] : m_layers) {
@@ -131,10 +119,6 @@ void SelectionTool::onPasteKeyPressed(QKeyEvent* event)
         layer->accept(*clip);
     }
 }
-
-void SelectionTool::mapKeyReleaseEvent(QKeyEvent*) {}
-
-void SelectionTool::mapMouseLeaveEvent() {}
 
 void SelectionTool::onSelected() {}
 

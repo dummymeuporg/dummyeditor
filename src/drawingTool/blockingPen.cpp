@@ -50,21 +50,6 @@ void BlockingPen::mapMouseReleaseEvent(QGraphicsSceneMouseEvent* event)
     m_mouseClicked = false;
 }
 
-void BlockingPen::mapKeyPressEvent(QKeyEvent* event)
-{
-    qDebug() << "key press.";
-}
-
-void BlockingPen::mapKeyReleaseEvent(QKeyEvent* event)
-{
-    qDebug() << "key release.";
-}
-
-void BlockingPen::mapMouseLeaveEvent()
-{
-    //
-}
-
 void BlockingPen::accept(DrawingVisitor& visitor)
 {
     visitor.visitTool(*this);

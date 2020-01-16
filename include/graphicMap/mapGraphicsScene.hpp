@@ -51,9 +51,6 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent*) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent*) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
-    void keyPressEvent(QKeyEvent*) override;
-    void keyReleaseEvent(QKeyEvent*) override;
-    bool eventFilter(QObject*, QEvent*) override;
     void drawGrid(quint16 width, quint16 height, unsigned int unit);
     void clearGrid();
     void redrawGrid();

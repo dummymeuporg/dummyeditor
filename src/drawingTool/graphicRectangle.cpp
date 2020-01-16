@@ -65,18 +65,6 @@ void GraphicRectangle::mapMouseReleaseEvent(QGraphicsSceneMouseEvent* event)
     }
 }
 
-void GraphicRectangle::mapKeyPressEvent(QKeyEvent* event)
-{
-    qDebug() << "key press.";
-}
-
-void GraphicRectangle::mapKeyReleaseEvent(QKeyEvent* event)
-{
-    qDebug() << "key release.";
-}
-
-void GraphicRectangle::mapMouseLeaveEvent() {}
-
 void GraphicRectangle::accept(DrawingVisitor& visitor)
 {
     visitor.visitTool(*this);

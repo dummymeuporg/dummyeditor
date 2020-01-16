@@ -57,18 +57,6 @@ void GraphicEraser::mapMouseReleaseEvent(QGraphicsSceneMouseEvent*)
     m_mouseClicked = false;
 }
 
-void GraphicEraser::mapKeyPressEvent(QKeyEvent*)
-{
-    qDebug() << "key press.";
-}
-
-void GraphicEraser::mapKeyReleaseEvent(::QKeyEvent*)
-{
-    qDebug() << "key release.";
-}
-
-void GraphicEraser::mapMouseLeaveEvent() {}
-
 void GraphicEraser::accept(DrawingVisitor& visitor)
 {
     visitor.visitTool(*this);

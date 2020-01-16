@@ -116,7 +116,6 @@ MainWindow::MainWindow(QWidget* parent)
 
     m_ui->actionPaste->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_V));
     m_ui->actionPaste->setShortcutContext(Qt::ApplicationShortcut);
-
 }
 
 MainWindow::~MainWindow()
@@ -198,6 +197,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
             this, "DummyEditor", tr("Do you want to save before you quit ?\n"),
             QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
             QMessageBox::Cancel);
+
         switch (resBtn) {
         case QMessageBox::Yes:
             m_currentProject->saveProject();
@@ -221,13 +221,11 @@ void MainWindow::on_actionNew_triggered()
     QString projectDirectory = QFileDialog::getExistingDirectory(
         this, tr("Choose your project directory"));
 
-    if (projectDirectory == "") {
+    if (projectDirectory == "")
         return;
-    }
 
-    if (nullptr != m_currentProject) {
+    if (nullptr != m_currentProject)
         closeCurrentProject();
-    }
 
     // Initialize a project into this directory
     Editor::Project::create(projectDirectory);
@@ -237,16 +235,14 @@ void MainWindow::on_actionNew_triggered()
 
 void MainWindow::on_actionOpen_triggered()
 {
-    if (nullptr != m_currentProject) {
-        closeCurrentProject();
-    }
-
     QString projectDirectory = QFileDialog::getExistingDirectory(
         this, tr("Choose an existing project directory"));
 
-    if (projectDirectory == "") {
+    if (projectDirectory == "")
         return;
-    }
+
+    if (nullptr != m_currentProject)
+        closeCurrentProject();
 
     loadProject(projectDirectory);
 }
@@ -305,40 +301,37 @@ void MainWindow::on_actionRedo_triggered()
 void MainWindow::on_actionCut_triggered()
 {
     qDebug() << "Cut.";
-    // TODO it's not the best way to manage event.
-    // Shortcut are good to be kept customisable. If we do so in the future,
-    // we'll need to update all those methods. Future refacto : expose the event
-    // to call and call it directly. And from the other way, use QShortcut (we
-    // might need to set shortcutContext) instead of keypressevent
-    QKeyEvent* keyEvent =
-        new QKeyEvent(QEvent::KeyPress, Qt::Key_X, Qt::ControlModifier);
-    QCoreApplication::postEvent(m_mapScene, keyEvent);
+
+    // Cut is only active for SelectionTool
+    auto* activeTool =
+        dynamic_cast<DrawingTools::SelectionTool*>(m_mapScene->drawingTool());
+    if (activeTool != nullptr) {
+        activeTool->doCut();
+    }
 }
 
 void MainWindow::on_actionCopy_triggered()
 {
     qDebug() << "Copy.";
-    // TODO it's not the best way to manage event.
-    // Shortcut are good to be kept customisable. If we do so in the future,
-    // we'll need to update all those methods. Future refacto : expose the event
-    // to call and call it directly. And from the other way, use QShortcut (we
-    // might need to set shortcutContext) instead of keypressevent
-    QKeyEvent* keyEvent =
-        new QKeyEvent(QEvent::KeyPress, Qt::Key_C, Qt::ControlModifier);
-    QCoreApplication::postEvent(m_mapScene, keyEvent);
+
+    // Copy is only active for SelectionTool
+    auto* activeTool =
+        dynamic_cast<DrawingTools::SelectionTool*>(m_mapScene->drawingTool());
+    if (activeTool != nullptr) {
+        activeTool->doCopy();
+    }
 }
 
 void MainWindow::on_actionPaste_triggered()
 {
     qDebug() << "Paste.";
-    // TODO: it's not the best way to manage event.
-    // Shortcut are good to be kept customisable. If we do so in the future,
-    // we'll need to update all those methods. Future refacto : expose the event
-    // to call and call it directly. And from the other way, use QShortcut (we
-    // might need to set shortcutContext) instead of keypressevent
-    QKeyEvent* keyEvent =
-        new QKeyEvent(QEvent::KeyPress, Qt::Key_V, Qt::ControlModifier);
-    QCoreApplication::postEvent(m_mapScene, keyEvent);
+
+    // Paste is only active for SelectionTool
+    auto* activeTool =
+        dynamic_cast<DrawingTools::SelectionTool*>(m_mapScene->drawingTool());
+    if (activeTool != nullptr) {
+        activeTool->doPaste();
+    }
 }
 
 void MainWindow::publishTools(GraphicMap::GraphicLayer* layer)
