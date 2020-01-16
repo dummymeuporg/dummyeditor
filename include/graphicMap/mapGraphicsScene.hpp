@@ -36,7 +36,7 @@ class MapGraphicsScene : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    MapGraphicsScene(QObject* parent = nullptr);
+    explicit MapGraphicsScene(QObject* parent = nullptr);
     virtual ~MapGraphicsScene() override;
 
     const std::shared_ptr<Editor::Map> map() const { return m_map; }
@@ -51,9 +51,6 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent*) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent*) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
-    void keyPressEvent(QKeyEvent*) override;
-    void keyReleaseEvent(QKeyEvent*) override;
-    bool eventFilter(QObject*, QEvent*) override;
     void drawGrid(quint16 width, quint16 height, unsigned int unit);
     void clearGrid();
     void redrawGrid();

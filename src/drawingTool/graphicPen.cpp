@@ -54,22 +54,6 @@ void GraphicPen::mapMouseReleaseEvent(::QGraphicsSceneMouseEvent* event)
     m_mousePressed = false;
 }
 
-void GraphicPen::mapKeyPressEvent(::QKeyEvent* event)
-{
-    qDebug() << "key press.";
-}
-
-void GraphicPen::mapKeyReleaseEvent(::QKeyEvent* event)
-{
-    qDebug() << "key release.";
-}
-
-void GraphicPen::mapMouseLeaveEvent()
-{
-    mapGraphScene().removeItem(m_hoverItem);
-    m_hoverItem = nullptr;
-}
-
 void GraphicPen::accept(DrawingVisitor& visitor)
 {
     visitor.visitTool(*this);

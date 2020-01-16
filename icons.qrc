@@ -29,5 +29,8 @@
         <file>icons/icon_eye_crossed.png</file>
         <file>icons/icon_pen_2.png</file>
         <file>icons/icon_eraser.png</file>
+        <file>icons/Cut_icon.png</file>
+        <file>icons/Redo_icon.png</file>
+        <file>icons/Undo_icon.png</file>
     </qresource>
 </RCC>

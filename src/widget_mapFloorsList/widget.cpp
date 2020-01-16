@@ -16,7 +16,7 @@ FloorListWidget::FloorListWidget(QWidget* parent)
 
 const MapFloorTreeModel* FloorListWidget::mapFloorTreeModel() const
 {
-  return m_floorTreeModel;
+    return m_floorTreeModel;
 }
 
 void FloorListWidget::setEditorMap(std::shared_ptr<Editor::Map> editorMap)

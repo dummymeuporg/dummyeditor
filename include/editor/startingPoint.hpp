@@ -12,8 +12,8 @@ namespace Editor {
 class StartingPoint
 {
 public:
-    StartingPoint();
-    StartingPoint(const char*, std::uint16_t, std::uint16_t, std::uint8_t);
+    explicit StartingPoint();
+    explicit StartingPoint(const char*, std::uint16_t, std::uint16_t, std::uint8_t);
 
     const char* mapName() const { return m_mapName.c_str(); }
     std::uint16_t x() const { return m_x; }

@@ -29,9 +29,6 @@ public:
     void mapMousePressEvent(QGraphicsSceneMouseEvent*) override;
     void mapMouseMoveEvent(QGraphicsSceneMouseEvent*) override;
     void mapMouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
-    void mapKeyPressEvent(QKeyEvent*) override;
-    void mapKeyReleaseEvent(QKeyEvent*) override;
-    void mapMouseLeaveEvent() override;
     void emitDrawingToolSelected() override;
     void onSelected() override;
     void onUnselected() override;

@@ -454,7 +454,7 @@
     <property name="title">
      <string>Edit</string>
     </property>
-    <addaction name="actionCancel"/>
+    <addaction name="actionUndo"/>
     <addaction name="separator"/>
     <addaction name="actionCut"/>
     <addaction name="actionCopy"/>
@@ -533,7 +533,9 @@
    <addaction name="actionSave"/>
    <addaction name="actionQuit"/>
    <addaction name="separator"/>
-   <addaction name="actionCancel"/>
+   <addaction name="actionUndo"/>
+   <addaction name="actionRedo"/>
+   <addaction name="actionCut"/>
    <addaction name="actionCopy"/>
    <addaction name="actionPaste"/>
    <addaction name="separator"/>
@@ -561,9 +563,6 @@
    <property name="toolTip">
     <string>Create a new project</string>
    </property>
-   <property name="shortcut">
-    <string>Ctrl+N</string>
-   </property>
   </action>
   <action name="actionOpen">
    <property name="icon">
@@ -576,9 +575,6 @@
    <property name="toolTip">
     <string>Open an existant project</string>
    </property>
-   <property name="shortcut">
-    <string>Ctrl+O</string>
-   </property>
   </action>
   <action name="actionSave">
    <property name="icon">
@@ -590,9 +586,6 @@
    </property>
    <property name="toolTip">
     <string>Save the project</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionImport_project">
@@ -616,14 +609,11 @@
    <property name="toolTip">
     <string>Quit the editor</string>
    </property>
-   <property name="shortcut">
-    <string>Ctrl+Q</string>
-   </property>
   </action>
-  <action name="actionCancel">
+  <action name="actionUndo">
    <property name="icon">
     <iconset resource="../icons.qrc">
-     <normaloff>:/icons/cancel_Icon.png</normaloff>:/icons/cancel_Icon.png</iconset>
+     <normaloff>:/icons/Undo_icon.png</normaloff>:/icons/Undo_icon.png</iconset>
    </property>
    <property name="text">
     <string>Cancel</string>
@@ -646,9 +636,6 @@
    <property name="toolTip">
     <string>Copy selected evenement(s)/cell(s)</string>
    </property>
-   <property name="shortcut">
-    <string>Ctrl+C</string>
-   </property>
   </action>
   <action name="actionPaste">
    <property name="icon">
@@ -660,9 +647,6 @@
    </property>
    <property name="toolTip">
     <string>Paste event(s)/cell(s) previously copy</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+V</string>
    </property>
   </action>
   <action name="actionClean_project">
@@ -937,11 +921,12 @@
    </property>
   </action>
   <action name="actionCut">
+   <property name="icon">
+    <iconset resource="../icons.qrc">
+     <normaloff>:/icons/Cut_icon.png</normaloff>:/icons/Cut_icon.png</iconset>
+   </property>
    <property name="text">
     <string>Cut</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+X</string>
    </property>
   </action>
   <action name="actionHigh_layer_2">
@@ -960,6 +945,18 @@
    </property>
    <property name="shortcut">
     <string>Shift+R</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="icon">
+    <iconset resource="../icons.qrc">
+     <normaloff>:/icons/Redo_icon.png</normaloff>:/icons/Redo_icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>actionRedo</string>
+   </property>
+   <property name="toolTip">
+    <string>Redo</string>
    </property>
   </action>
  </widget>
@@ -985,136 +982,7 @@
  <resources>
   <include location="../icons.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>actionNew</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>newProject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionOpen</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>openProject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>436</x>
-     <y>321</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionSave</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>saveProject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>436</x>
-     <y>321</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionCancel</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>onCancel()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>436</x>
-     <y>321</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionCut</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>onCut()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>436</x>
-     <y>321</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionCopy</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>onCopy()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>436</x>
-     <y>321</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionPaste</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>onPaste()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>436</x>
-     <y>321</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>treeViewMaps</sender>
-   <signal>doubleClicked(QModelIndex)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>selectCurrentMap(QModelIndex)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>170</x>
-     <y>481</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>26</x>
-     <y>620</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>newProject()</slot>
   <slot>openProject()</slot>

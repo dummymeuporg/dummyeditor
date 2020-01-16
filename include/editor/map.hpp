@@ -38,7 +38,7 @@ using Floors = std::vector<std::unique_ptr<Floor>>;
 class Map : public Dummy::Local::Map
 {
 public:
-    Map(const Dummy::Local::Project&, const std::string&);
+    explicit Map(const Dummy::Local::Project&, const std::string&);
     virtual ~Map();
 
     void setChipset(const std::string&);

@@ -50,18 +50,6 @@ void BlockingPen::mapMouseReleaseEvent(QGraphicsSceneMouseEvent* event)
     m_mouseClicked = false;
 }
 
-void BlockingPen::mapKeyPressEvent(QKeyEvent* event)
-{
-    qDebug() << "key press.";
-}
-
-void BlockingPen::mapKeyReleaseEvent(QKeyEvent* event)
-{
-    qDebug() << "key release.";
-}
-
-void BlockingPen::mapMouseLeaveEvent() {}
-
 void BlockingPen::accept(DrawingVisitor& visitor)
 {
     visitor.visitTool(*this);
@@ -74,8 +62,14 @@ void BlockingPen::emitDrawingToolSelected()
     emit drawingToolSelected(this);
 }
 
-void BlockingPen::onUnselected() {}
+void BlockingPen::onUnselected()
+{
+    //
+}
 
-void BlockingPen::onSelected() {}
+void BlockingPen::onSelected()
+{
+    //
+}
 
 } // namespace DrawingTools

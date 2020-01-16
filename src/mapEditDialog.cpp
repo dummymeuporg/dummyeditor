@@ -66,7 +66,36 @@ QString MapEditDialog::getMusic() const
     return m_ui->lineEditMusic->text();
 }
 
-void MapEditDialog::onChipsetBrowse()
+bool MapEditDialog::inputsAreValid(QString* errorMessage)
+{
+    if (m_ui->lineEditMapName->text().isEmpty()) {
+        if (errorMessage != nullptr)
+            *errorMessage = tr("You must enter a map name.");
+
+        return false;
+
+    } else if (m_ui->lineEditChipset->text().isEmpty()) {
+        if (errorMessage != nullptr)
+            *errorMessage = tr("You must enter a chipset filename.");
+
+        return false;
+
+    } else if (m_ui->spinBoxMapHeight->value() < 1) { // should not happen
+        if (errorMessage != nullptr)
+            *errorMessage = tr("You map's height must be above or equal to 1.");
+
+        return false;
+
+    } else if (m_ui->spinBoxMapWidth->value() < 1) { // should not happen
+        if (errorMessage != nullptr)
+            *errorMessage = tr("You map's width must be above or equal to 1.");
+
+        return false;
+    }
+    return true;
+}
+
+void MapEditDialog::on_pushButtonBrowseChipset_clicked()
 {
     // TODO use .open() instead of .exec() ?
     QFileDialog dlg(this, tr("Choose the chipset file for your map."),
@@ -88,27 +117,17 @@ void MapEditDialog::onChipsetBrowse()
     }
 }
 
-void MapEditDialog::onOK()
+void MapEditDialog::on_pushButtonOK_clicked()
 {
-    bool isOk = true;
     QString errorMessage;
-    if (m_ui->lineEditMapName->text().isEmpty()) {
-        isOk         = false;
-        errorMessage = tr("You must enter a map name.");
-    } else if (m_ui->lineEditChipset->text().isEmpty()) {
-        isOk         = false;
-        errorMessage = tr("You must enter a chipset filename.");
-    } else if (m_ui->spinBoxMapHeight->value() < 1) { // should not happen
-        isOk         = false;
-        errorMessage = tr("You map's height must be above or equal to 1.");
-    } else if (m_ui->spinBoxMapWidth->value() < 1) { // should not happen
-        isOk         = false;
-        errorMessage = tr("You map's width must be above or equal to 1.");
-    }
-
-    if (isOk) {
+    if (inputsAreValid(&errorMessage)) {
         accept();
     } else {
         QMessageBox::critical(this, tr("Error"), errorMessage);
     }
+}
+
+void MapEditDialog::on_pushButtonCancel_clicked()
+{
+    reject();
 }

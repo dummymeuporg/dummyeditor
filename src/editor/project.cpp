@@ -104,7 +104,7 @@ void Project::createFolders(const QString& baseFolder)
                   });
 }
 
-void Project::saveProjectFile()
+void Project::saveProject()
 {
     QDomDocument doc;
     QDomElement projectNode = doc.createElement("project");
@@ -132,6 +132,12 @@ void Project::saveProjectFile()
     file.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream stream(&file);
     doc.save(stream, 4);
+
+    if (openedMaps().count() > 0) {
+        for (auto e : openedMaps().keys()) {
+            document(e)->map->save();
+        }
+    }
 }
 
 void Project::dumpToXmlNode(QDomDocument& doc, QDomElement& xmlNode,

@@ -32,7 +32,7 @@ class ProjectError : public std::exception
 class Project
 {
 public:
-    Project(const std::string& folder);
+    explicit Project(const std::string& folder);
     virtual ~Project();
 
     // Getters
@@ -45,7 +45,7 @@ public:
     void setModified(bool isModified) { m_isModified = isModified; }
     void setStartingPoint(const StartingPoint&);
 
-    void saveProjectFile();
+    void saveProject();
     static void create(const QString&);
     static void cleanMapName(QString& mapName);
 

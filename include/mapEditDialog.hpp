@@ -40,10 +40,12 @@ public:
     QString getMusic() const;
 
 private slots:
-    void onChipsetBrowse();
-    void onOK();
+    void on_pushButtonBrowseChipset_clicked();
+    void on_pushButtonOK_clicked();
+    void on_pushButtonCancel_clicked();
 
 private:
+    bool inputsAreValid(QString* errorMessage = nullptr);
     Ui::MapEditDialog* m_ui = nullptr;
     QString m_chipsetPath;
 };

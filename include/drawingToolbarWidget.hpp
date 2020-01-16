@@ -32,7 +32,7 @@ class DrawingToolBarWidget : public QWidget,
 {
     Q_OBJECT
 public:
-    DrawingToolBarWidget(QWidget* parent = nullptr);
+    explicit DrawingToolBarWidget(QWidget* parent = nullptr);
 
     enum tToolBarState
     {

@@ -19,7 +19,7 @@ class ChipsetGraphicsScene : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    ChipsetGraphicsScene(QObject* parent = nullptr);
+    explicit ChipsetGraphicsScene(QObject* parent = nullptr);
     void mouseMoveEvent(QGraphicsSceneMouseEvent*) override;
     void mousePressEvent(QGraphicsSceneMouseEvent*) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent*) override;

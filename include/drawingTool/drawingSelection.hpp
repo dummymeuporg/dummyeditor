@@ -30,14 +30,11 @@ class SelectionTool : public DrawingTool
 {
     Q_OBJECT
 public:
-    SelectionTool(GraphicMap::MapGraphicsScene&);
+    explicit SelectionTool(GraphicMap::MapGraphicsScene&);
     void accept(DrawingVisitor&) override;
     void mapMousePressEvent(QGraphicsSceneMouseEvent*) override;
     void mapMouseMoveEvent(QGraphicsSceneMouseEvent*) override;
     void mapMouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
-    void mapKeyPressEvent(QKeyEvent*) override;
-    void mapKeyReleaseEvent(QKeyEvent*) override;
-    void mapMouseLeaveEvent() override;
     void emitDrawingToolSelected() override;
     void drawGrid() override;
     void onSelected() override;
@@ -46,13 +43,13 @@ public:
     // GraphicLayerVisitor
     void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
     void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
-    void onCopyKeyPressed();
+
+    void doCopy();
+    void doCut();
+    void doPaste();
 
 private:
     void drawSelection();
-    void onCopyKeyPressed(QKeyEvent*);
-    void onCutKeyPressed(QKeyEvent*);
-    void onPasteKeyPressed(QKeyEvent*);
 
 signals:
     void drawingToolSelected(::DrawingTools::DrawingTool*);

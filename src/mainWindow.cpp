@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QShortcut>
 
 #include "drawingTool/blockingEraser.hpp"
 #include "drawingTool/blockingPen.hpp"
@@ -42,17 +43,6 @@ MainWindow::MainWindow(QWidget* parent)
     QToolBar* tabGeneralToolBar = new QToolBar();
     tabGeneralToolBar->setStyleSheet("QToolBar{background-color: #ABABAB;}");
 
-    // create a group action to regroup action tools
-    QActionGroup* toolsGroup = new QActionGroup(this);
-    toolsGroup->addAction("Working tool");
-    // toolsGroup->addAction(ui->actionSelection);
-    // toolsGroup->addAction(ui->actionPen);
-    // toolsGroup->addAction(ui->actionRectangle);
-    // toolsGroup->addAction(ui->actionPath);
-    tabGeneralToolBar->addActions(toolsGroup->actions());
-
-    tabGeneralToolBar->addSeparator();
-
     // create a group action to regroup action layers
     QActionGroup* layersGroup = new QActionGroup(this);
     layersGroup->addAction("Working layer");
@@ -84,10 +74,6 @@ MainWindow::MainWindow(QWidget* parent)
 
     QObject::connect(m_ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
                      m_chipsetScene, SLOT(changeChipset(QString)));
-    /*
-QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
-                 m_mapScene, SLOT(changeSelection(QRect)));
-*/
 
     m_ui->graphicsViewChipset->scale(2.0, 2.0);
     m_ui->graphicsViewMap->scale(2.0, 2.0);
@@ -97,6 +83,67 @@ QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
 
     QList<int> desktopSizeListHeight {3 * height() / 5, height() / 5};
     m_ui->splitter->setSizes(desktopSizeListHeight);
+
+    /******************************************************
+     * MainWindows items connection and shortcut setting  *
+     ******************************************************/
+
+    connect(m_ui->actionQuit, SIGNAL(triggered()), this, SLOT(close()));
+    m_ui->actionQuit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
+    m_ui->actionQuit->setShortcutContext(Qt::ApplicationShortcut);
+
+    m_ui->actionNew->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_N));
+    m_ui->actionNew->setShortcutContext(Qt::ApplicationShortcut);
+
+    m_ui->actionOpen->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_O));
+    m_ui->actionOpen->setShortcutContext(Qt::ApplicationShortcut);
+
+    m_ui->actionSave->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
+    m_ui->actionSave->setShortcutContext(Qt::ApplicationShortcut);
+
+    m_ui->actionUndo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
+    m_ui->actionUndo->setShortcutContext(Qt::ApplicationShortcut);
+
+    m_ui->actionRedo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y));
+    m_ui->actionRedo->setShortcutContext(Qt::ApplicationShortcut);
+
+    m_ui->actionCut->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_X));
+    m_ui->actionCut->setShortcutContext(Qt::WindowShortcut);
+
+    m_ui->actionCopy->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_C));
+    m_ui->actionCopy->setShortcutContext(Qt::WindowShortcut);
+
+    m_ui->actionPaste->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_V));
+    m_ui->actionPaste->setShortcutContext(Qt::WindowShortcut);
+}
+
+MainWindow::~MainWindow()
+{
+    if (m_currentProject != nullptr) {
+        closeCurrentProject();
+        m_currentProject.reset();
+    }
+    for (auto tool : m_blockingTools) {
+        delete tool;
+    }
+    for (auto tool : m_graphicTools) {
+        delete tool;
+    }
+    delete m_ui;
+}
+
+void MainWindow::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer)
+{
+    // Publish visible/graphic related tools
+    m_ui->widgetDrawingToolbox->onLayerSelected(m_mapScene, m_chipsetScene,
+                                                layer, &m_graphicTools);
+}
+
+void MainWindow::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer)
+{
+    // Publish blocking related tools
+    m_ui->widgetDrawingToolbox->onLayerSelected(m_mapScene, m_chipsetScene,
+                                                layer, &m_blockingTools);
 }
 
 void MainWindow::initializeScenes()
@@ -109,23 +156,6 @@ void MainWindow::connectScenes()
 {
     QObject::connect(m_ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
                      m_chipsetScene, SLOT(changeChipset(QString)));
-    /*
-QObject::connect(m_chipsetScene, SIGNAL(selectionChanged(QRect)),
-                 m_mapScene, SLOT(changeSelection(QRect)));
-*/
-
-    /*
-QObject::connect(ui->actionPen, SIGNAL(triggered(bool)),
-                 m_mapScene, SLOT(setPenTool()));
-QObject::connect(ui->actionRectangle,
-                 SIGNAL(triggered(bool)),
-                 m_mapScene,
-                 SLOT(setRectangleTool()));
-QObject::connect(ui->actionSelection,
-                 SIGNAL(triggered(bool)),
-                 m_mapScene,
-                 SLOT(setSelectionTool()));
-*/
 }
 
 void MainWindow::closeCurrentProject()
@@ -133,53 +163,6 @@ void MainWindow::closeCurrentProject()
     // TODO clean currently loaded project
     delete m_chipsetScene;
     delete m_mapScene;
-}
-
-MainWindow::~MainWindow()
-{
-    if (m_currentProject != nullptr) {
-        closeCurrentProject();
-        m_currentProject.reset();
-    }
-    for (auto tool : m_blockingTools) { delete tool; }
-    for (auto tool : m_graphicTools) { delete tool; }
-    delete m_ui;
-}
-
-void MainWindow::newProject()
-{
-    // Open a file dialog to select a folder
-    QString projectDirectory = QFileDialog::getExistingDirectory(
-        this, tr("Choose your project directory"));
-
-    if (projectDirectory == "") {
-        return;
-    }
-
-    if (nullptr != m_currentProject) {
-        closeCurrentProject();
-    }
-
-    // Initialize a project into this directory
-    Editor::Project::create(projectDirectory);
-
-    loadProject(projectDirectory);
-}
-
-void MainWindow::openProject()
-{
-    if (nullptr != m_currentProject) {
-        closeCurrentProject();
-    }
-
-    QString projectDirectory = QFileDialog::getExistingDirectory(
-        this, tr("Choose an existing project directory"));
-
-    if (projectDirectory == "") {
-        return;
-    }
-
-    loadProject(projectDirectory);
 }
 
 void MainWindow::loadProject(const QString& projectDirectory)
@@ -198,24 +181,78 @@ void MainWindow::loadProject(const QString& projectDirectory)
     m_ui->actionLow_layer_1->trigger();
 }
 
-void MainWindow::saveProject()
+void MainWindow::removeTools()
 {
-    if (nullptr == m_currentProject) {
-        return;
-    }
+    qDebug() << "Remove tools";
+    m_mapScene->unsetDrawingTool();
+    m_chipsetScene->unsetPaletteTool();
+    m_ui->widgetDrawingToolbox->clear();
+}
 
-    m_currentProject->saveProjectFile();
+void MainWindow::closeEvent(QCloseEvent* event)
+{
+    if (nullptr != m_currentProject) {
+        QMessageBox::StandardButton resBtn = QMessageBox::question(
+            this, "DummyEditor", tr("Do you want to save before you quit ?\n"),
+            QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
+            QMessageBox::Cancel);
 
-    if (m_currentProject->openedMaps().count() <= 0) {
-        return;
-    }
-
-    for (auto e : m_currentProject->openedMaps().keys()) {
-        m_currentProject->document(e)->map->save();
+        switch (resBtn) {
+        case QMessageBox::Yes:
+            m_currentProject->saveProject();
+            event->accept();
+            break;
+        case QMessageBox::No:
+            event->accept();
+            break;
+        case QMessageBox::Cancel:
+            event->ignore();
+            break;
+        default:
+            break;
+        }
     }
 }
 
-void MainWindow::selectCurrentMap(QModelIndex selectedIndex)
+void MainWindow::on_actionNew_triggered()
+{
+    // Open a file dialog to select a folder
+    QString projectDirectory = QFileDialog::getExistingDirectory(
+        this, tr("Choose your project directory"));
+
+    if (projectDirectory == "")
+        return;
+
+    if (nullptr != m_currentProject)
+        closeCurrentProject();
+
+    // Initialize a project into this directory
+    Editor::Project::create(projectDirectory);
+
+    loadProject(projectDirectory);
+}
+
+void MainWindow::on_actionOpen_triggered()
+{
+    QString projectDirectory = QFileDialog::getExistingDirectory(
+        this, tr("Choose an existing project directory"));
+
+    if (projectDirectory == "")
+        return;
+
+    if (nullptr != m_currentProject)
+        closeCurrentProject();
+
+    loadProject(projectDirectory);
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+    if (m_currentProject != nullptr)
+        m_currentProject->saveProject();
+}
+
+void MainWindow::on_treeViewMaps_doubleClicked(const QModelIndex& selectedIndex)
 {
     const MapsTreeModel* mapModel = m_currentProject->mapsModel();
 
@@ -249,56 +286,45 @@ void MainWindow::selectCurrentMap(QModelIndex selectedIndex)
     m_ui->widgetDrawingToolbox->setInitialState();
 }
 
-void MainWindow::onCancel()
+
+void MainWindow::on_actionUndo_triggered()
 {
-    qDebug() << "Cancel.";
+    qDebug() << "Undo. Not implemented";
 }
 
-void MainWindow::onCut()
+void MainWindow::on_actionRedo_triggered()
 {
-    qDebug() << "Cut.";
-    // TODO it's not the best way to manage event.
-    // Shortcut are good to be kept customisable. If we do so in the future,
-    // we'll need to update all those methods. Future refacto : expose the event
-    // to call and call it directly. And from the other way, use QShortcut (we
-    // might need to set shortcutContext) instead of keypressevent
-    QKeyEvent* keyEvent =
-        new QKeyEvent(QEvent::KeyPress, Qt::Key_X, Qt::ControlModifier);
-    QCoreApplication::postEvent(m_mapScene, keyEvent);
+    qDebug() << "Redo. Not implemented";
 }
 
-void MainWindow::onCopy()
+void MainWindow::on_actionCut_triggered()
 {
-    qDebug() << "Copy.";
-    // TODO it's not the best way to manage event.
-    // Shortcut are good to be kept customisable. If we do so in the future,
-    // we'll need to update all those methods. Future refacto : expose the event
-    // to call and call it directly. And from the other way, use QShortcut (we
-    // might need to set shortcutContext) instead of keypressevent
-    QKeyEvent* keyEvent =
-        new QKeyEvent(QEvent::KeyPress, Qt::Key_C, Qt::ControlModifier);
-    QCoreApplication::postEvent(m_mapScene, keyEvent);
+    // Cut is only active for SelectionTool
+    auto* activeTool =
+        dynamic_cast<DrawingTools::SelectionTool*>(m_mapScene->drawingTool());
+    if (activeTool != nullptr) {
+        activeTool->doCut();
+    }
 }
 
-void MainWindow::onPaste()
+void MainWindow::on_actionCopy_triggered()
 {
-    qDebug() << "Paste.";
-    // TODO: it's not the best way to manage event.
-    // Shortcut are good to be kept customisable. If we do so in the future,
-    // we'll need to update all those methods. Future refacto : expose the event
-    // to call and call it directly. And from the other way, use QShortcut (we
-    // might need to set shortcutContext) instead of keypressevent
-    QKeyEvent* keyEvent =
-        new QKeyEvent(QEvent::KeyPress, Qt::Key_V, Qt::ControlModifier);
-    QCoreApplication::postEvent(m_mapScene, keyEvent);
+    // Copy is only active for SelectionTool
+    auto* activeTool =
+        dynamic_cast<DrawingTools::SelectionTool*>(m_mapScene->drawingTool());
+    if (activeTool != nullptr) {
+        activeTool->doCopy();
+    }
 }
 
-void MainWindow::removeTools()
+void MainWindow::on_actionPaste_triggered()
 {
-    qDebug() << "Remove tools";
-    m_mapScene->unsetDrawingTool();
-    m_chipsetScene->unsetPaletteTool();
-    m_ui->widgetDrawingToolbox->clear();
+    // Paste is only active for SelectionTool
+    auto* activeTool =
+        dynamic_cast<DrawingTools::SelectionTool*>(m_mapScene->drawingTool());
+    if (activeTool != nullptr) {
+        activeTool->doPaste();
+    }
 }
 
 void MainWindow::publishTools(GraphicMap::GraphicLayer* layer)
@@ -312,48 +338,10 @@ void MainWindow::publishTools(GraphicMap::GraphicLayer* layer)
     // m_chipsetScene->unsetPaletteTool();
 
     /*
-std::vector<DrawingTool::DrawingTool*>&& tools(layer->drawingTools());
-auto toolbox = ui->widgetDrawingToolbox;
-toolbox->reset(m_mapScene, m_chipsetScene, tools);
-*/
+  std::vector<DrawingTool::DrawingTool*>&& tools(layer->drawingTools());
+  auto toolbox = ui->widgetDrawingToolbox;
+  toolbox->reset(m_mapScene, m_chipsetScene, tools);
+  */
 
     layer->accept(*this);
-}
-
-void MainWindow::closeEvent(QCloseEvent* event)
-{
-    if (nullptr != m_currentProject) {
-        QMessageBox::StandardButton resBtn = QMessageBox::question(
-            this, "DummyEditor", tr("Do you want to save before you quit ?\n"),
-            QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
-            QMessageBox::Cancel);
-        switch (resBtn) {
-        case QMessageBox::Yes:
-            saveProject();
-            event->accept();
-            break;
-        case QMessageBox::No:
-            event->accept();
-            break;
-        case QMessageBox::Cancel:
-            event->ignore();
-            break;
-        default:
-            break;
-        }
-    }
-}
-
-void MainWindow::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer)
-{
-    // Publish visible/graphic related tools
-    m_ui->widgetDrawingToolbox->onLayerSelected(m_mapScene, m_chipsetScene,
-                                                layer, &m_graphicTools);
-}
-
-void MainWindow::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer)
-{
-    // Publish blocking related tools
-    m_ui->widgetDrawingToolbox->onLayerSelected(m_mapScene, m_chipsetScene,
-                                                layer, &m_blockingTools);
 }

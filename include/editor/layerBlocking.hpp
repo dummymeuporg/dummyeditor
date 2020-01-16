@@ -25,7 +25,7 @@ namespace Editor {
 class BlockingLayer : public Layer
 {
 public:
-    BlockingLayer(Dummy::Core::BlockingLayer&);
+    explicit BlockingLayer(Dummy::Core::BlockingLayer&);
 
     Dummy::Core::BlockingLayer& layer() { return m_layer; }
     std::uint8_t& operator[](std::size_t index);

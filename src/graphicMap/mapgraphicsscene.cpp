@@ -59,7 +59,9 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument(
             .c_str()));
 
     m_currentGraphicLayer = nullptr;
-    for (auto& graphicLayer : m_graphicLayers) { delete graphicLayer; }
+    for (auto& graphicLayer : m_graphicLayers) {
+        delete graphicLayer;
+    }
     m_graphicLayers.clear();
 
     int zindex = 0;
@@ -98,7 +100,6 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument(
                          graphicLayer, SLOT(setSelected()));
     }
 
-    // changeSelection(QRect(0,0,0,0));
     m_drawingTool = nullptr;
     return *this;
 }
@@ -192,38 +193,12 @@ void MapGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
     }
 }
 
-void MapGraphicsScene::keyPressEvent(QKeyEvent* event)
-{
-    if (nullptr != m_drawingTool) {
-        m_drawingTool->mapKeyPressEvent(event);
-    }
-}
-
-void MapGraphicsScene::keyReleaseEvent(QKeyEvent* event)
-{
-    if (nullptr != m_drawingTool) {
-        m_drawingTool->mapKeyReleaseEvent(event);
-    }
-}
-
 void MapGraphicsScene::unsetDrawingTool()
 {
     if (nullptr != m_drawingTool) {
         m_drawingTool->onUnselected();
     }
     m_drawingTool = nullptr;
-}
-
-bool MapGraphicsScene::eventFilter(QObject* watched, QEvent* event)
-{
-    Q_UNUSED(watched)
-    if (event->type() == QEvent::Leave) {
-        qDebug() << "Mouse left the scene";
-        if (nullptr != m_drawingTool) {
-            m_drawingTool->mapMouseLeaveEvent();
-        }
-    }
-    return false;
 }
 
 void MapGraphicsScene::setCurrentGraphicLayer(GraphicLayer* layer)
