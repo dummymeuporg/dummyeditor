@@ -92,7 +92,6 @@ MainWindow::MainWindow(QWidget* parent)
     m_ui->actionQuit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
     m_ui->actionQuit->setShortcutContext(Qt::ApplicationShortcut);
 
-
     m_ui->actionNew->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_N));
     m_ui->actionNew->setShortcutContext(Qt::ApplicationShortcut);
 
@@ -109,13 +108,13 @@ MainWindow::MainWindow(QWidget* parent)
     m_ui->actionRedo->setShortcutContext(Qt::ApplicationShortcut);
 
     m_ui->actionCut->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_X));
-    m_ui->actionCut->setShortcutContext(Qt::ApplicationShortcut);
+    m_ui->actionCut->setShortcutContext(Qt::WindowShortcut);
 
     m_ui->actionCopy->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_C));
-    m_ui->actionCopy->setShortcutContext(Qt::ApplicationShortcut);
+    m_ui->actionCopy->setShortcutContext(Qt::WindowShortcut);
 
     m_ui->actionPaste->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_V));
-    m_ui->actionPaste->setShortcutContext(Qt::ApplicationShortcut);
+    m_ui->actionPaste->setShortcutContext(Qt::WindowShortcut);
 }
 
 MainWindow::~MainWindow()
@@ -300,8 +299,6 @@ void MainWindow::on_actionRedo_triggered()
 
 void MainWindow::on_actionCut_triggered()
 {
-    qDebug() << "Cut.";
-
     // Cut is only active for SelectionTool
     auto* activeTool =
         dynamic_cast<DrawingTools::SelectionTool*>(m_mapScene->drawingTool());
@@ -312,8 +309,6 @@ void MainWindow::on_actionCut_triggered()
 
 void MainWindow::on_actionCopy_triggered()
 {
-    qDebug() << "Copy.";
-
     // Copy is only active for SelectionTool
     auto* activeTool =
         dynamic_cast<DrawingTools::SelectionTool*>(m_mapScene->drawingTool());
@@ -324,8 +319,6 @@ void MainWindow::on_actionCopy_triggered()
 
 void MainWindow::on_actionPaste_triggered()
 {
-    qDebug() << "Paste.";
-
     // Paste is only active for SelectionTool
     auto* activeTool =
         dynamic_cast<DrawingTools::SelectionTool*>(m_mapScene->drawingTool());

@@ -563,9 +563,6 @@
    <property name="toolTip">
     <string>Create a new project</string>
    </property>
-   <property name="shortcut">
-    <string>Ctrl+N</string>
-   </property>
   </action>
   <action name="actionOpen">
    <property name="icon">
@@ -578,9 +575,6 @@
    <property name="toolTip">
     <string>Open an existant project</string>
    </property>
-   <property name="shortcut">
-    <string>Ctrl+O</string>
-   </property>
   </action>
   <action name="actionSave">
    <property name="icon">
@@ -592,9 +586,6 @@
    </property>
    <property name="toolTip">
     <string>Save the project</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionImport_project">
@@ -617,9 +608,6 @@
    </property>
    <property name="toolTip">
     <string>Quit the editor</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Q</string>
    </property>
   </action>
   <action name="actionUndo">
@@ -648,9 +636,6 @@
    <property name="toolTip">
     <string>Copy selected evenement(s)/cell(s)</string>
    </property>
-   <property name="shortcut">
-    <string>Ctrl+C</string>
-   </property>
   </action>
   <action name="actionPaste">
    <property name="icon">
@@ -662,9 +647,6 @@
    </property>
    <property name="toolTip">
     <string>Paste event(s)/cell(s) previously copy</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+V</string>
    </property>
   </action>
   <action name="actionClean_project">
@@ -946,9 +928,6 @@
    <property name="text">
     <string>Cut</string>
    </property>
-   <property name="shortcut">
-    <string>Ctrl+X</string>
-   </property>
   </action>
   <action name="actionHigh_layer_2">
    <property name="checkable">
@@ -978,9 +957,6 @@
    </property>
    <property name="toolTip">
     <string>Redo</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Y</string>
    </property>
   </action>
  </widget>

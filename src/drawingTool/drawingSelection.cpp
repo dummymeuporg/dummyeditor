@@ -107,7 +107,7 @@ void SelectionTool::doCopy()
 
 void SelectionTool::doCut()
 {
-    qDebug() << "Cut";
+    qDebug() << "Cut (not implemented yet)";
 }
 
 void SelectionTool::doPaste()
