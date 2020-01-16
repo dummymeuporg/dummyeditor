@@ -91,6 +91,39 @@ MainWindow::MainWindow(QWidget* parent)
     connect(m_ui->actionQuit, SIGNAL(triggered()), this, SLOT(close()));
     m_ui->actionQuit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
     m_ui->actionQuit->setShortcutContext(Qt::ApplicationShortcut);
+
+    connect(m_ui->actionNew, SIGNAL(triggered()), this, SLOT(on_actionNew_triggered()));
+    m_ui->actionNew->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_N));
+    m_ui->actionNew->setShortcutContext(Qt::ApplicationShortcut);
+
+    connect(m_ui->actionOpen, SIGNAL(triggered()), this, SLOT(on_actionOpen_triggered()));
+    m_ui->actionOpen->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_O));
+    m_ui->actionOpen->setShortcutContext(Qt::ApplicationShortcut);
+
+    connect(m_ui->actionSave, SIGNAL(triggered()), this, SLOT(on_actionSave_triggered()));
+    m_ui->actionSave->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
+    m_ui->actionSave->setShortcutContext(Qt::ApplicationShortcut);
+
+    connect(m_ui->actionUndo, SIGNAL(triggered()), this, SLOT(on_actionUndo_triggered()));
+    m_ui->actionUndo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
+    m_ui->actionUndo->setShortcutContext(Qt::ApplicationShortcut);
+
+    connect(m_ui->actionRedo, SIGNAL(triggered()), this, SLOT(on_actionRedo_triggered()));
+    m_ui->actionRedo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y));
+    m_ui->actionRedo->setShortcutContext(Qt::ApplicationShortcut);
+
+    connect(m_ui->actionCut, SIGNAL(triggered()), this, SLOT(on_actionCut_triggered()));
+    m_ui->actionCut->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_X));
+    m_ui->actionCut->setShortcutContext(Qt::ApplicationShortcut);
+
+    connect(m_ui->actionCopy, SIGNAL(triggered()), this, SLOT(on_actionCopy_triggered()));
+    m_ui->actionCopy->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_C));
+    m_ui->actionCopy->setShortcutContext(Qt::ApplicationShortcut);
+
+    connect(m_ui->actionPaste, SIGNAL(triggered()), this, SLOT(on_actionPaste_triggered()));
+    m_ui->actionPaste->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_V));
+    m_ui->actionPaste->setShortcutContext(Qt::ApplicationShortcut);
+
 }
 
 MainWindow::~MainWindow()
@@ -269,6 +302,11 @@ void MainWindow::on_treeViewMaps_doubleClicked(const QModelIndex& selectedIndex)
 void MainWindow::on_actionUndo_triggered()
 {
     qDebug() << "Undo. Not implemented";
+}
+
+void MainWindow::on_actionRedo_triggered()
+{
+    qDebug() << "Redo. Not implemented";
 }
 
 void MainWindow::on_actionCut_triggered()

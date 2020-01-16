@@ -427,7 +427,7 @@
      <x>0</x>
      <y>0</y>
      <width>874</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -534,6 +534,8 @@
    <addaction name="actionQuit"/>
    <addaction name="separator"/>
    <addaction name="actionUndo"/>
+   <addaction name="actionRedo"/>
+   <addaction name="actionCut"/>
    <addaction name="actionCopy"/>
    <addaction name="actionPaste"/>
    <addaction name="separator"/>
@@ -622,8 +624,8 @@
   </action>
   <action name="actionUndo">
    <property name="icon">
-    <iconset resource="../icons.qrc">
-     <normaloff>:/icons/cancel_Icon.png</normaloff>:/icons/cancel_Icon.png</iconset>
+    <iconset>
+     <normaloff>../icons/Undo_icon.png</normaloff>../icons/Undo_icon.png</iconset>
    </property>
    <property name="text">
     <string>Cancel</string>
@@ -937,6 +939,10 @@
    </property>
   </action>
   <action name="actionCut">
+   <property name="icon">
+    <iconset>
+     <normaloff>../icons/Cut_icon.png</normaloff>../icons/Cut_icon.png</iconset>
+   </property>
    <property name="text">
     <string>Cut</string>
    </property>
@@ -960,6 +966,21 @@
    </property>
    <property name="shortcut">
     <string>Shift+R</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="icon">
+    <iconset>
+     <normaloff>../icons/Redo_icon.png</normaloff>../icons/Redo_icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>actionRedo</string>
+   </property>
+   <property name="toolTip">
+    <string>Redo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Y</string>
    </property>
   </action>
  </widget>
