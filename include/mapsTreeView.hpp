@@ -49,13 +49,13 @@ public:
 
     void setProject(std::shared_ptr<Editor::Project> project);
 
-signals:
-    void chipsetMapChanged(QString);
-
-private slots:
+public slots:
     void onNewMapAction();
     void onPropertiesAction();
     void showContextMenu(const QPoint&);
+
+signals:
+    void chipsetMapChanged(QString);
 
 private:
     std::shared_ptr<Editor::Project> m_project;

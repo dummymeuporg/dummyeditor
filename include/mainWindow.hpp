@@ -59,16 +59,7 @@ public:
     void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
     void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
 
-private:
-    void initializeScenes();
-    void connectScenes();
-    void enableMapCreation();
-    void closeCurrentProject();
-    void loadProject(const QString&);
-    void removeTools();
-    void closeEvent(QCloseEvent* event);
-
-private slots:
+public slots:
     // automatic connexions
     void on_treeViewMaps_doubleClicked(const QModelIndex& index);
     void on_actionNew_triggered();
@@ -81,6 +72,15 @@ private slots:
     void on_actionPaste_triggered();
     // manual connexions
     void publishTools(GraphicMap::GraphicLayer*);
+
+private:
+    void initializeScenes();
+    void connectScenes();
+    void enableMapCreation();
+    void closeCurrentProject();
+    void loadProject(const QString&);
+    void removeTools();
+    void closeEvent(QCloseEvent* event) override;
 
 private:
     Ui::MainWindow* m_ui                     = nullptr;

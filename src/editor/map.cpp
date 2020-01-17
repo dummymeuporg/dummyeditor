@@ -68,9 +68,10 @@ void Map::resizeGraphicLayer(Editor::GraphicLayer& graphicLayer,
     for (std::uint16_t y = 0; y < height; ++y) {
         for (std::uint16_t x = 0; x < width; ++x) {
             if (x < m_width && y < m_height) {
-                newGraphicLayer[y * width + x] = graphicLayer[y * m_width + x];
+                newGraphicLayer[(y * width) + x] =
+                    graphicLayer[(y * m_width) + x];
             } else {
-                newGraphicLayer[y * width + x] =
+                newGraphicLayer[(y * width) + x] =
                     std::pair<std::int8_t, std::int8_t>(-1, -1);
             }
         }
@@ -86,10 +87,10 @@ void Map::resizeBlockingLayer(Editor::BlockingLayer& blockingLayer,
     for (std::uint16_t y = 0; y < height; ++y) {
         for (std::uint16_t x = 0; x < width; ++x) {
             if (x < m_width && y < m_height) {
-                newBlockingLayer[y * width + x] =
-                    blockingLayer[y * m_width + x];
+                newBlockingLayer[(y * width) + x] =
+                    blockingLayer[(y * m_width) + x];
             } else {
-                newBlockingLayer[y * width + x] = 0;
+                newBlockingLayer[(y * width) + x] = 0;
             }
         }
     }
@@ -98,7 +99,9 @@ void Map::resizeBlockingLayer(Editor::BlockingLayer& blockingLayer,
 
 void Map::resize(std::uint16_t width, std::uint16_t height)
 {
-    for (auto& floor : m_editorFloors) { resizeFloor(*floor, width, height); }
+    for (const auto& floor : m_editorFloors) {
+        resizeFloor(*floor, width, height);
+    }
     m_width  = width;
     m_height = height;
 }
@@ -163,7 +166,9 @@ void Map::saveGraphicLayers()
     _writeStdString(ofs, m_music);
 
     // write the floors
-    for (auto& floor : m_floors) { writeFloor(ofs, floor); }
+    for (const auto& floor : m_floors) {
+        writeFloor(ofs, floor);
+    }
 }
 
 void Map::_writeStdString(std::ofstream& ofs, const std::string& str)

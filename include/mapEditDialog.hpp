@@ -39,7 +39,7 @@ public:
     QString getChipset() const;
     QString getMusic() const;
 
-private slots:
+public slots:
     void on_pushButtonBrowseChipset_clicked();
     void on_pushButtonOK_clicked();
     void on_pushButtonCancel_clicked();

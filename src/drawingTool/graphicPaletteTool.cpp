@@ -5,6 +5,7 @@
 #include <QGraphicsSceneMouseEvent>
 
 #include "chipsetGraphicsScene.hpp"
+#include "definitions.hpp"
 
 namespace DrawingTools {
 
@@ -22,7 +23,7 @@ void GraphicPaletteTool::emitDrawingToolSelected()
 }
 
 void GraphicPaletteTool::paletteMousePressEvent(
-    ::QGraphicsSceneMouseEvent* mouseEvent)
+    const QGraphicsSceneMouseEvent* mouseEvent)
 {
     if (nullptr == m_chipsetGraphicsScene
         || ! mouseEvent->buttons().testFlag(Qt::LeftButton) || m_isSelecting) {
@@ -45,9 +46,9 @@ void GraphicPaletteTool::paletteMousePressEvent(
 
     // Add a square
     QBrush brush(QColor(66, 135, 245));
-    int x = m_selectionStart.x() - (m_selectionStart.x() % 16);
-    int y = m_selectionStart.y() - (m_selectionStart.y() % 16);
-    setSelection(QRect(x, y, 16, 16),
+    int x = m_selectionStart.x() - (m_selectionStart.x() % CELL_W);
+    int y = m_selectionStart.y() - (m_selectionStart.y() % CELL_H);
+    setSelection(QRect(x, y, CELL_W, CELL_H),
                  m_chipsetGraphicsScene->chipset()->pixmap());
     m_selectionRectItem = m_chipsetGraphicsScene->addRect(m_rectSelection);
     m_selectionRectItem->setBrush(brush);
@@ -55,7 +56,7 @@ void GraphicPaletteTool::paletteMousePressEvent(
 }
 
 void GraphicPaletteTool::paletteMouseMoveEvent(
-    QGraphicsSceneMouseEvent* mouseEvent)
+    const QGraphicsSceneMouseEvent* mouseEvent)
 {
     if (nullptr == m_selectionRectItem || ! m_isSelecting) {
         return;
@@ -71,24 +72,23 @@ void GraphicPaletteTool::paletteMouseMoveEvent(
 
     QBrush brush(QColor(66, 135, 245));
 
-    //normalize selection rectangle in order accept any direction of selection
+    // normalize selection rectangle in order accept any direction of selection
     QRect realRect = QRect(m_selectionStart, pt).normalized();
 
-    //extend the rectangle to catch the complete border tiles
-    realRect.setLeft(realRect.left()-(realRect.left() % 16));
-    realRect.setTop(realRect.top()-(realRect.top() % 16));
-    realRect.setRight(((realRect.right() / 16) + 1) * 16);
-    realRect.setBottom(((realRect.bottom() / 16) + 1) * 16);
+    // extend the rectangle to catch the complete border tiles
+    realRect.setLeft(realRect.left() - (realRect.left() % CELL_W));
+    realRect.setTop(realRect.top() - (realRect.top() % CELL_H));
+    realRect.setRight(((realRect.right() / CELL_W) + 1) * CELL_W);
+    realRect.setBottom(((realRect.bottom() / CELL_H) + 1) * CELL_H);
 
-    setSelection(realRect,
-                 m_chipsetGraphicsScene->chipset()->pixmap());
+    setSelection(realRect, m_chipsetGraphicsScene->chipset()->pixmap());
     m_selectionRectItem = m_chipsetGraphicsScene->addRect(m_rectSelection);
     m_selectionRectItem->setBrush(brush);
     m_selectionRectItem->setOpacity(0.5);
 }
 
 void GraphicPaletteTool::paletteMouseReleaseEvent(
-    QGraphicsSceneMouseEvent* mouseEvent)
+    const QGraphicsSceneMouseEvent* mouseEvent)
 {
     if (nullptr != m_selectionItem) {
         m_isSelecting = false;

@@ -2,6 +2,7 @@
 
 #include <QGraphicsPixmapItem>
 
+#include "definitions.hpp"
 #include "editor/layerGraphic.hpp"
 #include "editor/map.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
@@ -20,23 +21,23 @@ VisibleGraphicLayer::VisibleGraphicLayer(Editor::GraphicLayer& layer,
 {
     layerItems().resize(m_graphicLayer.width() * m_graphicLayer.height());
 
-    int index = 0;
-    for (auto it = m_graphicLayer.layer().begin();
-         it != m_graphicLayer.layer().end(); ++it, ++index) {
+    size_t index = 0;
+    for (const auto& cellCoord : m_graphicLayer.layer()) {
         layerItems()[index] = nullptr;
-        qint16 x            = std::get<0>(*it);
-        qint16 y            = std::get<1>(*it);
+        qint16 x            = cellCoord.first;
+        qint16 y            = cellCoord.second;
         if (x >= 0 && y >= 0) {
-            layerItems()[index] = new QGraphicsPixmapItem(
-                m_chipsetPixmap.copy(QRect(x * 16, y * 16, 16, 16)));
+            layerItems()[index] = new QGraphicsPixmapItem(m_chipsetPixmap.copy(
+                QRect(x * CELL_W, y * CELL_H, CELL_W, CELL_H)));
 
-            qreal posX = (index % m_graphicLayer.width()) * 16;
-            qreal posY = (index / m_graphicLayer.width()) * 16;
+            qreal posX = (index % m_graphicLayer.width()) * CELL_W;
+            qreal posY = (index / m_graphicLayer.width()) * CELL_H;
 
             layerItems()[index]->setPos(posX, posY);
             layerItems()[index]->setZValue(zIndex);
-            layerItems()[index]->setOpacity(m_graphicLayer.visible() * 1);
+            layerItems()[index]->setOpacity(m_graphicLayer.visible() ? 1 : 0);
             mapGraphicsScene.addItem(layerItems()[index]);
+            ++index;
         }
     }
 }
@@ -54,8 +55,10 @@ VisibleGraphicLayer& VisibleGraphicLayer::setTile(quint16 x, quint16 y,
                                                   qint16 chipsetX,
                                                   qint16 chipsetY)
 {
-    if (x < m_graphicLayer.width() * 16 && y < m_graphicLayer.height() * 16) {
-        unsigned long index = (y / 16) * m_graphicLayer.width() + (x / 16);
+    if (x < (m_graphicLayer.width() * CELL_W)
+        && y < (m_graphicLayer.height() * CELL_H)) {
+        unsigned long index =
+            ((y / CELL_H) * m_graphicLayer.width()) + (x / CELL_W);
 
         if (nullptr != layerItems()[index]) {
             mapGraphicsScene().removeItem(layerItems()[index]);
@@ -63,14 +66,14 @@ VisibleGraphicLayer& VisibleGraphicLayer::setTile(quint16 x, quint16 y,
         }
 
         if (chipsetX >= 0 && chipsetY >= 0) {
-            layerItems()[index] = new QGraphicsPixmapItem(
-                m_chipsetPixmap.copy(QRect(chipsetX, chipsetY, 16, 16)));
+            layerItems()[index] = new QGraphicsPixmapItem(m_chipsetPixmap.copy(
+                QRect(chipsetX, chipsetY, CELL_W, CELL_H)));
             layerItems()[index]->setPos(x, y);
             layerItems()[index]->setZValue(zIndex());
             mapGraphicsScene().addItem(layerItems()[index]);
 
             m_graphicLayer[index] = std::pair<std::int8_t, std::int8_t>(
-                chipsetX / 16, chipsetY / 16);
+                chipsetX / CELL_W, chipsetY / CELL_H);
         } else {
             m_graphicLayer[index] = std::pair<std::int8_t, std::int8_t>(-1, -1);
         }
@@ -98,16 +101,16 @@ void VisibleGraphicLayer::accept(GraphicLayerVisitor& visitor)
 std::shared_ptr<LayerClipboard::Clipboard>
 VisibleGraphicLayer::getClipboardRegion(const QRect& clip)
 {
-    unsigned x(clip.x() / 16);
-    unsigned y(clip.y() / 16);
-    unsigned width(clip.width() / 16);
-    unsigned height(clip.height() / 16);
+    const size_t x(clip.x() / CELL_W);
+    const size_t y(clip.y() / CELL_H);
+    const size_t width(clip.width() / CELL_W);
+    const size_t height(clip.height() / CELL_H);
 
     std::vector<std::pair<std::int8_t, std::int8_t>> content;
 
     for (unsigned j = y; j <= (y + height); ++j) {
-        for (unsigned i = x; i <= (x + width); ++i) {
-            unsigned index(j * m_graphicLayer.width() + i);
+        for (size_t i = x; i <= (x + width); ++i) {
+            size_t index((j * m_graphicLayer.width()) + i);
             content.push_back(m_graphicLayer.layer().at(index));
         }
     }

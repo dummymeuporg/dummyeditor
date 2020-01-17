@@ -2,6 +2,7 @@
 
 #include <QDebug>
 
+#include "definitions.hpp"
 #include "editor/layerGraphic.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
@@ -34,7 +35,7 @@ void GraphicGeneralTool::drawGrid()
     }
 
     mapGraphScene().drawGrid(m_visibleGraphicLayer->layer().width(),
-                             m_visibleGraphicLayer->layer().height(), 16);
+                             m_visibleGraphicLayer->layer().height(), CELL_W);
 }
 
 void GraphicGeneralTool::setVisibleGraphicLayer(

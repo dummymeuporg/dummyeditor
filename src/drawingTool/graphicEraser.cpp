@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 
+#include "definitions.hpp"
 #include "drawingTool/drawingVisitor.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
 
@@ -22,13 +23,13 @@ void GraphicEraser::mapMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
     }
 
     QPoint point(mouseEvent->scenePos().toPoint());
-    point.setX(point.x() - (point.x() % 16));
-    point.setY(point.y() - (point.y() % 16));
+    point.setX(point.x() - (point.x() % CELL_W));
+    point.setY(point.y() - (point.y() % CELL_H));
     if (m_mouseClicked) {
         // XXX : remove the tile.
-        visibleGraphicLayer()->setTile(quint16(point.x() - (point.x() % 16)),
-                                       quint16(point.y() - (point.y() % 16)),
-                                       -1, -1);
+        visibleGraphicLayer()->setTile(
+            static_cast<quint16>(point.x() - (point.x() % CELL_W)),
+            static_cast<quint16>(point.y() - (point.y() % CELL_H)), -1, -1);
     }
 }
 
@@ -39,16 +40,16 @@ void GraphicEraser::mapMousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
     }
 
     QPoint point(mouseEvent->scenePos().toPoint());
-    point.setX(point.x() - (point.x() % 16));
-    point.setY(point.y() - (point.y() % 16));
+    point.setX(point.x() - (point.x() % CELL_W));
+    point.setY(point.y() - (point.y() % CELL_H));
     qDebug() << "Eraser press.";
 
     // XXX: remove tile.
     m_mouseClicked = true;
 
-    visibleGraphicLayer()->setTile(quint16(point.x() - (point.x() % 16)),
-                                   quint16(point.y() - (point.y() % 16)), -1,
-                                   -1);
+    visibleGraphicLayer()->setTile(
+        static_cast<quint16>(point.x() - (point.x() % CELL_W)),
+        static_cast<quint16>(point.y() - (point.y() % CELL_H)), -1, -1);
 }
 
 void GraphicEraser::mapMouseReleaseEvent(QGraphicsSceneMouseEvent*)

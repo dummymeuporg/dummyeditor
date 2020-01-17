@@ -15,7 +15,6 @@
 DrawingToolBarWidget::DrawingToolBarWidget(::QWidget* parent)
     : QWidget(parent)
     , m_toolbar(new QToolBar(this))
-    , m_state(NoDrawingToolState)
 {
     // Set empty toolbar for the moment.
     setLayout(new QHBoxLayout());
@@ -26,7 +25,7 @@ void DrawingToolBarWidget::clear()
 {
     m_toolbar->clear();
 
-    if (m_actionGrp) {
+    if (m_actionGrp != nullptr) {
         delete m_actionGrp;
         m_actionGrp = nullptr;
     }
@@ -41,7 +40,7 @@ void DrawingToolBarWidget::reset()
 
     m_actionGrp = new QActionGroup(m_toolbar);
 
-    for (auto& tool : *m_drawingTools) {
+    for (auto* tool : *m_drawingTools) {
         auto* action = new QAction(this);
         action->setIcon(tool->icon());
         action->setText(tr("Tool"));
@@ -117,10 +116,10 @@ void DrawingToolBarWidget::visitTool(DrawingTools::SelectionTool&)
 void DrawingToolBarWidget::visitGraphicLayer(
     GraphicMap::VisibleGraphicLayer& layer)
 {
-    DrawingTools::DrawingTool* tool;
+    DrawingTools::DrawingTool* tool = nullptr;
 
     switch (m_state) {
-    case GraphicToolsState:
+    case eToolBarState::Graphic:
         tool = mapScene()->drawingTool();
         if (nullptr != tool) {
             // TODO: clean this
@@ -129,11 +128,11 @@ void DrawingToolBarWidget::visitGraphicLayer(
         }
         break;
 
-    case BlockingToolsState:
-    case NoDrawingToolState:
+    case eToolBarState::Blocking:
+    case eToolBarState::NoDrawing:
     default: // keep default even if all values covereds wrong cast protection
         reset();
-        setState(GraphicToolsState);
+        setState(eToolBarState::Graphic);
         break;
     }
 }
@@ -141,10 +140,10 @@ void DrawingToolBarWidget::visitGraphicLayer(
 void DrawingToolBarWidget::visitGraphicLayer(
     GraphicMap::BlockingGraphicLayer& layer)
 {
-    DrawingTools::DrawingTool* tool;
+    DrawingTools::DrawingTool* tool = nullptr;
 
     switch (m_state) {
-    case BlockingToolsState:
+    case eToolBarState::Blocking:
         // TODO: clean this
         tool = mapScene()->drawingTool();
         if (nullptr != tool) {
@@ -153,21 +152,21 @@ void DrawingToolBarWidget::visitGraphicLayer(
         }
         break;
 
-    case GraphicToolsState:
-    case NoDrawingToolState:
+    case eToolBarState::Graphic:
+    case eToolBarState::NoDrawing:
     default: // keep default even if all values covereds wrong cast protection
         reset();
-        setState(BlockingToolsState);
+        setState(eToolBarState::Blocking);
         break;
     }
 }
 
-void DrawingToolBarWidget::setState(tToolBarState state)
+void DrawingToolBarWidget::setState(eToolBarState state)
 {
     m_state = state;
 }
 
 void DrawingToolBarWidget::setInitialState()
 {
-    setState(NoDrawingToolState);
+    setState(eToolBarState::NoDrawing);
 }

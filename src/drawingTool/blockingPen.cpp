@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 
+#include "definitions.hpp"
 #include "drawingTool/drawingVisitor.hpp"
 #include "graphicMap/layerGraphicBlocking.hpp"
 
@@ -18,8 +19,8 @@ void BlockingPen::mapMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
     if (nullptr != blockingLayer()) {
         QPoint point(mouseEvent->scenePos().toPoint());
-        point.setX(point.x() - (point.x() % 8));
-        point.setY(point.y() - (point.y() % 8));
+        point.setX(point.x() - (point.x() % BLOCK_W));
+        point.setY(point.y() - (point.y() % BLOCK_H));
 
         if (m_mouseClicked) {
             // XXX: set blocking tile
@@ -36,8 +37,8 @@ void BlockingPen::mapMousePressEvent(QGraphicsSceneMouseEvent* event)
     }
 
     QPoint point(event->scenePos().toPoint());
-    point.setX(point.x() - (point.x() % 8));
-    point.setY(point.y() - (point.y() % 8));
+    point.setX(point.x() - (point.x() % BLOCK_W));
+    point.setY(point.y() - (point.y() % BLOCK_H));
     // XXX: set blocking tile.
     blockingLayer()->setTile(point.x(), point.y(), true);
 

@@ -75,7 +75,8 @@ void Project::createXmlProjectFile(const QString& folder)
     QFile projectFile(folder + "/" + "project.xml");
     projectFile.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream out(&projectFile);
-    out << createXmlProjectTree().toString(4);
+    const int indent = 4;
+    out << createXmlProjectTree().toString(indent);
     projectFile.close();
 }
 
@@ -131,20 +132,22 @@ void Project::saveProject()
     QFile file(xmlPath);
     file.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream stream(&file);
-    doc.save(stream, 4);
+    const int indent = 4;
+    doc.save(stream, indent);
 
     if (openedMaps().count() > 0) {
         for (auto e : openedMaps().keys()) {
-            document(e)->map->save();
+            document(e)->m_map->save();
         }
     }
 }
 
 void Project::dumpToXmlNode(QDomDocument& doc, QDomElement& xmlNode,
-                            QStandardItem* modelItem)
+                            const QStandardItem* modelItem)
 {
-    for (int i = 0; i < modelItem->rowCount(); ++i) {
-        QStandardItem* mapItem = modelItem->child(i);
+    const int nbRows = modelItem->rowCount();
+    for (int i = 0; i < nbRows; ++i) {
+        const QStandardItem* mapItem = modelItem->child(i);
 
         QDomElement mapNode = doc.createElement("map");
         mapNode.setAttribute("name", mapItem->text());

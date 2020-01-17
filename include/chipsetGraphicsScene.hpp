@@ -31,16 +31,16 @@ public:
     void setSelection(const QRect& selection);
     void unsetPaletteTool();
 
-private:
-    void drawGrid();
+public slots:
+    void setPaletteTool(::DrawingTools::GraphicPaletteTool*);
+    void changeChipset(const QString& chipsetPath);
 
 signals:
     void selectionChanged(QRect, QPixmap);
     void chipsetChanged(QString);
 
-public slots:
-    void setPaletteTool(::DrawingTools::GraphicPaletteTool*);
-    void changeChipset(const QString& chipsetPath);
+private:
+    void drawGrid();
 
 private:
     QGraphicsPixmapItem* m_chipset = nullptr;

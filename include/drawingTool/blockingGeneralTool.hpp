@@ -36,10 +36,6 @@ public:
     void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
 
 signals:
-    // Note: I have to put the whole namespace shit here, because Qt
-    // signals/slots framework is based on textual comparison.
-    // TODO check if it's still the case now that the namespace has not the
-    // same name as the class
     void drawingToolSelected(DrawingTools::BlockingGeneralTool*);
 
 private:

@@ -4,6 +4,7 @@
 #include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
 
+#include "definitions.hpp"
 #include "editor/map.hpp"
 #include "editor/project.hpp"
 #include "graphicMap/layerGraphicBlocking.hpp"
@@ -35,11 +36,12 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument(
     const std::shared_ptr<MapDocument>& mapDocument)
 {
     if (m_map != nullptr) {
-        QRect invalidateRegion(0, 0, m_map->width() * 16, m_map->height() * 16);
+        QRect invalidateRegion(0, 0, m_map->width() * CELL_W,
+                               m_map->height() * CELL_H);
         qDebug() << "INVALIDATE " << invalidateRegion;
         invalidate(invalidateRegion);
 
-        for (auto& graphicLayer : m_graphicLayers) {
+        for (auto* graphicLayer : m_graphicLayers) {
             QObject::disconnect(&graphicLayer->editorLayer(),
                                 SIGNAL(visibilityChanged(bool)), graphicLayer,
                                 SLOT(setVisibility(bool)));
@@ -50,16 +52,15 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument(
     clear();
 
     m_mapDocument = mapDocument;
-    m_map         = m_mapDocument->map;
+    m_map         = m_mapDocument->m_map;
 
-    const Editor::Project& project = m_mapDocument->project;
-    m_mapChipset                   = QPixmap(QString(
+    const Editor::Project& project = m_mapDocument->m_project;
+    m_mapChipset                   = QPixmap(QString::fromStdString(
         (project.coreProject().projectPath() / "chipsets" / m_map->chipset())
-            .string()
-            .c_str()));
+            .string()));
 
     m_currentGraphicLayer = nullptr;
-    for (auto& graphicLayer : m_graphicLayers) {
+    for (const auto* graphicLayer : m_graphicLayers) {
         delete graphicLayer;
     }
     m_graphicLayers.clear();
@@ -69,8 +70,8 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument(
         for (const auto& [position, layer] : floor->graphicLayers()) {
             qDebug() << "Position: " << position;
 
-            auto graphicLayer =
-                new VisibleGraphicLayer(*layer, *this, m_mapChipset, zindex++);
+            auto* graphicLayer =
+                new VisibleGraphicLayer(*layer, *this, m_mapChipset, ++zindex);
 
             m_graphicLayers.push_back(graphicLayer);
 
@@ -84,12 +85,11 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument(
         }
 
         // Add blocking layer
-        auto graphicLayer =
+        auto* graphicLayer =
             new BlockingGraphicLayer(floor->blockingLayer(), *this, ++zindex);
 
         // Add event layer
-        auto eventLayer =
-            new EventsGraphicLayer(floor->eventsLayer(), *this, ++zindex);
+        new EventsGraphicLayer(floor->eventsLayer(), *this, ++zindex);
 
         m_graphicLayers.push_back(graphicLayer);
 
@@ -123,8 +123,9 @@ void MapGraphicsScene::adjustLayers() const
 void MapGraphicsScene::clearGrid()
 {
     qDebug() << "Clear grid.";
-    for (auto it = m_gridItems.begin(); it != m_gridItems.end(); ++it) {
-        removeItem(*it);
+    const int nbCells = m_gridItems.count();
+    for (int i = 0; i < nbCells; ++i) {
+        removeItem(m_gridItems[i]);
     }
     m_gridItems.clear();
 }
@@ -141,13 +142,13 @@ void MapGraphicsScene::drawGrid(quint16 width, quint16 height,
     for (int i = 0; i <= width; ++i) {
         QGraphicsItem* item =
             addLine(i * unit, 0, i * unit, unit * height, pen);
-        item->setZValue(88888);
+        item->setZValue(Z_GRID);
         m_gridItems.push_back(item);
     }
 
     for (int i = 0; i <= height; ++i) {
         QGraphicsItem* item = addLine(0, i * unit, unit * width, unit * i, pen);
-        item->setZValue(88888);
+        item->setZValue(Z_GRID);
         m_gridItems.push_back(item);
     }
 }

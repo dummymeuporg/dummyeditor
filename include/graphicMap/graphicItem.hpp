@@ -12,11 +12,11 @@ namespace GraphicMap {
 class GraphicItem : public QGraphicsItem
 {
 public:
-    enum eGraphicItemType
+    enum class eGraphicItemType
     {
-        eBlockingCrossItem,
-        eBlockingSquareItem,
-        eEventItem
+        eBlockingCross,
+        eBlockingSquare,
+        eEvent
     };
 
     explicit GraphicItem(eGraphicItemType type);

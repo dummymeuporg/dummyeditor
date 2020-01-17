@@ -4,7 +4,7 @@
 
 namespace MapFloorsList {
 
-LayerTreeItem::LayerTreeItem(Editor::Layer& layer, tLayerType type, int8_t idx)
+LayerTreeItem::LayerTreeItem(Editor::Layer& layer, eLayerType type, int8_t idx)
     : m_layer(layer)
     , m_type(type)
     , m_index(idx)
@@ -18,9 +18,9 @@ QVariant LayerTreeItem::data(int role) const
         return QStandardItem::data(role);
     }
 
-    if (m_type == GraphicLayer) {
+    if (m_type == eLayerType::Graphic) {
         return QObject::tr("Layer %1").arg(m_index);
-    } else if (m_type == BlockingLayer) {
+    } else if (m_type == eLayerType::Blocking) {
         return QObject::tr("Blocking layer");
     }
 

@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QGraphicsRectItem>
 
+#include "definitions.hpp"
 #include "drawingTool/graphicPaletteTool.hpp"
 
 ChipsetGraphicsScene::ChipsetGraphicsScene(QObject* parent)
@@ -14,18 +15,18 @@ void ChipsetGraphicsScene::drawGrid()
     QPen pen(Qt::black, 0.5);
 
     quint16 cellsWidth =
-        static_cast<quint16>(m_chipset->boundingRect().width() / 16);
+        static_cast<quint16>(m_chipset->boundingRect().width() / CELL_W);
     quint16 cellsHeight =
-        static_cast<quint16>(m_chipset->boundingRect().height() / 16);
+        static_cast<quint16>(m_chipset->boundingRect().height() / CELL_H);
 
-    for (int i = 0; i <= cellsWidth; i++) {
-        QGraphicsItem* item = addLine(i * 16, 0, i * 16, cellsHeight * 16, pen);
-        item->setZValue(99);
+    for (int x = 0; x <= cellsWidth * CELL_W; x += CELL_W) {
+        QGraphicsItem* item = addLine(x, 0, x, cellsHeight * CELL_H, pen);
+        item->setZValue(Z_GRID);
     }
 
-    for (int i = 0; i <= cellsHeight; i++) {
-        QGraphicsItem* item = addLine(0, i * 16, cellsWidth * 16, i * 16, pen);
-        item->setZValue(99);
+    for (int y = 0; y <= cellsHeight * CELL_H; y += CELL_H) {
+        QGraphicsItem* item = addLine(0, y, cellsWidth * CELL_W, y, pen);
+        item->setZValue(Z_GRID);
     }
 }
 

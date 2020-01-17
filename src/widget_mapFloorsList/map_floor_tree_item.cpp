@@ -16,11 +16,12 @@ FloorTreeItem::FloorTreeItem(Editor::Floor& floor, std::size_t index)
     updateVisibilityDisplay();
 
     // Put blocking layer at the top.
-    appendRow(new LayerTreeItem(floor.blockingLayer(), BlockingLayer));
+    appendRow(new LayerTreeItem(floor.blockingLayer(), eLayerType::Blocking));
 
     auto& layersMap = floor.graphicLayers();
-    for (auto it = layersMap.rbegin(); it != layersMap.rend(); ++it) {
-        appendRow(new LayerTreeItem(*(it->second), GraphicLayer, it->first));
+    for (auto& layer : layersMap) {
+        appendRow(new LayerTreeItem(*(layer.second), eLayerType::Graphic,
+                                    layer.first));
     }
 }
 
@@ -42,7 +43,8 @@ void FloorTreeItem::setVisible(bool visible)
     m_editorFloor.setVisible(visible);
     updateVisibilityDisplay();
 
-    for (int i = 0; i < rowCount(); ++i) {
+    int nbRows = rowCount();
+    for (int i = 0; i < nbRows; ++i) {
         auto* layerItem = reinterpret_cast<LayerTreeItem*>(child(i));
         layerItem->setVisible(visible);
     }

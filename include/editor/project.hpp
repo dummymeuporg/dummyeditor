@@ -51,7 +51,7 @@ public:
 
 private:
     void dumpToXmlNode(QDomDocument& document, QDomElement& xmlNode,
-                       QStandardItem* modelItem);
+                       const QStandardItem* modelItem);
 
     static QDomDocument createXmlProjectTree();
     static void createXmlProjectFile(const QString&);
