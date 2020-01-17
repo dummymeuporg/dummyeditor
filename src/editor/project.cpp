@@ -137,13 +137,13 @@ void Project::saveProject()
 
     if (openedMaps().count() > 0) {
         for (auto e : openedMaps().keys()) {
-            document(e)->map->save();
+            document(e)->m_map->save();
         }
     }
 }
 
 void Project::dumpToXmlNode(QDomDocument& doc, QDomElement& xmlNode,
-                            QStandardItem* modelItem)
+                            const QStandardItem* modelItem)
 {
     const int nbRows = modelItem->rowCount();
     for (int i = 0; i < nbRows; ++i) {

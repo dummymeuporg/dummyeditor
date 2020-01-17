@@ -124,10 +124,10 @@ MainWindow::~MainWindow()
         closeCurrentProject();
         m_currentProject.reset();
     }
-    for (auto tool : m_blockingTools) {
+    for (auto* tool : m_blockingTools) {
         delete tool;
     }
-    for (auto tool : m_graphicTools) {
+    for (auto* tool : m_graphicTools) {
         delete tool;
     }
     delete m_ui;
@@ -259,7 +259,7 @@ void MainWindow::on_treeViewMaps_doubleClicked(const QModelIndex& selectedIndex)
 
     QString mapName(mapModel->itemFromIndex(selectedIndex)->text());
     qDebug() << mapName;
-    std::shared_ptr<Editor::Map> map(m_currentProject->document(mapName)->map);
+    std::shared_ptr<Editor::Map> map(m_currentProject->document(mapName)->m_map);
     m_chipsetScene->setChipset((m_currentProject->coreProject().projectPath()
                                 / "chipsets" / map->chipset())
                                    .string()
@@ -267,7 +267,7 @@ void MainWindow::on_treeViewMaps_doubleClicked(const QModelIndex& selectedIndex)
 
     m_mapScene->setMapDocument(m_currentProject->document(mapName));
 
-    for (const auto& layer : m_mapScene->graphicLayers()) {
+    for (const auto* layer : m_mapScene->graphicLayers()) {
         // XXX: connect the layers to the main window in order
         // to publish tools.
         QObject::connect(layer,
@@ -279,7 +279,7 @@ void MainWindow::on_treeViewMaps_doubleClicked(const QModelIndex& selectedIndex)
     m_ui->graphicsViewMap->setSceneRect(
         QRect(0, 0, map->width() * CELL_W, map->height() * CELL_H));
 
-    auto mapFloorsList = reinterpret_cast<MapFloorsList::FloorListWidget*>(
+    auto* mapFloorsList = reinterpret_cast<MapFloorsList::FloorListWidget*>(
         m_ui->dockWidgetMapFloorsList->widget());
 
     mapFloorsList->setEditorMap(map);

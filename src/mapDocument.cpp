@@ -6,7 +6,7 @@
 
 MapDocument::MapDocument(Editor::Project& project, const QString& name,
                          std::shared_ptr<Editor::Map> map)
-    : project(project)
-    , map(map)
-    , mapName(name)
+    : m_project(project)
+    , m_map(map)
+    , m_mapName(name)
 {}

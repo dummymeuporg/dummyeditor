@@ -82,7 +82,7 @@ void GraphicPen::onUnselected()
     }
 }
 
-void GraphicPen::drawPattern(QGraphicsSceneMouseEvent* event)
+void GraphicPen::drawPattern(const QGraphicsSceneMouseEvent* event)
 {
     const QPoint& point(event->scenePos().toPoint());
     const QRect& selectionRect(selectionItem()->pixmap().rect());

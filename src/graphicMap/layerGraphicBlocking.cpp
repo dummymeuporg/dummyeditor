@@ -56,7 +56,7 @@ void BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
         size_t index(((y / BLOCK_H) * m_blockingLayer.width()) + (x / BLOCK_W));
         qDebug() << "Index: " << index;
 
-        if (m_blockingLayer[index]) {
+        if (m_blockingLayer[index] != 0) {
             m_blockingLayer[index] = false;
 
             if (nullptr != layerItems()[index]) {
@@ -103,7 +103,8 @@ void BlockingGraphicLayer::erase(int index, quint16 x, quint16 y)
 
 void BlockingGraphicLayer::draw(int index, quint16 x, quint16 y)
 {
-    layerItems()[index] = new GraphicItem(GraphicItem::eBlockingSquareItem);
+    layerItems()[index] =
+        new GraphicItem(GraphicItem::eGraphicItemType::eBlockingSquare);
     layerItems()[index]->setZValue(zIndex());
     layerItems()[index]->setPos(QPointF(x - (x % BLOCK_W), y - (y % BLOCK_H)));
     mapGraphicsScene().addItem(layerItems()[index]);

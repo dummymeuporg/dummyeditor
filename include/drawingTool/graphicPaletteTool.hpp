@@ -24,9 +24,9 @@ class GraphicPaletteTool : public GraphicGeneralTool
 public:
     GraphicPaletteTool(QIcon&&, GraphicMap::MapGraphicsScene&,
                        GraphicMap::VisibleGraphicLayer* = nullptr);
-    void paletteMousePressEvent(QGraphicsSceneMouseEvent*);
-    void paletteMouseMoveEvent(QGraphicsSceneMouseEvent*);
-    void paletteMouseReleaseEvent(QGraphicsSceneMouseEvent*);
+    void paletteMousePressEvent(const QGraphicsSceneMouseEvent*);
+    void paletteMouseMoveEvent(const QGraphicsSceneMouseEvent*);
+    void paletteMouseReleaseEvent(const QGraphicsSceneMouseEvent*);
     void emitDrawingToolSelected() override;
     void setSelection(const QRect&, const QPixmap&);
     ChipsetGraphicsScene* chipsetGraphicsScene() const

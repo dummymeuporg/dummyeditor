@@ -18,12 +18,14 @@ Blocking::Blocking(QRect&& clip, std::vector<uint8_t>&& content)
 void Blocking::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer)
 {
     // apply clipboard to layer.
-    const int clipW = m_clip.width();
-    const int clipH = m_clip.height();
-    size_t clipIndex(0);
+    const int clipW  = m_clip.width();
+    const int clipH  = m_clip.height();
+    size_t clipIndex = 0;
+
     for (int y = 0; y <= (clipH + BLOCK_H); y += BLOCK_H) {
         for (int x = 0; x <= (clipW + BLOCK_W); x += BLOCK_W) {
-            auto value = m_content.at(clipIndex++);
+            auto value = m_content.at(clipIndex);
+            ++clipIndex;
             layer.setTile(target().x() + x, target().y() + y, value);
         }
     }

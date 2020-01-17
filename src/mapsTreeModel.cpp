@@ -26,9 +26,10 @@ void MapsTreeModel::XmlMapToQItem(const QDomNode& node, QStandardItem* parent)
 QVariant MapsTreeModel::headerData(int section, Qt::Orientation orientation,
                                    int role) const
 {
-    if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
-        if (section == 0)
-            return QString("Maps");
-    }
+    if (role == Qt::DisplayRole          //
+        && orientation == Qt::Horizontal //
+        && section == 0)
+        return QString("Maps");
+
     return QVariant();
 }

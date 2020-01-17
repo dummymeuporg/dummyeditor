@@ -23,7 +23,7 @@ void GraphicPaletteTool::emitDrawingToolSelected()
 }
 
 void GraphicPaletteTool::paletteMousePressEvent(
-    ::QGraphicsSceneMouseEvent* mouseEvent)
+    const QGraphicsSceneMouseEvent* mouseEvent)
 {
     if (nullptr == m_chipsetGraphicsScene
         || ! mouseEvent->buttons().testFlag(Qt::LeftButton) || m_isSelecting) {
@@ -56,7 +56,7 @@ void GraphicPaletteTool::paletteMousePressEvent(
 }
 
 void GraphicPaletteTool::paletteMouseMoveEvent(
-    QGraphicsSceneMouseEvent* mouseEvent)
+    const QGraphicsSceneMouseEvent* mouseEvent)
 {
     if (nullptr == m_selectionRectItem || ! m_isSelecting) {
         return;
@@ -88,7 +88,7 @@ void GraphicPaletteTool::paletteMouseMoveEvent(
 }
 
 void GraphicPaletteTool::paletteMouseReleaseEvent(
-    QGraphicsSceneMouseEvent* mouseEvent)
+    const QGraphicsSceneMouseEvent* mouseEvent)
 {
     if (nullptr != m_selectionItem) {
         m_isSelecting = false;

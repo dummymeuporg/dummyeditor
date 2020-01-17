@@ -34,16 +34,16 @@ class DrawingToolBarWidget : public QWidget,
 public:
     explicit DrawingToolBarWidget(QWidget* parent = nullptr);
 
-    enum tToolBarState
+    enum class eToolBarState
     {
-        NoDrawingToolState,
-        BlockingToolsState,
-        GraphicToolsState
+        NoDrawing,
+        Blocking,
+        Graphic
     };
 
     void clear();
     void reset();
-    void setState(tToolBarState state);
+    void setState(eToolBarState state);
     void onLayerSelected(const GraphicMap::MapGraphicsScene*,
                          const ChipsetGraphicsScene*, GraphicMap::GraphicLayer&,
                          std::vector<DrawingTools::DrawingTool*>*);
@@ -71,7 +71,7 @@ private:
     const ChipsetGraphicsScene* m_chipsetGraphicsScene      = nullptr;
     const GraphicMap::MapGraphicsScene* m_mapScene          = nullptr;
     std::vector<DrawingTools::DrawingTool*>* m_drawingTools = nullptr;
-    tToolBarState m_state;
+    eToolBarState m_state = eToolBarState::NoDrawing;
 };
 
 #endif // DRAWINGTOOLBARWIDGET_H

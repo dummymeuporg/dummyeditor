@@ -100,7 +100,7 @@ void SelectionTool::doCopy()
 {
     qDebug() << "Copy";
     m_layers.clear();
-    for (const auto& layer : mapGraphScene().graphicLayers()) {
+    for (auto* layer : mapGraphScene().graphicLayers()) {
         QRect clip(m_startSelection, m_endSelection);
         m_layers[layer] = layer->getClipboardRegion(clip);
     }

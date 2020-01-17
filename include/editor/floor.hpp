@@ -32,7 +32,6 @@ public:
 
     BlockingLayer& blockingLayer() { return *m_blockingLayer; }
     EventsLayer& eventsLayer() { return *m_eventsLayer; }
-    GraphicLayers& graphicLayers() { return m_graphicLayers; }
     Dummy::Local::Floor& localFloor() { return m_floor; }
 
     /*

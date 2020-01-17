@@ -19,12 +19,12 @@ void ChipsetGraphicsScene::drawGrid()
     quint16 cellsHeight =
         static_cast<quint16>(m_chipset->boundingRect().height() / CELL_H);
 
-    for (int x = 0; x <= cellsWidth; x += CELL_W) {
+    for (int x = 0; x <= cellsWidth * CELL_W; x += CELL_W) {
         QGraphicsItem* item = addLine(x, 0, x, cellsHeight * CELL_H, pen);
         item->setZValue(Z_GRID);
     }
 
-    for (int y = 0; y <= cellsHeight; y += CELL_H) {
+    for (int y = 0; y <= cellsHeight * CELL_H; y += CELL_H) {
         QGraphicsItem* item = addLine(0, y, cellsWidth * CELL_W, y, pen);
         item->setZValue(Z_GRID);
     }

@@ -12,10 +12,10 @@ class Layer;
 } // namespace Editor
 
 namespace MapFloorsList {
-enum tLayerType
+enum class eLayerType
 {
-    GraphicLayer,
-    BlockingLayer
+    Graphic,
+    Blocking
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -26,7 +26,7 @@ enum tLayerType
 class LayerTreeItem : public MapTreeItem
 {
 public:
-    LayerTreeItem(Editor::Layer& layer, tLayerType type, int8_t index = 0);
+    LayerTreeItem(Editor::Layer& layer, eLayerType type, int8_t index = 0);
 
     QVariant data(int role = Qt::UserRole + 1) const override;
 
@@ -38,7 +38,7 @@ private:
     void updateVisibilityDisplay();
 
     Editor::Layer& m_layer;
-    tLayerType m_type;
+    eLayerType m_type;
     int8_t m_index;
 };
 

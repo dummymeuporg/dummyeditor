@@ -59,7 +59,7 @@ public:
         return m_editorFloors[floor]->graphicLayerAt(position);
     }
 
-    void load();
+    void load() override;
 
 private:
     void saveBlockingLayers();

@@ -13,11 +13,11 @@ GraphicItem::GraphicItem(eGraphicItemType type)
 QRectF GraphicItem::boundingRect() const
 {
     switch (m_type) {
-    case eBlockingCrossItem:
+    case eGraphicItemType::eBlockingCross:
         return QRectF(0, 0, CELL_W, CELL_H);
-    case eBlockingSquareItem:
+    case eGraphicItemType::eBlockingSquare:
         return QRectF(0, 0, BLOCK_W, BLOCK_H);
-    case eEventItem:
+    case eGraphicItemType::eEvent:
         return QRectF(0, 0, CELL_W, CELL_H);
     default:
         return QRectF(0, 0, 0, 0);
@@ -31,17 +31,17 @@ void GraphicItem::paint(QPainter* painter,
     Q_UNUSED(widget)
 
     switch (m_type) {
-    case eBlockingCrossItem:
+    case eGraphicItemType::eBlockingCross:
         painter->setBrush(Qt::black);
         painter->drawLine(0, 0, BLOCK_W, BLOCK_H);
         painter->drawLine(0, BLOCK_H, BLOCK_W, 0);
         break;
-    case eBlockingSquareItem:
+    case eGraphicItemType::eBlockingSquare:
         painter->setBrush(Qt::red);
         painter->setOpacity(0.5);
         painter->drawRect(0, 0, BLOCK_W, BLOCK_H);
         break;
-    case eEventItem:
+    case eGraphicItemType::eEvent:
         painter->setBrush(Qt::white);
         painter->setOpacity(0.5);
         painter->drawRect(0, 0, CELL_W, CELL_H);

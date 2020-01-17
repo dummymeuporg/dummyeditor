@@ -99,7 +99,7 @@ void Map::resizeBlockingLayer(Editor::BlockingLayer& blockingLayer,
 
 void Map::resize(std::uint16_t width, std::uint16_t height)
 {
-    for (auto& floor : m_editorFloors) {
+    for (const auto& floor : m_editorFloors) {
         resizeFloor(*floor, width, height);
     }
     m_width  = width;
@@ -166,7 +166,7 @@ void Map::saveGraphicLayers()
     _writeStdString(ofs, m_music);
 
     // write the floors
-    for (auto& floor : m_floors) {
+    for (const auto& floor : m_floors) {
         writeFloor(ofs, floor);
     }
 }

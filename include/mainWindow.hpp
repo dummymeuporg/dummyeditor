@@ -80,7 +80,7 @@ private:
     void closeCurrentProject();
     void loadProject(const QString&);
     void removeTools();
-    void closeEvent(QCloseEvent* event);
+    void closeEvent(QCloseEvent* event) override;
 
 private:
     Ui::MainWindow* m_ui                     = nullptr;

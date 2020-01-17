@@ -41,7 +41,7 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument(
         qDebug() << "INVALIDATE " << invalidateRegion;
         invalidate(invalidateRegion);
 
-        for (auto& graphicLayer : m_graphicLayers) {
+        for (auto* graphicLayer : m_graphicLayers) {
             QObject::disconnect(&graphicLayer->editorLayer(),
                                 SIGNAL(visibilityChanged(bool)), graphicLayer,
                                 SLOT(setVisibility(bool)));
@@ -52,16 +52,15 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument(
     clear();
 
     m_mapDocument = mapDocument;
-    m_map         = m_mapDocument->map;
+    m_map         = m_mapDocument->m_map;
 
-    const Editor::Project& project = m_mapDocument->project;
-    m_mapChipset                   = QPixmap(QString(
+    const Editor::Project& project = m_mapDocument->m_project;
+    m_mapChipset                   = QPixmap(QString::fromStdString(
         (project.coreProject().projectPath() / "chipsets" / m_map->chipset())
-            .string()
-            .c_str()));
+            .string()));
 
     m_currentGraphicLayer = nullptr;
-    for (auto& graphicLayer : m_graphicLayers) {
+    for (auto* graphicLayer : m_graphicLayers) {
         delete graphicLayer;
     }
     m_graphicLayers.clear();
@@ -71,8 +70,8 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument(
         for (const auto& [position, layer] : floor->graphicLayers()) {
             qDebug() << "Position: " << position;
 
-            auto graphicLayer =
-                new VisibleGraphicLayer(*layer, *this, m_mapChipset, zindex++);
+            auto* graphicLayer =
+                new VisibleGraphicLayer(*layer, *this, m_mapChipset, ++zindex);
 
             m_graphicLayers.push_back(graphicLayer);
 
@@ -86,11 +85,11 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument(
         }
 
         // Add blocking layer
-        auto graphicLayer =
+        auto* graphicLayer =
             new BlockingGraphicLayer(floor->blockingLayer(), *this, ++zindex);
 
         // Add event layer
-        auto eventLayer =
+        auto* eventLayer =
             new EventsGraphicLayer(floor->eventsLayer(), *this, ++zindex);
 
         m_graphicLayers.push_back(graphicLayer);

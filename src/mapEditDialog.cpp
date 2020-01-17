@@ -24,8 +24,8 @@ void MapEditDialog::setup(const Editor::Project& project,
     // TODO clean/reset ?
 
     if (nullptr != mapDocument) {
-        auto map(mapDocument->map);
-        m_ui->lineEditMapName->setText(mapDocument->mapName);
+        auto map(mapDocument->m_map);
+        m_ui->lineEditMapName->setText(mapDocument->m_mapName);
         m_ui->lineEditChipset->setText(QString::fromStdString(map->chipset()));
         m_ui->lineEditMusic->setText(QString::fromStdString(map->music()));
         m_ui->spinBoxMapHeight->setValue(map->height());

@@ -27,7 +27,8 @@ void Visible::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer)
 
     for (int y = 0; y < clipH; y += CELL_H) {
         for (int x = 0; x < clipW; x += CELL_W) {
-            auto value = m_content.at(clipIndex++);
+            auto value = m_content.at(clipIndex);
+            ++clipIndex;
             layer.setTile(target().x() + x, target().y() + y,
                           value.first * CELL_W, value.second * CELL_H);
         }

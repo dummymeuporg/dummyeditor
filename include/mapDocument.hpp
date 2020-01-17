@@ -23,9 +23,9 @@ struct MapDocument
 public:
     MapDocument(Editor::Project&, const QString&, std::shared_ptr<Editor::Map>);
 
-    Editor::Project& project;
-    const std::shared_ptr<Editor::Map> map;
-    const QString mapName;
+    Editor::Project& m_project;
+    const std::shared_ptr<Editor::Map> m_map;
+    const QString m_mapName;
 };
 
 #endif // MAPDOCUMENT_H

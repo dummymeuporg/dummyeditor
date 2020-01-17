@@ -110,7 +110,7 @@ void MapsTreeView::onNewMapAction()
 
     map->save();
     // Add the new map into the tree.
-    QList<QStandardItem*> mapRow{new QStandardItem(mapName)};
+    QList<QStandardItem*> mapRow {new QStandardItem(mapName)};
     selectedParentMap->appendRow(mapRow);
     expand(m_selectedModelIndex);
 }
@@ -118,11 +118,11 @@ void MapsTreeView::onNewMapAction()
 void MapsTreeView::onPropertiesAction()
 {
     // TODO move that "logical" part to a logical class instead of here
-    QStandardItem* item =
+    const QStandardItem* item =
         m_project->mapsModel()->itemFromIndex(m_selectedModelIndex);
-    qDebug() << item->text();
+
     std::shared_ptr<MapDocument> mapDocument(m_project->document(item->text()));
-    auto map(mapDocument->map);
+    auto map(mapDocument->m_map);
     // XXX fix this:
 
     MapEditDialog dlg;
