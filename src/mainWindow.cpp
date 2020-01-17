@@ -256,7 +256,7 @@ void MainWindow::on_treeViewMaps_doubleClicked(const QModelIndex& selectedIndex)
 
     for (const auto* layer : m_mapScene->graphicLayers()) {
         // XXX: connect the layers to the main window in order
-        // to publish tools.
+        // to set toolbox.
         QObject::connect(layer,
                          SIGNAL(layerSelected(GraphicMap::GraphicLayer*)), this,
                          SLOT(setToolboxOnLayer(GraphicMap::GraphicLayer*)));

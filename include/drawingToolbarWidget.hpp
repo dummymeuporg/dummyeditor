@@ -24,8 +24,6 @@ namespace DrawingTools {
 class DrawingTool;
 } // namespace DrawingTools
 
-template <typename T> using vecUnique = std::vector<std::unique_ptr<T>>;
-
 //////////////////////////////////////////////////////////////////////////////
 //  DrawingToolbarWidget class
 //////////////////////////////////////////////////////////////////////////////
@@ -58,11 +56,9 @@ private:
     QToolBar* m_toolbar       = nullptr;
     QActionGroup* m_actionGrp = nullptr;
 
-    const ChipsetGraphicsScene* m_chipsetGraphicsScene  = nullptr;
-    const GraphicMap::MapGraphicsScene* m_mapScene      = nullptr;
-    std::vector<DrawingTools::DrawingTool*>* m_oldTools = nullptr;
-    // vecUnique<DrawingTools::GraphicGeneralTool> m_graphicTools;
-    // vecUnique<DrawingTools::BlockingGeneralTool> m_blockingTools;
+    const ChipsetGraphicsScene* m_chipsetGraphicsScene      = nullptr;
+    const GraphicMap::MapGraphicsScene* m_mapScene          = nullptr;
+    std::vector<DrawingTools::DrawingTool*>* m_currentTools = nullptr;
 };
 
 #endif // DRAWINGTOOLBARWIDGET_H

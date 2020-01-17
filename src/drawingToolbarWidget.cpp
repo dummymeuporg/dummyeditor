@@ -41,12 +41,12 @@ void DrawingToolBarWidget::reset()
 {
     clear();
 
-    if (m_oldTools == nullptr)
+    if (m_currentTools == nullptr)
         return;
 
     m_actionGrp = new QActionGroup(m_toolbar);
 
-    for (auto* tool : *m_oldTools) {
+    for (auto* tool : *m_currentTools) {
         auto* action = new QAction(this);
         action->setIcon(tool->icon());
         action->setText(tr("Tool"));
@@ -114,8 +114,14 @@ void DrawingToolBarWidget::changeActiveLayer(
 {
     m_mapScene             = mapScene;
     m_chipsetGraphicsScene = chipset;
-    m_oldTools             = tools;
+    m_currentTools         = tools;
 
     mapScene->unsetDrawingTool();
     reset();
+
+    // TODO check if previous layer is same type as new layer => don't unset +
+    // reset
+
+    // TODO select first tool (and not just mapScene->select, but the button in
+    // ui also need to be checked
 }
