@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QShortcut>
 
+#include "definitions.hpp"
 #include "drawingTool/blockingEraser.hpp"
 #include "drawingTool/blockingPen.hpp"
 #include "drawingTool/drawingSelection.hpp"
@@ -276,7 +277,7 @@ void MainWindow::on_treeViewMaps_doubleClicked(const QModelIndex& selectedIndex)
 
     m_ui->graphicsViewChipset->viewport()->update();
     m_ui->graphicsViewMap->setSceneRect(
-        QRect(0, 0, map->width() * 16, map->height() * 16));
+        QRect(0, 0, map->width() * CELL_W, map->height() * CELL_H));
 
     auto mapFloorsList = reinterpret_cast<MapFloorsList::FloorListWidget*>(
         m_ui->dockWidgetMapFloorsList->widget());

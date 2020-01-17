@@ -5,6 +5,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 
+#include "definitions.hpp"
 #include "drawingTool/drawingVisitor.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
@@ -31,7 +32,7 @@ void GraphicRectangle::mapMousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 
     drawHoverPreviewItem();
     m_hoverItem->setPos(QPoint(m_rectangle.topLeft()));
-    m_hoverItem->setZValue(88888);
+    m_hoverItem->setZValue(Z_PREVIEW);
     mapGraphScene().addItem(m_hoverItem);
 }
 
@@ -44,7 +45,7 @@ void GraphicRectangle::mapMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 
         drawHoverPreviewItem();
         m_hoverItem->setPos(QPoint(m_rectangle.topLeft()));
-        m_hoverItem->setZValue(88888);
+        m_hoverItem->setZValue(Z_PREVIEW);
         mapGraphScene().addItem(m_hoverItem);
     }
 }
@@ -123,16 +124,18 @@ void GraphicRectangle::applySelectionToMap(quint16 mapX, quint16 mapY)
 
     QPoint point(mapX, mapY);
 
-    qint16 chipsetX = qint16(rectSelection().x() / 16);
-    qint16 chipsetY = qint16(rectSelection().y() / 16);
+    qint16 chipsetX = qint16(rectSelection().x() / CELL_W);
+    qint16 chipsetY = qint16(rectSelection().y() / CELL_H);
 
-    for (quint16 j = 0; j < rectSelection().height() / 16; j++) {
-        for (quint16 i = 0; i < rectSelection().width() / 16; i++) {
-            qDebug() << "CHIPSET: " << chipsetX + i << chipsetY + j;
-            qDebug() << "TARGET: " << point.x() + i << point.y() + j;
+    for (quint16 y = 0; y < rectSelection().height(); y += CELL_H) {
+        for (quint16 x = 0; x < rectSelection().width(); x += CELL_W) {
+            qDebug() << "CHIPSET: " << chipsetX + (x / CELL_W)
+                     << chipsetY + (y / CELL_H);
+            qDebug() << "TARGET: " << point.x() + (x / CELL_W)
+                     << point.y() + (y / CELL_H);
             visibleGraphicLayer()->setTile(
-                quint16(point.x() + i * 16), quint16(point.y() + j * 16),
-                (chipsetX + i) * 16, (chipsetY + j) * 16);
+                quint16(point.x() + x), quint16(point.y() + y),
+                chipsetX * CELL_W + x, chipsetY * CELL_H + y);
         }
     }
 }
@@ -143,8 +146,11 @@ QRect GraphicRectangle::adjustedRectFromP1P2(const QPoint& p1, const QPoint& p2)
     rect      = rect.normalized();
     QPoint q1 = rect.topLeft();
     QPoint q2 = rect.bottomRight();
-    QPoint trueQ1((q1.x() / 16) * 16, (q1.y() / 16) * 16);         // round down
-    QPoint trueQ2((q2.x() / 16 + 1) * 16, (q2.y() / 16 + 1) * 16); // round up
+    // round down
+    QPoint trueQ1((q1.x() / CELL_W) * CELL_W, (q1.y() / CELL_W) * CELL_W);
+    // round up
+    QPoint trueQ2((q2.x() / CELL_H + 1) * CELL_H,
+                  (q2.y() / CELL_H + 1) * CELL_H);
 
     // adjust because rect EXCLUDE its bottom-right point
     return QRect(trueQ1, trueQ2).adjusted(0, 0, -1, -1);

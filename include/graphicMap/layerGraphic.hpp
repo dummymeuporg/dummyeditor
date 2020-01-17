@@ -42,12 +42,12 @@ public:
     virtual std::shared_ptr<LayerClipboard::Clipboard>
     getClipboardRegion(const QRect& clip) = 0;
 
-signals:
-    void layerSelected(GraphicMap::GraphicLayer*);
-
 public slots:
     void setVisibility(bool);
     void setSelected();
+
+signals:
+    void layerSelected(GraphicMap::GraphicLayer*);
 
 protected:
     std::vector<QGraphicsItem*>& layerItems() { return m_layerItems; }

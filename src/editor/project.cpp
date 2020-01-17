@@ -75,7 +75,8 @@ void Project::createXmlProjectFile(const QString& folder)
     QFile projectFile(folder + "/" + "project.xml");
     projectFile.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream out(&projectFile);
-    out << createXmlProjectTree().toString(4);
+    const int indent = 4;
+    out << createXmlProjectTree().toString(indent);
     projectFile.close();
 }
 
@@ -131,7 +132,8 @@ void Project::saveProject()
     QFile file(xmlPath);
     file.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream stream(&file);
-    doc.save(stream, 4);
+    const int indent = 4;
+    doc.save(stream, indent);
 
     if (openedMaps().count() > 0) {
         for (auto e : openedMaps().keys()) {

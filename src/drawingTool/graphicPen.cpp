@@ -4,6 +4,7 @@
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneMouseEvent>
 
+#include "definitions.hpp"
 #include "drawingTool/drawingVisitor.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
@@ -19,14 +20,14 @@ GraphicPen::GraphicPen(GraphicMap::MapGraphicsScene& mapGraphicsScene,
 void GraphicPen::mapMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
     QPoint pt(mouseEvent->scenePos().toPoint());
-    pt.setX(pt.x() - (pt.x() % 16));
-    pt.setY(pt.y() - (pt.y() % 16));
+    pt.setX(pt.x() - (pt.x() % CELL_W));
+    pt.setY(pt.y() - (pt.y() % CELL_H));
 
     if (nullptr != selectionItem()) {
         if (m_hoverItem == nullptr
             || m_hoverItem->pixmap().toImage() != selectionPixmap().toImage()) {
             m_hoverItem = mapGraphScene().addPixmap(selectionItem()->pixmap());
-            m_hoverItem->setZValue(99999);
+            m_hoverItem->setZValue(Z_SELEC);
         }
         m_hoverItem->setPos(pt);
     }
@@ -85,16 +86,16 @@ void GraphicPen::drawPattern(QGraphicsSceneMouseEvent* event)
 {
     const QPoint& point(event->scenePos().toPoint());
     const QRect& selectionRect(selectionItem()->pixmap().rect());
-    int width(selectionRect.width() / 16);
-    int height(selectionRect.height() / 16);
+    int width(selectionRect.width() / CELL_W);
+    int height(selectionRect.height() / CELL_H);
 
     for (int j = 0; j < height; ++j) {
         for (int i = 0; i < width; ++i) {
             visibleGraphicLayer()->setTile(
-                quint16(point.x() - (point.x() % 16) + (i * 16)),
-                quint16(point.y() - (point.y() % 16) + (j * 16)),
-                qint16(rectSelection().x() + (i * 16)),
-                qint16(rectSelection().y() + (j * 16)));
+                quint16(point.x() - (point.x() % CELL_W) + (i * CELL_W)),
+                quint16(point.y() - (point.y() % CELL_H) + (j * CELL_H)),
+                qint16(rectSelection().x() + (i * CELL_W)),
+                qint16(rectSelection().y() + (j * CELL_H)));
         }
     }
 }

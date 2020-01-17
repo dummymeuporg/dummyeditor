@@ -4,6 +4,7 @@
 #include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
 
+#include "definitions.hpp"
 #include "editor/map.hpp"
 #include "editor/project.hpp"
 #include "graphicMap/layerGraphicBlocking.hpp"
@@ -35,7 +36,8 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument(
     const std::shared_ptr<MapDocument>& mapDocument)
 {
     if (m_map != nullptr) {
-        QRect invalidateRegion(0, 0, m_map->width() * 16, m_map->height() * 16);
+        QRect invalidateRegion(0, 0, m_map->width() * CELL_W,
+                               m_map->height() * CELL_H);
         qDebug() << "INVALIDATE " << invalidateRegion;
         invalidate(invalidateRegion);
 
@@ -141,13 +143,13 @@ void MapGraphicsScene::drawGrid(quint16 width, quint16 height,
     for (int i = 0; i <= width; ++i) {
         QGraphicsItem* item =
             addLine(i * unit, 0, i * unit, unit * height, pen);
-        item->setZValue(88888);
+        item->setZValue(Z_GRID);
         m_gridItems.push_back(item);
     }
 
     for (int i = 0; i <= height; ++i) {
         QGraphicsItem* item = addLine(0, i * unit, unit * width, unit * i, pen);
-        item->setZValue(88888);
+        item->setZValue(Z_GRID);
         m_gridItems.push_back(item);
     }
 }

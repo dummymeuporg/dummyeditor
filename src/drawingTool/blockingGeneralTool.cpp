@@ -2,6 +2,7 @@
 
 #include <QDebug>
 
+#include "definitions.hpp"
 #include "editor/layerBlocking.hpp"
 #include "graphicMap/layerGraphicBlocking.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
@@ -35,7 +36,7 @@ void BlockingGeneralTool::drawGrid()
     }
 
     mapGraphScene().drawGrid(m_blockingGraphicLayer->layer().width(),
-                             m_blockingGraphicLayer->layer().height(), 8);
+                             m_blockingGraphicLayer->layer().height(), BLOCK_W);
 }
 
 void BlockingGeneralTool::setBlockingGraphicLayer(

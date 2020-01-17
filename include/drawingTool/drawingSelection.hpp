@@ -48,11 +48,11 @@ public:
     void doCut();
     void doPaste();
 
-private:
-    void drawSelection();
-
 signals:
     void drawingToolSelected(::DrawingTools::DrawingTool*);
+
+private:
+    void drawSelection();
 
 private:
     bool m_mouseClicked                    = false;

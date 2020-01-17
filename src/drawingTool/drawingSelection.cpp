@@ -4,6 +4,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QKeyEvent>
 
+#include "definitions.hpp"
 #include "drawingTool/drawingVisitor.hpp"
 #include "editor/map.hpp"
 #include "graphicMap/layerGraphic.hpp"
@@ -23,8 +24,8 @@ void SelectionTool::accept(DrawingVisitor& visitor)
 void SelectionTool::mapMousePressEvent(QGraphicsSceneMouseEvent* event)
 {
     QPoint pt(event->scenePos().toPoint());
-    m_startSelection.setX(pt.x() - (pt.x() % 16));
-    m_startSelection.setY(pt.y() - (pt.y() % 16));
+    m_startSelection.setX(pt.x() - (pt.x() % CELL_W));
+    m_startSelection.setY(pt.y() - (pt.y() % CELL_H));
     m_endSelection = m_startSelection;
 
     m_mouseClicked = true;
@@ -53,13 +54,13 @@ void SelectionTool::drawSelection()
         start = m_endSelection;
     }
 
-    QRect rectSelection(start.x(), start.y(), (end.x() - start.x()) + 16,
-                        (end.y() - start.y()) + 16);
+    QRect rectSelection(start.x(), start.y(), (end.x() - start.x()) + CELL_W,
+                        (end.y() - start.y()) + CELL_H);
 
     QBrush brush(QColor(66, 135, 245));
 
     m_selectionRectItem = mapGraphScene().addRect(rectSelection);
-    m_selectionRectItem->setZValue(99999);
+    m_selectionRectItem->setZValue(Z_SELEC);
     m_selectionRectItem->setBrush(brush);
     m_selectionRectItem->setOpacity(0.5);
 }
@@ -68,7 +69,7 @@ void SelectionTool::drawGrid()
 {
     auto map = mapGraphScene().map();
     if (nullptr != map) {
-        mapGraphScene().drawGrid(map->width(), map->height(), 16);
+        mapGraphScene().drawGrid(map->width(), map->height(), CELL_W);
     }
 }
 
@@ -76,8 +77,8 @@ void SelectionTool::mapMouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
     if (m_mouseClicked) {
         QPoint pt(event->scenePos().toPoint());
-        m_endSelection.setX(pt.x() - (pt.x() % 16));
-        m_endSelection.setY(pt.y() - (pt.y() % 16));
+        m_endSelection.setX(pt.x() - (pt.x() % CELL_W));
+        m_endSelection.setY(pt.y() - (pt.y() % CELL_H));
 
         if (nullptr != m_selectionRectItem) {
             mapGraphScene().invalidate(m_selectionRectItem->rect());
