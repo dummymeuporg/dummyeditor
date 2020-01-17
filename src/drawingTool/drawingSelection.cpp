@@ -121,10 +121,6 @@ void SelectionTool::doPaste()
     }
 }
 
-void SelectionTool::onSelected() {}
-
-void SelectionTool::onUnselected() {}
-
 void SelectionTool::emitDrawingToolSelected()
 {
     // TODO : check if emiting 2 different signals is really what we want?

@@ -6,10 +6,15 @@
 #include <QHBoxLayout>
 
 #include "chipsetGraphicsScene.hpp"
+#include "drawingTool/blockingEraser.hpp"
 #include "drawingTool/blockingGeneralTool.hpp"
+#include "drawingTool/blockingPen.hpp"
+#include "drawingTool/drawingSelection.hpp"
 #include "drawingTool/graphicPen.hpp"
 #include "drawingTool/graphicRectangle.hpp"
 #include "graphicMap/layerGraphic.hpp"
+#include "graphicMap/layerGraphicBlocking.hpp"
+#include "graphicMap/layerGraphicVisible.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
 
 DrawingToolBarWidget::DrawingToolBarWidget(::QWidget* parent)
@@ -24,6 +29,7 @@ DrawingToolBarWidget::DrawingToolBarWidget(::QWidget* parent)
 void DrawingToolBarWidget::clear()
 {
     m_toolbar->clear();
+    // Todo follow leaks ?
 
     if (m_actionGrp != nullptr) {
         delete m_actionGrp;
@@ -35,12 +41,12 @@ void DrawingToolBarWidget::reset()
 {
     clear();
 
-    if (m_drawingTools == nullptr)
+    if (m_oldTools == nullptr)
         return;
 
     m_actionGrp = new QActionGroup(m_toolbar);
 
-    for (auto* tool : *m_drawingTools) {
+    for (auto* tool : *m_oldTools) {
         auto* action = new QAction(this);
         action->setIcon(tool->icon());
         action->setText(tr("Tool"));
@@ -58,18 +64,6 @@ void DrawingToolBarWidget::reset()
     }
 
     m_toolbar->addActions(m_actionGrp->actions());
-}
-
-void DrawingToolBarWidget::onLayerSelected(
-    const GraphicMap::MapGraphicsScene* mapScene,
-    const ::ChipsetGraphicsScene* chipsetScene, GraphicMap::GraphicLayer& layer,
-    std::vector<DrawingTools::DrawingTool*>* drawingTools)
-{
-    m_mapScene             = mapScene;
-    m_chipsetGraphicsScene = chipsetScene;
-    m_drawingTools         = drawingTools;
-
-    layer.accept(*this);
 }
 
 void DrawingToolBarWidget::visitTool(DrawingTools::GraphicPen& pen)
@@ -113,60 +107,15 @@ void DrawingToolBarWidget::visitTool(DrawingTools::SelectionTool&)
     // Nothing to do!
 }
 
-void DrawingToolBarWidget::visitGraphicLayer(
-    GraphicMap::VisibleGraphicLayer& layer)
+void DrawingToolBarWidget::changeActiveLayer(
+    GraphicMap::MapGraphicsScene* mapScene, const ChipsetGraphicsScene* chipset,
+    GraphicMap::GraphicLayer* layer,
+    std::vector<DrawingTools::DrawingTool*>* tools)
 {
-    DrawingTools::DrawingTool* tool = nullptr;
+    m_mapScene             = mapScene;
+    m_chipsetGraphicsScene = chipset;
+    m_oldTools             = tools;
 
-    switch (m_state) {
-    case eToolBarState::Graphic:
-        tool = mapScene()->drawingTool();
-        if (nullptr != tool) {
-            // TODO: clean this
-            reinterpret_cast<DrawingTools::GraphicGeneralTool*>(tool)
-                ->setVisibleGraphicLayer(&layer);
-        }
-        break;
-
-    case eToolBarState::Blocking:
-    case eToolBarState::NoDrawing:
-    default: // keep default even if all values covereds wrong cast protection
-        reset();
-        setState(eToolBarState::Graphic);
-        break;
-    }
-}
-
-void DrawingToolBarWidget::visitGraphicLayer(
-    GraphicMap::BlockingGraphicLayer& layer)
-{
-    DrawingTools::DrawingTool* tool = nullptr;
-
-    switch (m_state) {
-    case eToolBarState::Blocking:
-        // TODO: clean this
-        tool = mapScene()->drawingTool();
-        if (nullptr != tool) {
-            reinterpret_cast<DrawingTools::BlockingGeneralTool*>(tool)
-                ->setBlockingGraphicLayer(&layer);
-        }
-        break;
-
-    case eToolBarState::Graphic:
-    case eToolBarState::NoDrawing:
-    default: // keep default even if all values covereds wrong cast protection
-        reset();
-        setState(eToolBarState::Blocking);
-        break;
-    }
-}
-
-void DrawingToolBarWidget::setState(eToolBarState state)
-{
-    m_state = state;
-}
-
-void DrawingToolBarWidget::setInitialState()
-{
-    setState(eToolBarState::NoDrawing);
+    mapScene->unsetDrawingTool();
+    reset();
 }

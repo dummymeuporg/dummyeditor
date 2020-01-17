@@ -63,14 +63,4 @@ void BlockingPen::emitDrawingToolSelected()
     emit drawingToolSelected(this);
 }
 
-void BlockingPen::onUnselected()
-{
-    //
-}
-
-void BlockingPen::onSelected()
-{
-    //
-}
-
 } // namespace DrawingTools

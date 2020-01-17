@@ -37,8 +37,6 @@ public:
     void mapMouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
     void emitDrawingToolSelected() override;
     void drawGrid() override;
-    void onSelected() override;
-    void onUnselected() override;
 
     // GraphicLayerVisitor
     void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;

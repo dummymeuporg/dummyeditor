@@ -621,9 +621,6 @@
    <property name="toolTip">
     <string>Cancel the previous action</string>
    </property>
-   <property name="shortcut">
-    <string>Ctrl+Z</string>
-   </property>
   </action>
   <action name="actionCopy">
    <property name="icon">

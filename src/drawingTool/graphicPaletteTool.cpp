@@ -117,6 +117,4 @@ void GraphicPaletteTool::onUnselected()
     }
 }
 
-void GraphicPaletteTool::onSelected() {}
-
 } // namespace DrawingTools

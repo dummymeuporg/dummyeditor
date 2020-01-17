@@ -48,16 +48,13 @@ class QTreeView;
 //  MainWindow class
 //////////////////////////////////////////////////////////////////////////////
 
-class MainWindow : public QMainWindow, public GraphicMap::GraphicLayerVisitor
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
     explicit MainWindow(QWidget* parent = nullptr);
     virtual ~MainWindow() override;
-    // Inherited from GraphicMap::GraphicLayerVisitor
-    void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
-    void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
 
 public slots:
     // automatic connexions
@@ -71,7 +68,7 @@ public slots:
     void on_actionCopy_triggered();
     void on_actionPaste_triggered();
     // manual connexions
-    void publishTools(GraphicMap::GraphicLayer*);
+    void setToolboxOnLayer(GraphicMap::GraphicLayer*);
 
 private:
     void initializeScenes();
