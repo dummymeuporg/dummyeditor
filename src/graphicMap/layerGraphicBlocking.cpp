@@ -17,14 +17,16 @@ BlockingGraphicLayer::BlockingGraphicLayer(Editor::BlockingLayer& blockingLayer,
     : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex)
     , m_blockingLayer(blockingLayer)
 {
-    layerItems().resize(m_blockingLayer.layer().size());
+    const size_t nbCells = m_blockingLayer.layer().size();
+    layerItems().resize(nbCells);
 
-    for (size_t index = 0; index < m_blockingLayer.layer().size(); ++index) {
+    for (size_t index = 0; index < nbCells; ++index) {
         layerItems()[index] = nullptr;
         if (m_blockingLayer[index] != 0) {
             qreal posX((index % (m_blockingLayer.width())) * BLOCK_W);
             qreal posY((index / (m_blockingLayer.width())) * BLOCK_H);
-            draw(static_cast<int>(index), quint16(posX), quint16(posY));
+            draw(static_cast<int>(index), static_cast<quint16>(posX),
+                 static_cast<quint16>(posY));
         }
     }
 }
@@ -49,9 +51,9 @@ void BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
 {
     qDebug() << "Toggle tile." << x << y;
 
-    if (x < m_blockingLayer.width() * BLOCK_W
-        && y < m_blockingLayer.height() * BLOCK_H) {
-        size_t index((y / BLOCK_H) * m_blockingLayer.width() + (x / BLOCK_W));
+    if (x < (m_blockingLayer.width() * BLOCK_W)
+        && y < (m_blockingLayer.height() * BLOCK_H)) {
+        size_t index(((y / BLOCK_H) * m_blockingLayer.width()) + (x / BLOCK_W));
         qDebug() << "Index: " << index;
 
         if (m_blockingLayer[index]) {
@@ -73,9 +75,9 @@ void BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
 void BlockingGraphicLayer::setTile(quint16 x, quint16 y, bool isBlocking)
 {
     qDebug() << "Set blocking tile." << x << y;
-    if (x < m_blockingLayer.width() * BLOCK_W
-        && y < m_blockingLayer.height() * BLOCK_H) {
-        size_t index((y / BLOCK_H) * m_blockingLayer.width() + (x / BLOCK_W));
+    if (x < (m_blockingLayer.width() * BLOCK_W)
+        && y < (m_blockingLayer.height() * BLOCK_H)) {
+        size_t index(((y / BLOCK_H) * m_blockingLayer.width()) + (x / BLOCK_W));
 
         if (nullptr != layerItems()[index]) {
             mapGraphicsScene().removeItem(layerItems()[index]);
@@ -135,7 +137,7 @@ BlockingGraphicLayer::getClipboardRegion(const QRect& clip)
 
     for (unsigned j = y; j <= (y + height); ++j) {
         for (unsigned i = x; i <= (x + width); ++i) {
-            unsigned index(j * m_blockingLayer.width() + i);
+            unsigned index((j * m_blockingLayer.width()) + i);
             content.push_back(m_blockingLayer.layer().at(index));
         }
     }

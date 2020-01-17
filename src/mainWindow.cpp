@@ -79,10 +79,10 @@ MainWindow::MainWindow(QWidget* parent)
     m_ui->graphicsViewChipset->scale(2.0, 2.0);
     m_ui->graphicsViewMap->scale(2.0, 2.0);
 
-    QList<int> desktopSizeListWidth {width() / 5, 3 * width() / 5};
+    QList<int> desktopSizeListWidth {width() / 5, (3 * width()) / 5};
     m_ui->splitter_2->setSizes(desktopSizeListWidth);
 
-    QList<int> desktopSizeListHeight {3 * height() / 5, height() / 5};
+    QList<int> desktopSizeListHeight {(3 * height()) / 5, height() / 5};
     m_ui->splitter->setSizes(desktopSizeListHeight);
 
     /******************************************************

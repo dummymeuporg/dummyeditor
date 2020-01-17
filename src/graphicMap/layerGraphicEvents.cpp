@@ -14,9 +14,10 @@ EventsGraphicLayer::EventsGraphicLayer(Editor::EventsLayer& eventsLayer,
     : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex)
     , m_eventsLayer(eventsLayer)
 {
+    const size_t nbCells = eventsLayer.width() * eventsLayer.height();
     const auto& touchEvents(eventsLayer.touchEvents());
     const auto& floor(eventsLayer.floor());
-    layerItems().resize(eventsLayer.width() * eventsLayer.height());
+    layerItems().resize(nbCells);
 
     /*
 
@@ -32,11 +33,11 @@ EventsGraphicLayer::EventsGraphicLayer(Editor::EventsLayer& eventsLayer,
         }
     }
      */
-    for (size_t index = 0; index < layerItems().size(); ++index) {
+    for (size_t index = 0; index < nbCells; ++index) {
         if (touchEvents.find(index) != std::end(touchEvents)) {
             qreal posX((index % (floor.width())) * CELL_W);
             qreal posY((index / (floor.width())) * CELL_H);
-            draw(index, quint16(posX), quint16(posY));
+            draw(index, static_cast<quint16>(posX), static_cast<quint16>(posY));
         }
     }
 }

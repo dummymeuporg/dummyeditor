@@ -28,8 +28,8 @@ void GraphicEraser::mapMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
     if (m_mouseClicked) {
         // XXX : remove the tile.
         visibleGraphicLayer()->setTile(
-            quint16(point.x() - (point.x() % CELL_W)),
-            quint16(point.y() - (point.y() % CELL_H)), -1, -1);
+            static_cast<quint16>(point.x() - (point.x() % CELL_W)),
+            static_cast<quint16>(point.y() - (point.y() % CELL_H)), -1, -1);
     }
 }
 
@@ -47,9 +47,9 @@ void GraphicEraser::mapMousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
     // XXX: remove tile.
     m_mouseClicked = true;
 
-    visibleGraphicLayer()->setTile(quint16(point.x() - (point.x() % CELL_W)),
-                                   quint16(point.y() - (point.y() % CELL_H)),
-                                   -1, -1);
+    visibleGraphicLayer()->setTile(
+        static_cast<quint16>(point.x() - (point.x() % CELL_W)),
+        static_cast<quint16>(point.y() - (point.y() % CELL_H)), -1, -1);
 }
 
 void GraphicEraser::mapMouseReleaseEvent(QGraphicsSceneMouseEvent*)

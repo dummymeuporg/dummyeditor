@@ -21,11 +21,14 @@ Visible::Visible(QRect&& clip, vector<pair<int8_t, int8_t>>&& content)
 void Visible::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer)
 {
     // apply clipboard to layer.
-    auto clipIndex(0);
-    for (auto j = 0; j < m_clip.height(); j += CELL_H) {
-        for (auto i = 0; i < m_clip.width(); i += CELL_W) {
+    const int clipW  = m_clip.width();
+    const int clipH  = m_clip.height();
+    size_t clipIndex = 0;
+
+    for (int y = 0; y < clipH; y += CELL_H) {
+        for (int x = 0; x < clipW; x += CELL_W) {
             auto value = m_content.at(clipIndex++);
-            layer.setTile(target().x() + i, target().y() + j,
+            layer.setTile(target().x() + x, target().y() + y,
                           value.first * CELL_W, value.second * CELL_H);
         }
     }

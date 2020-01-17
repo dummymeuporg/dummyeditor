@@ -55,10 +55,10 @@ VisibleGraphicLayer& VisibleGraphicLayer::setTile(quint16 x, quint16 y,
                                                   qint16 chipsetX,
                                                   qint16 chipsetY)
 {
-    if (x < m_graphicLayer.width() * CELL_W
-        && y < m_graphicLayer.height() * CELL_H) {
+    if (x < (m_graphicLayer.width() * CELL_W)
+        && y < (m_graphicLayer.height() * CELL_H)) {
         unsigned long index =
-            (y / CELL_H) * m_graphicLayer.width() + (x / CELL_W);
+            ((y / CELL_H) * m_graphicLayer.width()) + (x / CELL_W);
 
         if (nullptr != layerItems()[index]) {
             mapGraphicsScene().removeItem(layerItems()[index]);
@@ -101,16 +101,16 @@ void VisibleGraphicLayer::accept(GraphicLayerVisitor& visitor)
 std::shared_ptr<LayerClipboard::Clipboard>
 VisibleGraphicLayer::getClipboardRegion(const QRect& clip)
 {
-    unsigned x(clip.x() / CELL_W);
-    unsigned y(clip.y() / CELL_H);
-    unsigned width(clip.width() / CELL_W);
-    unsigned height(clip.height() / CELL_H);
+    const size_t x(clip.x() / CELL_W);
+    const size_t y(clip.y() / CELL_H);
+    const size_t width(clip.width() / CELL_W);
+    const size_t height(clip.height() / CELL_H);
 
     std::vector<std::pair<std::int8_t, std::int8_t>> content;
 
     for (unsigned j = y; j <= (y + height); ++j) {
-        for (unsigned i = x; i <= (x + width); ++i) {
-            unsigned index(j * m_graphicLayer.width() + i);
+        for (size_t i = x; i <= (x + width); ++i) {
+            size_t index((j * m_graphicLayer.width()) + i);
             content.push_back(m_graphicLayer.layer().at(index));
         }
     }

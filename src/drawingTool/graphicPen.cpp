@@ -92,10 +92,12 @@ void GraphicPen::drawPattern(QGraphicsSceneMouseEvent* event)
     for (int j = 0; j < height; ++j) {
         for (int i = 0; i < width; ++i) {
             visibleGraphicLayer()->setTile(
-                quint16(point.x() - (point.x() % CELL_W) + (i * CELL_W)),
-                quint16(point.y() - (point.y() % CELL_H) + (j * CELL_H)),
-                qint16(rectSelection().x() + (i * CELL_W)),
-                qint16(rectSelection().y() + (j * CELL_H)));
+                static_cast<quint16>((point.x() - (point.x() % CELL_W))
+                                     + (i * CELL_W)),
+                static_cast<quint16>((point.y() - (point.y() % CELL_H))
+                                     + (j * CELL_H)),
+                static_cast<qint16>(rectSelection().x() + (i * CELL_W)),
+                static_cast<qint16>(rectSelection().y() + (j * CELL_H)));
         }
     }
 }

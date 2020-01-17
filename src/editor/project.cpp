@@ -145,7 +145,8 @@ void Project::saveProject()
 void Project::dumpToXmlNode(QDomDocument& doc, QDomElement& xmlNode,
                             QStandardItem* modelItem)
 {
-    for (int i = 0; i < modelItem->rowCount(); ++i) {
+    const int nbRows = modelItem->rowCount();
+    for (int i = 0; i < nbRows; ++i) {
         QStandardItem* mapItem = modelItem->child(i);
 
         QDomElement mapNode = doc.createElement("map");

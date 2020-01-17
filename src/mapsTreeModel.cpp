@@ -9,7 +9,11 @@ MapsTreeModel::MapsTreeModel(const QDomNode& mapsNode)
 
 void MapsTreeModel::XmlMapToQItem(const QDomNode& node, QStandardItem* parent)
 {
-    for (QDomNode n = node.firstChild(); ! n.isNull(); n = n.nextSibling()) {
+    const auto& children = node.childNodes();
+    int nbChildren       = children.count();
+
+    for (int i = 0; i < nbChildren; ++i) {
+        const auto& n = children.at(i);
         if (n.nodeName() == "map") {
             QString mapName = n.attributes().namedItem("name").nodeValue();
             QStandardItem* mapItem = new QStandardItem(mapName);

@@ -125,8 +125,9 @@ void MapGraphicsScene::adjustLayers() const
 void MapGraphicsScene::clearGrid()
 {
     qDebug() << "Clear grid.";
-    for (auto it = m_gridItems.begin(); it != m_gridItems.end(); ++it) {
-        removeItem(*it);
+    const int nbCells = m_gridItems.count();
+    for (int i = 0; i < nbCells; ++i) {
+        removeItem(m_gridItems[i]);
     }
     m_gridItems.clear();
 }
