@@ -22,7 +22,7 @@ VisibleGraphicLayer::VisibleGraphicLayer(Editor::GraphicLayer& layer,
     layerItems().resize(m_graphicLayer.width() * m_graphicLayer.height());
 
     size_t index = 0;
-    for (auto& cellCoord : m_graphicLayer.layer()) {
+    for (const auto& cellCoord : m_graphicLayer.layer()) {
         layerItems()[index] = nullptr;
         qint16 x            = cellCoord.first;
         qint16 y            = cellCoord.second;

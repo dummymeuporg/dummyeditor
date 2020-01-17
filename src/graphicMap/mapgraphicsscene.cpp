@@ -60,7 +60,7 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument(
             .string()));
 
     m_currentGraphicLayer = nullptr;
-    for (auto* graphicLayer : m_graphicLayers) {
+    for (const auto* graphicLayer : m_graphicLayers) {
         delete graphicLayer;
     }
     m_graphicLayers.clear();
@@ -89,8 +89,7 @@ MapGraphicsScene& MapGraphicsScene::setMapDocument(
             new BlockingGraphicLayer(floor->blockingLayer(), *this, ++zindex);
 
         // Add event layer
-        auto* eventLayer =
-            new EventsGraphicLayer(floor->eventsLayer(), *this, ++zindex);
+        new EventsGraphicLayer(floor->eventsLayer(), *this, ++zindex);
 
         m_graphicLayers.push_back(graphicLayer);
 

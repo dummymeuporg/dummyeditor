@@ -124,10 +124,10 @@ MainWindow::~MainWindow()
         closeCurrentProject();
         m_currentProject.reset();
     }
-    for (auto* tool : m_blockingTools) {
+    for (const auto* tool : m_blockingTools) {
         delete tool;
     }
-    for (auto* tool : m_graphicTools) {
+    for (const auto* tool : m_graphicTools) {
         delete tool;
     }
     delete m_ui;
@@ -259,7 +259,8 @@ void MainWindow::on_treeViewMaps_doubleClicked(const QModelIndex& selectedIndex)
 
     QString mapName(mapModel->itemFromIndex(selectedIndex)->text());
     qDebug() << mapName;
-    std::shared_ptr<Editor::Map> map(m_currentProject->document(mapName)->m_map);
+    std::shared_ptr<Editor::Map> map(
+        m_currentProject->document(mapName)->m_map);
     m_chipsetScene->setChipset((m_currentProject->coreProject().projectPath()
                                 / "chipsets" / map->chipset())
                                    .string()
