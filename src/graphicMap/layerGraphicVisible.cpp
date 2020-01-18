@@ -44,6 +44,12 @@ VisibleGraphicLayer::VisibleGraphicLayer(Editor::GraphicLayer& layer,
 
 VisibleGraphicLayer::~VisibleGraphicLayer() {}
 
+void VisibleGraphicLayer::setSelected()
+{
+    MapSceneLayer::setSelected();
+    emit layerSelected(this);
+}
+
 /*
 MapSceneLayer& VisibleGraphicLayer::removeTile(quint16 x, quint16 y)
 {

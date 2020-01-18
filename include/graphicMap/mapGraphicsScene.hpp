@@ -7,6 +7,7 @@
 //////////////////////////////////////////////////////////////////////////////
 //  forward declaration
 //////////////////////////////////////////////////////////////////////////////
+template <typename T> using vec_uniq = std::vector<std::unique_ptr<T>>;
 
 namespace DrawingTools {
 class DrawingTool;
@@ -29,7 +30,6 @@ class VisibleGraphicLayer;
 class BlockingGraphicLayer;
 class EventsGraphicLayer;
 class MapSceneLayer;
-using MapLayers = std::vector<MapSceneLayer*>;
 
 //////////////////////////////////////////////////////////////////////////////
 //  MapGraphicsScene class
@@ -46,10 +46,11 @@ public:
     const std::shared_ptr<MapDocument> mapDocument() const;
     DrawingTools::DrawingTool* drawingTool() const { return m_drawingTool; }
     const QRect& chipsetSelection() const { return m_chipsetSelection; }
-    const MapLayers& graphicLayers() const { return m_graphicLayers; }
+    const vec_uniq<VisibleGraphicLayer>& graphicLayers() const;
+    const vec_uniq<BlockingGraphicLayer>& blockingLayers() const;
+    const vec_uniq<EventsGraphicLayer>& eventLayers() const;
 
-    MapGraphicsScene&
-    setMapDocument(const std::shared_ptr<MapDocument>& mapDocument);
+    void setMapDocument(const std::shared_ptr<MapDocument>& mapDocument);
 
     void mousePressEvent(QGraphicsSceneMouseEvent*) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent*) override;
@@ -85,8 +86,11 @@ private:
 
     DrawingTools::DrawingTool* m_drawingTool = nullptr;
 
-    MapLayers m_graphicLayers;
     MapSceneLayer* m_currentGraphicLayer = nullptr;
+
+    vec_uniq<VisibleGraphicLayer> m_visibleLayers;
+    vec_uniq<BlockingGraphicLayer> m_blockingLayers;
+    vec_uniq<EventsGraphicLayer> m_eventLayers;
 
     QVector<QGraphicsItem*> m_gridItems;
 };

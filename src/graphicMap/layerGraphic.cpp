@@ -23,8 +23,6 @@ void MapSceneLayer::setVisibility(bool visible)
 
 void MapSceneLayer::setSelected()
 {
-    emit layerSelected(this);
-
     // Bind the tool to this graphic layer
     auto* drawingTool = mapGraphicsScene().drawingTool();
     if (nullptr != drawingTool) {

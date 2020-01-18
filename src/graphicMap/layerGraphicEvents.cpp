@@ -42,9 +42,16 @@ EventsGraphicLayer::EventsGraphicLayer(Editor::EventsLayer& eventsLayer,
     }
 }
 
+void EventsGraphicLayer::setSelected()
+{
+    MapSceneLayer::setSelected();
+    emit layerSelected(this);
+}
+
 void EventsGraphicLayer::draw(int index, quint16 x, quint16 y)
 {
-    layerItems()[index] = new GraphicItem(GraphicItem::eGraphicItemType::eEvent);
+    layerItems()[index] =
+        new GraphicItem(GraphicItem::eGraphicItemType::eEvent);
     layerItems()[index]->setZValue(zIndex());
 
     layerItems()[index]->setPos(QPointF(x - (x % CELL_W), y - (y % CELL_H)));

@@ -46,10 +46,7 @@ public:
 
 public slots:
     void setVisibility(bool);
-    void setSelected();
-
-signals:
-    void layerSelected(GraphicMap::MapSceneLayer*);
+    virtual void setSelected();
 
 protected:
     std::vector<QGraphicsItem*>& layerItems() { return m_layerItems; }

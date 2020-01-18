@@ -28,6 +28,7 @@ class MapGraphicsScene;
 
 class VisibleGraphicLayer : public MapSceneLayer
 {
+    Q_OBJECT
 public:
     VisibleGraphicLayer(Editor::GraphicLayer&, MapGraphicsScene&,
                         const QPixmap&, int);
@@ -39,7 +40,7 @@ public:
                                  qint16 chipsetY);
     VisibleGraphicLayer& setChipsetPixmap(const QPixmap*);
 
-    //virtual MapSceneLayer& removeTile(quint16, quint16) override;
+    // virtual MapSceneLayer& removeTile(quint16, quint16) override;
 
     Editor::Layer& editorLayer() override;
 
@@ -49,6 +50,12 @@ public:
     getClipboardRegion(const QRect& clip) override;
 
     void accept(GraphicLayerVisitor&) override;
+
+public slots:
+    void setSelected() override;
+
+signals:
+    void layerSelected(GraphicMap::VisibleGraphicLayer*);
 
 private:
     Editor::GraphicLayer& m_graphicLayer;

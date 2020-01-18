@@ -47,6 +47,12 @@ MapSceneLayer& BlockingGraphicLayer::removeTile(quint16 x, quint16 y)
     return *this;
 }*/
 
+void BlockingGraphicLayer::setSelected()
+{
+    MapSceneLayer::setSelected();
+    emit layerSelected(this);
+}
+
 void BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
 {
     qDebug() << "Toggle tile." << x << y;

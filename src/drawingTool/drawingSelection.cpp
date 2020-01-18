@@ -7,7 +7,8 @@
 #include "definitions.hpp"
 #include "drawingTool/drawingVisitor.hpp"
 #include "editor/map.hpp"
-#include "graphicMap/layerGraphic.hpp"
+#include "graphicMap/layerGraphicBlocking.hpp"
+#include "graphicMap/layerGraphicVisible.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
 
 namespace DrawingTools {
@@ -100,9 +101,16 @@ void SelectionTool::doCopy()
 {
     qDebug() << "Copy";
     m_layers.clear();
-    for (auto* layer : mapGraphScene().graphicLayers()) {
-        QRect clip(m_startSelection, m_endSelection);
-        m_layers[layer] = layer->getClipboardRegion(clip);
+    QRect clip(m_startSelection, m_endSelection);
+
+    // copy visible tiles
+    for (const auto& pVisLayer : mapGraphScene().graphicLayers()) {
+        m_layers[pVisLayer.get()] = pVisLayer->getClipboardRegion(clip);
+    }
+
+    // copy blocking tiles
+    for (const auto& pBlockLayer : mapGraphScene().blockingLayers()) {
+        m_layers[pBlockLayer.get()] = pBlockLayer->getClipboardRegion(clip);
     }
 }
 

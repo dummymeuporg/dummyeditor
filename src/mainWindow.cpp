@@ -254,12 +254,20 @@ void MainWindow::on_treeViewMaps_doubleClicked(const QModelIndex& selectedIndex)
 
     m_mapScene->setMapDocument(m_currentProject->document(mapName));
 
-    for (const auto* layer : m_mapScene->graphicLayers()) {
-        // XXX: connect the layers to the main window in order
-        // to set toolbox.
-        QObject::connect(layer,
-                         SIGNAL(layerSelected(GraphicMap::MapSceneLayer*)), this,
-                         SLOT(setToolboxOnLayer(GraphicMap::MapSceneLayer*)));
+    // link visible layers
+    for (const auto& pVisLayer : m_mapScene->graphicLayers()) {
+        QObject::connect(
+            pVisLayer.get(),
+            SIGNAL(layerSelected(GraphicMap::VisibleGraphicLayer*)), this,
+            SLOT(linkToolboxToLayer(GraphicMap::VisibleGraphicLayer*)));
+    }
+
+    // link blocking layers
+    for (const auto& pBlockLayer : m_mapScene->blockingLayers()) {
+        QObject::connect(
+            pBlockLayer.get(),
+            SIGNAL(layerSelected(GraphicMap::BlockingGraphicLayer*)), this,
+            SLOT(linkToolboxToLayer(GraphicMap::BlockingGraphicLayer*)));
     }
 
     m_ui->graphicsViewChipset->viewport()->update();
@@ -273,17 +281,21 @@ void MainWindow::on_treeViewMaps_doubleClicked(const QModelIndex& selectedIndex)
     removeTools();
 }
 
-void MainWindow::setToolboxOnLayer(GraphicMap::MapSceneLayer* layer)
+void MainWindow::linkToolboxToLayer(GraphicMap::VisibleGraphicLayer* layer)
 {
-    std::vector<DrawingTools::DrawingTool*>* tools = nullptr;
-    auto* visibleLayer = dynamic_cast<GraphicMap::VisibleGraphicLayer*>(layer);
-    if (visibleLayer != nullptr)
-        tools = &m_graphicTools;
-    else
-        tools = &m_blockingTools;
-
     m_ui->widgetDrawingToolbox->changeActiveLayer(m_mapScene, m_chipsetScene,
-                                                  tools);
+                                                  &m_graphicTools);
+}
+
+void MainWindow::linkToolboxToLayer(GraphicMap::BlockingGraphicLayer* layer)
+{
+    m_ui->widgetDrawingToolbox->changeActiveLayer(m_mapScene, m_chipsetScene,
+                                                  &m_blockingTools);
+}
+
+void MainWindow::linkToolboxToLayer(GraphicMap::EventsGraphicLayer* layer)
+{
+    // TODO
 }
 
 
