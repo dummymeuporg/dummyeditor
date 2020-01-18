@@ -281,21 +281,19 @@ void MainWindow::on_treeViewMaps_doubleClicked(const QModelIndex& selectedIndex)
     removeTools();
 }
 
-void MainWindow::linkToolboxToLayer(
-    const GraphicMap::VisibleGraphicLayer* layer)
+void MainWindow::linkToolboxToLayer(GraphicMap::VisibleGraphicLayer* layer)
 {
     m_ui->widgetDrawingToolbox->changeActiveLayer(m_mapScene, m_chipsetScene,
                                                   m_graphicTools);
 }
 
-void MainWindow::linkToolboxToLayer(
-    const GraphicMap::BlockingGraphicLayer* layer)
+void MainWindow::linkToolboxToLayer(GraphicMap::BlockingGraphicLayer* layer)
 {
     m_ui->widgetDrawingToolbox->changeActiveLayer(m_mapScene, m_chipsetScene,
                                                   m_blockingTools);
 }
 
-void MainWindow::linkToolboxToLayer(const GraphicMap::EventsGraphicLayer* layer)
+void MainWindow::linkToolboxToLayer(GraphicMap::EventsGraphicLayer* layer)
 {
     // TODO
 }
