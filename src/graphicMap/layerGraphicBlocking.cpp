@@ -14,7 +14,7 @@ namespace GraphicMap {
 BlockingGraphicLayer::BlockingGraphicLayer(Editor::BlockingLayer& blockingLayer,
                                            MapGraphicsScene& mapGraphicsScene,
                                            int zIndex)
-    : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex)
+    : GraphicMap::MapSceneLayer(mapGraphicsScene, zIndex)
     , m_blockingLayer(blockingLayer)
 {
     const size_t nbCells = m_blockingLayer.layer().size();

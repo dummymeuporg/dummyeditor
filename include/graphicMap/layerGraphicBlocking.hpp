@@ -18,7 +18,7 @@ class BlockingSquareItem;
 //  BlockingGraphicLayer class
 //////////////////////////////////////////////////////////////////////////////
 
-class BlockingGraphicLayer : public GraphicLayer
+class BlockingGraphicLayer : public MapSceneLayer
 {
 public:
     BlockingGraphicLayer(Editor::BlockingLayer&, MapGraphicsScene&, int zValue);

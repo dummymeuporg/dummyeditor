@@ -25,8 +25,8 @@ class BlockingLayer;
 struct MapDocument;
 
 namespace GraphicMap {
-class GraphicLayer;
-using GraphicLayers = std::vector<GraphicLayer*>;
+class MapSceneLayer;
+using GraphicLayers = std::vector<MapSceneLayer*>;
 
 //////////////////////////////////////////////////////////////////////////////
 //  MapGraphicsScene class
@@ -60,7 +60,7 @@ public slots:
     void unsetDrawingTool();
     void setDrawingTool(::DrawingTools::DrawingTool*);
     void adjustLayers() const;
-    void setCurrentGraphicLayer(GraphicLayer*);
+    void setCurrentGraphicLayer(MapSceneLayer*);
 
 private:
     void cleanLayer(QVector<QGraphicsPixmapItem*>& layer);
@@ -83,7 +83,7 @@ private:
     DrawingTools::DrawingTool* m_drawingTool = nullptr;
 
     GraphicLayers m_graphicLayers;
-    GraphicLayer* m_currentGraphicLayer = nullptr;
+    MapSceneLayer* m_currentGraphicLayer = nullptr;
 
     QVector<QGraphicsItem*> m_gridItems;
 };

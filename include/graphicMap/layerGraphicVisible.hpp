@@ -26,7 +26,7 @@ class MapGraphicsScene;
 //  VisibleGraphicLayer class
 //////////////////////////////////////////////////////////////////////////////
 
-class VisibleGraphicLayer : public GraphicLayer
+class VisibleGraphicLayer : public MapSceneLayer
 {
 public:
     VisibleGraphicLayer(Editor::GraphicLayer&, MapGraphicsScene&,

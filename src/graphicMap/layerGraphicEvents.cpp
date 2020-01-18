@@ -11,7 +11,7 @@ namespace GraphicMap {
 EventsGraphicLayer::EventsGraphicLayer(Editor::EventsLayer& eventsLayer,
                                        MapGraphicsScene& mapGraphicsScene,
                                        int zIndex)
-    : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex)
+    : GraphicMap::MapSceneLayer(mapGraphicsScene, zIndex)
     , m_eventsLayer(eventsLayer)
 {
     const size_t nbCells = eventsLayer.width() * eventsLayer.height();

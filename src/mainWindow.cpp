@@ -258,8 +258,8 @@ void MainWindow::on_treeViewMaps_doubleClicked(const QModelIndex& selectedIndex)
         // XXX: connect the layers to the main window in order
         // to set toolbox.
         QObject::connect(layer,
-                         SIGNAL(layerSelected(GraphicMap::GraphicLayer*)), this,
-                         SLOT(setToolboxOnLayer(GraphicMap::GraphicLayer*)));
+                         SIGNAL(layerSelected(GraphicMap::MapSceneLayer*)), this,
+                         SLOT(setToolboxOnLayer(GraphicMap::MapSceneLayer*)));
     }
 
     m_ui->graphicsViewChipset->viewport()->update();
@@ -273,7 +273,7 @@ void MainWindow::on_treeViewMaps_doubleClicked(const QModelIndex& selectedIndex)
     removeTools();
 }
 
-void MainWindow::setToolboxOnLayer(GraphicMap::GraphicLayer* layer)
+void MainWindow::setToolboxOnLayer(GraphicMap::MapSceneLayer* layer)
 {
     std::vector<DrawingTools::DrawingTool*>* tools = nullptr;
     auto* visibleLayer = dynamic_cast<GraphicMap::VisibleGraphicLayer*>(layer);
@@ -283,7 +283,7 @@ void MainWindow::setToolboxOnLayer(GraphicMap::GraphicLayer* layer)
         tools = &m_blockingTools;
 
     m_ui->widgetDrawingToolbox->changeActiveLayer(m_mapScene, m_chipsetScene,
-                                                  layer, tools);
+                                                  tools);
 }
 
 

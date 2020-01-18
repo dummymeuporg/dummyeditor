@@ -15,7 +15,7 @@ VisibleGraphicLayer::VisibleGraphicLayer(Editor::GraphicLayer& layer,
                                          MapGraphicsScene& mapGraphicsScene,
                                          const QPixmap& chipsetPixmap,
                                          int zIndex)
-    : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex)
+    : GraphicMap::MapSceneLayer(mapGraphicsScene, zIndex)
     , m_graphicLayer(layer)
     , m_chipsetPixmap(chipsetPixmap)
 {

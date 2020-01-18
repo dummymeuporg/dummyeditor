@@ -1,9 +1,8 @@
 #ifndef GRAPHICLAYER_H
 #define GRAPHICLAYER_H
 
+#include <QObject>
 #include <memory>
-
-#include "graphicMap/mapSceneLayer.hpp"
 
 //////////////////////////////////////////////////////////////////////////////
 //  forward declaration
@@ -25,16 +24,19 @@ class Clipboard;
 
 namespace GraphicMap {
 class GraphicLayerVisitor;
+class MapGraphicsScene;
 
 //////////////////////////////////////////////////////////////////////////////
 //  GraphicLayer class
 //////////////////////////////////////////////////////////////////////////////
 
-class GraphicLayer : public MapSceneLayer
+class MapSceneLayer : public QObject
 {
     Q_OBJECT
 public:
-    GraphicLayer(MapGraphicsScene&, int);
+    MapSceneLayer(MapGraphicsScene&, int zIndex);
+
+    MapGraphicsScene& mapGraphicsScene() { return m_mapGraphicsScene; }
 
     virtual Editor::Layer& editorLayer()                           = 0;
     virtual std::vector<DrawingTools::DrawingTool*> drawingTools() = 0;
@@ -47,12 +49,15 @@ public slots:
     void setSelected();
 
 signals:
-    void layerSelected(GraphicMap::GraphicLayer*);
+    void layerSelected(GraphicMap::MapSceneLayer*);
 
 protected:
     std::vector<QGraphicsItem*>& layerItems() { return m_layerItems; }
+    int zIndex() { return m_zIndex; }
 
 private:
+    MapGraphicsScene& m_mapGraphicsScene;
+    int m_zIndex;
     std::vector<QGraphicsItem*> m_layerItems;
 };
 } // namespace GraphicMap

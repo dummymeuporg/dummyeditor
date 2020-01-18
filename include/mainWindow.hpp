@@ -23,7 +23,7 @@ class MainWindow;
 
 namespace GraphicMap {
 class MapGraphicsScene;
-class GraphicLayer;
+class MapSceneLayer;
 class VisibleGraphicLayer;
 class BlockingGraphicLayer;
 } // namespace GraphicMap
@@ -68,7 +68,7 @@ public slots:
     void on_actionCopy_triggered();
     void on_actionPaste_triggered();
     // manual connexions
-    void setToolboxOnLayer(GraphicMap::GraphicLayer*);
+    void setToolboxOnLayer(GraphicMap::MapSceneLayer*);
 
 private:
     void initializeScenes();

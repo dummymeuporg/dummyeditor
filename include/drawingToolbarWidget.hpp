@@ -16,7 +16,7 @@ class ChipsetGraphicsScene;
 class QActionGroup;
 
 namespace GraphicMap {
-class GraphicLayer;
+class MapSceneLayer;
 class MapGraphicsScene;
 } // namespace GraphicMap
 
@@ -28,7 +28,7 @@ class DrawingTool;
 //  DrawingToolbarWidget class
 //////////////////////////////////////////////////////////////////////////////
 
-class DrawingToolBarWidget : public QWidget, public DrawingTools::DrawingVisitor
+class DrawingToolBarWidget : public QWidget
 {
     Q_OBJECT
 public:
@@ -39,17 +39,8 @@ public:
 
     const GraphicMap::MapGraphicsScene* mapScene() { return m_mapScene; }
 
-    // DrawingTool::Visitor methods:
-    void visitTool(DrawingTools::GraphicPen&) override;
-    void visitTool(DrawingTools::GraphicRectangle&) override;
-    void visitTool(DrawingTools::GraphicEraser&) override;
-    void visitTool(DrawingTools::BlockingEraser&) override;
-    void visitTool(DrawingTools::BlockingPen&) override;
-    void visitTool(DrawingTools::SelectionTool&) override;
-
     void changeActiveLayer(GraphicMap::MapGraphicsScene*,
                            const ChipsetGraphicsScene* chipset,
-                           GraphicMap::GraphicLayer* layer,
                            std::vector<DrawingTools::DrawingTool*>*);
 
 private:

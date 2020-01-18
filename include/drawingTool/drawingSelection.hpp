@@ -17,7 +17,7 @@ class QGraphicsSceneMouseEvent;
 class QKeyEvent;
 
 namespace GraphicMap {
-class GraphicLayer;
+class MapSceneLayer;
 } // namespace GraphicMap
 
 namespace DrawingTools {
@@ -57,7 +57,7 @@ private:
     QGraphicsRectItem* m_selectionRectItem = nullptr;
     QPoint m_startSelection;
     QPoint m_endSelection;
-    std::map<GraphicMap::GraphicLayer*,
+    std::map<GraphicMap::MapSceneLayer*,
              std::shared_ptr<LayerClipboard::Clipboard>>
         m_layers;
 };

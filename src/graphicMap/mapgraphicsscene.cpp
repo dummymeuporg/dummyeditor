@@ -17,16 +17,10 @@ namespace GraphicMap {
 MapGraphicsScene::MapGraphicsScene(QObject* parent)
     : QGraphicsScene(parent)
 {
-    // m_paintingLayerState = new GraphicMap::NotPaintingState(*this);
-    // m_drawingTool = new NoDrawingTool(*this);
     installEventFilter(this);
 }
 
-MapGraphicsScene::~MapGraphicsScene()
-{
-    // delete m_drawingTool;
-    // delete m_paintingLayerState;
-}
+MapGraphicsScene::~MapGraphicsScene() {}
 const std::shared_ptr<MapDocument> MapGraphicsScene::mapDocument() const
 {
     return m_mapDocument;
@@ -202,7 +196,7 @@ void MapGraphicsScene::unsetDrawingTool()
     m_drawingTool = nullptr;
 }
 
-void MapGraphicsScene::setCurrentGraphicLayer(GraphicLayer* layer)
+void MapGraphicsScene::setCurrentGraphicLayer(MapSceneLayer* layer)
 {
     qDebug() << "Set current graphic layer.";
     m_currentGraphicLayer = layer;

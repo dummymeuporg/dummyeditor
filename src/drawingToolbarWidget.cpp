@@ -29,7 +29,7 @@ DrawingToolBarWidget::DrawingToolBarWidget(::QWidget* parent)
 void DrawingToolBarWidget::clear()
 {
     m_toolbar->clear();
-    // Todo follow leaks ?
+    // Todo follow leaks of QActions?
 
     if (m_actionGrp != nullptr) {
         delete m_actionGrp;
@@ -60,56 +60,27 @@ void DrawingToolBarWidget::reset()
             tool, SIGNAL(drawingToolSelected(::DrawingTools::DrawingTool*)),
             m_mapScene, SLOT(setDrawingTool(::DrawingTools::DrawingTool*)));
 
-        tool->accept(*this);
+        // TODO a more specific call to avoid this dynamic cast, but without the
+        // complexity of visitor pattern
+        // or connect to a more general slot
+        auto* paletteTool =
+            dynamic_cast<DrawingTools::GraphicPaletteTool*>(tool);
+
+        if (paletteTool != nullptr) {
+            QObject::connect(
+                paletteTool,
+                SIGNAL(
+                    drawingToolSelected(::DrawingTools::GraphicPaletteTool*)),
+                m_chipsetGraphicsScene,
+                SLOT(setPaletteTool(::DrawingTools::GraphicPaletteTool*)));
+        }
     }
 
     m_toolbar->addActions(m_actionGrp->actions());
 }
 
-void DrawingToolBarWidget::visitTool(DrawingTools::GraphicPen& pen)
-{
-    // XXX: connect the pen to the chipset scene.
-    // m_chipsetScene
-    qDebug() << "visitTool: connect tool.";
-    QObject::connect(
-        &pen, SIGNAL(drawingToolSelected(::DrawingTools::GraphicPaletteTool*)),
-        m_chipsetGraphicsScene,
-        SLOT(setPaletteTool(::DrawingTools::GraphicPaletteTool*)));
-}
-
-void DrawingToolBarWidget::visitTool(DrawingTools::GraphicRectangle& rectangle)
-{
-    qDebug() << "visitTool: connect tool.";
-    QObject::connect(
-        &rectangle,
-        SIGNAL(drawingToolSelected(::DrawingTools::GraphicPaletteTool*)),
-        m_chipsetGraphicsScene,
-        SLOT(setPaletteTool(::DrawingTools::GraphicPaletteTool*)));
-}
-
-void DrawingToolBarWidget::visitTool(DrawingTools::GraphicEraser&)
-{
-    // Nothing to do!
-}
-
-void DrawingToolBarWidget::visitTool(DrawingTools::BlockingPen&)
-{
-    // Nothing to do!
-}
-
-void DrawingToolBarWidget::visitTool(DrawingTools::BlockingEraser&)
-{
-    // Nothing to do!
-}
-
-void DrawingToolBarWidget::visitTool(DrawingTools::SelectionTool&)
-{
-    // Nothing to do!
-}
-
 void DrawingToolBarWidget::changeActiveLayer(
     GraphicMap::MapGraphicsScene* mapScene, const ChipsetGraphicsScene* chipset,
-    GraphicMap::GraphicLayer* layer,
     std::vector<DrawingTools::DrawingTool*>* tools)
 {
     m_mapScene             = mapScene;
