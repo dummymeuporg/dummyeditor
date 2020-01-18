@@ -18,7 +18,7 @@ class Project;
 } // namespace Editor
 
 namespace Ui {
-class MainWindow;
+class MainWindow_Old;
 }
 
 namespace GraphicMap {
@@ -48,13 +48,13 @@ class QTreeView;
 //  MainWindow class
 //////////////////////////////////////////////////////////////////////////////
 
-class MainWindow : public QMainWindow
+class MainWindow_Old : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget* parent = nullptr);
-    virtual ~MainWindow() override;
+    explicit MainWindow_Old(QWidget* parent = nullptr);
+    virtual ~MainWindow_Old() override;
 
 public slots:
     // automatic connexions
@@ -82,7 +82,7 @@ private:
     void closeEvent(QCloseEvent* event) override;
 
 private:
-    Ui::MainWindow* m_ui                     = nullptr;
+    Ui::MainWindow_Old* m_ui                 = nullptr;
     ChipsetGraphicsScene* m_chipsetScene     = nullptr;
     GraphicMap::MapGraphicsScene* m_mapScene = nullptr;
     std::shared_ptr<Editor::Project> m_currentProject;

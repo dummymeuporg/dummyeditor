@@ -22,9 +22,9 @@
 #include "mapDocument.hpp"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget* parent)
+MainWindow_Old::MainWindow_Old(QWidget* parent)
     : QMainWindow(parent)
-    , m_ui(new Ui::MainWindow)
+    , m_ui(new Ui::MainWindow_Old)
     , m_chipsetScene(new ChipsetGraphicsScene())
     , m_mapScene(new GraphicMap::MapGraphicsScene())
 {
@@ -118,7 +118,7 @@ MainWindow::MainWindow(QWidget* parent)
     m_ui->actionPaste->setShortcutContext(Qt::WindowShortcut);
 }
 
-MainWindow::~MainWindow()
+MainWindow_Old::~MainWindow_Old()
 {
     if (m_currentProject != nullptr) {
         closeCurrentProject();
@@ -133,26 +133,26 @@ MainWindow::~MainWindow()
     delete m_ui;
 }
 
-void MainWindow::initializeScenes()
+void MainWindow_Old::initializeScenes()
 {
     m_ui->graphicsViewChipset->setScene(m_chipsetScene);
     m_ui->graphicsViewMap->setScene(m_mapScene);
 }
 
-void MainWindow::connectScenes()
+void MainWindow_Old::connectScenes()
 {
     QObject::connect(m_ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
                      m_chipsetScene, SLOT(changeChipset(QString)));
 }
 
-void MainWindow::closeCurrentProject()
+void MainWindow_Old::closeCurrentProject()
 {
     // TODO clean currently loaded project
     delete m_chipsetScene;
     delete m_mapScene;
 }
 
-void MainWindow::loadProject(const QString& projectDirectory)
+void MainWindow_Old::loadProject(const QString& projectDirectory)
 {
     connectScenes();
 
@@ -168,7 +168,7 @@ void MainWindow::loadProject(const QString& projectDirectory)
     m_ui->actionLow_layer_1->trigger();
 }
 
-void MainWindow::removeTools()
+void MainWindow_Old::removeTools()
 {
     qDebug() << "Remove tools";
     m_mapScene->unsetDrawingTool();
@@ -176,7 +176,7 @@ void MainWindow::removeTools()
     m_ui->widgetDrawingToolbox->clear();
 }
 
-void MainWindow::closeEvent(QCloseEvent* event)
+void MainWindow_Old::closeEvent(QCloseEvent* event)
 {
     if (nullptr != m_currentProject) {
         QMessageBox::StandardButton resBtn = QMessageBox::question(
@@ -201,7 +201,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
     }
 }
 
-void MainWindow::on_actionNew_triggered()
+void MainWindow_Old::on_actionNew_triggered()
 {
     // Open a file dialog to select a folder
     QString projectDirectory = QFileDialog::getExistingDirectory(
@@ -219,7 +219,7 @@ void MainWindow::on_actionNew_triggered()
     loadProject(projectDirectory);
 }
 
-void MainWindow::on_actionOpen_triggered()
+void MainWindow_Old::on_actionOpen_triggered()
 {
     QString projectDirectory = QFileDialog::getExistingDirectory(
         this, tr("Choose an existing project directory"));
@@ -233,13 +233,14 @@ void MainWindow::on_actionOpen_triggered()
     loadProject(projectDirectory);
 }
 
-void MainWindow::on_actionSave_triggered()
+void MainWindow_Old::on_actionSave_triggered()
 {
     if (m_currentProject != nullptr)
         m_currentProject->saveProject();
 }
 
-void MainWindow::on_treeViewMaps_doubleClicked(const QModelIndex& selectedIndex)
+void MainWindow_Old::on_treeViewMaps_doubleClicked(
+    const QModelIndex& selectedIndex)
 {
     const MapsTreeModel* mapModel = m_currentProject->mapsModel();
 
@@ -281,35 +282,35 @@ void MainWindow::on_treeViewMaps_doubleClicked(const QModelIndex& selectedIndex)
     removeTools();
 }
 
-void MainWindow::linkToolboxToLayer(GraphicMap::VisibleGraphicLayer* layer)
+void MainWindow_Old::linkToolboxToLayer(GraphicMap::VisibleGraphicLayer* layer)
 {
     m_ui->widgetDrawingToolbox->changeActiveLayer(m_mapScene, m_chipsetScene,
                                                   m_graphicTools);
 }
 
-void MainWindow::linkToolboxToLayer(GraphicMap::BlockingGraphicLayer* layer)
+void MainWindow_Old::linkToolboxToLayer(GraphicMap::BlockingGraphicLayer* layer)
 {
     m_ui->widgetDrawingToolbox->changeActiveLayer(m_mapScene, m_chipsetScene,
                                                   m_blockingTools);
 }
 
-void MainWindow::linkToolboxToLayer(GraphicMap::EventsGraphicLayer* layer)
+void MainWindow_Old::linkToolboxToLayer(GraphicMap::EventsGraphicLayer* layer)
 {
     // TODO
 }
 
 
-void MainWindow::on_actionUndo_triggered()
+void MainWindow_Old::on_actionUndo_triggered()
 {
     qDebug() << "Undo. Not implemented";
 }
 
-void MainWindow::on_actionRedo_triggered()
+void MainWindow_Old::on_actionRedo_triggered()
 {
     qDebug() << "Redo. Not implemented";
 }
 
-void MainWindow::on_actionCut_triggered()
+void MainWindow_Old::on_actionCut_triggered()
 {
     // Cut is only active for SelectionTool
     auto* activeTool =
@@ -319,7 +320,7 @@ void MainWindow::on_actionCut_triggered()
     }
 }
 
-void MainWindow::on_actionCopy_triggered()
+void MainWindow_Old::on_actionCopy_triggered()
 {
     // Copy is only active for SelectionTool
     auto* activeTool =
@@ -329,7 +330,7 @@ void MainWindow::on_actionCopy_triggered()
     }
 }
 
-void MainWindow::on_actionPaste_triggered()
+void MainWindow_Old::on_actionPaste_triggered()
 {
     // Paste is only active for SelectionTool
     auto* activeTool =
