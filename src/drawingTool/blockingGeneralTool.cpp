@@ -54,6 +54,12 @@ void BlockingGeneralTool::visitGraphicLayer(
     setBlockingGraphicLayer(&layer);
 }
 
+void BlockingGeneralTool::visitGraphicLayer(
+    GraphicMap::EventsGraphicLayer& layer)
+{
+    qDebug() << "Visit event layer";
+}
+
 void BlockingGeneralTool::visitGraphicLayer(GraphicMap::VisibleGraphicLayer&)
 {
     // Do nothing. Not the right tool.

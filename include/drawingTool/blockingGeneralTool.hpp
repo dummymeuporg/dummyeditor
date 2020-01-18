@@ -34,6 +34,7 @@ public:
 
     void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
     void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
+    void visitGraphicLayer(GraphicMap::EventsGraphicLayer&) override;
 
 signals:
     void drawingToolSelected(DrawingTools::BlockingGeneralTool*);

@@ -15,7 +15,7 @@ VisibleGraphicLayer::VisibleGraphicLayer(Editor::GraphicLayer& layer,
                                          MapGraphicsScene& mapGraphicsScene,
                                          const QPixmap& chipsetPixmap,
                                          int zIndex)
-    : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex)
+    : GraphicMap::MapSceneLayer(mapGraphicsScene, zIndex)
     , m_graphicLayer(layer)
     , m_chipsetPixmap(chipsetPixmap)
 {
@@ -43,6 +43,12 @@ VisibleGraphicLayer::VisibleGraphicLayer(Editor::GraphicLayer& layer,
 }
 
 VisibleGraphicLayer::~VisibleGraphicLayer() {}
+
+void VisibleGraphicLayer::setSelected()
+{
+    MapSceneLayer::setSelected();
+    emit layerSelected(this);
+}
 
 /*
 MapSceneLayer& VisibleGraphicLayer::removeTile(quint16 x, quint16 y)

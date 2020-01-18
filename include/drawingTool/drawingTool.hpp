@@ -33,8 +33,8 @@ public:
     virtual void mapMouseMoveEvent(QGraphicsSceneMouseEvent*)    = 0;
     virtual void mapMouseReleaseEvent(QGraphicsSceneMouseEvent*) = 0;
     virtual void drawGrid()                                      = 0;
-    virtual void onSelected()                                    = 0;
-    virtual void onUnselected()                                  = 0;
+    virtual void onSelected();
+    virtual void onUnselected();
 
     const QIcon& icon() const { return m_icon; }
 

@@ -65,8 +65,4 @@ void BlockingEraser::emitDrawingToolSelected()
     emit drawingToolSelected(this);
 }
 
-void BlockingEraser::onUnselected() {}
-
-void BlockingEraser::onSelected() {}
-
 } // namespace DrawingTools

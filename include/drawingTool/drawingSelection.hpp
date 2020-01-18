@@ -17,7 +17,7 @@ class QGraphicsSceneMouseEvent;
 class QKeyEvent;
 
 namespace GraphicMap {
-class GraphicLayer;
+class MapSceneLayer;
 } // namespace GraphicMap
 
 namespace DrawingTools {
@@ -37,12 +37,11 @@ public:
     void mapMouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
     void emitDrawingToolSelected() override;
     void drawGrid() override;
-    void onSelected() override;
-    void onUnselected() override;
 
     // GraphicLayerVisitor
     void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
     void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
+    void visitGraphicLayer(GraphicMap::EventsGraphicLayer&) override;
 
     void doCopy();
     void doCut();
@@ -59,9 +58,9 @@ private:
     QGraphicsRectItem* m_selectionRectItem = nullptr;
     QPoint m_startSelection;
     QPoint m_endSelection;
-    std::map<GraphicMap::GraphicLayer*,
+    std::map<GraphicMap::MapSceneLayer*,
              std::shared_ptr<LayerClipboard::Clipboard>>
-        m_layers;
+        m_copyClipboard;
 };
 
 } // namespace DrawingTools

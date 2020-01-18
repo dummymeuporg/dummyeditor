@@ -30,8 +30,6 @@ public:
     void mapMouseMoveEvent(QGraphicsSceneMouseEvent*) override;
     void mapMouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
     void emitDrawingToolSelected() override;
-    void onUnselected() override;
-    void onSelected() override;
 
 signals:
     void drawingToolSelected(::DrawingTools::DrawingTool*);

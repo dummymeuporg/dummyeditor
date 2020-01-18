@@ -35,7 +35,6 @@ public:
     }
     void setChipsetGraphicsScene(ChipsetGraphicsScene*);
     void onUnselected() override;
-    void onSelected() override;
 
 signals:
     // Note: I have to put the whole namespace shit here, because Qt

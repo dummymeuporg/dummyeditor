@@ -133,20 +133,6 @@ MainWindow::~MainWindow()
     delete m_ui;
 }
 
-void MainWindow::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer)
-{
-    // Publish visible/graphic related tools
-    m_ui->widgetDrawingToolbox->onLayerSelected(m_mapScene, m_chipsetScene,
-                                                layer, &m_graphicTools);
-}
-
-void MainWindow::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer)
-{
-    // Publish blocking related tools
-    m_ui->widgetDrawingToolbox->onLayerSelected(m_mapScene, m_chipsetScene,
-                                                layer, &m_blockingTools);
-}
-
 void MainWindow::initializeScenes()
 {
     m_ui->graphicsViewChipset->setScene(m_chipsetScene);
@@ -268,12 +254,20 @@ void MainWindow::on_treeViewMaps_doubleClicked(const QModelIndex& selectedIndex)
 
     m_mapScene->setMapDocument(m_currentProject->document(mapName));
 
-    for (const auto* layer : m_mapScene->graphicLayers()) {
-        // XXX: connect the layers to the main window in order
-        // to publish tools.
-        QObject::connect(layer,
-                         SIGNAL(layerSelected(GraphicMap::GraphicLayer*)), this,
-                         SLOT(publishTools(GraphicMap::GraphicLayer*)));
+    // link visible layers
+    for (const auto& pVisLayer : m_mapScene->graphicLayers()) {
+        QObject::connect(
+            pVisLayer.get(),
+            SIGNAL(layerSelected(GraphicMap::VisibleGraphicLayer*)), this,
+            SLOT(linkToolboxToLayer(GraphicMap::VisibleGraphicLayer*)));
+    }
+
+    // link blocking layers
+    for (const auto& pBlockLayer : m_mapScene->blockingLayers()) {
+        QObject::connect(
+            pBlockLayer.get(),
+            SIGNAL(layerSelected(GraphicMap::BlockingGraphicLayer*)), this,
+            SLOT(linkToolboxToLayer(GraphicMap::BlockingGraphicLayer*)));
     }
 
     m_ui->graphicsViewChipset->viewport()->update();
@@ -285,7 +279,23 @@ void MainWindow::on_treeViewMaps_doubleClicked(const QModelIndex& selectedIndex)
 
     mapFloorsList->setEditorMap(map);
     removeTools();
-    m_ui->widgetDrawingToolbox->setInitialState();
+}
+
+void MainWindow::linkToolboxToLayer(GraphicMap::VisibleGraphicLayer* layer)
+{
+    m_ui->widgetDrawingToolbox->changeActiveLayer(m_mapScene, m_chipsetScene,
+                                                  m_graphicTools);
+}
+
+void MainWindow::linkToolboxToLayer(GraphicMap::BlockingGraphicLayer* layer)
+{
+    m_ui->widgetDrawingToolbox->changeActiveLayer(m_mapScene, m_chipsetScene,
+                                                  m_blockingTools);
+}
+
+void MainWindow::linkToolboxToLayer(GraphicMap::EventsGraphicLayer* layer)
+{
+    // TODO
 }
 
 
@@ -327,23 +337,4 @@ void MainWindow::on_actionPaste_triggered()
     if (activeTool != nullptr) {
         activeTool->doPaste();
     }
-}
-
-void MainWindow::publishTools(GraphicMap::GraphicLayer* layer)
-{
-    qDebug() << "Publish tools!";
-    // XXX: if we are publishing (new tools), make the map scene
-    // unselect its previous tool (if any).
-    // ...
-    // Not sure this is a fancy way to do so, though.
-    // m_mapScene->unsetDrawingTool();
-    // m_chipsetScene->unsetPaletteTool();
-
-    /*
-  std::vector<DrawingTool::DrawingTool*>&& tools(layer->drawingTools());
-  auto toolbox = ui->widgetDrawingToolbox;
-  toolbox->reset(m_mapScene, m_chipsetScene, tools);
-  */
-
-    layer->accept(*this);
 }

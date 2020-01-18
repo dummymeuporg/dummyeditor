@@ -6,12 +6,13 @@
 #include "graphicMap/mapGraphicsScene.hpp"
 
 namespace GraphicMap {
-GraphicLayer::GraphicLayer(MapGraphicsScene& mapGraphicsScene, int zIndex)
-    : MapSceneLayer(mapGraphicsScene, zIndex)
+MapSceneLayer::MapSceneLayer(MapGraphicsScene& mapGraphicsScene, int zIndex)
+    : m_mapGraphicsScene(mapGraphicsScene)
+    , m_zIndex(zIndex)
 {}
 
 
-void GraphicLayer::setVisibility(bool visible)
+void MapSceneLayer::setVisibility(bool visible)
 {
     for (auto* layerIt : layerItems()) {
         if (layerIt != nullptr) {
@@ -20,10 +21,8 @@ void GraphicLayer::setVisibility(bool visible)
     }
 }
 
-void GraphicLayer::setSelected()
+void MapSceneLayer::setSelected()
 {
-    emit layerSelected(this);
-
     // Bind the tool to this graphic layer
     auto* drawingTool = mapGraphicsScene().drawingTool();
     if (nullptr != drawingTool) {

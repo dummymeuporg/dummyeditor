@@ -7,7 +7,8 @@
 #include "definitions.hpp"
 #include "drawingTool/drawingVisitor.hpp"
 #include "editor/map.hpp"
-#include "graphicMap/layerGraphic.hpp"
+#include "graphicMap/layerGraphicBlocking.hpp"
+#include "graphicMap/layerGraphicVisible.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
 
 namespace DrawingTools {
@@ -99,10 +100,18 @@ void SelectionTool::mapMouseReleaseEvent(QGraphicsSceneMouseEvent*)
 void SelectionTool::doCopy()
 {
     qDebug() << "Copy";
-    m_layers.clear();
-    for (auto* layer : mapGraphScene().graphicLayers()) {
-        QRect clip(m_startSelection, m_endSelection);
-        m_layers[layer] = layer->getClipboardRegion(clip);
+    m_copyClipboard.clear();
+    QRect clip(m_startSelection, m_endSelection);
+
+    // copy visible tiles
+    for (const auto& pVisLayer : mapGraphScene().graphicLayers()) {
+        m_copyClipboard[pVisLayer.get()] = pVisLayer->getClipboardRegion(clip);
+    }
+
+    // copy blocking tiles
+    for (const auto& pBlockLayer : mapGraphScene().blockingLayers()) {
+        m_copyClipboard[pBlockLayer.get()] =
+            pBlockLayer->getClipboardRegion(clip);
     }
 }
 
@@ -113,17 +122,13 @@ void SelectionTool::doCut()
 
 void SelectionTool::doPaste()
 {
-    qDebug() << "Paste\r\n layers count: " << m_layers.size() << "\r\n";
-    for (auto& [layer, clip] : m_layers) {
+    qDebug() << "Paste\r\n layers count: " << m_copyClipboard.size() << "\r\n";
+    for (auto& [layer, clip] : m_copyClipboard) {
         qDebug() << layer << "\r\n";
         clip->setTarget(m_startSelection);
         layer->accept(*clip);
     }
 }
-
-void SelectionTool::onSelected() {}
-
-void SelectionTool::onUnselected() {}
 
 void SelectionTool::emitDrawingToolSelected()
 {
@@ -140,6 +145,11 @@ void SelectionTool::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer)
 void SelectionTool::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer)
 {
     mapGraphScene().redrawGrid();
+}
+
+void SelectionTool::visitGraphicLayer(GraphicMap::EventsGraphicLayer& layer)
+{
+    // nothing to do yet
 }
 
 } // namespace DrawingTools

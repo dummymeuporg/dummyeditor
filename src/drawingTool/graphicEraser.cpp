@@ -70,8 +70,4 @@ void GraphicEraser::emitDrawingToolSelected()
     emit drawingToolSelected(this);
 }
 
-void GraphicEraser::onSelected() {}
-
-void GraphicEraser::onUnselected() {}
-
 } // namespace DrawingTools

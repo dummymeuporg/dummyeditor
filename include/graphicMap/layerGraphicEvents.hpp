@@ -18,18 +18,25 @@ namespace GraphicMap {
 //  EventsGraphicLayer class
 //////////////////////////////////////////////////////////////////////////////
 
-class EventsGraphicLayer : public GraphicLayer
+class EventsGraphicLayer : public MapSceneLayer
 {
+    Q_OBJECT
 public:
     EventsGraphicLayer(Editor::EventsLayer&, MapGraphicsScene&, int);
 
-    //MapSceneLayer& removeTile(quint16, quint16) override;
+    // MapSceneLayer& removeTile(quint16, quint16) override;
     std::vector<DrawingTools::DrawingTool*> drawingTools() override;
     Editor::Layer& editorLayer() override;
     void accept(GraphicLayerVisitor&) override;
 
     std::shared_ptr<LayerClipboard::Clipboard>
     getClipboardRegion(const QRect& clip) override;
+
+public slots:
+    void setSelected() override;
+
+signals:
+    void layerSelected(GraphicMap::EventsGraphicLayer*);
 
 private:
     void draw(int, quint16, quint16);

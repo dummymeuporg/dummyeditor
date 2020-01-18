@@ -7,6 +7,7 @@
 //////////////////////////////////////////////////////////////////////////////
 //  forward declaration
 //////////////////////////////////////////////////////////////////////////////
+template <typename T> using vec_uniq = std::vector<std::unique_ptr<T>>;
 
 namespace DrawingTools {
 class DrawingTool;
@@ -25,8 +26,10 @@ class BlockingLayer;
 struct MapDocument;
 
 namespace GraphicMap {
-class GraphicLayer;
-using GraphicLayers = std::vector<GraphicLayer*>;
+class VisibleGraphicLayer;
+class BlockingGraphicLayer;
+class EventsGraphicLayer;
+class MapSceneLayer;
 
 //////////////////////////////////////////////////////////////////////////////
 //  MapGraphicsScene class
@@ -43,10 +46,11 @@ public:
     const std::shared_ptr<MapDocument> mapDocument() const;
     DrawingTools::DrawingTool* drawingTool() const { return m_drawingTool; }
     const QRect& chipsetSelection() const { return m_chipsetSelection; }
-    const GraphicLayers& graphicLayers() const { return m_graphicLayers; }
+    const vec_uniq<VisibleGraphicLayer>& graphicLayers() const;
+    const vec_uniq<BlockingGraphicLayer>& blockingLayers() const;
+    const vec_uniq<EventsGraphicLayer>& eventLayers() const;
 
-    MapGraphicsScene&
-    setMapDocument(const std::shared_ptr<MapDocument>& mapDocument);
+    void setMapDocument(const std::shared_ptr<MapDocument>& mapDocument);
 
     void mousePressEvent(QGraphicsSceneMouseEvent*) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent*) override;
@@ -60,7 +64,7 @@ public slots:
     void unsetDrawingTool();
     void setDrawingTool(::DrawingTools::DrawingTool*);
     void adjustLayers() const;
-    void setCurrentGraphicLayer(GraphicLayer*);
+    void setCurrentGraphicLayer(MapSceneLayer*);
 
 private:
     void cleanLayer(QVector<QGraphicsPixmapItem*>& layer);
@@ -82,8 +86,11 @@ private:
 
     DrawingTools::DrawingTool* m_drawingTool = nullptr;
 
-    GraphicLayers m_graphicLayers;
-    GraphicLayer* m_currentGraphicLayer = nullptr;
+    MapSceneLayer* m_currentGraphicLayer = nullptr;
+
+    vec_uniq<VisibleGraphicLayer> m_visibleLayers;
+    vec_uniq<BlockingGraphicLayer> m_blockingLayers;
+    vec_uniq<EventsGraphicLayer> m_eventLayers;
 
     QVector<QGraphicsItem*> m_gridItems;
 };

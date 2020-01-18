@@ -2,9 +2,7 @@
 #define DRAWINGTOOLBARWIDGET_H
 
 #include <QToolBar>
-
-#include "drawingTool/drawingVisitor.hpp"
-#include "graphicMap/graphicLayerVisitor.hpp"
+#include <memory>
 
 //////////////////////////////////////////////////////////////////////////////
 //  forward declaration
@@ -14,7 +12,6 @@ class ChipsetGraphicsScene;
 class QActionGroup;
 
 namespace GraphicMap {
-class GraphicLayer;
 class MapGraphicsScene;
 } // namespace GraphicMap
 
@@ -26,52 +23,21 @@ class DrawingTool;
 //  DrawingToolbarWidget class
 //////////////////////////////////////////////////////////////////////////////
 
-class DrawingToolBarWidget : public QWidget,
-                             public DrawingTools::DrawingVisitor,
-                             public GraphicMap::GraphicLayerVisitor
+class DrawingToolBarWidget : public QWidget
 {
     Q_OBJECT
 public:
     explicit DrawingToolBarWidget(QWidget* parent = nullptr);
 
-    enum class eToolBarState
-    {
-        NoDrawing,
-        Blocking,
-        Graphic
-    };
-
     void clear();
-    void reset();
-    void setState(eToolBarState state);
-    void onLayerSelected(const GraphicMap::MapGraphicsScene*,
-                         const ChipsetGraphicsScene*, GraphicMap::GraphicLayer&,
-                         std::vector<DrawingTools::DrawingTool*>*);
-
-    const GraphicMap::MapGraphicsScene* mapScene() { return m_mapScene; }
-
-    void setInitialState();
-
-    // DrawingTool::Visitor methods:
-    void visitTool(DrawingTools::GraphicPen&) override;
-    void visitTool(DrawingTools::GraphicRectangle&) override;
-    void visitTool(DrawingTools::GraphicEraser&) override;
-    void visitTool(DrawingTools::BlockingEraser&) override;
-    void visitTool(DrawingTools::BlockingPen&) override;
-    void visitTool(DrawingTools::SelectionTool&) override;
-
-    // GraphicMap::GraphicLayerVisitor methods:
-    void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
-    void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
+    void changeActiveLayer(GraphicMap::MapGraphicsScene*,
+                           const ChipsetGraphicsScene* chipset,
+                           std::vector<DrawingTools::DrawingTool*>&);
 
 private:
-    QToolBar* m_toolbar       = nullptr;
-    QActionGroup* m_actionGrp = nullptr;
-
-    const ChipsetGraphicsScene* m_chipsetGraphicsScene      = nullptr;
-    const GraphicMap::MapGraphicsScene* m_mapScene          = nullptr;
-    std::vector<DrawingTools::DrawingTool*>* m_drawingTools = nullptr;
-    eToolBarState m_state = eToolBarState::NoDrawing;
+    QToolBar* m_toolbar = nullptr;
+    std::unique_ptr<QActionGroup> m_actionGrp;
+    std::vector<std::unique_ptr<QAction>> m_actions;
 };
 
 #endif // DRAWINGTOOLBARWIDGET_H

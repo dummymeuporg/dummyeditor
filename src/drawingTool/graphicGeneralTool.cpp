@@ -51,6 +51,11 @@ void GraphicGeneralTool::visitGraphicLayer(
     qDebug() << "Visit visible graphic layer";
     setVisibleGraphicLayer(&layer);
 }
+void GraphicGeneralTool::visitGraphicLayer(
+    GraphicMap::EventsGraphicLayer& layer)
+{
+    qDebug() << "Visit event graphic layer";
+}
 
 void GraphicGeneralTool::visitGraphicLayer(GraphicMap::BlockingGraphicLayer&)
 {

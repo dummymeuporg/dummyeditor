@@ -33,20 +33,9 @@ public:
 class GraphicLayerVisitor
 {
 public:
-    virtual void visitGraphicLayer(VisibleGraphicLayer&)
-    {
-        throw GraphicLayerNotSupported();
-    }
-
-    virtual void visitGraphicLayer(BlockingGraphicLayer&)
-    {
-        throw GraphicLayerNotSupported();
-    }
-
-    virtual void visitGraphicLayer(EventsGraphicLayer&)
-    {
-        throw GraphicLayerNotSupported();
-    }
+    virtual void visitGraphicLayer(VisibleGraphicLayer&)  = 0;
+    virtual void visitGraphicLayer(BlockingGraphicLayer&) = 0;
+    virtual void visitGraphicLayer(EventsGraphicLayer&)   = 0;
 };
 
 } // namespace GraphicMap

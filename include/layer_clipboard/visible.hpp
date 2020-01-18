@@ -29,7 +29,16 @@ class Visible : public Clipboard
 public:
     Visible(const QRect&, const std::vector<std::pair<int8_t, int8_t>>&);
     Visible(QRect&&, std::vector<std::pair<int8_t, int8_t>>&&);
+
     void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
+    void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override
+    {
+        throw GraphicMap::GraphicLayerNotSupported();
+    }
+    void visitGraphicLayer(GraphicMap::EventsGraphicLayer&) override
+    {
+        throw GraphicMap::GraphicLayerNotSupported();
+    }
 
 private:
     QRect m_clip;

@@ -14,7 +14,7 @@ namespace GraphicMap {
 BlockingGraphicLayer::BlockingGraphicLayer(Editor::BlockingLayer& blockingLayer,
                                            MapGraphicsScene& mapGraphicsScene,
                                            int zIndex)
-    : GraphicMap::GraphicLayer(mapGraphicsScene, zIndex)
+    : GraphicMap::MapSceneLayer(mapGraphicsScene, zIndex)
     , m_blockingLayer(blockingLayer)
 {
     const size_t nbCells = m_blockingLayer.layer().size();
@@ -46,6 +46,12 @@ MapSceneLayer& BlockingGraphicLayer::removeTile(quint16 x, quint16 y)
     }
     return *this;
 }*/
+
+void BlockingGraphicLayer::setSelected()
+{
+    MapSceneLayer::setSelected();
+    emit layerSelected(this);
+}
 
 void BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
 {

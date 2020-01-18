@@ -13,6 +13,16 @@ void DrawingTool::emitDrawingToolSelected()
     emit drawingToolSelected(this);
 }
 
+void DrawingTool::onSelected()
+{
+    /* default : do nothing */
+}
+
+void DrawingTool::onUnselected()
+{
+    /* default : do nothing */
+}
+
 void DrawingTool::setSelected(bool selected)
 {
     if (selected) {

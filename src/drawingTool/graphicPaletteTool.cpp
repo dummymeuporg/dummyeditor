@@ -78,8 +78,8 @@ void GraphicPaletteTool::paletteMouseMoveEvent(
     // extend the rectangle to catch the complete border tiles
     realRect.setLeft(realRect.left() - (realRect.left() % CELL_W));
     realRect.setTop(realRect.top() - (realRect.top() % CELL_H));
-    realRect.setRight(((realRect.right() / CELL_W) + 1) * CELL_W);
-    realRect.setBottom(((realRect.bottom() / CELL_H) + 1) * CELL_H);
+    realRect.setRight(((realRect.right() / CELL_W) + 1) * CELL_W - 1);
+    realRect.setBottom(((realRect.bottom() / CELL_H) + 1) * CELL_H - 1);
 
     setSelection(realRect, m_chipsetGraphicsScene->chipset()->pixmap());
     m_selectionRectItem = m_chipsetGraphicsScene->addRect(m_rectSelection);
@@ -116,7 +116,5 @@ void GraphicPaletteTool::onUnselected()
         m_selectionItem = nullptr;
     }
 }
-
-void GraphicPaletteTool::onSelected() {}
 
 } // namespace DrawingTools

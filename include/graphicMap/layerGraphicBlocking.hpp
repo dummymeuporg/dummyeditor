@@ -18,8 +18,9 @@ class BlockingSquareItem;
 //  BlockingGraphicLayer class
 //////////////////////////////////////////////////////////////////////////////
 
-class BlockingGraphicLayer : public GraphicLayer
+class BlockingGraphicLayer : public MapSceneLayer
 {
+    Q_OBJECT
 public:
     BlockingGraphicLayer(Editor::BlockingLayer&, MapGraphicsScene&, int zValue);
     ~BlockingGraphicLayer() override;
@@ -36,6 +37,12 @@ public:
 
     std::shared_ptr<LayerClipboard::Clipboard>
     getClipboardRegion(const QRect& clip) override;
+
+public slots:
+    void setSelected() override;
+
+signals:
+    void layerSelected(GraphicMap::BlockingGraphicLayer*);
 
 private:
     void erase(int, quint16, quint16);

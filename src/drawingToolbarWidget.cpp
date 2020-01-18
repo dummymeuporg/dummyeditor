@@ -2,14 +2,10 @@
 
 #include <QAction>
 #include <QActionGroup>
-#include <QDebug>
 #include <QHBoxLayout>
 
 #include "chipsetGraphicsScene.hpp"
-#include "drawingTool/blockingGeneralTool.hpp"
-#include "drawingTool/graphicPen.hpp"
-#include "drawingTool/graphicRectangle.hpp"
-#include "graphicMap/layerGraphic.hpp"
+#include "drawingTool/graphicPaletteTool.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
 
 DrawingToolBarWidget::DrawingToolBarWidget(::QWidget* parent)
@@ -24,149 +20,55 @@ DrawingToolBarWidget::DrawingToolBarWidget(::QWidget* parent)
 void DrawingToolBarWidget::clear()
 {
     m_toolbar->clear();
-
-    if (m_actionGrp != nullptr) {
-        delete m_actionGrp;
-        m_actionGrp = nullptr;
-    }
+    m_actions.clear();
 }
 
-void DrawingToolBarWidget::reset()
+void DrawingToolBarWidget::changeActiveLayer(
+    GraphicMap::MapGraphicsScene* mapScene, const ChipsetGraphicsScene* chipset,
+    std::vector<DrawingTools::DrawingTool*>& tools)
 {
+    // TODO check if previous layer is same type as new layer => don't unset +
+    // reset
+    mapScene->unsetDrawingTool();
     clear();
 
-    if (m_drawingTools == nullptr)
-        return;
+    m_actionGrp = std::unique_ptr<QActionGroup>(new QActionGroup(m_toolbar));
 
-    m_actionGrp = new QActionGroup(m_toolbar);
+    for (auto* tool : tools) {
+        std::unique_ptr<QAction> pAction(new QAction(this));
+        pAction->setIcon(tool->icon());
+        pAction->setText(tr("Tool"));
+        pAction->setCheckable(true);
+        m_actionGrp->addAction(pAction.get());
 
-    for (auto* tool : *m_drawingTools) {
-        auto* action = new QAction(this);
-        action->setIcon(tool->icon());
-        action->setText(tr("Tool"));
-        action->setCheckable(true);
-        m_actionGrp->addAction(action);
+        // connect action to tool
+        QObject::connect(pAction.get(), SIGNAL(triggered(bool)), //
+                         tool, SLOT(setSelected(bool)));
 
-        QObject::connect(action, SIGNAL(triggered(bool)), tool,
-                         SLOT(setSelected(bool)));
-
+        // connect tool to map
         QObject::connect(
             tool, SIGNAL(drawingToolSelected(::DrawingTools::DrawingTool*)),
-            m_mapScene, SLOT(setDrawingTool(::DrawingTools::DrawingTool*)));
+            mapScene, SLOT(setDrawingTool(::DrawingTools::DrawingTool*)));
 
-        tool->accept(*this);
+        // connect palette tool to chipset
+        auto* paletteTool =
+            dynamic_cast<DrawingTools::GraphicPaletteTool*>(tool);
+        if (paletteTool != nullptr) {
+            QObject::connect(
+                paletteTool,
+                SIGNAL(
+                    drawingToolSelected(::DrawingTools::GraphicPaletteTool*)),
+                chipset,
+                SLOT(setPaletteTool(::DrawingTools::GraphicPaletteTool*)));
+        }
+
+        m_actions.push_back(std::move(pAction));
     }
 
     m_toolbar->addActions(m_actionGrp->actions());
-}
 
-void DrawingToolBarWidget::onLayerSelected(
-    const GraphicMap::MapGraphicsScene* mapScene,
-    const ::ChipsetGraphicsScene* chipsetScene, GraphicMap::GraphicLayer& layer,
-    std::vector<DrawingTools::DrawingTool*>* drawingTools)
-{
-    m_mapScene             = mapScene;
-    m_chipsetGraphicsScene = chipsetScene;
-    m_drawingTools         = drawingTools;
-
-    layer.accept(*this);
-}
-
-void DrawingToolBarWidget::visitTool(DrawingTools::GraphicPen& pen)
-{
-    // XXX: connect the pen to the chipset scene.
-    // m_chipsetScene
-    qDebug() << "visitTool: connect tool.";
-    QObject::connect(
-        &pen, SIGNAL(drawingToolSelected(::DrawingTools::GraphicPaletteTool*)),
-        m_chipsetGraphicsScene,
-        SLOT(setPaletteTool(::DrawingTools::GraphicPaletteTool*)));
-}
-
-void DrawingToolBarWidget::visitTool(DrawingTools::GraphicRectangle& rectangle)
-{
-    qDebug() << "visitTool: connect tool.";
-    QObject::connect(
-        &rectangle,
-        SIGNAL(drawingToolSelected(::DrawingTools::GraphicPaletteTool*)),
-        m_chipsetGraphicsScene,
-        SLOT(setPaletteTool(::DrawingTools::GraphicPaletteTool*)));
-}
-
-void DrawingToolBarWidget::visitTool(DrawingTools::GraphicEraser&)
-{
-    // Nothing to do!
-}
-
-void DrawingToolBarWidget::visitTool(DrawingTools::BlockingPen&)
-{
-    // Nothing to do!
-}
-
-void DrawingToolBarWidget::visitTool(DrawingTools::BlockingEraser&)
-{
-    // Nothing to do!
-}
-
-void DrawingToolBarWidget::visitTool(DrawingTools::SelectionTool&)
-{
-    // Nothing to do!
-}
-
-void DrawingToolBarWidget::visitGraphicLayer(
-    GraphicMap::VisibleGraphicLayer& layer)
-{
-    DrawingTools::DrawingTool* tool = nullptr;
-
-    switch (m_state) {
-    case eToolBarState::Graphic:
-        tool = mapScene()->drawingTool();
-        if (nullptr != tool) {
-            // TODO: clean this
-            reinterpret_cast<DrawingTools::GraphicGeneralTool*>(tool)
-                ->setVisibleGraphicLayer(&layer);
-        }
-        break;
-
-    case eToolBarState::Blocking:
-    case eToolBarState::NoDrawing:
-    default: // keep default even if all values covereds wrong cast protection
-        reset();
-        setState(eToolBarState::Graphic);
-        break;
+    // Select first tool
+    if (m_actions.size() > 0) {
+        m_actions[0]->trigger();
     }
-}
-
-void DrawingToolBarWidget::visitGraphicLayer(
-    GraphicMap::BlockingGraphicLayer& layer)
-{
-    DrawingTools::DrawingTool* tool = nullptr;
-
-    switch (m_state) {
-    case eToolBarState::Blocking:
-        // TODO: clean this
-        tool = mapScene()->drawingTool();
-        if (nullptr != tool) {
-            reinterpret_cast<DrawingTools::BlockingGeneralTool*>(tool)
-                ->setBlockingGraphicLayer(&layer);
-        }
-        break;
-
-    case eToolBarState::Graphic:
-    case eToolBarState::NoDrawing:
-    default: // keep default even if all values covereds wrong cast protection
-        reset();
-        setState(eToolBarState::Blocking);
-        break;
-    }
-}
-
-void DrawingToolBarWidget::setState(eToolBarState state)
-{
-    m_state = state;
-}
-
-void DrawingToolBarWidget::setInitialState()
-{
-    setState(eToolBarState::NoDrawing);
 }

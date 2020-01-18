@@ -66,8 +66,6 @@ void GraphicPen::emitDrawingToolSelected()
     emit drawingToolSelected(this);
 }
 
-void GraphicPen::onSelected() {}
-
 void GraphicPen::onUnselected()
 {
     GraphicPaletteTool::onUnselected();
