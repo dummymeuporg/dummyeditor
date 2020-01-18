@@ -68,9 +68,9 @@ public slots:
     void on_actionCopy_triggered();
     void on_actionPaste_triggered();
     // manual connexions
-    void linkToolboxToLayer(GraphicMap::VisibleGraphicLayer*);
-    void linkToolboxToLayer(GraphicMap::BlockingGraphicLayer*);
-    void linkToolboxToLayer(GraphicMap::EventsGraphicLayer*);
+    void linkToolboxToLayer(const GraphicMap::VisibleGraphicLayer*);
+    void linkToolboxToLayer(const GraphicMap::BlockingGraphicLayer*);
+    void linkToolboxToLayer(const GraphicMap::EventsGraphicLayer*);
 
 private:
     void initializeScenes();

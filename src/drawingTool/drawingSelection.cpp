@@ -100,17 +100,18 @@ void SelectionTool::mapMouseReleaseEvent(QGraphicsSceneMouseEvent*)
 void SelectionTool::doCopy()
 {
     qDebug() << "Copy";
-    m_layers.clear();
+    m_copyClipboard.clear();
     QRect clip(m_startSelection, m_endSelection);
 
     // copy visible tiles
     for (const auto& pVisLayer : mapGraphScene().graphicLayers()) {
-        m_layers[pVisLayer.get()] = pVisLayer->getClipboardRegion(clip);
+        m_copyClipboard[pVisLayer.get()] = pVisLayer->getClipboardRegion(clip);
     }
 
     // copy blocking tiles
     for (const auto& pBlockLayer : mapGraphScene().blockingLayers()) {
-        m_layers[pBlockLayer.get()] = pBlockLayer->getClipboardRegion(clip);
+        m_copyClipboard[pBlockLayer.get()] =
+            pBlockLayer->getClipboardRegion(clip);
     }
 }
 
@@ -121,8 +122,8 @@ void SelectionTool::doCut()
 
 void SelectionTool::doPaste()
 {
-    qDebug() << "Paste\r\n layers count: " << m_layers.size() << "\r\n";
-    for (auto& [layer, clip] : m_layers) {
+    qDebug() << "Paste\r\n layers count: " << m_copyClipboard.size() << "\r\n";
+    for (auto& [layer, clip] : m_copyClipboard) {
         qDebug() << layer << "\r\n";
         clip->setTarget(m_startSelection);
         layer->accept(*clip);

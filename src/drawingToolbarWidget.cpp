@@ -2,19 +2,10 @@
 
 #include <QAction>
 #include <QActionGroup>
-#include <QDebug>
 #include <QHBoxLayout>
 
 #include "chipsetGraphicsScene.hpp"
-#include "drawingTool/blockingEraser.hpp"
-#include "drawingTool/blockingGeneralTool.hpp"
-#include "drawingTool/blockingPen.hpp"
-#include "drawingTool/drawingSelection.hpp"
-#include "drawingTool/graphicPen.hpp"
-#include "drawingTool/graphicRectangle.hpp"
-#include "graphicMap/layerGraphic.hpp"
-#include "graphicMap/layerGraphicBlocking.hpp"
-#include "graphicMap/layerGraphicVisible.hpp"
+#include "drawingTool/graphicPaletteTool.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
 
 DrawingToolBarWidget::DrawingToolBarWidget(::QWidget* parent)
@@ -29,70 +20,55 @@ DrawingToolBarWidget::DrawingToolBarWidget(::QWidget* parent)
 void DrawingToolBarWidget::clear()
 {
     m_toolbar->clear();
-    // Todo follow leaks of QActions?
-
-    if (m_actionGrp != nullptr) {
-        delete m_actionGrp;
-        m_actionGrp = nullptr;
-    }
+    m_actions.clear();
 }
 
-void DrawingToolBarWidget::reset()
+void DrawingToolBarWidget::changeActiveLayer(
+    GraphicMap::MapGraphicsScene* mapScene, const ChipsetGraphicsScene* chipset,
+    std::vector<DrawingTools::DrawingTool*>& tools)
 {
+    // TODO check if previous layer is same type as new layer => don't unset +
+    // reset
+    mapScene->unsetDrawingTool();
     clear();
 
-    if (m_currentTools == nullptr)
-        return;
+    m_actionGrp = std::unique_ptr<QActionGroup>(new QActionGroup(m_toolbar));
 
-    m_actionGrp = new QActionGroup(m_toolbar);
+    for (auto* tool : tools) {
+        std::unique_ptr<QAction> pAction(new QAction(this));
+        pAction->setIcon(tool->icon());
+        pAction->setText(tr("Tool"));
+        pAction->setCheckable(true);
+        m_actionGrp->addAction(pAction.get());
 
-    for (auto* tool : *m_currentTools) {
-        auto* action = new QAction(this);
-        action->setIcon(tool->icon());
-        action->setText(tr("Tool"));
-        action->setCheckable(true);
-        m_actionGrp->addAction(action);
+        // connect action to tool
+        QObject::connect(pAction.get(), SIGNAL(triggered(bool)), //
+                         tool, SLOT(setSelected(bool)));
 
-        QObject::connect(action, SIGNAL(triggered(bool)), tool,
-                         SLOT(setSelected(bool)));
-
+        // connect tool to map
         QObject::connect(
             tool, SIGNAL(drawingToolSelected(::DrawingTools::DrawingTool*)),
-            m_mapScene, SLOT(setDrawingTool(::DrawingTools::DrawingTool*)));
+            mapScene, SLOT(setDrawingTool(::DrawingTools::DrawingTool*)));
 
-        // TODO a more specific call to avoid this dynamic cast, but without the
-        // complexity of visitor pattern
-        // or connect to a more general slot
+        // connect palette tool to chipset
         auto* paletteTool =
             dynamic_cast<DrawingTools::GraphicPaletteTool*>(tool);
-
         if (paletteTool != nullptr) {
             QObject::connect(
                 paletteTool,
                 SIGNAL(
                     drawingToolSelected(::DrawingTools::GraphicPaletteTool*)),
-                m_chipsetGraphicsScene,
+                chipset,
                 SLOT(setPaletteTool(::DrawingTools::GraphicPaletteTool*)));
         }
+
+        m_actions.push_back(std::move(pAction));
     }
 
     m_toolbar->addActions(m_actionGrp->actions());
-}
 
-void DrawingToolBarWidget::changeActiveLayer(
-    GraphicMap::MapGraphicsScene* mapScene, const ChipsetGraphicsScene* chipset,
-    std::vector<DrawingTools::DrawingTool*>* tools)
-{
-    m_mapScene             = mapScene;
-    m_chipsetGraphicsScene = chipset;
-    m_currentTools         = tools;
-
-    mapScene->unsetDrawingTool();
-    reset();
-
-    // TODO check if previous layer is same type as new layer => don't unset +
-    // reset
-
-    // TODO select first tool (and not just mapScene->select, but the button in
-    // ui also need to be checked
+    // Select first tool
+    if (m_actions.size() > 0) {
+        m_actions[0]->trigger();
+    }
 }

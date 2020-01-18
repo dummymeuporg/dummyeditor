@@ -60,7 +60,7 @@ private:
     QPoint m_endSelection;
     std::map<GraphicMap::MapSceneLayer*,
              std::shared_ptr<LayerClipboard::Clipboard>>
-        m_layers;
+        m_copyClipboard;
 };
 
 } // namespace DrawingTools
