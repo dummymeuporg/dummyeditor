@@ -41,6 +41,7 @@ public:
     // GraphicLayerVisitor
     void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
     void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
+    void visitGraphicLayer(GraphicMap::EventsGraphicLayer&) override;
 
     void doCopy();
     void doCut();

@@ -25,8 +25,11 @@ class BlockingLayer;
 struct MapDocument;
 
 namespace GraphicMap {
+class VisibleGraphicLayer;
+class BlockingGraphicLayer;
+class EventsGraphicLayer;
 class MapSceneLayer;
-using GraphicLayers = std::vector<MapSceneLayer*>;
+using MapLayers = std::vector<MapSceneLayer*>;
 
 //////////////////////////////////////////////////////////////////////////////
 //  MapGraphicsScene class
@@ -43,7 +46,7 @@ public:
     const std::shared_ptr<MapDocument> mapDocument() const;
     DrawingTools::DrawingTool* drawingTool() const { return m_drawingTool; }
     const QRect& chipsetSelection() const { return m_chipsetSelection; }
-    const GraphicLayers& graphicLayers() const { return m_graphicLayers; }
+    const MapLayers& graphicLayers() const { return m_graphicLayers; }
 
     MapGraphicsScene&
     setMapDocument(const std::shared_ptr<MapDocument>& mapDocument);
@@ -82,7 +85,7 @@ private:
 
     DrawingTools::DrawingTool* m_drawingTool = nullptr;
 
-    GraphicLayers m_graphicLayers;
+    MapLayers m_graphicLayers;
     MapSceneLayer* m_currentGraphicLayer = nullptr;
 
     QVector<QGraphicsItem*> m_gridItems;

@@ -138,4 +138,9 @@ void SelectionTool::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer)
     mapGraphScene().redrawGrid();
 }
 
+void SelectionTool::visitGraphicLayer(GraphicMap::EventsGraphicLayer& layer)
+{
+    // nothing to do yet
+}
+
 } // namespace DrawingTools

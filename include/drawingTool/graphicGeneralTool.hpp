@@ -35,6 +35,7 @@ public:
     // Methods inherited from GraphicMap::GraphicLayerVisitor
     void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
     void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
+    void visitGraphicLayer(GraphicMap::EventsGraphicLayer&) override;
 
 signals:
     // Note: I have to put the whole namespace shit here, because Qt
