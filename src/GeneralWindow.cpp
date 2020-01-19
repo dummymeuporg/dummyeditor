@@ -113,6 +113,8 @@ void GeneralWindow::updateProjectView()
     m_ui->panels_tabs->setEnabled(thereIsAProject);
     m_ui->toolbar_gameTool->setEnabled(thereIsAProject);
     m_ui->toolbar_mapTools->setEnabled(thereIsAProject);
+    m_ui->actionSave->setEnabled(thereIsAProject);
+    m_ui->actionClose->setEnabled(thereIsAProject);
 
     // TODO update tabs content
     updateMapsList();
@@ -153,6 +155,10 @@ void GeneralWindow::on_actionNew_triggered()
     Editor::Project::create(projectDirectory);
 
     loadProject(projectDirectory);
+
+    //TODO: add the project name and the path to the output
+    if (nullptr != m_loadedProject)
+        qDebug() << "Project created" << endl;
 }
 
 void GeneralWindow::on_actionOpen_triggered()
@@ -171,13 +177,18 @@ void GeneralWindow::on_actionOpen_triggered()
     // Open new
     loadProject(projectDirectory);
 
-    //TODO: add the project name and the path to the output
+    //TODO: add project name
     if (nullptr != m_loadedProject)
-        qDebug() << "Project created" << endl;
+        qDebug() << "Project loaded" << endl;
+
 }
 
 void GeneralWindow::on_actionSave_triggered()
 {
+
+    if (nullptr == m_loadedProject)
+        return;
+
     //Save current project
     m_loadedProject->saveProject();
 
@@ -188,6 +199,9 @@ void GeneralWindow::on_actionSave_triggered()
 
 void GeneralWindow::on_actionClose_triggered()
 {
+    if (nullptr == m_loadedProject)
+        return;
+
     bool closingAccepted = closeProject();
 
     if (closingAccepted)
