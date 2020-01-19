@@ -1,33 +1,34 @@
 #ifndef EDITORPROJECT_H
 #define EDITORPROJECT_H
 
+#include <QDomDocument>
+#include <QMap>
 #include <memory>
 
-#include <QDomDocument>
-
 #include <dummy/local/project.hpp>
-
-#include "mapsTreeModel.hpp"
 
 //////////////////////////////////////////////////////////////////////////////
 //  forward declaration
 //////////////////////////////////////////////////////////////////////////////
 
 struct MapDocument;
+class QStandardItem;
+class MapsTreeModel;
 
 namespace Editor {
 class StartingPoint;
 
 //////////////////////////////////////////////////////////////////////////////
-//  Errors
-//////////////////////////////////////////////////////////////////////////////
-
-class ProjectError : public std::exception
-{};
-
-//////////////////////////////////////////////////////////////////////////////
 //  Project class
 //////////////////////////////////////////////////////////////////////////////
+struct tMapInfo
+{
+    std::string m_mapName;
+    std::string m_chispetPath;
+    std::string m_musicPath;
+    uint16_t m_width  = 0;
+    uint16_t m_height = 0;
+};
 
 class Project
 {
@@ -45,9 +46,11 @@ public:
     void setModified(bool isModified) { m_isModified = isModified; }
     void setStartingPoint(const StartingPoint&);
 
+    // Utils
     void saveProject();
     static void create(const QString&);
     static void cleanMapName(QString& mapName);
+    void createMap(const tMapInfo& mapInfo, QStandardItem& parent);
 
 private:
     void dumpToXmlNode(QDomDocument& document, QDomElement& xmlNode,

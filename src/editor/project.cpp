@@ -5,10 +5,13 @@
 #include <QDebug>
 #include <QDir>
 
+#include "editor/layerBlocking.hpp"
+#include "editor/layerEvents.hpp"
+#include "editor/layerGraphic.hpp"
 #include "editor/map.hpp"
 #include "editor/startingPoint.hpp"
 #include "mapDocument.hpp"
-#include "mapsTreeModel.hpp"
+#include "mapsTree.hpp"
 
 namespace Editor {
 
@@ -163,6 +166,40 @@ void Project::cleanMapName(QString& mapName)
     mapName.replace("\\", "");
     mapName.replace("/", "");
     mapName.replace("..", "");
+}
+
+void Project::createMap(const tMapInfo& mapInfo, QStandardItem& parent)
+{
+    if (m_mapsModel == nullptr)
+        return;
+
+    const uint16_t w      = mapInfo.m_width;
+    const uint16_t h      = mapInfo.m_height;
+    const QString mapName = QString::fromStdString(mapInfo.m_mapName);
+
+    auto map = std::make_shared<Editor::Map>(coreProject(), mapInfo.m_mapName);
+    map->setChipset(mapInfo.m_chispetPath);
+    map->setMusic(mapInfo.m_musicPath);
+    map->reset(w, h);
+
+    // For now, create one floor with four layers.
+    // The layers will have for position :
+    // -1 (the lowest one)
+    // 0 (the one juste below the character)
+    // 1 (the one juste above the character)
+    // 2 (another one above)
+    Dummy::Local::Floor floor(*map);
+    floor.addGraphicLayer(-1, Dummy::Core::GraphicLayer(w, h));
+    floor.addGraphicLayer(0, Dummy::Core::GraphicLayer(w, h));
+    floor.addGraphicLayer(1, Dummy::Core::GraphicLayer(w, h));
+    floor.addGraphicLayer(2, Dummy::Core::GraphicLayer(w, h));
+
+    map->addFloor(std::make_unique<Editor::Floor>(floor));
+    map->resize(w, h);
+
+    // Add the new map into the tree.
+    QList<QStandardItem*> mapRow {new QStandardItem(mapName)};
+    parent.appendRow(mapRow);
 }
 
 std::shared_ptr<MapDocument> Project::document(const QString& mapName)

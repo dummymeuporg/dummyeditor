@@ -1,5 +1,5 @@
 #include "GeneralWindow.hpp"
-#include "mainWindow.hpp"
+#include "legacy/mainWindow.hpp"
 #include <QApplication>
 
 int main(int argc, char* argv[])

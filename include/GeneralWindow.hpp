@@ -27,18 +27,22 @@ class GeneralWindow : public QMainWindow
 
 public:
     explicit GeneralWindow(QWidget* parent = nullptr);
-    ~GeneralWindow();
+    virtual ~GeneralWindow() override;
+
+public:
+    bool loadProject(const QString& path);
+    bool closeProject();
 
 private slots:
     void on_actionOpen_triggered();
 
 private:
-    bool loadProject(const QString& path);
-    bool closeProject();
+    void closeEvent(QCloseEvent* event) override;
     void updateProjectView();
+    void updateMapsList();
 
     Ui::GeneralWindow* m_ui;
-    std::unique_ptr<Editor::Project> m_loadedProject;
+    std::shared_ptr<Editor::Project> m_loadedProject;
 };
 
 #endif // GENERALWINDOW_H

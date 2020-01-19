@@ -961,7 +961,7 @@
   <customwidget>
    <class>MapsTreeView</class>
    <extends>QTreeView</extends>
-   <header>mapsTreeView.hpp</header>
+   <header>mapsTree.hpp</header>
   </customwidget>
   <customwidget>
    <class>MapFloorsList::FloorListWidget</class>

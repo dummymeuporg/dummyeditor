@@ -1,6 +1,7 @@
 #include "GeneralWindow.hpp"
 #include "ui_GeneralWindow.h"
 
+#include <QCloseEvent>
 #include <QDir>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -22,6 +23,10 @@ GeneralWindow::GeneralWindow(QWidget* parent)
 
     // Set default view state
     updateProjectView();
+
+    // connect ui items
+    connect(m_ui->btnNewMap, SIGNAL(clicked()), m_ui->mapList,
+            SLOT(addMapAtRoot()));
 }
 
 GeneralWindow::~GeneralWindow()
@@ -31,18 +36,28 @@ GeneralWindow::~GeneralWindow()
 
 //////////////////////////////////////////////////////////////////////////////
 
+void GeneralWindow::closeEvent(QCloseEvent* event)
+{
+    bool closingAccepted = closeProject();
+
+    if (closingAccepted)
+        event->accept();
+    else
+        event->ignore();
+}
+
 bool GeneralWindow::loadProject(const QString& path)
 {
     // Create a new project
     std::string strPath = QDir::cleanPath(path).toStdString();
-    auto newProject     = std::unique_ptr<Project>(new Project(strPath));
+    auto newProject     = std::make_shared<Project>(strPath);
 
     // Check if has been successfully loaded
     // TODO add a "isLoaded" method to check loading errors
     // if not loaded, return false here
 
     // Use this new project
-    m_loadedProject = std::move(newProject);
+    m_loadedProject = newProject;
 
     // Update the view
     updateProjectView();
@@ -88,7 +103,18 @@ void GeneralWindow::updateProjectView()
     m_ui->toolbar_mapTools->setEnabled(thereIsAProject);
 
     // TODO update tabs content
+    updateMapsList();
+
     // TODO update usable actions
+}
+
+void GeneralWindow::updateMapsList()
+{
+    if (m_loadedProject == nullptr) {
+        m_ui->mapList->clear();
+    } else {
+        m_ui->mapList->setProject(m_loadedProject);
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////

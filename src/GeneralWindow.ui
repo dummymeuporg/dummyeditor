@@ -10,6 +10,9 @@
     <height>756</height>
    </rect>
   </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::CustomContextMenu</enum>
+  </property>
   <property name="windowTitle">
    <string>Dummy Editor</string>
   </property>
@@ -95,14 +98,32 @@
              </attribute>
              <layout class="QVBoxLayout" name="verticalLayout_2">
               <item>
-               <widget class="QListWidget" name="map_list">
+               <widget class="MapsTreeView" name="mapList">
+                <property name="contextMenuPolicy">
+                 <enum>Qt::CustomContextMenu</enum>
+                </property>
                 <property name="frameShape">
                  <enum>QFrame::NoFrame</enum>
                 </property>
+                <property name="editTriggers">
+                 <set>QAbstractItemView::NoEditTriggers</set>
+                </property>
+                <property name="dragEnabled">
+                 <bool>true</bool>
+                </property>
+                <property name="dragDropMode">
+                 <enum>QAbstractItemView::InternalMove</enum>
+                </property>
+                <property name="expandsOnDoubleClick">
+                 <bool>false</bool>
+                </property>
+                <attribute name="headerVisible">
+                 <bool>false</bool>
+                </attribute>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="btn_new_map">
+               <widget class="QPushButton" name="btnNewMap">
                 <property name="text">
                  <string>New map...</string>
                 </property>
@@ -133,14 +154,14 @@
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout">
                 <item>
-                 <widget class="QPushButton" name="btn_new_floor">
+                 <widget class="QPushButton" name="btnNewFloor">
                   <property name="text">
                    <string>New Floor</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="btn_new_layer">
+                 <widget class="QPushButton" name="btnNewLayer">
                   <property name="text">
                    <string>New Layer</string>
                   </property>
@@ -365,6 +386,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MapsTreeView</class>
+   <extends>QTreeView</extends>
+   <header>mapsTree.hpp</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../icons.qrc"/>
  </resources>

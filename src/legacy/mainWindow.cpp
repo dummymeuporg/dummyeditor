@@ -1,4 +1,4 @@
-#include "mainWindow.hpp"
+#include "legacy/mainWindow.hpp"
 
 #include <filesystem>
 
@@ -13,6 +13,7 @@
 #include "drawingTool/blockingPen.hpp"
 #include "drawingTool/drawingSelection.hpp"
 #include "editor/map.hpp"
+#include "editor/project.hpp"
 
 #include "graphicMap/layerGraphicBlocking.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
