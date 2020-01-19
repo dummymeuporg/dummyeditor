@@ -32,5 +32,6 @@
         <file>icons/Cut_icon.png</file>
         <file>icons/Redo_icon.png</file>
         <file>icons/Undo_icon.png</file>
+        <file>icons/close_icon_red.png</file>
     </qresource>
 </RCC>

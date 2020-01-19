@@ -5,6 +5,7 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QDebug>
 
 #include "editor/project.hpp"
 
@@ -24,9 +25,20 @@ GeneralWindow::GeneralWindow(QWidget* parent)
     // Set default view state
     updateProjectView();
 
-    // connect ui items
-    connect(m_ui->btnNewMap, SIGNAL(clicked()), m_ui->mapList,
-            SLOT(addMapAtRoot()));
+    // UI items connections and shortcuts
+    connect(m_ui->btnNewMap, SIGNAL(clicked()), m_ui->mapList,SLOT(addMapAtRoot()));
+
+    m_ui->actionNew->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_N));
+    m_ui->actionNew->setShortcutContext(Qt::ApplicationShortcut);
+
+    m_ui->actionOpen->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_O));
+    m_ui->actionOpen->setShortcutContext(Qt::ApplicationShortcut);
+
+    m_ui->actionSave->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
+    m_ui->actionSave->setShortcutContext(Qt::ApplicationShortcut);
+
+    m_ui->actionClose->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
+    m_ui->actionClose->setShortcutContext(Qt::ApplicationShortcut);
 }
 
 GeneralWindow::~GeneralWindow()
@@ -134,4 +146,28 @@ void GeneralWindow::on_actionOpen_triggered()
 
     // Open new
     loadProject(projectDirectory);
+
+    //TODO: add the project name and the path to the output
+    if (nullptr != m_loadedProject)
+        qDebug() << "Project created" << endl;
+}
+
+void GeneralWindow::on_actionSave_triggered()
+{
+    //Save current project
+    m_loadedProject->saveProject();
+
+    //TODO: create a way to check the save action and get this info to condition the output info
+    qDebug() << "Project saved" << endl;
+
+}
+
+void GeneralWindow::on_actionClose_triggered()
+{
+    bool closingAccepted = closeProject();
+
+    if (closingAccepted)
+        qDebug() << "Project closed" << endl;
+    else
+        qDebug() << "Closing canceled" << endl;
 }

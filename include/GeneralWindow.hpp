@@ -35,6 +35,8 @@ public:
 
 private slots:
     void on_actionOpen_triggered();
+    void on_actionSave_triggered();
+    void on_actionClose_triggered();
 
 private:
     void closeEvent(QCloseEvent* event) override;

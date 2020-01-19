@@ -269,7 +269,7 @@
      <x>0</x>
      <y>0</y>
      <width>1084</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -293,6 +293,8 @@
    </attribute>
    <addaction name="actionNew"/>
    <addaction name="actionOpen"/>
+   <addaction name="actionSave"/>
+   <addaction name="actionClose"/>
   </widget>
   <widget class="QToolBar" name="toolbar_mapTools">
    <property name="windowTitle">
@@ -371,6 +373,30 @@
    </property>
    <property name="text">
     <string>Open project</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="icon">
+    <iconset>
+     <normaloff>../icons/save_Icon.png</normaloff>../icons/save_Icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save Project</string>
+   </property>
+   <property name="toolTip">
+    <string>Save the project</string>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="icon">
+    <iconset>
+     <normaloff>../icons/close_icon_red.png</normaloff>../icons/close_icon_red.png</iconset>
+   </property>
+   <property name="text">
+    <string>Close porject</string>
+   </property>
+   <property name="toolTip">
+    <string>Close the project</string>
    </property>
   </action>
  </widget>

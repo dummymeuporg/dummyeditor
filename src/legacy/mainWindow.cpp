@@ -91,32 +91,32 @@ MainWindow_Old::MainWindow_Old(QWidget* parent)
      ******************************************************/
 
     connect(m_ui->actionQuit, SIGNAL(triggered()), this, SLOT(close()));
-    m_ui->actionQuit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
-    m_ui->actionQuit->setShortcutContext(Qt::ApplicationShortcut);
+    //m_ui->actionQuit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
+    //m_ui->actionQuit->setShortcutContext(Qt::ApplicationShortcut);
 
-    m_ui->actionNew->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_N));
-    m_ui->actionNew->setShortcutContext(Qt::ApplicationShortcut);
+    //m_ui->actionNew->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_N));
+    //m_ui->actionNew->setShortcutContext(Qt::ApplicationShortcut);
 
-    m_ui->actionOpen->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_O));
-    m_ui->actionOpen->setShortcutContext(Qt::ApplicationShortcut);
+    //m_ui->actionOpen->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_O));
+    //m_ui->actionOpen->setShortcutContext(Qt::ApplicationShortcut);
 
-    m_ui->actionSave->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
-    m_ui->actionSave->setShortcutContext(Qt::ApplicationShortcut);
+    //m_ui->actionSave->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
+    //m_ui->actionSave->setShortcutContext(Qt::ApplicationShortcut);
 
-    m_ui->actionUndo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
-    m_ui->actionUndo->setShortcutContext(Qt::ApplicationShortcut);
+    //m_ui->actionUndo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
+    //m_ui->actionUndo->setShortcutContext(Qt::ApplicationShortcut);
 
-    m_ui->actionRedo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y));
-    m_ui->actionRedo->setShortcutContext(Qt::ApplicationShortcut);
+    //m_ui->actionRedo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y));
+    //m_ui->actionRedo->setShortcutContext(Qt::ApplicationShortcut);
 
-    m_ui->actionCut->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_X));
-    m_ui->actionCut->setShortcutContext(Qt::WindowShortcut);
+    //m_ui->actionCut->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_X));
+    //m_ui->actionCut->setShortcutContext(Qt::WindowShortcut);
 
-    m_ui->actionCopy->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_C));
-    m_ui->actionCopy->setShortcutContext(Qt::WindowShortcut);
+    //m_ui->actionCopy->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_C));
+    //m_ui->actionCopy->setShortcutContext(Qt::WindowShortcut);
 
-    m_ui->actionPaste->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_V));
-    m_ui->actionPaste->setShortcutContext(Qt::WindowShortcut);
+    //m_ui->actionPaste->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_V));
+    //m_ui->actionPaste->setShortcutContext(Qt::WindowShortcut);
 }
 
 MainWindow_Old::~MainWindow_Old()
