@@ -267,7 +267,7 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionNew_project"/>
+    <addaction name="actionNew"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
@@ -282,8 +282,8 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionNew_project"/>
-   <addaction name="actionUndo"/>
+   <addaction name="actionNew"/>
+   <addaction name="actionOpen"/>
   </widget>
   <widget class="QToolBar" name="toolbar_mapTools">
    <property name="windowTitle">
@@ -310,7 +310,7 @@
    </attribute>
    <addaction name="actionPlay"/>
   </widget>
-  <action name="actionNew_project">
+  <action name="actionNew">
    <property name="icon">
     <iconset resource="../icons.qrc">
      <normaloff>:/icons/newProject_Icon.png</normaloff>:/icons/newProject_Icon.png</iconset>
@@ -353,6 +353,15 @@
    </property>
    <property name="text">
     <string>Play</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="icon">
+    <iconset resource="../icons.qrc">
+     <normaloff>:/icons/openProject_Icon.png</normaloff>:/icons/openProject_Icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open project</string>
    </property>
   </action>
  </widget>
