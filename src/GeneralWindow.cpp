@@ -131,6 +131,30 @@ void GeneralWindow::updateMapsList()
 
 //////////////////////////////////////////////////////////////////////////////
 
+void GeneralWindow::on_actionNew_triggered()
+{
+    bool closingAccepted=false;
+    if (nullptr != m_loadedProject){
+        closingAccepted = closeProject();
+        if (closingAccepted)
+            qDebug() << "Project closed" << endl;
+        else
+            return;
+    }
+
+    // Open a file dialog to select a folder
+    QString projectDirectory = QFileDialog::getExistingDirectory(
+        this, tr("Choose your project directory"));
+
+    if (projectDirectory == "")
+        return;
+
+    // Initialize a project into this directory
+    Editor::Project::create(projectDirectory);
+
+    loadProject(projectDirectory);
+}
+
 void GeneralWindow::on_actionOpen_triggered()
 {
     // Close current project
