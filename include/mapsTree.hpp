@@ -17,7 +17,8 @@ class Project;
 }
 namespace Editor {
 class Project;
-}
+class Map;
+} // namespace Editor
 class QDomNode;
 class MapEditDialog;
 
@@ -44,7 +45,8 @@ public slots:
     void showContextMenu(const QPoint&);
 
     void addMapAtRoot();
-    void createNewMap(int dlgButton);
+    void createMap(int dlgButton);
+    void editMap(int dlgButton);
 
 signals:
     void chipsetMapChanged(QString);
@@ -57,6 +59,7 @@ private:
     MapEditDialog* m_newMapDialog = nullptr;
     MapEditDialog* m_editDialog   = nullptr;
     QModelIndex m_selectedIndex;
+    std::shared_ptr<Editor::Map> m_editedMap;
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -75,4 +78,4 @@ private:
     void XmlMapToQItem(const QDomNode& mapsNode, QStandardItem* parent);
 };
 
-#endif // MAPSTREEVIEW_H
+#endif // MAPSTREE_H

@@ -1,7 +1,6 @@
 #include "mapsTree.hpp"
 
 #include <QAction>
-#include <QDebug>
 #include <QDomNode>
 #include <QTreeWidgetItem>
 
@@ -30,11 +29,9 @@ MapsTreeView::MapsTreeView(QWidget* parent)
     m_mapMenu->setEnabled(false);
 
     // connect new map dialog
-    connect(m_newMapDialog, SIGNAL(finished(int)), this,
-            SLOT(createNewMap(int)));
+    connect(m_newMapDialog, SIGNAL(finished(int)), this, SLOT(createMap(int)));
     // connect edit dialog
-    // connect(m_editDialog, SIGNAL(finished(int)), this,
-    // SLOT(dialogIsFinished(int)));
+    connect(m_editDialog, SIGNAL(finished(int)), this, SLOT(editMap(int)));
 }
 
 void MapsTreeView::setProject(std::shared_ptr<Editor::Project> project)
@@ -82,7 +79,7 @@ void MapsTreeView::addMapAtRoot()
     showNewMapDlg();
 }
 
-void MapsTreeView::createNewMap(int result)
+void MapsTreeView::createMap(int result)
 {
     if (result != QDialog::Accepted)
         return;
@@ -111,42 +108,41 @@ void MapsTreeView::createNewMap(int result)
     expand(m_selectedIndex);
 }
 
+void MapsTreeView::editMap(int result)
+{
+    if (result != QDialog::Accepted)
+        return;
+
+    // TODO changing the name has influence on its map<name;mapDoc> in
+    // project... so it's harder, but should be possible
+
+    std::string strChipset = m_editDialog->getChipset().toStdString();
+    if (strChipset != m_editedMap->chipset()) {
+        emit chipsetMapChanged(QString::fromStdString(
+            (m_project->coreProject().projectPath() / "chipsets" / strChipset)
+                .string()));
+        m_editedMap->setChipset(strChipset);
+    }
+    m_editedMap->setMusic(m_editDialog->getMusic().toStdString());
+
+    quint16 width  = m_editDialog->getWidth();
+    quint16 height = m_editDialog->getHeight();
+
+    if (width != m_editedMap->width() || height != m_editedMap->height()) {
+        m_editedMap->resize(width, height);
+    }
+}
+
 void MapsTreeView::showEditDlg()
 {
-    // TODO move that "logical" part to a logical class instead of here
     const QStandardItem* item =
         m_project->mapsModel()->itemFromIndex(m_selectedIndex);
+    auto mapDocument = m_project->document(item->text());
 
-    std::shared_ptr<MapDocument> mapDocument(m_project->document(item->text()));
-    auto map(mapDocument->m_map);
-    // XXX fix this:
+    m_editedMap = mapDocument->m_map;
 
-    MapEditDialog dlg;
-    dlg.setup(*m_project, mapDocument);
-
-    dlg.exec();
-    if (dlg.result() == QDialog::Accepted) {
-        QString dlgChipset = dlg.getChipset();
-        if (dlgChipset.toStdString() != map->chipset()) {
-            emit chipsetMapChanged(
-                QString((m_project->coreProject().projectPath() / "chipsets"
-                         / dlgChipset.toStdString())
-                            .string()
-                            .c_str()));
-        }
-        map->setChipset(dlg.getChipset().toStdString());
-        map->setMusic(dlg.getMusic().toStdString());
-
-        quint16 width  = dlg.getWidth();
-        quint16 height = dlg.getHeight();
-
-        if (width != map->width() || height != map->height()) {
-            qDebug() << "Resize to " << width << ", " << height;
-            map->resize(width, height);
-        }
-
-        // map->save();
-    }
+    m_editDialog->setup(*m_project, mapDocument);
+    m_editDialog->open();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

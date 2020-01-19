@@ -119,58 +119,10 @@
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="layer_list_tab">
+            <widget class="MapFloorsList::FloorListWidget" name="layer_list_tab">
              <attribute name="title">
               <string>Layers</string>
              </attribute>
-             <layout class="QVBoxLayout" name="verticalLayout_3">
-              <item>
-               <widget class="QTreeWidget" name="treeWidget">
-                <property name="frameShape">
-                 <enum>QFrame::NoFrame</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Plain</enum>
-                </property>
-                <column>
-                 <property name="text">
-                  <string notr="true">1</string>
-                 </property>
-                </column>
-               </widget>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout">
-                <item>
-                 <widget class="QPushButton" name="btnNewFloor">
-                  <property name="text">
-                   <string>New Floor</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="btnNewLayer">
-                  <property name="text">
-                   <string>New Layer</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-               </layout>
-              </item>
-             </layout>
             </widget>
            </widget>
            <widget class="QFrame" name="chipsets_panel">
@@ -204,7 +156,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QGraphicsView" name="graphicsView"/>
+              <widget class="QGraphicsView" name="graphicsViewChipset"/>
              </item>
             </layout>
            </widget>
@@ -227,7 +179,7 @@
              <number>1</number>
             </property>
             <item>
-             <widget class="QGraphicsView" name="graphicsView_2">
+             <widget class="QGraphicsView" name="graphicsViewMap">
               <property name="enabled">
                <bool>true</bool>
               </property>
@@ -269,7 +221,7 @@
      <x>0</x>
      <y>0</y>
      <width>1084</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -405,6 +357,12 @@
    <class>MapsTreeView</class>
    <extends>QTreeView</extends>
    <header>mapsTree.hpp</header>
+  </customwidget>
+  <customwidget>
+   <class>MapFloorsList::FloorListWidget</class>
+   <extends>QWidget</extends>
+   <header>widget_mapFloorsList/widget.hpp</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>
