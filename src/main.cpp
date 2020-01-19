@@ -6,14 +6,19 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    bool useLegacy = false;
+    bool useLegacy = true;
+    bool useNew    = true;
+
+    MainWindow_Old mainwindowL;
+    GeneralWindow mainWindow;
+
     if (useLegacy) {
-        MainWindow_Old mainwindow;
-        mainwindow.show();
-        return app.exec();
-    } else {
-        GeneralWindow mainWindow;
-        mainWindow.show();
-        return app.exec();
+        mainwindowL.show();
     }
+
+    if (useNew) {
+        mainWindow.show();
+    }
+
+    return app.exec();
 }

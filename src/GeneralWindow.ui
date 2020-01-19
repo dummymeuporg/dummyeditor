@@ -45,7 +45,7 @@
        <bool>false</bool>
       </property>
       <property name="tabBarAutoHide">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
       <widget class="QWidget" name="tab_map">
        <property name="enabled">
@@ -82,22 +82,89 @@
            <property name="orientation">
             <enum>Qt::Vertical</enum>
            </property>
-           <widget class="QTabWidget" name="tabWidget">
+           <widget class="QTabWidget" name="maps_panel">
+            <property name="tabPosition">
+             <enum>QTabWidget::West</enum>
+            </property>
             <property name="currentIndex">
              <number>0</number>
             </property>
-            <widget class="QWidget" name="map_list">
+            <widget class="QWidget" name="map_list_tab">
              <attribute name="title">
               <string>Maps</string>
              </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_2">
+              <item>
+               <widget class="QListWidget" name="map_list">
+                <property name="frameShape">
+                 <enum>QFrame::NoFrame</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_new_map">
+                <property name="text">
+                 <string>New map...</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
-            <widget class="QWidget" name="layer_list">
+            <widget class="QWidget" name="layer_list_tab">
              <attribute name="title">
               <string>Layers</string>
              </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_3">
+              <item>
+               <widget class="QTreeWidget" name="treeWidget">
+                <property name="frameShape">
+                 <enum>QFrame::NoFrame</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Plain</enum>
+                </property>
+                <column>
+                 <property name="text">
+                  <string notr="true">1</string>
+                 </property>
+                </column>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout">
+                <item>
+                 <widget class="QPushButton" name="btn_new_floor">
+                  <property name="text">
+                   <string>New Floor</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btn_new_layer">
+                  <property name="text">
+                   <string>New Layer</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </item>
+             </layout>
             </widget>
            </widget>
-           <widget class="QFrame" name="frame">
+           <widget class="QFrame" name="chipsets_panel">
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
@@ -171,6 +238,16 @@
       <widget class="QWidget" name="tab_object">
        <attribute name="title">
         <string>Objects</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab_monsters">
+       <attribute name="title">
+        <string>Monsters</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab_magic">
+       <attribute name="title">
+        <string>Magic</string>
        </attribute>
       </widget>
      </widget>
