@@ -35,20 +35,8 @@
     </property>
     <item>
      <widget class="QTabWidget" name="panels_tabs">
-      <property name="currentIndex">
-       <number>0</number>
-      </property>
-      <property name="usesScrollButtons">
-       <bool>true</bool>
-      </property>
       <property name="documentMode">
        <bool>true</bool>
-      </property>
-      <property name="tabsClosable">
-       <bool>false</bool>
-      </property>
-      <property name="tabBarAutoHide">
-       <bool>false</bool>
       </property>
       <widget class="QWidget" name="tab_map">
        <property name="enabled">
