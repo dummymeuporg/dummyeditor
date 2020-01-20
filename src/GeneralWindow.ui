@@ -35,6 +35,9 @@
     </property>
     <item>
      <widget class="QTabWidget" name="panels_tabs">
+      <property name="currentIndex">
+       <number>6</number>
+      </property>
       <property name="documentMode">
        <bool>true</bool>
       </property>
@@ -211,6 +214,16 @@
         <string>Magic</string>
        </attribute>
       </widget>
+      <widget class="QWidget" name="tab_fights">
+       <attribute name="title">
+        <string>Fight Scenes</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab_cinematics">
+       <attribute name="title">
+        <string>Cinematics</string>
+       </attribute>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -221,7 +234,7 @@
      <x>0</x>
      <y>0</y>
      <width>1084</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
