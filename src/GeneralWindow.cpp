@@ -8,8 +8,11 @@
 #include <QMessageBox>
 
 #include "chipsetGraphicsScene.hpp"
+#include "definitions.hpp"
+#include "editor/map.hpp"
 #include "editor/project.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
+#include "mapDocument.hpp"
 
 using Editor::Project;
 
@@ -22,8 +25,13 @@ GeneralWindow::GeneralWindow(QWidget* parent)
     , m_mapScene(new GraphicMap::MapGraphicsScene)
 {
     m_ui->setupUi(this);
+
     m_ui->graphicsViewChipset->setScene(m_chipsetScene.get());
+    m_ui->graphicsViewChipset->scale(2.0, 2.0);
+
     m_ui->graphicsViewMap->setScene(m_mapScene.get());
+    m_ui->graphicsViewMap->scale(2.0, 2.0);
+    m_ui->graphicsViewMap->setBackgroundBrush(QColor(150, 150, 150));
 
     // Set default sizes of movable splitters between panels
     m_ui->splitter_map->setSizes({width() / 4, width() - (width() / 4)});
@@ -33,7 +41,7 @@ GeneralWindow::GeneralWindow(QWidget* parent)
     updateProjectView();
 
     // UI items connections and shortcuts
-    connect(m_ui->btnNewMap, SIGNAL(clicked()), m_ui->mapList,
+    connect(m_ui->btnNewMap, SIGNAL(clicked()), m_ui->mapsList,
             SLOT(addMapAtRoot()));
 
     m_ui->actionNew->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_N));
@@ -49,9 +57,9 @@ GeneralWindow::GeneralWindow(QWidget* parent)
     m_ui->actionClose->setShortcutContext(Qt::ApplicationShortcut);
 
     // connect ui items
-    connect(m_ui->btnNewMap, SIGNAL(clicked()), m_ui->mapList,
+    connect(m_ui->btnNewMap, SIGNAL(clicked()), m_ui->mapsList,
             SLOT(addMapAtRoot()));
-    connect(m_ui->mapList, SIGNAL(chipsetMapChanged(QString)),
+    connect(m_ui->mapsList, SIGNAL(chipsetMapChanged(QString)),
             m_chipsetScene.get(), SLOT(changeChipset(QString)));
 }
 
@@ -143,9 +151,9 @@ void GeneralWindow::updateProjectView()
 void GeneralWindow::updateMapsList()
 {
     if (m_loadedProject == nullptr) {
-        m_ui->mapList->clear();
+        m_ui->mapsList->clear();
     } else {
-        m_ui->mapList->setProject(m_loadedProject);
+        m_ui->mapsList->setProject(m_loadedProject);
     }
 }
 
@@ -188,7 +196,7 @@ void GeneralWindow::on_actionOpen_triggered()
         return;
 
     // Open new
-    bool projectOpened = loadProject(projectDirectory);
+    loadProject(projectDirectory);
 }
 
 void GeneralWindow::on_actionSave_triggered()
@@ -207,4 +215,31 @@ void GeneralWindow::on_actionSave_triggered()
 void GeneralWindow::on_actionClose_triggered()
 {
     closeProject();
+}
+
+void GeneralWindow::on_mapsList_doubleClicked(const QModelIndex& selectedIndex)
+{
+    // fetch map data
+    const MapsTreeModel* mapModel = m_loadedProject->mapsModel();
+    QString mapName = mapModel->itemFromIndex(selectedIndex)->text();
+    std::shared_ptr<Editor::Map> map(m_loadedProject->document(mapName)->m_map);
+
+    // update chipset scene
+    QString chipsetPath =
+        QString::fromStdString((m_loadedProject->coreProject().projectPath()
+                                / "chipsets" / map->chipset())
+                                   .string());
+    m_chipsetScene->setChipset(chipsetPath);
+    m_ui->graphicsViewChipset->viewport()->update();
+
+    // update map scene
+    m_mapScene->setMapDocument(m_loadedProject->document(mapName));
+    m_ui->graphicsViewMap->setSceneRect(
+        QRect(0, 0, map->width() * CELL_W, map->height() * CELL_H));
+
+    // TODO connect layer selection to toolbox setting
+
+    // update layer list
+    m_ui->layer_list_tab->setEditorMap(map);
+    m_ui->maps_panel->setCurrentIndex(1);
 }

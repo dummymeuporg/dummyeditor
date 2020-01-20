@@ -20,6 +20,7 @@ class MapFloorsList;
 
 namespace MapFloorsList {
 class MapFloorTreeModel;
+class MapTreeItem;
 
 
 // This line shouldn't even exist. Still here is the reason why:
@@ -55,11 +56,14 @@ public:
 public slots:
     void selectLayer(QModelIndex);
     void toggleLayerVisibleState(QModelIndex);
+    void on_treeViewFloors_clicked(const QModelIndex& index);
+
+signals:
+    void treeItemSelected(const MapTreeItem&);
 
 private:
     void reset();
 
-private:
     Ui::MapFloorsList* m_ui             = nullptr;
     MapFloorTreeModel* m_floorTreeModel = nullptr;
 };

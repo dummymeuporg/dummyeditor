@@ -49,3 +49,16 @@ void FloorListWidget::selectLayer(QModelIndex selectedIndex)
 }
 
 } // namespace MapFloorsList
+
+void MapFloorsList::FloorListWidget::on_treeViewFloors_clicked(
+    const QModelIndex& idx)
+{
+    if (m_floorTreeModel == nullptr)
+        return;
+
+    auto* itemSelected = m_floorTreeModel->floorItemFromIdx(idx);
+    if (m_floorTreeModel == nullptr)
+        return;
+
+    emit treeItemSelected(*itemSelected);
+}
