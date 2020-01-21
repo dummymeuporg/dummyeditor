@@ -19,7 +19,9 @@ class GeneralWindow;
 
 namespace GraphicMap {
 class MapGraphicsScene;
-}
+class VisibleGraphicLayer;
+class BlockingGraphicLayer;
+} // namespace GraphicMap
 
 class ChipsetGraphicsScene;
 
@@ -45,6 +47,9 @@ private slots:
     void on_actionSave_triggered();
     void on_actionClose_triggered();
     void on_mapsList_doubleClicked(const QModelIndex& selectedIndex);
+
+    void graphicLayerSelected(GraphicMap::VisibleGraphicLayer* layer);
+    void blockingLayerSelected(GraphicMap::BlockingGraphicLayer* layer);
 
 private:
     void closeEvent(QCloseEvent* event) override;

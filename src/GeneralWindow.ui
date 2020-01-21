@@ -93,24 +93,12 @@
                 <property name="contextMenuPolicy">
                  <enum>Qt::CustomContextMenu</enum>
                 </property>
-                <property name="frameShape">
-                 <enum>QFrame::NoFrame</enum>
-                </property>
-                <property name="editTriggers">
-                 <set>QAbstractItemView::NoEditTriggers</set>
-                </property>
                 <property name="dragEnabled">
                  <bool>true</bool>
-                </property>
-                <property name="dragDropMode">
-                 <enum>QAbstractItemView::InternalMove</enum>
                 </property>
                 <property name="expandsOnDoubleClick">
                  <bool>false</bool>
                 </property>
-                <attribute name="headerVisible">
-                 <bool>false</bool>
-                </attribute>
                </widget>
               </item>
               <item>
@@ -219,48 +207,10 @@
         <string>Fight Scenes</string>
        </attribute>
       </widget>
-      <widget class="QWidget" name="tab_cinematics">
+      <widget class="CinematicsWidget" name="tab_cinematics">
        <attribute name="title">
         <string>Cinematics</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QWidget" name="verticalWidget" native="true">
-          <layout class="QVBoxLayout" name="verticalLayout_4">
-           <item>
-            <widget class="MapsTreeView" name="mapListCinematics"/>
-           </item>
-           <item>
-            <widget class="QTabWidget" name="tabWidget">
-             <widget class="QWidget" name="objectsListCinematics">
-              <attribute name="title">
-               <string>Tab 1</string>
-              </attribute>
-             </widget>
-             <widget class="QWidget" name="widget">
-              <attribute name="title">
-               <string>Tab 2</string>
-              </attribute>
-             </widget>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QWidget" name="verticalWidget_2" native="true">
-          <layout class="QVBoxLayout" name="verticalLayout_6"/>
-         </widget>
-        </item>
-        <item>
-         <widget class="QGraphicsView" name="graphicsView"/>
-        </item>
-        <item>
-         <widget class="QWidget" name="horizontalWidget" native="true">
-          <layout class="QHBoxLayout" name="horizontalLayout_2"/>
-         </widget>
-        </item>
-       </layout>
       </widget>
      </widget>
     </item>
@@ -413,6 +363,12 @@
    <class>MapFloorsList::FloorListWidget</class>
    <extends>QWidget</extends>
    <header>mapFloorTreeWidget.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CinematicsWidget</class>
+   <extends>QWidget</extends>
+   <header>CinematicsWidget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

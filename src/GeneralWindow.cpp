@@ -11,6 +11,8 @@
 #include "definitions.hpp"
 #include "editor/map.hpp"
 #include "editor/project.hpp"
+#include "graphicMap/layerGraphicBlocking.hpp"
+#include "graphicMap/layerGraphicVisible.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
 #include "mapDocument.hpp"
 
@@ -157,7 +159,10 @@ void GeneralWindow::updateMapsAndFloorsList()
     } else {
         m_ui->mapsList->setProject(m_loadedProject);
     }
+    m_ui->maps_panel->setCurrentIndex(0);
     m_ui->layer_list_tab->reset();
+    m_mapScene->clear();
+    m_chipsetScene->clear();
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -240,9 +245,33 @@ void GeneralWindow::on_mapsList_doubleClicked(const QModelIndex& selectedIndex)
     m_ui->graphicsViewMap->setSceneRect(
         QRect(0, 0, map->width() * CELL_W, map->height() * CELL_H));
 
-    // TODO connect layer selection to toolbox setting
+    // link visible layers
+    for (const auto& pVisLayer : m_mapScene->graphicLayers()) {
+        connect(pVisLayer.get(),
+                SIGNAL(layerSelected(GraphicMap::VisibleGraphicLayer*)), this,
+                SLOT(graphicLayerSelected(GraphicMap::VisibleGraphicLayer*)));
+    }
+
+    // link blocking layers
+    for (const auto& pBlockLayer : m_mapScene->blockingLayers()) {
+        connect(pBlockLayer.get(),
+                SIGNAL(layerSelected(GraphicMap::BlockingGraphicLayer*)), this,
+                SLOT(blockingLayerSelected(GraphicMap::BlockingGraphicLayer*)));
+    }
+
+    // link events layers ?
 
     // update layer list
     m_ui->layer_list_tab->setEditorMap(map);
     m_ui->maps_panel->setCurrentIndex(1);
+}
+
+void GeneralWindow::graphicLayerSelected(GraphicMap::VisibleGraphicLayer* layer)
+{
+    // TODO link tools to active layer
+}
+void GeneralWindow::blockingLayerSelected(
+    GraphicMap::BlockingGraphicLayer* layer)
+{
+    // TODO link tools to active layer
 }

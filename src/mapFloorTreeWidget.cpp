@@ -12,6 +12,7 @@ FloorListWidget::FloorListWidget(QWidget* parent)
 {
     m_ui->setupUi(this);
 }
+FloorListWidget::~FloorListWidget() {}
 
 void FloorListWidget::setEditorMap(std::shared_ptr<Editor::Map> editorMap)
 {
@@ -27,7 +28,7 @@ void FloorListWidget::reset()
 
 void FloorListWidget::on_treeViewFloors_doubleClicked(const QModelIndex& idx)
 {
-    // toggleLayerVisibleState
+    // toggle Layer VisibleState
     qDebug() << "Toggle Layer visibility: selectedIndex: " << idx;
     m_floorTreeModel->floorItemFromIdx(idx)->toggle();
 }

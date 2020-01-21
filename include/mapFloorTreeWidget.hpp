@@ -32,6 +32,7 @@ class FloorListWidget : public QWidget
     Q_OBJECT
 public:
     explicit FloorListWidget(QWidget* parent = nullptr);
+    virtual ~FloorListWidget() override;
 
     void setEditorMap(std::shared_ptr<Editor::Map>);
     void reset();

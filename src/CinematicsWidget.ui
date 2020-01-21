@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CinematicsWidget</class>
+ <widget class="QWidget" name="CinematicsWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>941</width>
+    <height>674</height>
+   </rect>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QWidget" name="verticalWidget" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <item>
+       <widget class="MapsTreeView" name="mapListCinematics" native="true"/>
+      </item>
+      <item>
+       <widget class="QTabWidget" name="tabWidget">
+        <widget class="QWidget" name="objectsListCinematics">
+         <attribute name="title">
+          <string>Tab 1</string>
+         </attribute>
+        </widget>
+        <widget class="QWidget" name="widget">
+         <attribute name="title">
+          <string>Tab 2</string>
+         </attribute>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="verticalWidget_2" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout_6"/>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGraphicsView" name="graphicsView"/>
+   </item>
+   <item>
+    <widget class="QWidget" name="horizontalWidget" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_2"/>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MapsTreeView</class>
+   <extends>QTreeView</extends>
+   <header>mapsTree.hpp</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
