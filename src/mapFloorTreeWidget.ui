@@ -64,40 +64,7 @@
   </layout>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>treeViewFloors</sender>
-   <signal>doubleClicked(QModelIndex)</signal>
-   <receiver>MapFloorsList</receiver>
-   <slot>toggleLayerVisibleState(QModelIndex)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>84</x>
-     <y>134</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>193</x>
-     <y>353</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>treeViewFloors</sender>
-   <signal>clicked(QModelIndex)</signal>
-   <receiver>MapFloorsList</receiver>
-   <slot>selectLayer(QModelIndex)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>128</x>
-     <y>180</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>214</x>
-     <y>440</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>selectLayer(QModelIndex)</slot>
   <slot>setSelected(QModelIndex)</slot>

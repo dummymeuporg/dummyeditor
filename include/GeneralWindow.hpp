@@ -49,7 +49,7 @@ private slots:
 private:
     void closeEvent(QCloseEvent* event) override;
     void updateProjectView();
-    void updateMapsList();
+    void updateMapsAndFloorsList();
 
     std::unique_ptr<Ui::GeneralWindow> m_ui;
     std::unique_ptr<ChipsetGraphicsScene> m_chipsetScene;

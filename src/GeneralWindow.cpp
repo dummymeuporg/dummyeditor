@@ -31,11 +31,13 @@ GeneralWindow::GeneralWindow(QWidget* parent)
 
     m_ui->graphicsViewMap->setScene(m_mapScene.get());
     m_ui->graphicsViewMap->scale(2.0, 2.0);
-    m_ui->graphicsViewMap->setBackgroundBrush(QColor(150, 150, 150));
+    m_ui->graphicsViewMap->setBackgroundBrush(QColor("#969696"));
 
     // Set default sizes of movable splitters between panels
-    m_ui->splitter_map->setSizes({width() / 4, width() - (width() / 4)});
-    m_ui->splitter_chipset->setSizes({height() / 3, height() - (height() / 3)});
+    QList<int> horiCoef = {width() / 4, width() - (width() / 4)};
+    QList<int> vertCoef = {width() / 4, width() - (width() / 4)};
+    m_ui->splitter_map->setSizes(horiCoef);
+    m_ui->splitter_chipset->setSizes(vertCoef);
 
     // Set default view state
     updateProjectView();
@@ -141,20 +143,21 @@ void GeneralWindow::updateProjectView()
     m_ui->toolbar_mapTools->setEnabled(thereIsAProject);
 
     // TODO update tabs content
-    updateMapsList();
+    updateMapsAndFloorsList();
 
     // TODO update usable actions
     m_ui->actionSave->setEnabled(thereIsAProject);
     m_ui->actionClose->setEnabled(thereIsAProject);
 }
 
-void GeneralWindow::updateMapsList()
+void GeneralWindow::updateMapsAndFloorsList()
 {
     if (m_loadedProject == nullptr) {
         m_ui->mapsList->clear();
     } else {
         m_ui->mapsList->setProject(m_loadedProject);
     }
+    m_ui->layer_list_tab->reset();
 }
 
 //////////////////////////////////////////////////////////////////////////////

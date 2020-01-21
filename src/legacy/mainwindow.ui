@@ -554,7 +554,7 @@
   </widget>
   <action name="actionNew">
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/newProject_Icon.png</normaloff>:/icons/newProject_Icon.png</iconset>
    </property>
    <property name="text">
@@ -566,7 +566,7 @@
   </action>
   <action name="actionOpen">
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/openProject_Icon.png</normaloff>:/icons/openProject_Icon.png</iconset>
    </property>
    <property name="text">
@@ -578,7 +578,7 @@
   </action>
   <action name="actionSave">
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/save_Icon.png</normaloff>:/icons/save_Icon.png</iconset>
    </property>
    <property name="text">
@@ -600,7 +600,7 @@
   </action>
   <action name="actionQuit">
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/quit_Icon.png</normaloff>:/icons/quit_Icon.png</iconset>
    </property>
    <property name="text">
@@ -612,7 +612,7 @@
   </action>
   <action name="actionUndo">
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/Undo_icon.png</normaloff>:/icons/Undo_icon.png</iconset>
    </property>
    <property name="text">
@@ -624,7 +624,7 @@
   </action>
   <action name="actionCopy">
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/copy_Icon.png</normaloff>:/icons/copy_Icon.png</iconset>
    </property>
    <property name="text">
@@ -636,7 +636,7 @@
   </action>
   <action name="actionPaste">
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/past_Icon.png</normaloff>:/icons/past_Icon.png</iconset>
    </property>
    <property name="text">
@@ -671,7 +671,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/icon_pen.png</normaloff>:/icons/icon_pen.png</iconset>
    </property>
    <property name="text">
@@ -686,7 +686,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/icon_rect.png</normaloff>:/icons/icon_rect.png</iconset>
    </property>
    <property name="text">
@@ -704,7 +704,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/icon_layer0.png</normaloff>:/icons/icon_layer0.png</iconset>
    </property>
    <property name="text">
@@ -722,7 +722,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/icon_layer1.png</normaloff>:/icons/icon_layer1.png</iconset>
    </property>
    <property name="text">
@@ -740,7 +740,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/icon_layer2.png</normaloff>:/icons/icon_layer2.png</iconset>
    </property>
    <property name="text">
@@ -755,7 +755,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/icon_layerEvent.png</normaloff>:/icons/icon_layerEvent.png</iconset>
    </property>
    <property name="text">
@@ -770,7 +770,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/icon_selection.png</normaloff>:/icons/icon_selection.png</iconset>
    </property>
    <property name="text">
@@ -785,7 +785,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/icon_prog1.png</normaloff>:/icons/icon_prog1.png</iconset>
    </property>
    <property name="text">
@@ -803,7 +803,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/icon_prog2.png</normaloff>:/icons/icon_prog2.png</iconset>
    </property>
    <property name="text">
@@ -818,7 +818,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/icon_prog3.png</normaloff>:/icons/icon_prog3.png</iconset>
    </property>
    <property name="text">
@@ -833,7 +833,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/icon_launch.png</normaloff>:/icons/icon_launch.png</iconset>
    </property>
    <property name="text">
@@ -848,7 +848,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/icon_fullscreen.png</normaloff>:/icons/icon_fullscreen.png</iconset>
    </property>
    <property name="text">
@@ -860,7 +860,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/icon_music.png</normaloff>:/icons/icon_music.png</iconset>
    </property>
    <property name="text">
@@ -872,7 +872,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/icon_prog4.png</normaloff>:/icons/icon_prog4.png</iconset>
    </property>
    <property name="text">
@@ -889,7 +889,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/icon_penpath.png</normaloff>:/icons/icon_penpath.png</iconset>
    </property>
    <property name="text">
@@ -907,7 +907,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/icon_blocking.png</normaloff>:/icons/icon_blocking.png</iconset>
    </property>
    <property name="text">
@@ -919,7 +919,7 @@
   </action>
   <action name="actionCut">
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/Cut_icon.png</normaloff>:/icons/Cut_icon.png</iconset>
    </property>
    <property name="text">
@@ -934,7 +934,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/icon_layer3.png</normaloff>:/icons/icon_layer3.png</iconset>
    </property>
    <property name="text">
@@ -946,7 +946,7 @@
   </action>
   <action name="actionRedo">
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/icons/Redo_icon.png</normaloff>:/icons/Redo_icon.png</iconset>
    </property>
    <property name="text">
@@ -966,7 +966,7 @@
   <customwidget>
    <class>MapFloorsList::FloorListWidget</class>
    <extends>QWidget</extends>
-   <header>widget_mapFloorsList/widget.hpp</header>
+   <header>mapFloorTreeWidget.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -977,7 +977,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../icons.qrc"/>
+  <include location="../../icons.qrc"/>
  </resources>
  <connections/>
  <slots>

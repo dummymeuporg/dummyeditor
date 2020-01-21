@@ -412,7 +412,7 @@
   <customwidget>
    <class>MapFloorsList::FloorListWidget</class>
    <extends>QWidget</extends>
-   <header>widget_mapFloorsList/widget.hpp</header>
+   <header>mapFloorTreeWidget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
