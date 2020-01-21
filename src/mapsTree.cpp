@@ -84,11 +84,11 @@ void MapsTreeView::createMap(int result)
     if (result != QDialog::Accepted)
         return;
 
-    QStandardItemModel* mapsModel = qobject_cast<QStandardItemModel*>(model());
+    const auto* mapsModel = qobject_cast<QStandardItemModel*>(model());
     if (mapsModel == nullptr)
         return;
 
-    QStandardItem* selectedParentMap = mapsModel->invisibleRootItem();
+    auto* selectedParentMap = mapsModel->invisibleRootItem();
     if (m_selectedIndex.isValid()) {
         selectedParentMap = mapsModel->itemFromIndex(m_selectedIndex);
     }

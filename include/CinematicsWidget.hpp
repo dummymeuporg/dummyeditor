@@ -2,6 +2,7 @@
 #define CINEMATICSWIDGET_H
 
 #include <QWidget>
+#include <memory>
 
 namespace Ui {
 class CinematicsWidget;
@@ -9,14 +10,14 @@ class CinematicsWidget;
 
 class CinematicsWidget : public QWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  explicit CinematicsWidget(QWidget *parent = nullptr);
-  ~CinematicsWidget();
+    explicit CinematicsWidget(QWidget* parent = nullptr);
+    virtual ~CinematicsWidget() override;
 
 private:
-  Ui::CinematicsWidget *ui;
+    std::unique_ptr<Ui::CinematicsWidget> m_ui;
 };
 
 #endif // CINEMATICSWIDGET_H

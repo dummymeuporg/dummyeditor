@@ -25,6 +25,16 @@ MapTreeItem* MapFloorTreeModel::floorItemFromIdx(const QModelIndex& index) const
     return dynamic_cast<MapTreeItem*>(itemFromIndex(index));
 }
 
+void MapTreeItem::setVisibilityIcon(bool isVisible)
+{
+    setEnabled(isVisible);
+    if (isVisible) {
+        setIcon(QIcon(":/icons/icon_eye.png"));
+    } else {
+        setIcon(QIcon(":/icons/icon_eye_crossed.png"));
+    }
+}
+
 //////////////////////////////////////////////////////////////////////////////
 //  MapFloorTreeItem class
 // This class is the model (data) of a floor (containing several layers)
@@ -34,7 +44,7 @@ FloorTreeItem::FloorTreeItem(Editor::Floor& floor, std::size_t index)
     : m_editorFloor(floor)
     , m_index(index)
 {
-    setVisible(true);
+    setVisibilityIcon(true);
 
     // Put blocking layer at the top.
     appendRow(new LayerTreeItem(floor.blockingLayer(), eLayerType::Blocking));
@@ -64,12 +74,7 @@ void FloorTreeItem::setVisible(bool visible)
     m_editorFloor.setVisible(visible);
 
     // update visibility icon
-    setEnabled(visible);
-    if (visible) {
-        setIcon(QIcon(":/icons/icon_eye.png"));
-    } else {
-        setIcon(QIcon(":/icons/icon_eye_crossed.png"));
-    }
+    setVisibilityIcon(visible);
 
     // propagate to children
     int nbRows = rowCount();
@@ -121,13 +126,7 @@ void LayerTreeItem::toggle()
 void LayerTreeItem::setVisible(bool visible)
 {
     m_layer.setVisible(visible);
-    setEnabled(visible);
-
-    if (visible) {
-        setIcon(QIcon(":/icons/icon_eye.png"));
-    } else {
-        setIcon(QIcon(":/icons/icon_eye_crossed.png"));
-    }
+    setVisibilityIcon(visible);
 }
 
 void LayerTreeItem::setSelected()

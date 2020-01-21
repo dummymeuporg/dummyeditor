@@ -32,6 +32,9 @@ public:
     virtual void toggle()         = 0;
     virtual void setVisible(bool) = 0;
     virtual void setSelected()    = 0;
+
+protected:
+    void setVisibilityIcon(bool isVisible);
 };
 
 //////////////////////////////////////////////////////////////////////////////
