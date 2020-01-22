@@ -47,6 +47,9 @@ private slots:
     void on_actionSave_triggered();
     void on_actionClose_triggered();
     void on_mapsList_doubleClicked(const QModelIndex& selectedIndex);
+    void on_actionCut_triggered();
+    void on_actionCopy_triggered();
+    void on_actionPaste_triggered();
 
     void graphicLayerSelected(GraphicMap::VisibleGraphicLayer* layer);
     void blockingLayerSelected(GraphicMap::BlockingGraphicLayer* layer);

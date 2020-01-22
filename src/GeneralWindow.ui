@@ -222,7 +222,7 @@
      <x>0</x>
      <y>0</y>
      <width>1084</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -261,6 +261,9 @@
    </attribute>
    <addaction name="actionEraser"/>
    <addaction name="actionPen"/>
+   <addaction name="actionCut"/>
+   <addaction name="actionCopy"/>
+   <addaction name="actionPaste"/>
   </widget>
   <widget class="QToolBar" name="toolbar_gameTool">
    <property name="windowTitle">
@@ -350,6 +353,42 @@
    </property>
    <property name="toolTip">
     <string>Close the project</string>
+   </property>
+  </action>
+  <action name="actionCut">
+   <property name="icon">
+    <iconset resource="../icons.qrc">
+     <normaloff>:/icons/Cut_icon.png</normaloff>:/icons/Cut_icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Cut selection</string>
+   </property>
+   <property name="toolTip">
+    <string>Cut selection</string>
+   </property>
+  </action>
+  <action name="actionCopy">
+   <property name="icon">
+    <iconset resource="../icons.qrc">
+     <normaloff>:/icons/copy_Icon.png</normaloff>:/icons/copy_Icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Copy selection</string>
+   </property>
+   <property name="toolTip">
+    <string>Copy selection</string>
+   </property>
+  </action>
+  <action name="actionPaste">
+   <property name="icon">
+    <iconset resource="../icons.qrc">
+     <normaloff>:/icons/past_Icon.png</normaloff>:/icons/past_Icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Paste </string>
+   </property>
+   <property name="toolTip">
+    <string>Paste the cutted/copied selection</string>
    </property>
   </action>
  </widget>

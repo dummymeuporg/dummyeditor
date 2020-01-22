@@ -60,6 +60,15 @@ GeneralWindow::GeneralWindow(QWidget* parent)
     m_ui->actionClose->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
     m_ui->actionClose->setShortcutContext(Qt::ApplicationShortcut);
 
+    m_ui->actionCut->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_X));
+    m_ui->actionCut->setShortcutContext(Qt::ApplicationShortcut);
+
+    m_ui->actionCopy->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_C));
+    m_ui->actionCopy->setShortcutContext(Qt::ApplicationShortcut);
+
+    m_ui->actionPaste->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_V));
+    m_ui->actionPaste->setShortcutContext(Qt::ApplicationShortcut);
+
     // connect ui items
     connect(m_ui->btnNewMap, SIGNAL(clicked()), m_ui->mapsList,
             SLOT(addMapAtRoot()));
@@ -274,4 +283,19 @@ void GeneralWindow::blockingLayerSelected(
     GraphicMap::BlockingGraphicLayer* layer)
 {
     // TODO link tools to active layer
+}
+
+void GeneralWindow::on_actionCut_triggered()
+{
+    qDebug() << "Action Cut TODO" << endl;
+}
+
+void GeneralWindow::on_actionCopy_triggered()
+{
+    qDebug() << "Action Copy TODO" << endl;
+}
+
+void GeneralWindow::on_actionPaste_triggered()
+{
+    qDebug() << "Action Paste TODO" << endl;
 }
