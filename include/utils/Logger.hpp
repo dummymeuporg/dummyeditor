@@ -46,7 +46,7 @@ public:
 class LoggerFile : public Logger
 {
 public:
-    LoggerFile(const std::string& logFilePath);
+    explicit LoggerFile(const std::string& logFilePath);
     void print(const std::string& message, eLogType type) override;
 };
 

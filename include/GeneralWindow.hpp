@@ -75,7 +75,7 @@ private:
 class LoggerStatusBar : public Log::Logger
 {
 public:
-    LoggerStatusBar(QStatusBar* stsBar);
+    explicit LoggerStatusBar(QStatusBar* stsBar);
     void print(const std::string& message, Log::eLogType type) override;
 
 private:

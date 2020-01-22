@@ -19,7 +19,7 @@ void Logger::unregisterLogger(const std::shared_ptr<Logger>& toRm)
 
 void Logger::printAll(const std::string& message, eLogType type)
 {
-    for (auto& logger : Logger::gLoggers)
+    for (const auto& logger : Logger::gLoggers)
         if (logger != nullptr)
             logger->print(message, type);
 }
@@ -65,6 +65,10 @@ void LoggerFile::print(const std::string& message, eLogType type)
 // fast access QString
 ////////////////////////////////////////////////
 
+void print(const std::string& message, eLogType type)
+{
+    Logger::printAll(message, type);
+}
 void print(const QString& message, eLogType type)
 {
     Logger::printAll(message.toStdString(), type);
@@ -86,33 +90,6 @@ void info(const QString& message)
 void error(const QString& message)
 {
     Logger::printAll(message.toStdString(), eLogType::ERROR);
-}
-
-////////////////////////////////////////////////
-// fast access Std::String
-////////////////////////////////////////////////
-
-void print(const std::string& message, eLogType type)
-{
-    Logger::printAll(message, type);
-}
-void debug(const std::string& message)
-{
-#ifdef QT_DEBUG
-    Logger::printAll(message, eLogType::DEBUG);
-#endif // QT_DEBUT
-}
-void log(const std::string& message)
-{
-    Logger::printAll(message, eLogType::LOG);
-}
-void info(const std::string& message)
-{
-    Logger::printAll(message, eLogType::INFORMATION);
-}
-void error(const std::string& message)
-{
-    Logger::printAll(message, eLogType::ERROR);
 }
 
 } // namespace Log
