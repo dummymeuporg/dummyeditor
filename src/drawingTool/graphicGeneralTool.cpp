@@ -2,7 +2,7 @@
 
 #include <QDebug>
 
-#include "definitions.hpp"
+#include "utils/definitions.hpp"
 #include "editor/layerGraphic.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"

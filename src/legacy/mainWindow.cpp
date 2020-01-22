@@ -8,7 +8,7 @@
 #include <QMessageBox>
 #include <QShortcut>
 
-#include "definitions.hpp"
+#include "utils/definitions.hpp"
 #include "drawingTool/blockingEraser.hpp"
 #include "drawingTool/blockingPen.hpp"
 #include "drawingTool/drawingSelection.hpp"
@@ -20,7 +20,7 @@
 #include "graphicMap/mapGraphicsScene.hpp"
 
 #include "chipsetGraphicsScene.hpp"
-#include "mapDocument.hpp"
+#include "utils/mapDocument.hpp"
 #include "ui_mainwindow.h"
 
 MainWindow_Old::MainWindow_Old(QWidget* parent)

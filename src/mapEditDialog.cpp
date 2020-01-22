@@ -6,7 +6,7 @@
 
 #include "editor/map.hpp"
 #include "editor/project.hpp"
-#include "mapDocument.hpp"
+#include "utils/mapDocument.hpp"
 
 
 MapEditDialog::MapEditDialog(QWidget* parent)

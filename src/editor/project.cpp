@@ -10,7 +10,7 @@
 #include "editor/layerGraphic.hpp"
 #include "editor/map.hpp"
 #include "editor/startingPoint.hpp"
-#include "mapDocument.hpp"
+#include "utils/mapDocument.hpp"
 #include "mapsTree.hpp"
 
 namespace Editor {

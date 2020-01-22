@@ -4,13 +4,13 @@
 #include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
 
-#include "definitions.hpp"
+#include "utils/definitions.hpp"
 #include "editor/map.hpp"
 #include "editor/project.hpp"
 #include "graphicMap/layerGraphicBlocking.hpp"
 #include "graphicMap/layerGraphicEvents.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
-#include "mapDocument.hpp"
+#include "utils/mapDocument.hpp"
 
 using std::unique_ptr;
 

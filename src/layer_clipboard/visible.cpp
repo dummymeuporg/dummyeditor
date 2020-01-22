@@ -1,6 +1,6 @@
 #include "layer_clipboard/visible.hpp"
 
-#include "definitions.hpp"
+#include "utils/definitions.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
 
 using std::pair;

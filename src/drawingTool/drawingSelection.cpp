@@ -4,7 +4,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QKeyEvent>
 
-#include "definitions.hpp"
+#include "utils/definitions.hpp"
 #include "drawingTool/drawingVisitor.hpp"
 #include "editor/map.hpp"
 #include "graphicMap/layerGraphicBlocking.hpp"

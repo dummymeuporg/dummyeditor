@@ -1,6 +1,6 @@
 #include "layer_clipboard/blocking.hpp"
 
-#include "definitions.hpp"
+#include "utils/definitions.hpp"
 #include "graphicMap/layerGraphicBlocking.hpp"
 
 namespace LayerClipboard {

@@ -2,7 +2,7 @@
 
 #include <QPainter>
 
-#include "definitions.hpp"
+#include "utils/definitions.hpp"
 
 namespace GraphicMap {
 

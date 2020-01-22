@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <memory>
 
+#include "utils/Logger.hpp"
 
 //////////////////////////////////////////////////////////////////////////////
 //  forward declaration
@@ -59,11 +60,26 @@ private:
     void updateProjectView();
     void updateMapsAndFloorsList();
 
+    void setupLoggers();
+    void cleanLoggers();
+
     std::unique_ptr<Ui::GeneralWindow> m_ui;
     std::unique_ptr<ChipsetGraphicsScene> m_chipsetScene;
     std::unique_ptr<GraphicMap::MapGraphicsScene> m_mapScene;
 
     std::shared_ptr<Editor::Project> m_loadedProject;
+    std::vector<std::shared_ptr<Log::Logger>> m_loggers;
+};
+
+// This is a wrapper around status bar to use log system
+class LoggerStatusBar : public Log::Logger
+{
+public:
+    LoggerStatusBar(QStatusBar* stsBar);
+    void print(const std::string& message, Log::eLogType type) override;
+
+private:
+    QStatusBar* m_statusBar = nullptr;
 };
 
 #endif // GENERALWINDOW_H

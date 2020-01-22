@@ -8,13 +8,13 @@
 #include <QMessageBox>
 
 #include "chipsetGraphicsScene.hpp"
-#include "definitions.hpp"
 #include "editor/map.hpp"
 #include "editor/project.hpp"
 #include "graphicMap/layerGraphicBlocking.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
-#include "mapDocument.hpp"
+#include "utils/definitions.hpp"
+#include "utils/mapDocument.hpp"
 
 using Editor::Project;
 
@@ -27,6 +27,7 @@ GeneralWindow::GeneralWindow(QWidget* parent)
     , m_mapScene(new GraphicMap::MapGraphicsScene)
 {
     m_ui->setupUi(this);
+    setupLoggers();
 
     m_ui->graphicsViewChipset->setScene(m_chipsetScene.get());
     m_ui->graphicsViewChipset->scale(2.0, 2.0);
@@ -76,7 +77,10 @@ GeneralWindow::GeneralWindow(QWidget* parent)
             m_chipsetScene.get(), SLOT(changeChipset(QString)));
 }
 
-GeneralWindow::~GeneralWindow() {}
+GeneralWindow::~GeneralWindow()
+{
+    cleanLoggers();
+}
 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -130,13 +134,13 @@ bool GeneralWindow::closeProject()
     } else if (resBtn == QMessageBox::No) {
         // Nothing to do
     } else {
-        qDebug() << "Closing canceled" << endl;
+        Log::info("Closing canceled");
         return false; // failure of closing : cancellation
     }
 
     // Clear project
     m_loadedProject = nullptr;
-    qDebug() << "Project closed" << endl;
+    Log::info("Project closed");
 
     // Clear view
     updateProjectView();
@@ -172,6 +176,28 @@ void GeneralWindow::updateMapsAndFloorsList()
     m_ui->layer_list_tab->reset();
     m_mapScene->clear();
     m_chipsetScene->clear();
+}
+
+void GeneralWindow::setupLoggers()
+{
+    // Console logger
+    std::shared_ptr<Log::Logger> pConsoleLog =
+        std::make_shared<Log::LoggerConsole>();
+    m_loggers.push_back(pConsoleLog);
+    Log::Logger::registerLogger(pConsoleLog);
+
+    // Status bar Logger
+    std::shared_ptr<Log::Logger> pStatusBarLog =
+        std::make_shared<LoggerStatusBar>(m_ui->statusbar);
+    m_loggers.push_back(pStatusBarLog);
+    Log::Logger::registerLogger(pStatusBarLog);
+}
+
+void GeneralWindow::cleanLoggers()
+{
+    for (auto& pLogger : m_loggers)
+        Log::Logger::unregisterLogger(pLogger);
+    m_loggers.clear();
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -298,4 +324,22 @@ void GeneralWindow::on_actionCopy_triggered()
 void GeneralWindow::on_actionPaste_triggered()
 {
     qDebug() << "Action Paste TODO" << endl;
+}
+
+LoggerStatusBar::LoggerStatusBar(QStatusBar* stsBar)
+    : m_statusBar(stsBar)
+{}
+
+void LoggerStatusBar::print(const std::string& message, Log::eLogType type)
+{
+    switch (type) {
+    case Log::eLogType::INFORMATION:
+    case Log::eLogType::ERROR:
+        m_statusBar->showMessage(QString::fromStdString(message));
+        break;
+    case Log::eLogType::LOG:
+    case Log::eLogType::DEBUG:
+    default:
+        break; // do nothing log default and unknown types
+    }
 }

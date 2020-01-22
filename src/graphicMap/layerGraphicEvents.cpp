@@ -1,6 +1,6 @@
 #include "graphicMap/layerGraphicEvents.hpp"
 
-#include "definitions.hpp"
+#include "utils/definitions.hpp"
 #include "editor/layerEvents.hpp"
 #include "graphicMap/graphicItem.hpp"
 #include "graphicMap/graphicLayerVisitor.hpp"

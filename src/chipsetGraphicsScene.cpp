@@ -3,7 +3,7 @@
 #include <QDebug>
 #include <QGraphicsRectItem>
 
-#include "definitions.hpp"
+#include "utils/definitions.hpp"
 #include "drawingTool/graphicPaletteTool.hpp"
 
 ChipsetGraphicsScene::ChipsetGraphicsScene(QObject* parent)

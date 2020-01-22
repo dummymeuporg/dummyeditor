@@ -2,7 +2,7 @@
 
 #include <QGraphicsPixmapItem>
 
-#include "definitions.hpp"
+#include "utils/definitions.hpp"
 #include "editor/layerGraphic.hpp"
 #include "editor/map.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
