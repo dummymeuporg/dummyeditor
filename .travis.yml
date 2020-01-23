@@ -69,8 +69,4 @@ script:
         - cmake -DLUA_INCLUDE_DIR=${TRAVIS_BUILD_DIR}/lua/include/ -DLUA_LIBRARIES=${TRAVIS_BUILD_DIR}/lua/liblua53.so -DLUA_LIBRARY=${TRAVIS_BUILD_DIR}/lua/liblua53.so .
         - make clean
         - build-wrapper-linux-x86-64 --out-dir bw-outputs make -j 2 dummyeditor
-        - sonar-scanner
-        - ls /home/travis/  
-        - cd /home/travis/  
-        - echo "There is $(grep -rIio "todo" * | wc -l) TODOs in the code"
-        - ${TRAVIS_BUILD_DIR}  
+        - sonar-scanner  
