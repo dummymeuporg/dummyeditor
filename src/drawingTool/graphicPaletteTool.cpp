@@ -1,11 +1,11 @@
 #include "drawingTool/graphicPaletteTool.hpp"
 
-#include <QDebug>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneMouseEvent>
 
 #include "chipsetGraphicsScene.hpp"
 #include "utils/definitions.hpp"
+#include "utils/Logger.hpp"
 
 namespace DrawingTools {
 
@@ -18,7 +18,7 @@ GraphicPaletteTool::GraphicPaletteTool(
 void GraphicPaletteTool::emitDrawingToolSelected()
 {
     GraphicGeneralTool::emitDrawingToolSelected();
-    qDebug() << "Emit drawing tool selected.";
+    Log::info("Emit drawing tool selected.");
     emit drawingToolSelected(this);
 }
 

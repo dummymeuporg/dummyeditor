@@ -1,9 +1,9 @@
 #include "drawingTool/blockingPen.hpp"
 
-#include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 
 #include "utils/definitions.hpp"
+#include "utils/Logger.hpp"
 #include "drawingTool/drawingVisitor.hpp"
 #include "graphicMap/layerGraphicBlocking.hpp"
 
@@ -31,7 +31,7 @@ void BlockingPen::mapMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 
 void BlockingPen::mapMousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    qDebug() << "Blocking pen press.";
+    Log::info("Blocking pen press.");
     if (nullptr == blockingLayer()) {
         return;
     }
@@ -47,7 +47,7 @@ void BlockingPen::mapMousePressEvent(QGraphicsSceneMouseEvent* event)
 
 void BlockingPen::mapMouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
-    qDebug() << "Pen release.";
+    Log::info("Pen release.");
     m_mouseClicked = false;
 }
 

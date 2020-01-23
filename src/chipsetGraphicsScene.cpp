@@ -1,9 +1,9 @@
 #include "chipsetGraphicsScene.hpp"
 
-#include <QDebug>
 #include <QGraphicsRectItem>
 
 #include "utils/definitions.hpp"
+#include "utils/Logger.hpp"
 #include "drawingTool/graphicPaletteTool.hpp"
 
 ChipsetGraphicsScene::ChipsetGraphicsScene(QObject* parent)
@@ -46,7 +46,7 @@ void ChipsetGraphicsScene::setSelection(const QRect& selection)
 
 void ChipsetGraphicsScene::setChipset(const QString& chipsetPath)
 {
-    qDebug() << chipsetPath;
+    Log::info(chipsetPath);
     setChipset(QPixmap(chipsetPath));
     setSelection(QRect(0, 0, 0, 0));
 }
@@ -87,11 +87,11 @@ void ChipsetGraphicsScene::setPaletteTool(
 {
     m_paletteTool = paletteTool;
     m_paletteTool->setChipsetGraphicsScene(this);
-    qDebug() << "ChispetGraphicsScene: palette tool set!";
+    Log::info("ChispetGraphicsScene: palette tool set!");
 }
 
 void ChipsetGraphicsScene::unsetPaletteTool()
 {
     m_paletteTool = nullptr;
-    qDebug() << "Palette tool unset.";
+    Log::info("Palette tool unset.");
 }

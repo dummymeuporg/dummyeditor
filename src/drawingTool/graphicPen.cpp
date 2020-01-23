@@ -1,10 +1,10 @@
 #include "drawingTool/graphicPen.hpp"
 
-#include <QDebug>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneMouseEvent>
 
 #include "utils/definitions.hpp"
+#include "utils/Logger.hpp"
 #include "drawingTool/drawingVisitor.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
@@ -39,7 +39,7 @@ void GraphicPen::mapMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 
 void GraphicPen::mapMousePressEvent(::QGraphicsSceneMouseEvent* event)
 {
-    qDebug() << "Pen press.";
+    Log::info("Pen press.");
 
     if (nullptr == selectionItem() || nullptr == visibleGraphicLayer()) {
         return;
@@ -51,7 +51,7 @@ void GraphicPen::mapMousePressEvent(::QGraphicsSceneMouseEvent* event)
 
 void GraphicPen::mapMouseReleaseEvent(::QGraphicsSceneMouseEvent* event)
 {
-    qDebug() << "Pen release.";
+    Log::info("Pen release.");
     m_mousePressed = false;
 }
 
@@ -73,7 +73,7 @@ void GraphicPen::onUnselected()
         mapGraphScene().removeItem(m_hoverItem);
         m_hoverItem = nullptr;
     }
-    qDebug() << "Remove selection item.";
+    Log::info("Remove selection item.");
     if (nullptr != selectionItem()) {
         mapGraphScene().removeItem(selectionItem());
         setSelectionItem(nullptr);

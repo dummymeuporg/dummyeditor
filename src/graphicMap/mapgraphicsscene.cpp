@@ -4,12 +4,13 @@
 #include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
 
-#include "utils/definitions.hpp"
 #include "editor/map.hpp"
 #include "editor/project.hpp"
 #include "graphicMap/layerGraphicBlocking.hpp"
 #include "graphicMap/layerGraphicEvents.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
+#include "utils/definitions.hpp"
+#include "utils/Logger.hpp"
 #include "utils/mapDocument.hpp"
 
 using std::unique_ptr;
@@ -133,7 +134,7 @@ void MapGraphicsScene::adjustLayers() const
 
 void MapGraphicsScene::clearGrid()
 {
-    qDebug() << "Clear grid.";
+    Log::info("Clear grid.");
     const int nbCells = m_gridItems.count();
     for (int i = 0; i < nbCells; ++i) {
         removeItem(m_gridItems[i]);
@@ -148,7 +149,7 @@ void MapGraphicsScene::drawGrid(quint16 width, quint16 height,
 
     clearGrid();
 
-    qDebug() << "Draw grid.";
+    Log::info("Draw grid.");
 
     for (int i = 0; i <= width; ++i) {
         QGraphicsItem* item =
@@ -180,7 +181,7 @@ void MapGraphicsScene::setDrawingTool(::DrawingTools::DrawingTool* drawingTool)
         m_currentGraphicLayer->accept(*m_drawingTool);
     }
 
-    qDebug() << "tool is set.";
+    Log::info("tool is set.");
     m_drawingTool->drawGrid();
 }
 
@@ -215,7 +216,7 @@ void MapGraphicsScene::unsetDrawingTool()
 
 void MapGraphicsScene::setCurrentGraphicLayer(MapSceneLayer* layer)
 {
-    qDebug() << "Set current graphic layer.";
+    Log::info("Set current graphic layer.");
     m_currentGraphicLayer = layer;
     if (nullptr != m_drawingTool) {
         layer->accept(*m_drawingTool);

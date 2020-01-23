@@ -3,8 +3,10 @@
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 #include <QKeyEvent>
+#include <typeinfo>
 
 #include "utils/definitions.hpp"
+#include "utils/Logger.hpp"
 #include "drawingTool/drawingVisitor.hpp"
 #include "editor/map.hpp"
 #include "graphicMap/layerGraphicBlocking.hpp"
@@ -99,7 +101,7 @@ void SelectionTool::mapMouseReleaseEvent(QGraphicsSceneMouseEvent*)
 
 void SelectionTool::doCopy()
 {
-    qDebug() << "Copy";
+    Log::info("Copy");
     m_copyClipboard.clear();
     QRect clip(m_startSelection, m_endSelection);
 
@@ -117,7 +119,7 @@ void SelectionTool::doCopy()
 
 void SelectionTool::doCut()
 {
-    qDebug() << "Cut (not implemented yet)";
+    Log::info("TODO : Cut");
 }
 
 void SelectionTool::doPaste()

@@ -2,7 +2,6 @@
 
 #include <algorithm>
 
-#include <QDebug>
 #include <QDir>
 
 #include "editor/layerBlocking.hpp"
@@ -11,6 +10,7 @@
 #include "editor/map.hpp"
 #include "editor/startingPoint.hpp"
 #include "utils/mapDocument.hpp"
+#include "utils/Logger.hpp"
 #include "mapsTree.hpp"
 
 namespace Editor {
@@ -104,7 +104,7 @@ void Project::createFolders(const QString& baseFolder)
                       if (! dir.exists()) {
                           dir.mkpath(".");
                       }
-                      qDebug() << "create folder " << folder;
+                      Log::info("create folder " + folder);
                   });
 }
 

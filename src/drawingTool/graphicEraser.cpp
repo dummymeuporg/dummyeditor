@@ -1,9 +1,9 @@
 #include "drawingTool/graphicEraser.hpp"
 
-#include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 
 #include "utils/definitions.hpp"
+#include "utils/Logger.hpp"
 #include "drawingTool/drawingVisitor.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
 
@@ -42,7 +42,7 @@ void GraphicEraser::mapMousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
     QPoint point(mouseEvent->scenePos().toPoint());
     point.setX(point.x() - (point.x() % CELL_W));
     point.setY(point.y() - (point.y() % CELL_H));
-    qDebug() << "Eraser press.";
+    Log::info("Eraser press.");
 
     // XXX: remove tile.
     m_mouseClicked = true;
@@ -54,7 +54,7 @@ void GraphicEraser::mapMousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 
 void GraphicEraser::mapMouseReleaseEvent(QGraphicsSceneMouseEvent*)
 {
-    qDebug() << "Eraser release.";
+    Log::info("Eraser release.");
     m_mouseClicked = false;
 }
 

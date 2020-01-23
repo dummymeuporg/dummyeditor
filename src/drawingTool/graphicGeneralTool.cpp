@@ -1,8 +1,7 @@
 #include "drawingTool/graphicGeneralTool.hpp"
 
-#include <QDebug>
-
 #include "utils/definitions.hpp"
+#include "utils/Logger.hpp"
 #include "editor/layerGraphic.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
@@ -19,7 +18,7 @@ GraphicGeneralTool::GraphicGeneralTool(
 void GraphicGeneralTool::emitDrawingToolSelected()
 {
     DrawingTool::emitDrawingToolSelected();
-    qDebug() << "Emit drawing tool selected.";
+    Log::info("Emit drawing tool selected.");
     emit drawingToolSelected(this);
 }
 
@@ -48,13 +47,13 @@ void GraphicGeneralTool::setVisibleGraphicLayer(
 void GraphicGeneralTool::visitGraphicLayer(
     GraphicMap::VisibleGraphicLayer& layer)
 {
-    qDebug() << "Visit visible graphic layer";
+    Log::info("Visit visible graphic layer");
     setVisibleGraphicLayer(&layer);
 }
 void GraphicGeneralTool::visitGraphicLayer(
     GraphicMap::EventsGraphicLayer& layer)
 {
-    qDebug() << "Visit event graphic layer";
+    Log::info("Visit event graphic layer");
 }
 
 void GraphicGeneralTool::visitGraphicLayer(GraphicMap::BlockingGraphicLayer&)

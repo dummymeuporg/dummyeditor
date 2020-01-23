@@ -1,8 +1,7 @@
 #include "drawingTool/blockingGeneralTool.hpp"
 
-#include <QDebug>
-
 #include "utils/definitions.hpp"
+#include "utils/Logger.hpp"
 #include "editor/layerBlocking.hpp"
 #include "graphicMap/layerGraphicBlocking.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
@@ -20,7 +19,7 @@ void BlockingGeneralTool::emitDrawingToolSelected()
 {
     // TODO : check if emiting 2 different signals is really what we want?
     DrawingTool::emitDrawingToolSelected();
-    qDebug() << "Emit drawing tool selected.";
+    Log::info("Emit drawing tool selected.");
     emit drawingToolSelected(this);
 }
 
@@ -50,14 +49,14 @@ void BlockingGeneralTool::setBlockingGraphicLayer(
 void BlockingGeneralTool::visitGraphicLayer(
     GraphicMap::BlockingGraphicLayer& layer)
 {
-    qDebug() << "Visit blocking layer";
+    Log::info("Visit blocking layer");
     setBlockingGraphicLayer(&layer);
 }
 
 void BlockingGeneralTool::visitGraphicLayer(
     GraphicMap::EventsGraphicLayer& layer)
 {
-    qDebug() << "Visit event layer";
+    Log::info("Visit event layer");
 }
 
 void BlockingGeneralTool::visitGraphicLayer(GraphicMap::VisibleGraphicLayer&)

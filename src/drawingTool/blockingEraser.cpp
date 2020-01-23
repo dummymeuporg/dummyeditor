@@ -1,9 +1,9 @@
 #include "drawingTool/blockingEraser.hpp"
 
-#include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 
 #include "utils/definitions.hpp"
+#include "utils/Logger.hpp"
 #include "drawingTool/drawingVisitor.hpp"
 #include "graphicMap/layerGraphicBlocking.hpp"
 
@@ -33,7 +33,7 @@ void BlockingEraser::mapMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 
 void BlockingEraser::mapMousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    qDebug() << "Blocking eraser press.";
+    Log::info("Blocking eraser press.");
     if (nullptr == blockingLayer()) {
         return;
     }
@@ -49,7 +49,7 @@ void BlockingEraser::mapMousePressEvent(QGraphicsSceneMouseEvent* event)
 
 void BlockingEraser::mapMouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
-    qDebug() << "Blocking eraser release.";
+    Log::info("Blocking eraser release.");
     m_mouseClicked = false;
 }
 

@@ -3,12 +3,12 @@
 #include <filesystem>
 
 #include <QCloseEvent>
-#include <QDebug>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QShortcut>
 
 #include "utils/definitions.hpp"
+#include "utils/Logger.hpp"
 #include "drawingTool/blockingEraser.hpp"
 #include "drawingTool/blockingPen.hpp"
 #include "drawingTool/drawingSelection.hpp"
@@ -171,7 +171,7 @@ void MainWindow_Old::loadProject(const QString& projectDirectory)
 
 void MainWindow_Old::removeTools()
 {
-    qDebug() << "Remove tools";
+    Log::info("Remove tools");
     m_mapScene->unsetDrawingTool();
     m_chipsetScene->unsetPaletteTool();
     m_ui->widgetDrawingToolbox->clear();
@@ -246,7 +246,7 @@ void MainWindow_Old::on_treeViewMaps_doubleClicked(
     const MapsTreeModel* mapModel = m_currentProject->mapsModel();
 
     QString mapName(mapModel->itemFromIndex(selectedIndex)->text());
-    qDebug() << mapName;
+    Log::info(mapName);
     std::shared_ptr<Editor::Map> map(
         m_currentProject->document(mapName)->m_map);
     m_chipsetScene->setChipset((m_currentProject->coreProject().projectPath()
@@ -303,12 +303,12 @@ void MainWindow_Old::linkToolboxToLayer(GraphicMap::EventsGraphicLayer* layer)
 
 void MainWindow_Old::on_actionUndo_triggered()
 {
-    qDebug() << "Undo. Not implemented";
+    Log::info("TODO : Undo");
 }
 
 void MainWindow_Old::on_actionRedo_triggered()
 {
-    qDebug() << "Redo. Not implemented";
+    Log::info("TODO : Redo");
 }
 
 void MainWindow_Old::on_actionCut_triggered()

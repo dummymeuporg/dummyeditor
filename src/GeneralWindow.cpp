@@ -2,7 +2,6 @@
 #include "ui_GeneralWindow.h"
 
 #include <QCloseEvent>
-#include <QDebug>
 #include <QDir>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -112,7 +111,7 @@ bool GeneralWindow::loadProject(const QString& path)
 
     // TODO: add the project name and the path to the output
     if (nullptr != m_loadedProject)
-        qDebug() << "Project loaded" << endl;
+        Log::info("Project loaded");
 
     return true;
 }
@@ -220,7 +219,7 @@ void GeneralWindow::on_actionNew_triggered()
 
     // TODO: add the project name and the path to the output
     if (nullptr != m_loadedProject)
-        qDebug() << "Project created" << endl;
+        Log::info("Project created");
 
     loadProject(projectDirectory);
 }
@@ -252,7 +251,7 @@ void GeneralWindow::on_actionSave_triggered()
 
     // TODO: create a way to check the save action and get this info to
     // condition the output info
-    qDebug() << "Project saved" << endl;
+    Log::info("Project saved");
 }
 
 void GeneralWindow::on_actionClose_triggered()
@@ -313,17 +312,17 @@ void GeneralWindow::blockingLayerSelected(
 
 void GeneralWindow::on_actionCut_triggered()
 {
-    qDebug() << "Action Cut TODO" << endl;
+    Log::info("TODO : Action Cut");
 }
 
 void GeneralWindow::on_actionCopy_triggered()
 {
-    qDebug() << "Action Copy TODO" << endl;
+    Log::info("TODO : Action Copy");
 }
 
 void GeneralWindow::on_actionPaste_triggered()
 {
-    qDebug() << "Action Paste TODO" << endl;
+    Log::info("TODO : Action Paste");
 }
 
 LoggerStatusBar::LoggerStatusBar(QStatusBar* stsBar)
