@@ -111,7 +111,7 @@ bool GeneralWindow::loadProject(const QString& path)
 
     // TODO: add the project name and the path to the output
     if (nullptr != m_loadedProject)
-        Log::info("Project loaded");
+        Log::info(tr("Project loaded"));
 
     return true;
 }
@@ -133,13 +133,13 @@ bool GeneralWindow::closeProject()
     } else if (resBtn == QMessageBox::No) {
         // Nothing to do
     } else {
-        Log::info("Closing canceled");
+        Log::info(tr("Closing canceled"));
         return false; // failure of closing : cancellation
     }
 
     // Clear project
     m_loadedProject = nullptr;
-    Log::info("Project closed");
+    Log::info(tr("Project closed"));
 
     // Clear view
     updateProjectView();
@@ -219,7 +219,7 @@ void GeneralWindow::on_actionNew_triggered()
 
     // TODO: add the project name and the path to the output
     if (nullptr != m_loadedProject)
-        Log::info("Project created");
+        Log::info(tr("Project created"));
 
     loadProject(projectDirectory);
 }
@@ -251,7 +251,7 @@ void GeneralWindow::on_actionSave_triggered()
 
     // TODO: create a way to check the save action and get this info to
     // condition the output info
-    Log::info("Project saved");
+    Log::info(tr("Project saved"));
 }
 
 void GeneralWindow::on_actionClose_triggered()
@@ -312,17 +312,17 @@ void GeneralWindow::blockingLayerSelected(
 
 void GeneralWindow::on_actionCut_triggered()
 {
-    Log::info("TODO : Action Cut");
+    Log::info(tr("TODO : Action Cut"));
 }
 
 void GeneralWindow::on_actionCopy_triggered()
 {
-    Log::info("TODO : Action Copy");
+    Log::info(tr("TODO : Action Copy"));
 }
 
 void GeneralWindow::on_actionPaste_triggered()
 {
-    Log::info("TODO : Action Paste");
+    Log::info(tr("TODO : Action Paste"));
 }
 
 LoggerStatusBar::LoggerStatusBar(QStatusBar* stsBar)

@@ -2,7 +2,9 @@
 
 #include <algorithm>
 
+#include <QDebug>
 #include <QDir>
+#include <QObject>
 
 #include "editor/layerBlocking.hpp"
 #include "editor/layerEvents.hpp"
@@ -104,7 +106,7 @@ void Project::createFolders(const QString& baseFolder)
                       if (! dir.exists()) {
                           dir.mkpath(".");
                       }
-                      Log::info("create folder " + folder);
+                      Log::info(QObject::tr("create folder ") + folder);
                   });
 }
 

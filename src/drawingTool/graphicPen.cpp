@@ -39,7 +39,7 @@ void GraphicPen::mapMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 
 void GraphicPen::mapMousePressEvent(::QGraphicsSceneMouseEvent* event)
 {
-    Log::info("Pen press.");
+    Log::info(tr("Pen press."));
 
     if (nullptr == selectionItem() || nullptr == visibleGraphicLayer()) {
         return;
@@ -51,7 +51,7 @@ void GraphicPen::mapMousePressEvent(::QGraphicsSceneMouseEvent* event)
 
 void GraphicPen::mapMouseReleaseEvent(::QGraphicsSceneMouseEvent* event)
 {
-    Log::info("Pen release.");
+    Log::info(tr("Pen release."));
     m_mousePressed = false;
 }
 
@@ -73,7 +73,7 @@ void GraphicPen::onUnselected()
         mapGraphScene().removeItem(m_hoverItem);
         m_hoverItem = nullptr;
     }
-    Log::info("Remove selection item.");
+    Log::info(tr("Remove selection item."));
     if (nullptr != selectionItem()) {
         mapGraphScene().removeItem(selectionItem());
         setSelectionItem(nullptr);

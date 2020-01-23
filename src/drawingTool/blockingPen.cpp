@@ -31,7 +31,7 @@ void BlockingPen::mapMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 
 void BlockingPen::mapMousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    Log::info("Blocking pen press.");
+    Log::info(tr("Blocking pen press."));
     if (nullptr == blockingLayer()) {
         return;
     }
@@ -47,7 +47,7 @@ void BlockingPen::mapMousePressEvent(QGraphicsSceneMouseEvent* event)
 
 void BlockingPen::mapMouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
-    Log::info("Pen release.");
+    Log::info(tr("Pen release."));
     m_mouseClicked = false;
 }
 

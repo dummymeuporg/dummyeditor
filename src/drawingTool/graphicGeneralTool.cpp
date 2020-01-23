@@ -18,7 +18,7 @@ GraphicGeneralTool::GraphicGeneralTool(
 void GraphicGeneralTool::emitDrawingToolSelected()
 {
     DrawingTool::emitDrawingToolSelected();
-    Log::info("Emit drawing tool selected.");
+    Log::info(tr("Emit drawing tool selected."));
     emit drawingToolSelected(this);
 }
 
@@ -47,13 +47,13 @@ void GraphicGeneralTool::setVisibleGraphicLayer(
 void GraphicGeneralTool::visitGraphicLayer(
     GraphicMap::VisibleGraphicLayer& layer)
 {
-    Log::info("Visit visible graphic layer");
+    Log::info(tr("Visit visible graphic layer"));
     setVisibleGraphicLayer(&layer);
 }
 void GraphicGeneralTool::visitGraphicLayer(
     GraphicMap::EventsGraphicLayer& layer)
 {
-    Log::info("Visit event graphic layer");
+    Log::info(tr("Visit event graphic layer"));
 }
 
 void GraphicGeneralTool::visitGraphicLayer(GraphicMap::BlockingGraphicLayer&)

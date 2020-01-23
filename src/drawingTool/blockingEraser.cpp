@@ -33,7 +33,7 @@ void BlockingEraser::mapMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 
 void BlockingEraser::mapMousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    Log::info("Blocking eraser press.");
+    Log::info(tr("Blocking eraser press."));
     if (nullptr == blockingLayer()) {
         return;
     }
@@ -49,7 +49,7 @@ void BlockingEraser::mapMousePressEvent(QGraphicsSceneMouseEvent* event)
 
 void BlockingEraser::mapMouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
-    Log::info("Blocking eraser release.");
+    Log::info(tr("Blocking eraser release."));
     m_mouseClicked = false;
 }
 

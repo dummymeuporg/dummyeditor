@@ -171,7 +171,7 @@ void MainWindow_Old::loadProject(const QString& projectDirectory)
 
 void MainWindow_Old::removeTools()
 {
-    Log::info("Remove tools");
+    Log::info(tr("Remove tools"));
     m_mapScene->unsetDrawingTool();
     m_chipsetScene->unsetPaletteTool();
     m_ui->widgetDrawingToolbox->clear();
@@ -303,12 +303,12 @@ void MainWindow_Old::linkToolboxToLayer(GraphicMap::EventsGraphicLayer* layer)
 
 void MainWindow_Old::on_actionUndo_triggered()
 {
-    Log::info("TODO : Undo");
+    Log::info(tr("TODO : Undo"));
 }
 
 void MainWindow_Old::on_actionRedo_triggered()
 {
-    Log::info("TODO : Redo");
+    Log::info(tr("TODO : Redo"));
 }
 
 void MainWindow_Old::on_actionCut_triggered()

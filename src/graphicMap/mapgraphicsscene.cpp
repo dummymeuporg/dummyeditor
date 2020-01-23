@@ -134,7 +134,7 @@ void MapGraphicsScene::adjustLayers() const
 
 void MapGraphicsScene::clearGrid()
 {
-    Log::info("Clear grid.");
+    Log::info(tr("Clear grid."));
     const int nbCells = m_gridItems.count();
     for (int i = 0; i < nbCells; ++i) {
         removeItem(m_gridItems[i]);
@@ -149,7 +149,7 @@ void MapGraphicsScene::drawGrid(quint16 width, quint16 height,
 
     clearGrid();
 
-    Log::info("Draw grid.");
+    Log::info(tr("Draw grid."));
 
     for (int i = 0; i <= width; ++i) {
         QGraphicsItem* item =
@@ -181,7 +181,7 @@ void MapGraphicsScene::setDrawingTool(::DrawingTools::DrawingTool* drawingTool)
         m_currentGraphicLayer->accept(*m_drawingTool);
     }
 
-    Log::info("tool is set.");
+    Log::info(tr("tool is set."));
     m_drawingTool->drawGrid();
 }
 
@@ -216,7 +216,7 @@ void MapGraphicsScene::unsetDrawingTool()
 
 void MapGraphicsScene::setCurrentGraphicLayer(MapSceneLayer* layer)
 {
-    Log::info("Set current graphic layer.");
+    Log::info(tr("Set current graphic layer."));
     m_currentGraphicLayer = layer;
     if (nullptr != m_drawingTool) {
         layer->accept(*m_drawingTool);

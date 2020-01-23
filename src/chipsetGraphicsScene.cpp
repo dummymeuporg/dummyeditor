@@ -87,11 +87,11 @@ void ChipsetGraphicsScene::setPaletteTool(
 {
     m_paletteTool = paletteTool;
     m_paletteTool->setChipsetGraphicsScene(this);
-    Log::info("ChispetGraphicsScene: palette tool set!");
+    Log::info(tr("ChispetGraphicsScene: palette tool set!"));
 }
 
 void ChipsetGraphicsScene::unsetPaletteTool()
 {
     m_paletteTool = nullptr;
-    Log::info("Palette tool unset.");
+    Log::info(tr("Palette tool unset."));
 }

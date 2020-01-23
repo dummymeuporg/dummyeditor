@@ -18,7 +18,7 @@ GraphicPaletteTool::GraphicPaletteTool(
 void GraphicPaletteTool::emitDrawingToolSelected()
 {
     GraphicGeneralTool::emitDrawingToolSelected();
-    Log::info("Emit drawing tool selected.");
+    Log::info(tr("Emit drawing tool selected."));
     emit drawingToolSelected(this);
 }
 
