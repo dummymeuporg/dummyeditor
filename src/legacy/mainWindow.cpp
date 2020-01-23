@@ -171,7 +171,7 @@ void MainWindow_Old::loadProject(const QString& projectDirectory)
 
 void MainWindow_Old::removeTools()
 {
-    Log::info(tr("Remove tools"));
+    Log::debug(tr("Remove tools"));
     m_mapScene->unsetDrawingTool();
     m_chipsetScene->unsetPaletteTool();
     m_ui->widgetDrawingToolbox->clear();
@@ -246,7 +246,7 @@ void MainWindow_Old::on_treeViewMaps_doubleClicked(
     const MapsTreeModel* mapModel = m_currentProject->mapsModel();
 
     QString mapName(mapModel->itemFromIndex(selectedIndex)->text());
-    Log::info(mapName);
+    Log::info(mapName + tr(" selected"));
     std::shared_ptr<Editor::Map> map(
         m_currentProject->document(mapName)->m_map);
     m_chipsetScene->setChipset((m_currentProject->coreProject().projectPath()
@@ -303,12 +303,12 @@ void MainWindow_Old::linkToolboxToLayer(GraphicMap::EventsGraphicLayer* layer)
 
 void MainWindow_Old::on_actionUndo_triggered()
 {
-    Log::info(tr("TODO : Undo"));
+    Log::debug(tr("TODO : Undo"));
 }
 
 void MainWindow_Old::on_actionRedo_triggered()
 {
-    Log::info(tr("TODO : Redo"));
+    Log::debug(tr("TODO : Redo"));
 }
 
 void MainWindow_Old::on_actionCut_triggered()

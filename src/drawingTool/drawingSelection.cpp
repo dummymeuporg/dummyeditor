@@ -101,7 +101,7 @@ void SelectionTool::mapMouseReleaseEvent(QGraphicsSceneMouseEvent*)
 
 void SelectionTool::doCopy()
 {
-    Log::info(tr("Copy"));
+    Log::debug(tr("Copy"));
     m_copyClipboard.clear();
     QRect clip(m_startSelection, m_endSelection);
 
@@ -119,7 +119,7 @@ void SelectionTool::doCopy()
 
 void SelectionTool::doCut()
 {
-    Log::info(tr("TODO : Cut"));
+    Log::debug(tr("TODO : Cut"));
 }
 
 void SelectionTool::doPaste()

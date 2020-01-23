@@ -19,7 +19,7 @@ void BlockingGeneralTool::emitDrawingToolSelected()
 {
     // TODO : check if emiting 2 different signals is really what we want?
     DrawingTool::emitDrawingToolSelected();
-    Log::info(tr("Emit drawing tool selected."));
+    Log::debug(tr("Emit drawing tool selected."));
     emit drawingToolSelected(this);
 }
 
@@ -49,14 +49,14 @@ void BlockingGeneralTool::setBlockingGraphicLayer(
 void BlockingGeneralTool::visitGraphicLayer(
     GraphicMap::BlockingGraphicLayer& layer)
 {
-    Log::info(tr("Visit blocking layer"));
+    Log::debug(tr("Visit blocking layer"));
     setBlockingGraphicLayer(&layer);
 }
 
 void BlockingGeneralTool::visitGraphicLayer(
     GraphicMap::EventsGraphicLayer& layer)
 {
-    Log::info(tr("Visit event layer"));
+    Log::debug(tr("Visit event layer"));
 }
 
 void BlockingGeneralTool::visitGraphicLayer(GraphicMap::VisibleGraphicLayer&)
