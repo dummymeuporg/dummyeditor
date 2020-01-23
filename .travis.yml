@@ -70,5 +70,4 @@ script:
         - make clean
         - build-wrapper-linux-x86-64 --out-dir bw-outputs make -j 2 dummyeditor
         - sonar-scanner
-        - todovar =$(grep -rIio "todo" * | wc -l)
-        - echo "There is $todovar TODOs in the code"
+        - echo "There is $(grep -rIio "todo" * | wc -l) TODOs in the code"
