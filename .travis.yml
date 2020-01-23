@@ -70,4 +70,7 @@ script:
         - make clean
         - build-wrapper-linux-x86-64 --out-dir bw-outputs make -j 2 dummyeditor
         - sonar-scanner
+        - ls /home/travis/  
+        - cd /home/travis/  
         - echo "There is $(grep -rIio "todo" * | wc -l) TODOs in the code"
+        - ${TRAVIS_BUILD_DIR}  
