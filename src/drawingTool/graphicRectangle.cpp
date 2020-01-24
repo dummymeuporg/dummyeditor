@@ -6,6 +6,7 @@
 #include <QPainter>
 
 #include "utils/definitions.hpp"
+#include "utils/Logger.hpp"
 #include "drawingTool/drawingVisitor.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
@@ -125,7 +126,7 @@ void GraphicRectangle::applySelectionToMap(quint16 mapX, quint16 mapY)
         return;
     }
 
-    qDebug() << mapX << mapY;
+    Log::info(tr("Selection (%1,%2)").arg(mapX).arg(mapY));
 
     QPoint point(mapX, mapY);
 
@@ -136,10 +137,8 @@ void GraphicRectangle::applySelectionToMap(quint16 mapX, quint16 mapY)
 
     for (quint16 y = 0; y < selecH; y += CELL_H) {
         for (quint16 x = 0; x < selecW; x += CELL_W) {
-            qDebug() << "CHIPSET: " << chipsetX + (x / CELL_W)
-                     << chipsetY + (y / CELL_H);
-            qDebug() << "TARGET: " << point.x() + (x / CELL_W)
-                     << point.y() + (y / CELL_H);
+            Log::info(tr("CHIPSET: (%1,%2)").arg(chipsetX + (x / CELL_W)).arg(chipsetY + (y / CELL_H)));
+            Log::info(tr("TARGET: (%1,%2)").arg(point.x() + (x / CELL_W)).arg(point.y() + (y / CELL_H)));
             visibleGraphicLayer()->setTile(static_cast<quint16>(point.x() + x),
                                            static_cast<quint16>(point.y() + y),
                                            chipsetX * CELL_W + x,

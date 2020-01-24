@@ -45,8 +45,6 @@ GeneralWindow::GeneralWindow(QWidget* parent)
     updateProjectView();
 
     // UI items connections and shortcuts
-    connect(m_ui->btnNewMap, SIGNAL(clicked()), m_ui->mapsList,
-            SLOT(addMapAtRoot()));
 
     m_ui->actionNew->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_N));
     m_ui->actionNew->setShortcutContext(Qt::ApplicationShortcut);

@@ -7,6 +7,7 @@
 #include "editor/layerBlocking.hpp"
 #include "editor/layerEvents.hpp"
 #include "editor/layerGraphic.hpp"
+#include "utils/Logger.hpp"
 
 namespace Editor {
 Map::Map(const Dummy::Local::Project& project, const std::string& name)
@@ -22,6 +23,11 @@ void Map::load()
     for (auto& floor : m_floors) {
         m_editorFloors.push_back(std::make_unique<Floor>(floor));
     }
+}
+
+void Map::setName(const std::string& newName)
+{
+    m_name = newName;
 }
 
 void Map::setChipset(const std::string& chipset)

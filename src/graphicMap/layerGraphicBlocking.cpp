@@ -3,6 +3,7 @@
 #include <QDebug>
 
 #include "utils/definitions.hpp"
+#include "utils/Logger.hpp"
 #include "editor/layerBlocking.hpp"
 #include "editor/map.hpp"
 #include "graphicMap/graphicItem.hpp"
@@ -55,12 +56,12 @@ void BlockingGraphicLayer::setSelected()
 
 void BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
 {
-    qDebug() << "Toggle tile." << x << y;
+    Log::info(tr("Toggle tile (%1,%2)").arg(x).arg(y));
 
     if (x < (m_blockingLayer.width() * BLOCK_W)
         && y < (m_blockingLayer.height() * BLOCK_H)) {
         size_t index(((y / BLOCK_H) * m_blockingLayer.width()) + (x / BLOCK_W));
-        qDebug() << "Index: " << index;
+        Log::debug(tr("Index: %1").arg(index));
 
         if (m_blockingLayer[index] != 0) {
             m_blockingLayer[index] = false;
@@ -70,8 +71,8 @@ void BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
                 layerItems()[index] = nullptr;
             }
         } else {
-            qDebug() << "False!";
-            qDebug() << x << y;
+            Log::debug(tr("False!"));
+            Log::info(tr("(%1,%2)").arg(x).arg(y));
             draw(index, x, y);
             m_blockingLayer[index] = true;
         }
@@ -80,7 +81,7 @@ void BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
 
 void BlockingGraphicLayer::setTile(quint16 x, quint16 y, bool isBlocking)
 {
-    qDebug() << "Set blocking tile." << x << y;
+    Log::debug(tr("Set blocking tile (%1,%2).").arg(x).arg(y));
     if (x < (m_blockingLayer.width() * BLOCK_W)
         && y < (m_blockingLayer.height() * BLOCK_H)) {
         size_t index(((y / BLOCK_H) * m_blockingLayer.width()) + (x / BLOCK_W));

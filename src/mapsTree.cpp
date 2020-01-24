@@ -1,6 +1,7 @@
 #include "mapsTree.hpp"
 
 #include <QAction>
+#include <QDebug>
 #include <QDomNode>
 #include <QTreeWidgetItem>
 
@@ -17,6 +18,7 @@ MapsTreeView::MapsTreeView(QWidget* parent)
     , m_newMapDialog(new MapEditDialog(this))
     , m_editDialog(new MapEditDialog(this))
 {
+
     // add actions to menu
     m_mapMenu->addAction(m_newMapAction);
     m_mapMenu->addAction(m_editAction);
@@ -59,6 +61,8 @@ void MapsTreeView::showContextMenu(const QPoint& point)
     // Activate "Properties" Action if we clicked on an item
     bool clickedOnItem = m_selectedIndex.isValid();
     m_editAction->setEnabled(clickedOnItem);
+
+    // map names should be modified only though properties and not by clicking on the map twice slowly.
 
     // And finally show the contextual menu
     m_mapMenu->exec(viewport()->mapToGlobal(point));
@@ -115,6 +119,7 @@ void MapsTreeView::editMap(int result)
 
     // TODO changing the name has influence on its map<name;mapDoc> in
     // project... so it's harder, but should be possible
+    m_editedMap->setName(m_editDialog->getMapName().toStdString());
 
     std::string strChipset = m_editDialog->getChipset().toStdString();
     if (strChipset != m_editedMap->chipset()) {
@@ -143,6 +148,7 @@ void MapsTreeView::showEditDlg()
 
     m_editDialog->setup(*m_project, mapDocument);
     m_editDialog->open();
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////

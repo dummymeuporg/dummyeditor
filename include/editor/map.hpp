@@ -41,6 +41,7 @@ public:
     explicit Map(const Dummy::Local::Project&, const std::string&);
     virtual ~Map();
 
+    void setName (const std::string&);
     void setChipset(const std::string&);
     void setMusic(const std::string&);
     void reset(std::uint16_t, std::uint16_t);
