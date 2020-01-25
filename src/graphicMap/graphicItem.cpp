@@ -24,12 +24,8 @@ QRectF GraphicItem::boundingRect() const
     }
 }
 
-void GraphicItem::paint(QPainter* painter,
-                        const QStyleOptionGraphicsItem* option, QWidget* widget)
+void GraphicItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
-    Q_UNUSED(option)
-    Q_UNUSED(widget)
-
     switch (m_type) {
     case eGraphicItemType::eBlockingCross:
         painter->setBrush(Qt::black);

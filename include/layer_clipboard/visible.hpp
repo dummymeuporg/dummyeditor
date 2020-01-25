@@ -2,7 +2,6 @@
 #define LAYERCLIPBOARDVISIBLE_H
 
 #include <cstdint>
-#include <utility>
 #include <vector>
 
 #include <QRect>
@@ -30,15 +29,7 @@ public:
     Visible(const QRect&, const std::vector<std::pair<int8_t, int8_t>>&);
     Visible(QRect&&, std::vector<std::pair<int8_t, int8_t>>&&);
 
-    void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override;
-    void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override
-    {
-        throw GraphicMap::GraphicLayerNotSupported();
-    }
-    void visitGraphicLayer(GraphicMap::EventsGraphicLayer&) override
-    {
-        throw GraphicMap::GraphicLayerNotSupported();
-    }
+    void paste(GraphicMap::VisibleGraphicLayer&);
 
 private:
     QRect m_clip;

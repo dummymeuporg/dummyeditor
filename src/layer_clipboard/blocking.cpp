@@ -1,7 +1,7 @@
 #include "layer_clipboard/blocking.hpp"
 
-#include "utils/definitions.hpp"
 #include "graphicMap/layerGraphicBlocking.hpp"
+#include "utils/definitions.hpp"
 
 namespace LayerClipboard {
 
@@ -15,7 +15,7 @@ Blocking::Blocking(QRect&& clip, std::vector<uint8_t>&& content)
     , m_content(std::move(content))
 {}
 
-void Blocking::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer)
+void Blocking::paste(GraphicMap::BlockingGraphicLayer& layer)
 {
     // apply clipboard to layer.
     const int clipW  = m_clip.width();

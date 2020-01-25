@@ -1,43 +1,37 @@
-#ifndef BLOCKING_H
-#define BLOCKING_H
+#ifndef GRAPHICPEN_H
+#define GRAPHICPEN_H
 
-#include "drawingTool/blockingGeneralTool.hpp"
-
-//////////////////////////////////////////////////////////////////////////////
-//  forward declaration
-//////////////////////////////////////////////////////////////////////////////
-
-class QGraphicsSceneMouseEvent;
-
-namespace GraphicMap {
-class BlockingGraphicLayer;
-}
+#include "legacy/drawingTool/graphicPaletteTool.hpp"
 
 namespace DrawingTools {
 
 //////////////////////////////////////////////////////////////////////////////
-//  BlockingPen class
+//  GraphicPen class
 //////////////////////////////////////////////////////////////////////////////
 
-class BlockingPen : public BlockingGeneralTool
+class GraphicPen : public GraphicPaletteTool
 {
     Q_OBJECT
 public:
-    BlockingPen(GraphicMap::MapGraphicsScene&,
-                GraphicMap::BlockingGraphicLayer* = nullptr);
+    GraphicPen(GraphicMap::MapGraphicsScene&,
+               GraphicMap::VisibleGraphicLayer* = nullptr);
     void accept(DrawingVisitor&) override;
     void mapMousePressEvent(QGraphicsSceneMouseEvent*) override;
     void mapMouseMoveEvent(QGraphicsSceneMouseEvent*) override;
     void mapMouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
     void emitDrawingToolSelected() override;
+    void onUnselected() override;
 
 signals:
     void drawingToolSelected(::DrawingTools::DrawingTool*);
 
 private:
-    bool m_mouseClicked = false;
+    void drawPattern(const QGraphicsSceneMouseEvent*);
+
+    QGraphicsPixmapItem* m_hoverItem = nullptr;
+    bool m_mousePressed              = false;
 };
 
 } // namespace DrawingTools
 
-#endif // BLOCKING_H
+#endif // GRAPHICPEN_H

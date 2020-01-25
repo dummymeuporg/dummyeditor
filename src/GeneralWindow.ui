@@ -93,8 +93,14 @@
                 <property name="contextMenuPolicy">
                  <enum>Qt::CustomContextMenu</enum>
                 </property>
+                <property name="editTriggers">
+                 <set>QAbstractItemView::NoEditTriggers</set>
+                </property>
                 <property name="dragEnabled">
                  <bool>true</bool>
+                </property>
+                <property name="dragDropMode">
+                 <enum>QAbstractItemView::InternalMove</enum>
                 </property>
                 <property name="expandsOnDoubleClick">
                  <bool>false</bool>
@@ -222,7 +228,7 @@
      <x>0</x>
      <y>0</y>
      <width>1084</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

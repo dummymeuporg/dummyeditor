@@ -1,17 +1,17 @@
-#include "drawingTool/drawingSelection.hpp"
+#include "legacy/drawingTool/drawingSelection.hpp"
 
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 #include <QKeyEvent>
 #include <typeinfo>
 
-#include "utils/definitions.hpp"
-#include "utils/Logger.hpp"
-#include "drawingTool/drawingVisitor.hpp"
 #include "editor/map.hpp"
 #include "graphicMap/layerGraphicBlocking.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
+#include "legacy/drawingTool/drawingVisitor.hpp"
+#include "utils/Logger.hpp"
+#include "utils/definitions.hpp"
 
 namespace DrawingTools {
 
@@ -33,11 +33,6 @@ void SelectionTool::mapMousePressEvent(QGraphicsSceneMouseEvent* event)
 
     m_mouseClicked = true;
 
-    if (nullptr != m_selectionRectItem) {
-        mapGraphScene().invalidate(m_selectionRectItem->rect());
-        mapGraphScene().removeItem(m_selectionRectItem);
-    }
-
     drawSelection();
 }
 
@@ -48,8 +43,7 @@ void SelectionTool::drawSelection()
     QPoint start;
     QPoint end;
 
-    if (m_startSelection.x() <= m_endSelection.x()
-        && m_startSelection.y() <= m_endSelection.y()) {
+    if (m_startSelection.x() <= m_endSelection.x() && m_startSelection.y() <= m_endSelection.y()) {
         start = m_startSelection;
         end   = m_endSelection;
     } else {
@@ -57,24 +51,12 @@ void SelectionTool::drawSelection()
         start = m_endSelection;
     }
 
-    QRect rectSelection(start.x(), start.y(), (end.x() - start.x()) + CELL_W,
-                        (end.y() - start.y()) + CELL_H);
+    QRect rectSelection(start.x(), start.y(), (end.x() - start.x()) + CELL_W, (end.y() - start.y()) + CELL_H);
 
-    QBrush brush(QColor(66, 135, 245));
-
-    m_selectionRectItem = mapGraphScene().addRect(rectSelection);
-    m_selectionRectItem->setZValue(Z_SELEC);
-    m_selectionRectItem->setBrush(brush);
-    m_selectionRectItem->setOpacity(0.5);
+    mapGraphScene().setSelection(rectSelection);
 }
 
-void SelectionTool::drawGrid()
-{
-    auto map = mapGraphScene().map();
-    if (nullptr != map) {
-        mapGraphScene().drawGrid(map->width(), map->height(), CELL_W);
-    }
-}
+void SelectionTool::drawGrid() {}
 
 void SelectionTool::mapMouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
@@ -82,11 +64,6 @@ void SelectionTool::mapMouseMoveEvent(QGraphicsSceneMouseEvent* event)
         QPoint pt(event->scenePos().toPoint());
         m_endSelection.setX(pt.x() - (pt.x() % CELL_W));
         m_endSelection.setY(pt.y() - (pt.y() % CELL_H));
-
-        if (nullptr != m_selectionRectItem) {
-            mapGraphScene().invalidate(m_selectionRectItem->rect());
-            mapGraphScene().removeItem(m_selectionRectItem);
-        }
 
         drawSelection();
     }
@@ -112,8 +89,7 @@ void SelectionTool::doCopy()
 
     // copy blocking tiles
     for (const auto& pBlockLayer : mapGraphScene().blockingLayers()) {
-        m_copyClipboard[pBlockLayer.get()] =
-            pBlockLayer->getClipboardRegion(clip);
+        m_copyClipboard[pBlockLayer.get()] = pBlockLayer->getClipboardRegion(clip);
     }
 }
 
@@ -139,15 +115,9 @@ void SelectionTool::emitDrawingToolSelected()
     emit drawingToolSelected(this);
 }
 
-void SelectionTool::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer)
-{
-    mapGraphScene().redrawGrid();
-}
+void SelectionTool::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer) {}
 
-void SelectionTool::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer)
-{
-    mapGraphScene().redrawGrid();
-}
+void SelectionTool::visitGraphicLayer(GraphicMap::BlockingGraphicLayer& layer) {}
 
 void SelectionTool::visitGraphicLayer(GraphicMap::EventsGraphicLayer& layer)
 {

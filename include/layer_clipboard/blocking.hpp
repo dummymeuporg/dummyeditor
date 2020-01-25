@@ -28,15 +28,7 @@ public:
     Blocking(const QRect&, const std::vector<uint8_t>&);
     Blocking(QRect&&, std::vector<uint8_t>&&);
 
-    void visitGraphicLayer(GraphicMap::BlockingGraphicLayer&) override;
-    void visitGraphicLayer(GraphicMap::VisibleGraphicLayer&) override
-    {
-        throw GraphicMap::GraphicLayerNotSupported();
-    }
-    void visitGraphicLayer(GraphicMap::EventsGraphicLayer&) override
-    {
-        throw GraphicMap::GraphicLayerNotSupported();
-    }
+    void paste(GraphicMap::BlockingGraphicLayer&);
 
 private:
     QRect m_clip;

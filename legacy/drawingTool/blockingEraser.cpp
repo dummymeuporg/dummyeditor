@@ -1,10 +1,10 @@
-#include "drawingTool/blockingEraser.hpp"
+#include "legacy/drawingTool/blockingEraser.hpp"
 
 #include <QGraphicsSceneMouseEvent>
 
 #include "utils/definitions.hpp"
 #include "utils/Logger.hpp"
-#include "drawingTool/drawingVisitor.hpp"
+#include "legacy/drawingTool/drawingVisitor.hpp"
 #include "graphicMap/layerGraphicBlocking.hpp"
 
 namespace DrawingTools {

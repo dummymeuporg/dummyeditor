@@ -11,9 +11,9 @@
 #include "editor/layerGraphic.hpp"
 #include "editor/map.hpp"
 #include "editor/startingPoint.hpp"
-#include "utils/mapDocument.hpp"
-#include "utils/Logger.hpp"
 #include "mapsTree.hpp"
+#include "utils/Logger.hpp"
+#include "utils/mapDocument.hpp"
 
 namespace Editor {
 
@@ -21,13 +21,11 @@ Project::Project(const std::string& projectFolder)
     : m_coreProject(fs::path(projectFolder))
 {
     // Try to read the "project.xml" file that should be present in folderPath.
-    QFile xmlProjectFile(
-        (m_coreProject.projectPath() / "project.xml").string().c_str());
+    QFile xmlProjectFile((m_coreProject.projectPath() / "project.xml").string().c_str());
     m_domDocument.setContent(&xmlProjectFile);
     xmlProjectFile.close();
 
-    QDomNodeList mapsNodes =
-        m_domDocument.documentElement().elementsByTagName("maps");
+    QDomNodeList mapsNodes = m_domDocument.documentElement().elementsByTagName("maps");
 
     if (mapsNodes.length() > 0) {
         m_mapsModel = new MapsTreeModel(mapsNodes.at(0));
@@ -35,17 +33,15 @@ Project::Project(const std::string& projectFolder)
         // XXX: Throw exception?
     }
 
-    QDomNodeList startingPositionNodes =
-        m_domDocument.documentElement().elementsByTagName("starting_point");
+    QDomNodeList startingPositionNodes = m_domDocument.documentElement().elementsByTagName("starting_point");
 
     if (startingPositionNodes.length() > 0) {
         const QDomNode& startingPositionNode(startingPositionNodes.at(0));
         const QDomNamedNodeMap& attributes(startingPositionNode.attributes());
-        m_startingPoint = std::make_unique<StartingPoint>(
-            attributes.namedItem("map").nodeValue().toStdString().c_str(),
-            attributes.namedItem("x").nodeValue().toUShort(),
-            attributes.namedItem("y").nodeValue().toUShort(),
-            attributes.namedItem("floor").nodeValue().toUShort());
+        m_startingPoint = std::make_unique<StartingPoint>(attributes.namedItem("map").nodeValue().toStdString().c_str(),
+                                                          attributes.namedItem("x").nodeValue().toUShort(),
+                                                          attributes.namedItem("y").nodeValue().toUShort(),
+                                                          attributes.namedItem("floor").nodeValue().toUShort());
     }
 }
 
@@ -100,14 +96,13 @@ QDomDocument Project::createXmlProjectTree()
 void Project::createFolders(const QString& baseFolder)
 {
     std::vector<QString> folders {"maps", "chipsets", "sounds"};
-    std::for_each(folders.begin(), folders.end(),
-                  [&baseFolder](const QString& folder) {
-                      QDir dir(baseFolder + "/" + folder);
-                      if (! dir.exists()) {
-                          dir.mkpath(".");
-                      }
-                      Log::info(QObject::tr("create folder ") + folder);
-                  });
+    std::for_each(folders.begin(), folders.end(), [&baseFolder](const QString& folder) {
+        QDir dir(baseFolder + "/" + folder);
+        if (! dir.exists()) {
+            dir.mkpath(".");
+        }
+        Log::info(QObject::tr("create folder ") + folder);
+    });
 }
 
 void Project::saveProject()
@@ -124,14 +119,12 @@ void Project::saveProject()
         startingPointNode.setAttribute("map", m_startingPoint->mapName());
         startingPointNode.setAttribute("x", m_startingPoint->x());
         startingPointNode.setAttribute("y", m_startingPoint->y());
-        startingPointNode.setAttribute(
-            "floor", static_cast<std::uint16_t>(m_startingPoint->floor()));
+        startingPointNode.setAttribute("floor", static_cast<std::uint16_t>(m_startingPoint->floor()));
         projectNode.appendChild(startingPointNode);
     }
 
     dumpToXmlNode(doc, mapsNode, m_mapsModel->invisibleRootItem());
-    QString xmlPath(
-        (m_coreProject.projectPath() / "project.xml").string().c_str());
+    QString xmlPath((m_coreProject.projectPath() / "project.xml").string().c_str());
 
     // XXX: Handle errors eventually.
     QFile file(xmlPath);
@@ -142,13 +135,12 @@ void Project::saveProject()
 
     if (openedMaps().count() > 0) {
         for (auto e : openedMaps().keys()) {
-            document(e)->m_map->save();
+            document(e).m_map->save();
         }
     }
 }
 
-void Project::dumpToXmlNode(QDomDocument& doc, QDomElement& xmlNode,
-                            const QStandardItem* modelItem)
+void Project::dumpToXmlNode(QDomDocument& doc, QDomElement& xmlNode, const QStandardItem* modelItem)
 {
     const int nbRows = modelItem->rowCount();
     for (int i = 0; i < nbRows; ++i) {
@@ -204,21 +196,19 @@ void Project::createMap(const tMapInfo& mapInfo, QStandardItem& parent)
     parent.appendRow(mapRow);
 }
 
-std::shared_ptr<MapDocument> Project::document(const QString& mapName)
+const MapDocument& Project::document(const QString& mapName)
 {
     QString cleantMapname(mapName);
     cleanMapName(cleantMapname);
 
     if (! m_openedMaps.contains(cleantMapname)) {
-        auto map = std::make_shared<Editor::Map>(m_coreProject,
-                                                 cleantMapname.toStdString());
+        auto map = std::make_shared<Editor::Map>(m_coreProject, cleantMapname.toStdString());
         map->load();
 
-        auto mapDocument =
-            std::make_shared<MapDocument>(*this, cleantMapname, map);
+        auto mapDocument = std::make_shared<MapDocument>(*this, cleantMapname, map);
 
         m_openedMaps.insert(cleantMapname, mapDocument);
     }
-    return m_openedMaps[cleantMapname];
+    return *(m_openedMaps[cleantMapname]);
 }
 } // namespace Editor

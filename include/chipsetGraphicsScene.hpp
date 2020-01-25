@@ -1,15 +1,8 @@
 #ifndef CHIPSETGRAPHICSCENE_H
 #define CHIPSETGRAPHICSCENE_H
 
+#include <QGraphicsRectItem>
 #include <QGraphicsScene>
-
-//////////////////////////////////////////////////////////////////////////////
-//  forward declaration
-//////////////////////////////////////////////////////////////////////////////
-
-namespace DrawingTools {
-class GraphicPaletteTool;
-} // namespace DrawingTools
 
 //////////////////////////////////////////////////////////////////////////////
 //  ChipsetGraphicsScene class
@@ -24,28 +17,21 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent*) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
 
-    QGraphicsPixmapItem* chipset() const { return m_chipset; }
-
-    void setChipset(const QPixmap& pixmap);
-    void setChipset(const QString& chipsetPath);
-    void setSelection(const QRect& selection);
-    void unsetPaletteTool();
+    const QPixmap& chipset() { return m_chipset; }
 
 public slots:
-    void setPaletteTool(::DrawingTools::GraphicPaletteTool*);
-    void changeChipset(const QString& chipsetPath);
-
-signals:
-    void selectionChanged(QRect, QPixmap);
-    void chipsetChanged(QString);
+    void setChipset(const QString& chipsetPath);
 
 private:
     void drawGrid();
+    void setSelectRect(const QRect&);
 
 private:
-    QGraphicsPixmapItem* m_chipset = nullptr;
+    QPixmap m_chipset;
+    QGraphicsRectItem* m_selectionRectItem = nullptr; // Qt deletes it
+    bool m_isSelecting                     = false;
     QRect m_currentSelection;
-    DrawingTools::GraphicPaletteTool* m_paletteTool = nullptr;
+    QPoint m_selectionStart;
 };
 
 #endif // CHIPSETGRAPHICSCENE_H

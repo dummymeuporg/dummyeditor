@@ -18,8 +18,7 @@ MapEditDialog::MapEditDialog(QWidget* parent)
 
 MapEditDialog::~MapEditDialog() {}
 
-void MapEditDialog::setup(const Editor::Project& project,
-                          std::shared_ptr<MapDocument> mapDocument)
+void MapEditDialog::setup(const Editor::Project& project, const MapDocument* mapDocument)
 {
     // TODO clean/reset ?
 
@@ -33,8 +32,7 @@ void MapEditDialog::setup(const Editor::Project& project,
     }
 
     // TODO replace call to filesystem with QFile ?
-    m_chipsetPath = QString::fromStdString(
-        (project.coreProject().projectPath() / "chipsets").string());
+    m_chipsetPath = QString::fromStdString((project.coreProject().projectPath() / "chipsets").string());
 
     // On Windows, fs::pash puts some backslashes. That sucks.
     // Clean path uses slashes, remove weird paths as "folder/../folder"
@@ -98,8 +96,7 @@ bool MapEditDialog::inputsAreValid(QString* errorMessage)
 void MapEditDialog::on_pushButtonBrowseChipset_clicked()
 {
     // TODO use .open() instead of .exec() ?
-    QFileDialog dlg(this, tr("Choose the chipset file for your map."),
-                    m_chipsetPath, "PNG files (*.png)");
+    QFileDialog dlg(this, tr("Choose the chipset file for your map."), m_chipsetPath, "PNG files (*.png)");
 
     if (dlg.exec() != QDialog::Accepted)
         return;
@@ -108,12 +105,9 @@ void MapEditDialog::on_pushButtonBrowseChipset_clicked()
     QString selectedChipset     = dlg.selectedFiles().at(0);
     int indexOfFileNameInString = selectedChipset.indexOf(m_chipsetPath);
     if (indexOfFileNameInString < 0) {
-        QMessageBox::critical(
-            this, tr("Error"),
-            tr("Please select a chipset inside the 'chipset' folder."));
+        QMessageBox::critical(this, tr("Error"), tr("Please select a chipset inside the 'chipset' folder."));
     } else {
-        m_ui->lineEditChipset->setText(selectedChipset.mid(
-            indexOfFileNameInString + 1 + m_chipsetPath.size()));
+        m_ui->lineEditChipset->setText(selectedChipset.mid(indexOfFileNameInString + 1 + m_chipsetPath.size()));
     }
 }
 

@@ -7,21 +7,21 @@
 #include <QMessageBox>
 #include <QShortcut>
 
-#include "utils/definitions.hpp"
-#include "utils/Logger.hpp"
-#include "drawingTool/blockingEraser.hpp"
-#include "drawingTool/blockingPen.hpp"
-#include "drawingTool/drawingSelection.hpp"
+#include "legacy/drawingTool/blockingEraser.hpp"
+#include "legacy/drawingTool/blockingPen.hpp"
+#include "legacy/drawingTool/drawingSelection.hpp"
 #include "editor/map.hpp"
 #include "editor/project.hpp"
+#include "utils/Logger.hpp"
+#include "utils/definitions.hpp"
 
 #include "graphicMap/layerGraphicBlocking.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
 
 #include "chipsetGraphicsScene.hpp"
-#include "utils/mapDocument.hpp"
 #include "ui_mainwindow.h"
+#include "utils/mapDocument.hpp"
 
 MainWindow_Old::MainWindow_Old(QWidget* parent)
     : QMainWindow(parent)
@@ -75,7 +75,7 @@ MainWindow_Old::MainWindow_Old(QWidget* parent)
     initializeScenes();
 
     QObject::connect(m_ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
-                     m_chipsetScene, SLOT(changeChipset(QString)));
+                     m_chipsetScene, SLOT(setChipset(QString)));
 
     m_ui->graphicsViewChipset->scale(2.0, 2.0);
     m_ui->graphicsViewMap->scale(2.0, 2.0);
@@ -91,32 +91,6 @@ MainWindow_Old::MainWindow_Old(QWidget* parent)
      ******************************************************/
 
     connect(m_ui->actionQuit, SIGNAL(triggered()), this, SLOT(close()));
-    //m_ui->actionQuit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
-    //m_ui->actionQuit->setShortcutContext(Qt::ApplicationShortcut);
-
-    //m_ui->actionNew->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_N));
-    //m_ui->actionNew->setShortcutContext(Qt::ApplicationShortcut);
-
-    //m_ui->actionOpen->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_O));
-    //m_ui->actionOpen->setShortcutContext(Qt::ApplicationShortcut);
-
-    //m_ui->actionSave->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
-    //m_ui->actionSave->setShortcutContext(Qt::ApplicationShortcut);
-
-    //m_ui->actionUndo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
-    //m_ui->actionUndo->setShortcutContext(Qt::ApplicationShortcut);
-
-    //m_ui->actionRedo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y));
-    //m_ui->actionRedo->setShortcutContext(Qt::ApplicationShortcut);
-
-    //m_ui->actionCut->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_X));
-    //m_ui->actionCut->setShortcutContext(Qt::WindowShortcut);
-
-    //m_ui->actionCopy->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_C));
-    //m_ui->actionCopy->setShortcutContext(Qt::WindowShortcut);
-
-    //m_ui->actionPaste->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_V));
-    //m_ui->actionPaste->setShortcutContext(Qt::WindowShortcut);
 }
 
 MainWindow_Old::~MainWindow_Old()
@@ -143,7 +117,7 @@ void MainWindow_Old::initializeScenes()
 void MainWindow_Old::connectScenes()
 {
     QObject::connect(m_ui->treeViewMaps, SIGNAL(chipsetMapChanged(QString)),
-                     m_chipsetScene, SLOT(changeChipset(QString)));
+                     m_chipsetScene, SLOT(setChipset(QString)));
 }
 
 void MainWindow_Old::closeCurrentProject()
@@ -173,7 +147,6 @@ void MainWindow_Old::removeTools()
 {
     Log::debug(tr("Remove tools"));
     m_mapScene->unsetDrawingTool();
-    m_chipsetScene->unsetPaletteTool();
     m_ui->widgetDrawingToolbox->clear();
 }
 

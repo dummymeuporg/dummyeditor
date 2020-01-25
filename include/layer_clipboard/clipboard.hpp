@@ -3,15 +3,13 @@
 
 #include <QPoint>
 
-#include "graphicMap/graphicLayerVisitor.hpp"
-
 namespace LayerClipboard {
 
 //////////////////////////////////////////////////////////////////////////////
 //  Clipboard class
 //////////////////////////////////////////////////////////////////////////////
 
-class Clipboard : public GraphicMap::GraphicLayerVisitor
+class Clipboard
 {
 public:
     Clipboard();

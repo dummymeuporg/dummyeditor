@@ -6,7 +6,7 @@
 #include <QMainWindow>
 #include <QModelIndex>
 
-#include "drawingTool/drawingVisitor.hpp"
+#include "legacy/drawingTool/drawingVisitor.hpp"
 #include "graphicMap/graphicLayerVisitor.hpp"
 
 //////////////////////////////////////////////////////////////////////////////

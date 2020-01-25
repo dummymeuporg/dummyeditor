@@ -7,8 +7,8 @@
 
 #include "editor/map.hpp"
 #include "editor/project.hpp"
-#include "utils/mapDocument.hpp"
 #include "mapEditDialog.hpp"
+#include "utils/mapDocument.hpp"
 
 MapsTreeView::MapsTreeView(QWidget* parent)
     : QTreeView(parent)
@@ -26,8 +26,7 @@ MapsTreeView::MapsTreeView(QWidget* parent)
     connect(m_newMapAction, SIGNAL(triggered()), this, SLOT(showNewMapDlg()));
     connect(m_editAction, SIGNAL(triggered()), this, SLOT(showEditDlg()));
     // connect menu pop-up
-    connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this,
-            SLOT(showContextMenu(const QPoint&)));
+    connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showContextMenu(const QPoint&)));
     m_mapMenu->setEnabled(false);
 
     // connect new map dialog
@@ -123,9 +122,8 @@ void MapsTreeView::editMap(int result)
 
     std::string strChipset = m_editDialog->getChipset().toStdString();
     if (strChipset != m_editedMap->chipset()) {
-        emit chipsetMapChanged(QString::fromStdString(
-            (m_project->coreProject().projectPath() / "chipsets" / strChipset)
-                .string()));
+        emit chipsetMapChanged(
+            QString::fromStdString((m_project->coreProject().projectPath() / "chipsets" / strChipset).string()));
         m_editedMap->setChipset(strChipset);
     }
     m_editedMap->setMusic(m_editDialog->getMusic().toStdString());
@@ -140,15 +138,13 @@ void MapsTreeView::editMap(int result)
 
 void MapsTreeView::showEditDlg()
 {
-    const QStandardItem* item =
-        m_project->mapsModel()->itemFromIndex(m_selectedIndex);
-    auto mapDocument = m_project->document(item->text());
+    const QStandardItem* item = m_project->mapsModel()->itemFromIndex(m_selectedIndex);
+    auto& mapDocument         = m_project->document(item->text());
 
-    m_editedMap = mapDocument->m_map;
+    m_editedMap = mapDocument.m_map;
 
-    m_editDialog->setup(*m_project, mapDocument);
+    m_editDialog->setup(*m_project, &mapDocument);
     m_editDialog->open();
-
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -168,7 +164,7 @@ void MapsTreeModel::XmlMapToQItem(const QDomNode& node, QStandardItem* parent)
         const auto& n = children.at(i);
 
         if (n.nodeName() == "map") {
-            QString mapName = n.attributes().namedItem("name").nodeValue();
+            QString mapName        = n.attributes().namedItem("name").nodeValue();
             QStandardItem* mapItem = new QStandardItem(mapName);
             parent->appendRow(mapItem);
 
@@ -177,8 +173,7 @@ void MapsTreeModel::XmlMapToQItem(const QDomNode& node, QStandardItem* parent)
     }
 }
 
-QVariant MapsTreeModel::headerData(int section, Qt::Orientation orientation,
-                                   int role) const
+QVariant MapsTreeModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role == Qt::DisplayRole          //
         && orientation == Qt::Horizontal //

@@ -1,7 +1,7 @@
 #include "layer_clipboard/visible.hpp"
 
-#include "utils/definitions.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
+#include "utils/definitions.hpp"
 
 using std::pair;
 using std::vector;
@@ -18,7 +18,7 @@ Visible::Visible(QRect&& clip, vector<pair<int8_t, int8_t>>&& content)
     , m_content(std::move(content))
 {}
 
-void Visible::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer)
+void Visible::paste(GraphicMap::VisibleGraphicLayer& layer)
 {
     // apply clipboard to layer.
     const int clipW  = m_clip.width();
@@ -29,8 +29,7 @@ void Visible::visitGraphicLayer(GraphicMap::VisibleGraphicLayer& layer)
         for (int x = 0; x < clipW; x += CELL_W) {
             auto value = m_content.at(clipIndex);
             ++clipIndex;
-            layer.setTile(target().x() + x, target().y() + y,
-                          value.first * CELL_W, value.second * CELL_H);
+            layer.setTile(target().x() + x, target().y() + y, value.first * CELL_W, value.second * CELL_H);
         }
     }
 }

@@ -1,7 +1,7 @@
 #ifndef GRAPHICPALETTETOOL_H
 #define GRAPHICPALETTETOOL_H
 
-#include "drawingTool/graphicGeneralTool.hpp"
+#include "legacy/drawingTool/graphicGeneralTool.hpp"
 
 //////////////////////////////////////////////////////////////////////////////
 //  forward declaration
@@ -22,17 +22,13 @@ class GraphicPaletteTool : public GraphicGeneralTool
 {
     Q_OBJECT
 public:
-    GraphicPaletteTool(QIcon&&, GraphicMap::MapGraphicsScene&,
-                       GraphicMap::VisibleGraphicLayer* = nullptr);
+    GraphicPaletteTool(QIcon&&, GraphicMap::MapGraphicsScene&, GraphicMap::VisibleGraphicLayer* = nullptr);
     void paletteMousePressEvent(const QGraphicsSceneMouseEvent*);
     void paletteMouseMoveEvent(const QGraphicsSceneMouseEvent*);
     void paletteMouseReleaseEvent(const QGraphicsSceneMouseEvent*);
     void emitDrawingToolSelected() override;
     void setSelection(const QRect&, const QPixmap&);
-    ChipsetGraphicsScene* chipsetGraphicsScene() const
-    {
-        return m_chipsetGraphicsScene;
-    }
+    ChipsetGraphicsScene* chipsetGraphicsScene() const { return m_chipsetGraphicsScene; }
     void setChipsetGraphicsScene(ChipsetGraphicsScene*);
     void onUnselected() override;
 
@@ -42,15 +38,12 @@ signals:
     void drawingToolSelected(::DrawingTools::GraphicPaletteTool*);
 
 protected:
-    QGraphicsPixmapItem* selectionItem() const { return m_selectionItem; }
-    void setSelectionItem(QGraphicsPixmapItem* i) { m_selectionItem = i; }
     const QRect& rectSelection() const { return m_rectSelection; }
     const QPixmap& selectionPixmap() const { return m_selectionPixmap; }
 
 private:
     ChipsetGraphicsScene* m_chipsetGraphicsScene = nullptr;
     QGraphicsRectItem* m_selectionRectItem       = nullptr;
-    QGraphicsPixmapItem* m_selectionItem         = nullptr;
     bool m_isSelecting                           = false;
     QRect m_rectSelection;
     QPixmap m_selectionPixmap;

@@ -1,10 +1,10 @@
-#include "drawingTool/graphicEraser.hpp"
+#include "legacy/drawingTool/graphicEraser.hpp"
 
 #include <QGraphicsSceneMouseEvent>
 
 #include "utils/definitions.hpp"
 #include "utils/Logger.hpp"
-#include "drawingTool/drawingVisitor.hpp"
+#include "legacy/drawingTool/drawingVisitor.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
 
 namespace DrawingTools {

@@ -1,11 +1,11 @@
-#include "drawingToolbarWidget.hpp"
+#include "legacy/drawingtoolbarWidget.hpp"
 
 #include <QAction>
 #include <QActionGroup>
 #include <QHBoxLayout>
 
 #include "chipsetGraphicsScene.hpp"
-#include "drawingTool/graphicPaletteTool.hpp"
+#include "legacy/drawingTool/graphicPaletteTool.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
 
 DrawingToolBarWidget::DrawingToolBarWidget(::QWidget* parent)
@@ -54,12 +54,14 @@ void DrawingToolBarWidget::changeActiveLayer(
         auto* paletteTool =
             dynamic_cast<DrawingTools::GraphicPaletteTool*>(tool);
         if (paletteTool != nullptr) {
-            QObject::connect(
-                paletteTool,
-                SIGNAL(
-                    drawingToolSelected(::DrawingTools::GraphicPaletteTool*)),
-                chipset,
-                SLOT(setPaletteTool(::DrawingTools::GraphicPaletteTool*)));
+            /*
+              QObject::connect(
+                  paletteTool,
+                  SIGNAL(
+                      drawingToolSelected(::DrawingTools::GraphicPaletteTool*)),
+                  chipset,
+                  SLOT(setPaletteTool(::DrawingTools::GraphicPaletteTool*)));
+  */
         }
 
         m_actions.push_back(std::move(pAction));

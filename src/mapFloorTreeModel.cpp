@@ -99,7 +99,7 @@ LayerTreeItem::LayerTreeItem(Editor::Layer& layer, eLayerType type, int8_t idx)
     , m_type(type)
     , m_index(idx)
 {
-    setVisible(true);
+    setVisibilityIcon(true);
 }
 
 QVariant LayerTreeItem::data(int role) const

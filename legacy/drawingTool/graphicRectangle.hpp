@@ -1,7 +1,7 @@
 #ifndef GRAPHICRECTANGLE_H
 #define GRAPHICRECTANGLE_H
 
-#include "drawingTool/graphicPaletteTool.hpp"
+#include "legacy/drawingTool/graphicPaletteTool.hpp"
 
 namespace DrawingTools {
 

@@ -1,7 +1,7 @@
 #ifndef BLOCKINGTOOL_H
 #define BLOCKINGTOOL_H
 
-#include "drawingTool/drawingTool.hpp"
+#include "legacy/drawingTool/drawingTool.hpp"
 
 //////////////////////////////////////////////////////////////////////////////
 //  forward declaration

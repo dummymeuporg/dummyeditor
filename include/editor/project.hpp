@@ -39,7 +39,7 @@ public:
     // Getters
     MapsTreeModel* mapsModel();
     const Dummy::Local::Project& coreProject() const { return m_coreProject; }
-    std::shared_ptr<MapDocument> document(const QString& mapName);
+    const MapDocument& document(const QString& mapName);
     QMap<QString, std::shared_ptr<MapDocument>> openedMaps() const;
 
     // Setters
@@ -53,8 +53,7 @@ public:
     void createMap(const tMapInfo& mapInfo, QStandardItem& parent);
 
 private:
-    void dumpToXmlNode(QDomDocument& document, QDomElement& xmlNode,
-                       const QStandardItem* modelItem);
+    void dumpToXmlNode(QDomDocument& document, QDomElement& xmlNode, const QStandardItem* modelItem);
 
     static QDomDocument createXmlProjectTree();
     static void createXmlProjectFile(const QString&);

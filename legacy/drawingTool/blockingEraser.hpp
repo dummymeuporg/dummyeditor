@@ -1,7 +1,7 @@
-#ifndef GRAPHICERASER_H
-#define GRAPHICERASER_H
+#ifndef BLOCKINGERASER_H
+#define BLOCKINGERASER_H
 
-#include "drawingTool/graphicGeneralTool.hpp"
+#include "legacy/drawingTool/blockingGeneralTool.hpp"
 
 //////////////////////////////////////////////////////////////////////////////
 //  forward declaration
@@ -10,21 +10,21 @@
 class QGraphicsSceneMouseEvent;
 
 namespace GraphicMap {
-class VisibleGraphicLayer;
+class BlockingGraphicLayer;
 }
 
 namespace DrawingTools {
 
 //////////////////////////////////////////////////////////////////////////////
-//  GraphicEraser class
+//  BlockingEraser class
 //////////////////////////////////////////////////////////////////////////////
 
-class GraphicEraser : public GraphicGeneralTool
+class BlockingEraser : public BlockingGeneralTool
 {
     Q_OBJECT
 public:
-    GraphicEraser(GraphicMap::MapGraphicsScene&,
-                  GraphicMap::VisibleGraphicLayer* = nullptr);
+    BlockingEraser(GraphicMap::MapGraphicsScene&,
+                   GraphicMap::BlockingGraphicLayer* = nullptr);
     void accept(DrawingVisitor&) override;
     void mapMousePressEvent(QGraphicsSceneMouseEvent*) override;
     void mapMouseMoveEvent(QGraphicsSceneMouseEvent*) override;
@@ -40,4 +40,4 @@ private:
 
 } // namespace DrawingTools
 
-#endif // GRAPHICERASER_H
+#endif // BLOCKINGERASER_H

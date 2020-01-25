@@ -1,10 +1,10 @@
-#include "drawingTool/graphicGeneralTool.hpp"
+#include "legacy/drawingTool/graphicGeneralTool.hpp"
 
-#include "utils/definitions.hpp"
-#include "utils/Logger.hpp"
 #include "editor/layerGraphic.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
+#include "utils/Logger.hpp"
+#include "utils/definitions.hpp"
 
 namespace DrawingTools {
 
@@ -41,7 +41,6 @@ void GraphicGeneralTool::setVisibleGraphicLayer(
     GraphicMap::VisibleGraphicLayer* layer)
 {
     m_visibleGraphicLayer = layer;
-    mapGraphScene().redrawGrid();
 }
 
 void GraphicGeneralTool::visitGraphicLayer(

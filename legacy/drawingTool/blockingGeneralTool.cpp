@@ -1,4 +1,4 @@
-#include "drawingTool/blockingGeneralTool.hpp"
+#include "legacy/drawingTool/blockingGeneralTool.hpp"
 
 #include "utils/definitions.hpp"
 #include "utils/Logger.hpp"
@@ -42,8 +42,6 @@ void BlockingGeneralTool::setBlockingGraphicLayer(
     GraphicMap::BlockingGraphicLayer* layer)
 {
     m_blockingGraphicLayer = layer;
-    mapGraphScene().redrawGrid(); // TODO : this call a commented method...
-                                  // is that the intended purpose?
 }
 
 void BlockingGeneralTool::visitGraphicLayer(

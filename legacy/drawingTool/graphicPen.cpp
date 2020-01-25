@@ -1,11 +1,11 @@
-#include "drawingTool/graphicPen.hpp"
+#include "legacy/drawingTool/graphicPen.hpp"
 
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneMouseEvent>
 
 #include "utils/definitions.hpp"
 #include "utils/Logger.hpp"
-#include "drawingTool/drawingVisitor.hpp"
+#include "legacy/drawingTool/drawingVisitor.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
 

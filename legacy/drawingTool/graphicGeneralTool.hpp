@@ -1,7 +1,7 @@
 #ifndef GRAPHICTOOL_H
 #define GRAPHICTOOL_H
 
-#include "drawingTool/drawingTool.hpp"
+#include "legacy/drawingTool/drawingTool.hpp"
 
 //////////////////////////////////////////////////////////////////////////////
 //  forward declaration

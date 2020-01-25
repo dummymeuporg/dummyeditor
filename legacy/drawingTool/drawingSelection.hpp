@@ -6,8 +6,8 @@
 
 #include <QGraphicsRectItem>
 
-#include "drawingTool/drawingTool.hpp"
 #include "layer_clipboard/clipboard.hpp"
+#include "legacy/drawingTool/drawingTool.hpp"
 
 //////////////////////////////////////////////////////////////////////////////
 //  forward declaration
@@ -54,10 +54,10 @@ private:
     void drawSelection();
 
 private:
-    bool m_mouseClicked                    = false;
-    QGraphicsRectItem* m_selectionRectItem = nullptr;
+    bool m_mouseClicked = false;
     QPoint m_startSelection;
     QPoint m_endSelection;
+
     std::map<GraphicMap::MapSceneLayer*,
              std::shared_ptr<LayerClipboard::Clipboard>>
         m_copyClipboard;

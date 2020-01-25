@@ -30,8 +30,7 @@ public:
     explicit MapEditDialog(QWidget* parent = nullptr);
     ~MapEditDialog() override;
 
-    void setup(const Editor::Project& project,
-               std::shared_ptr<MapDocument> = nullptr);
+    void setup(const Editor::Project& project, const MapDocument* = nullptr);
 
     QString getMapName() const;
     quint16 getWidth() const;

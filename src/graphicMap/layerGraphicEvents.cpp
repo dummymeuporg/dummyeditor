@@ -1,23 +1,19 @@
 #include "graphicMap/layerGraphicEvents.hpp"
 
-#include "utils/definitions.hpp"
 #include "editor/layerEvents.hpp"
 #include "graphicMap/graphicItem.hpp"
-#include "graphicMap/graphicLayerVisitor.hpp"
-#include "graphicMap/mapGraphicsScene.hpp"
+#include "utils/definitions.hpp"
 
 namespace GraphicMap {
 
-EventsGraphicLayer::EventsGraphicLayer(Editor::EventsLayer& eventsLayer,
-                                       MapGraphicsScene& mapGraphicsScene,
-                                       int zIndex)
-    : GraphicMap::MapSceneLayer(mapGraphicsScene, zIndex)
+EventsGraphicLayer::EventsGraphicLayer(Editor::EventsLayer& eventsLayer, int zIndex)
+    : GraphicMap::MapSceneLayer(zIndex)
     , m_eventsLayer(eventsLayer)
 {
     const size_t nbCells = eventsLayer.width() * eventsLayer.height();
     const auto& touchEvents(eventsLayer.touchEvents());
     const auto& floor(eventsLayer.floor());
-    layerItems().resize(nbCells);
+    indexedItems().resize(nbCells);
 
     /*
 
@@ -37,7 +33,7 @@ EventsGraphicLayer::EventsGraphicLayer(Editor::EventsLayer& eventsLayer,
         if (touchEvents.find(index) != std::end(touchEvents)) {
             qreal posX((index % (floor.width())) * CELL_W);
             qreal posY((index / (floor.width())) * CELL_H);
-            draw(index, static_cast<quint16>(posX), static_cast<quint16>(posY));
+            setTile(static_cast<quint16>(posX), static_cast<quint16>(posY), index);
         }
     }
 }
@@ -48,40 +44,15 @@ void EventsGraphicLayer::setSelected()
     emit layerSelected(this);
 }
 
-void EventsGraphicLayer::draw(int index, quint16 x, quint16 y)
+void EventsGraphicLayer::setTile(quint16 x, quint16 y, int index)
 {
-    layerItems()[index] =
-        new GraphicItem(GraphicItem::eGraphicItemType::eEvent);
-    layerItems()[index]->setZValue(zIndex());
-
-    layerItems()[index]->setPos(QPointF(x - (x % CELL_W), y - (y % CELL_H)));
-
-    mapGraphicsScene().addItem(layerItems()[index]);
-}
-/*
-MapSceneLayer& EventsGraphicLayer::removeTile(quint16, quint16)
-{
-    return *this;
-}
-*/
-std::vector<DrawingTools::DrawingTool*> EventsGraphicLayer::drawingTools()
-{
-    std::vector<DrawingTools::DrawingTool*> tools;
-    return tools;
+    // TODO change this to correspond to other setTiles methods
+    indexedItems()[index] = new GraphicItem(GraphicItem::eGraphicItemType::eEvent);
+    indexedItems()[index]->setPos(QPointF(x - (x % CELL_W), y - (y % CELL_H)));
+    graphicItems()->addToGroup(indexedItems()[index]);
 }
 
-Editor::Layer& EventsGraphicLayer::editorLayer()
-{
-    return m_eventsLayer;
-}
-
-void EventsGraphicLayer::accept(GraphicLayerVisitor& visitor)
-{
-    visitor.visitGraphicLayer(*this);
-}
-
-std::shared_ptr<LayerClipboard::Clipboard>
-EventsGraphicLayer::getClipboardRegion(const QRect& clip)
+std::shared_ptr<LayerClipboard::Clipboard> EventsGraphicLayer::getClipboardRegion(const QRect& clip)
 {
     // XXX: Todo later.
     return nullptr;

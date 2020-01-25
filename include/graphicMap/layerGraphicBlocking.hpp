@@ -12,7 +12,6 @@ class BlockingLayer;
 } // namespace Editor
 
 namespace GraphicMap {
-class BlockingSquareItem;
 
 //////////////////////////////////////////////////////////////////////////////
 //  BlockingGraphicLayer class
@@ -22,31 +21,17 @@ class BlockingGraphicLayer : public MapSceneLayer
 {
     Q_OBJECT
 public:
-    BlockingGraphicLayer(Editor::BlockingLayer&, MapGraphicsScene&, int zValue);
-    ~BlockingGraphicLayer() override;
+    BlockingGraphicLayer(Editor::BlockingLayer&, int zValue);
+    std::shared_ptr<LayerClipboard::Clipboard> getClipboardRegion(const QRect& clip) override;
 
-    const Editor::BlockingLayer& layer() const { return m_blockingLayer; }
-    Editor::Layer& editorLayer() override;
-
-    // MapSceneLayer& removeTile(quint16, quint16) override;
     void toggleTile(quint16, quint16);
     void setTile(quint16, quint16, bool);
-
-    std::vector<DrawingTools::DrawingTool*> drawingTools() override;
-    void accept(GraphicLayerVisitor&) override;
-
-    std::shared_ptr<LayerClipboard::Clipboard>
-    getClipboardRegion(const QRect& clip) override;
 
 public slots:
     void setSelected() override;
 
 signals:
     void layerSelected(GraphicMap::BlockingGraphicLayer*);
-
-private:
-    void erase(int, quint16, quint16);
-    void draw(int, quint16, quint16);
 
 private:
     Editor::BlockingLayer& m_blockingLayer;

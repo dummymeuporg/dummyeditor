@@ -1,4 +1,4 @@
-#include "drawingTool/graphicRectangle.hpp"
+#include "legacy/drawingTool/graphicRectangle.hpp"
 
 #include <QDebug>
 #include <QGraphicsPixmapItem>
@@ -7,7 +7,7 @@
 
 #include "utils/definitions.hpp"
 #include "utils/Logger.hpp"
-#include "drawingTool/drawingVisitor.hpp"
+#include "legacy/drawingTool/drawingVisitor.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
 

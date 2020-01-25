@@ -5,10 +5,6 @@
 #include <QPixmap>
 #include <memory>
 
-#include "drawingTool/graphicEraser.hpp"
-#include "drawingTool/graphicPen.hpp"
-#include "drawingTool/graphicRectangle.hpp"
-
 #include "graphicMap/layerGraphic.hpp"
 
 //////////////////////////////////////////////////////////////////////////////
@@ -30,26 +26,13 @@ class VisibleGraphicLayer : public MapSceneLayer
 {
     Q_OBJECT
 public:
-    VisibleGraphicLayer(Editor::GraphicLayer&, MapGraphicsScene&,
-                        const QPixmap&, int);
-    ~VisibleGraphicLayer() override;
+    VisibleGraphicLayer(Editor::GraphicLayer&, const QPixmap&, int);
     const QPixmap& chipsetPixmap() const { return m_chipsetPixmap; }
-    const Editor::GraphicLayer& layer() const { return m_graphicLayer; }
 
-    VisibleGraphicLayer& setTile(quint16 x, quint16 y, qint16 chipsetX,
-                                 qint16 chipsetY);
-    VisibleGraphicLayer& setChipsetPixmap(const QPixmap*);
+    void setTile(quint16 x, quint16 y, qint16 chipsetX, qint16 chipsetY);
+    void setChipsetPixmap(const QPixmap*);
 
-    // virtual MapSceneLayer& removeTile(quint16, quint16) override;
-
-    Editor::Layer& editorLayer() override;
-
-    std::vector<DrawingTools::DrawingTool*> drawingTools() override;
-
-    std::shared_ptr<LayerClipboard::Clipboard>
-    getClipboardRegion(const QRect& clip) override;
-
-    void accept(GraphicLayerVisitor&) override;
+    std::shared_ptr<LayerClipboard::Clipboard> getClipboardRegion(const QRect& clip) override;
 
 public slots:
     void setSelected() override;

@@ -550,7 +550,7 @@
    <attribute name="dockWidgetArea">
     <number>8</number>
    </attribute>
-   <widget class="DrawingToolBarWidget" name="widgetDrawingToolbox"/>
+   <widget class="legacy/drawingtoolBarWidget" name="widgetDrawingToolbox"/>
   </widget>
   <action name="actionNew">
    <property name="icon">
@@ -972,7 +972,7 @@
   <customwidget>
    <class>DrawingToolBarWidget</class>
    <extends>QWidget</extends>
-   <header>drawingToolbarWidget.hpp</header>
+   <header>legacy/drawingToolbarWidget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

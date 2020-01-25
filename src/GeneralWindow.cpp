@@ -68,10 +68,8 @@ GeneralWindow::GeneralWindow(QWidget* parent)
     m_ui->actionPaste->setShortcutContext(Qt::ApplicationShortcut);
 
     // connect ui items
-    connect(m_ui->btnNewMap, SIGNAL(clicked()), m_ui->mapsList,
-            SLOT(addMapAtRoot()));
-    connect(m_ui->mapsList, SIGNAL(chipsetMapChanged(QString)),
-            m_chipsetScene.get(), SLOT(changeChipset(QString)));
+    connect(m_ui->btnNewMap, SIGNAL(clicked()), m_ui->mapsList, SLOT(addMapAtRoot()));
+    connect(m_ui->mapsList, SIGNAL(chipsetMapChanged(QString)), m_chipsetScene.get(), SLOT(setChipset(QString)));
 }
 
 GeneralWindow::~GeneralWindow()
@@ -119,11 +117,9 @@ bool GeneralWindow::closeProject()
     if (m_loadedProject == nullptr)
         return true; // success, nothing to do
 
-    QMessageBox::StandardButton resBtn = QMessageBox::question(
-        this, "DummyEditor",
-        tr("Do you want to save before closing this project?"),
-        QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
-        QMessageBox::Cancel);
+    QMessageBox::StandardButton resBtn =
+        QMessageBox::question(this, "DummyEditor", tr("Do you want to save before closing this project?"),
+                              QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes, QMessageBox::Cancel);
 
     // Save project if needed
     if (resBtn == QMessageBox::Yes) {
@@ -178,14 +174,12 @@ void GeneralWindow::updateMapsAndFloorsList()
 void GeneralWindow::setupLoggers()
 {
     // Console logger
-    std::shared_ptr<Log::Logger> pConsoleLog =
-        std::make_shared<Log::LoggerConsole>();
+    std::shared_ptr<Log::Logger> pConsoleLog = std::make_shared<Log::LoggerConsole>();
     m_loggers.push_back(pConsoleLog);
     Log::Logger::registerLogger(pConsoleLog);
 
     // Status bar Logger
-    std::shared_ptr<Log::Logger> pStatusBarLog =
-        std::make_shared<LoggerStatusBar>(m_ui->statusbar);
+    std::shared_ptr<Log::Logger> pStatusBarLog = std::make_shared<LoggerStatusBar>(m_ui->statusbar);
     m_loggers.push_back(pStatusBarLog);
     Log::Logger::registerLogger(pStatusBarLog);
 }
@@ -202,8 +196,7 @@ void GeneralWindow::cleanLoggers()
 void GeneralWindow::on_actionNew_triggered()
 {
     // Open a file dialog to select a folder
-    QString projectDirectory = QFileDialog::getExistingDirectory(
-        this, tr("Choose your project directory"));
+    QString projectDirectory = QFileDialog::getExistingDirectory(this, tr("Choose your project directory"));
 
     if (projectDirectory == "")
         return;
@@ -230,8 +223,7 @@ void GeneralWindow::on_actionOpen_triggered()
         return;
 
     // Ask where new is
-    QString projectDirectory = QFileDialog::getExistingDirectory(
-        this, tr("Choose an existing project directory"));
+    QString projectDirectory = QFileDialog::getExistingDirectory(this, tr("Choose an existing project directory"));
     if (projectDirectory == "")
         return;
 
@@ -261,33 +253,29 @@ void GeneralWindow::on_mapsList_doubleClicked(const QModelIndex& selectedIndex)
 {
     // fetch map data
     const MapsTreeModel* mapModel = m_loadedProject->mapsModel();
-    QString mapName = mapModel->itemFromIndex(selectedIndex)->text();
-    std::shared_ptr<Editor::Map> map(m_loadedProject->document(mapName)->m_map);
+    QString mapName               = mapModel->itemFromIndex(selectedIndex)->text();
+    const auto& mapData           = m_loadedProject->document(mapName).m_map;
+    std::shared_ptr<Editor::Map> map(mapData);
 
     // update chipset scene
     QString chipsetPath =
-        QString::fromStdString((m_loadedProject->coreProject().projectPath()
-                                / "chipsets" / map->chipset())
-                                   .string());
+        QString::fromStdString((m_loadedProject->coreProject().projectPath() / "chipsets" / map->chipset()).string());
     m_chipsetScene->setChipset(chipsetPath);
     m_ui->graphicsViewChipset->viewport()->update();
 
     // update map scene
-    m_mapScene->setMapDocument(m_loadedProject->document(mapName));
-    m_ui->graphicsViewMap->setSceneRect(
-        QRect(0, 0, map->width() * CELL_W, map->height() * CELL_H));
+    m_mapScene->setFloors(mapData->floors(), m_chipsetScene->chipset());
+    m_ui->graphicsViewMap->setSceneRect(QRect(0, 0, map->width() * CELL_W, map->height() * CELL_H));
 
     // link visible layers
     for (const auto& pVisLayer : m_mapScene->graphicLayers()) {
-        connect(pVisLayer.get(),
-                SIGNAL(layerSelected(GraphicMap::VisibleGraphicLayer*)), this,
+        connect(pVisLayer.get(), SIGNAL(layerSelected(GraphicMap::VisibleGraphicLayer*)), this,
                 SLOT(graphicLayerSelected(GraphicMap::VisibleGraphicLayer*)));
     }
 
     // link blocking layers
     for (const auto& pBlockLayer : m_mapScene->blockingLayers()) {
-        connect(pBlockLayer.get(),
-                SIGNAL(layerSelected(GraphicMap::BlockingGraphicLayer*)), this,
+        connect(pBlockLayer.get(), SIGNAL(layerSelected(GraphicMap::BlockingGraphicLayer*)), this,
                 SLOT(blockingLayerSelected(GraphicMap::BlockingGraphicLayer*)));
     }
 
@@ -302,8 +290,7 @@ void GeneralWindow::graphicLayerSelected(GraphicMap::VisibleGraphicLayer* layer)
 {
     // TODO link tools to active layer
 }
-void GeneralWindow::blockingLayerSelected(
-    GraphicMap::BlockingGraphicLayer* layer)
+void GeneralWindow::blockingLayerSelected(GraphicMap::BlockingGraphicLayer* layer)
 {
     // TODO link tools to active layer
 }
