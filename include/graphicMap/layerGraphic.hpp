@@ -30,7 +30,7 @@ public:
 
 public slots:
     void setVisibility(bool);
-    virtual void setSelected();
+    virtual void setSelected() = 0;
 
 protected:
     std::vector<QGraphicsItem*>& indexedItems() { return m_indexedItems; }

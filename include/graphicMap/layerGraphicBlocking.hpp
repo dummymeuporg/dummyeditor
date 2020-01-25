@@ -23,6 +23,7 @@ class BlockingGraphicLayer : public MapSceneLayer
 public:
     BlockingGraphicLayer(Editor::BlockingLayer&, int zValue);
     std::shared_ptr<LayerClipboard::Clipboard> getClipboardRegion(const QRect& clip) override;
+    Editor::BlockingLayer& layer() { return m_blockingLayer; }
 
     void toggleTile(quint16, quint16);
     void setTile(quint16, quint16, bool);

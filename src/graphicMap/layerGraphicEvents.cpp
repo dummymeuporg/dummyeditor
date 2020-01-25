@@ -40,7 +40,6 @@ EventsGraphicLayer::EventsGraphicLayer(Editor::EventsLayer& eventsLayer, int zIn
 
 void EventsGraphicLayer::setSelected()
 {
-    MapSceneLayer::setSelected();
     emit layerSelected(this);
 }
 

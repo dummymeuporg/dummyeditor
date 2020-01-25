@@ -7,6 +7,8 @@
 #include <QMessageBox>
 
 #include "chipsetGraphicsScene.hpp"
+#include "editor/layerBlocking.hpp"
+#include "editor/layerGraphic.hpp"
 #include "editor/map.hpp"
 #include "editor/project.hpp"
 #include "graphicMap/layerGraphicBlocking.hpp"
@@ -286,12 +288,14 @@ void GeneralWindow::on_mapsList_doubleClicked(const QModelIndex& selectedIndex)
     m_ui->maps_panel->setCurrentIndex(1);
 }
 
-void GeneralWindow::graphicLayerSelected(GraphicMap::VisibleGraphicLayer* layer)
+void GeneralWindow::graphicLayerSelected(GraphicMap::VisibleGraphicLayer* visLayer)
 {
+    m_mapScene->drawGrid(visLayer->layer().width(), visLayer->layer().height(), CELL_H);
     // TODO link tools to active layer
 }
-void GeneralWindow::blockingLayerSelected(GraphicMap::BlockingGraphicLayer* layer)
+void GeneralWindow::blockingLayerSelected(GraphicMap::BlockingGraphicLayer* blockLayer)
 {
+    m_mapScene->drawGrid(blockLayer->layer().width(), blockLayer->layer().height(), BLOCK_H);
     // TODO link tools to active layer
 }
 

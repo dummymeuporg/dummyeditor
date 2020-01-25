@@ -28,6 +28,7 @@ class VisibleGraphicLayer : public MapSceneLayer
 public:
     VisibleGraphicLayer(Editor::GraphicLayer&, const QPixmap&, int);
     const QPixmap& chipsetPixmap() const { return m_chipsetPixmap; }
+    Editor::GraphicLayer& layer() { return m_graphicLayer; }
 
     void setTile(quint16 x, quint16 y, qint16 chipsetX, qint16 chipsetY);
     void setChipsetPixmap(const QPixmap*);

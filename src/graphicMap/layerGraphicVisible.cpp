@@ -36,7 +36,6 @@ VisibleGraphicLayer::VisibleGraphicLayer(Editor::GraphicLayer& layer, const QPix
 
 void VisibleGraphicLayer::setSelected()
 {
-    MapSceneLayer::setSelected();
     emit layerSelected(this);
 }
 

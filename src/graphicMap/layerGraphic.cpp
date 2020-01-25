@@ -24,16 +24,4 @@ void MapSceneLayer::setVisibility(bool visible)
     m_items->setVisible(visible);
 }
 
-void MapSceneLayer::setSelected()
-{
-    /*
-      // Bind the tool to this graphic layer
-      auto* drawingTool = mapGraphicsScene().drawingTool();
-      if (nullptr != drawingTool) {
-          accept(*drawingTool);
-      }
-    mapGraphicsScene().setCurrentGraphicLayer(this);
-  */
-}
-
 } // namespace GraphicMap
