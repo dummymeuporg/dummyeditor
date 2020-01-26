@@ -13,7 +13,7 @@ class Layer : public QObject
 {
     Q_OBJECT
 public:
-    Layer();
+    explicit Layer();
     bool visible() { return m_visible; }
     void setVisible(bool visible);
 

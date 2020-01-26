@@ -6,14 +6,12 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
-#include "chipsetGraphicsScene.hpp"
 #include "editor/layerBlocking.hpp"
 #include "editor/layerGraphic.hpp"
 #include "editor/map.hpp"
 #include "editor/project.hpp"
 #include "graphicMap/layerGraphicBlocking.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
-#include "graphicMap/mapGraphicsScene.hpp"
 #include "utils/definitions.hpp"
 #include "utils/mapDocument.hpp"
 
@@ -24,16 +22,15 @@ using Editor::Project;
 GeneralWindow::GeneralWindow(QWidget* parent)
     : QMainWindow(parent)
     , m_ui(new Ui::GeneralWindow)
-    , m_chipsetScene(new ChipsetGraphicsScene)
-    , m_mapScene(new GraphicMap::MapGraphicsScene)
+    , m_mapTools(m_chipsetScene, m_mapScene, m_ui.get())
 {
     m_ui->setupUi(this);
     setupLoggers();
 
-    m_ui->graphicsViewChipset->setScene(m_chipsetScene.get());
+    m_ui->graphicsViewChipset->setScene(&m_chipsetScene);
     m_ui->graphicsViewChipset->scale(2.0, 2.0);
 
-    m_ui->graphicsViewMap->setScene(m_mapScene.get());
+    m_ui->graphicsViewMap->setScene(&m_mapScene);
     m_ui->graphicsViewMap->scale(2.0, 2.0);
     m_ui->graphicsViewMap->setBackgroundBrush(QColor("#969696"));
 
@@ -71,7 +68,7 @@ GeneralWindow::GeneralWindow(QWidget* parent)
 
     // connect ui items
     connect(m_ui->btnNewMap, SIGNAL(clicked()), m_ui->mapsList, SLOT(addMapAtRoot()));
-    connect(m_ui->mapsList, SIGNAL(chipsetMapChanged(QString)), m_chipsetScene.get(), SLOT(setChipset(QString)));
+    connect(m_ui->mapsList, SIGNAL(chipsetMapChanged(QString)), &m_chipsetScene, SLOT(setChipset(QString)));
 }
 
 GeneralWindow::~GeneralWindow()
@@ -150,12 +147,15 @@ void GeneralWindow::updateProjectView()
     // Disable unusable components
     m_ui->panels_tabs->setEnabled(thereIsAProject);
     m_ui->toolbar_gameTool->setEnabled(thereIsAProject);
-    m_ui->toolbar_mapTools->setEnabled(thereIsAProject);
+    if (! thereIsAProject) {
+        m_mapTools.clear();
+        m_ui->toolbar_mapTools->setEnabled(false);
+    }
 
-    // TODO update tabs content
+    // update tabs content
     updateMapsAndFloorsList();
 
-    // TODO update usable actions
+    // update usable actions
     m_ui->actionSave->setEnabled(thereIsAProject);
     m_ui->actionClose->setEnabled(thereIsAProject);
 }
@@ -169,8 +169,8 @@ void GeneralWindow::updateMapsAndFloorsList()
     }
     m_ui->maps_panel->setCurrentIndex(0);
     m_ui->layer_list_tab->reset();
-    m_mapScene->clear();
-    m_chipsetScene->clear();
+    m_mapScene.clear();
+    m_chipsetScene.clear();
 }
 
 void GeneralWindow::setupLoggers()
@@ -187,15 +187,14 @@ void GeneralWindow::setupLoggers()
 
     // File logger
 
-    std::shared_ptr<Log::Logger> pFileLog =
-        std::make_shared<Log::LoggerFile>();
+    std::shared_ptr<Log::Logger> pFileLog = std::make_shared<Log::LoggerFile>();
     m_loggers.push_back(pFileLog);
     Log::Logger::registerLogger(pFileLog);
 }
 
 void GeneralWindow::cleanLoggers()
 {
-    for (auto& pLogger : m_loggers)
+    for (const auto& pLogger : m_loggers)
         Log::Logger::unregisterLogger(pLogger);
     m_loggers.clear();
 }
@@ -269,26 +268,28 @@ void GeneralWindow::on_mapsList_doubleClicked(const QModelIndex& selectedIndex)
     // update chipset scene
     QString chipsetPath =
         QString::fromStdString((m_loadedProject->coreProject().projectPath() / "chipsets" / map->chipset()).string());
-    m_chipsetScene->setChipset(chipsetPath);
+    m_chipsetScene.setChipset(chipsetPath);
     m_ui->graphicsViewChipset->viewport()->update();
 
     // update map scene
-    m_mapScene->setFloors(mapData->floors(), m_chipsetScene->chipset());
+    m_mapScene.setFloors(mapData->floors(), m_chipsetScene.chipset());
     m_ui->graphicsViewMap->setSceneRect(QRect(0, 0, map->width() * CELL_W, map->height() * CELL_H));
 
     // link visible layers
-    for (const auto& pVisLayer : m_mapScene->graphicLayers()) {
+    for (const auto& pVisLayer : m_mapScene.graphicLayers()) {
         connect(pVisLayer.get(), SIGNAL(layerSelected(GraphicMap::VisibleGraphicLayer*)), this,
                 SLOT(graphicLayerSelected(GraphicMap::VisibleGraphicLayer*)));
     }
 
     // link blocking layers
-    for (const auto& pBlockLayer : m_mapScene->blockingLayers()) {
+    for (const auto& pBlockLayer : m_mapScene.blockingLayers()) {
         connect(pBlockLayer.get(), SIGNAL(layerSelected(GraphicMap::BlockingGraphicLayer*)), this,
                 SLOT(blockingLayerSelected(GraphicMap::BlockingGraphicLayer*)));
     }
 
     // link events layers ?
+
+    m_mapTools.clear();
 
     // update layer list
     m_ui->layer_list_tab->setEditorMap(map);
@@ -297,13 +298,33 @@ void GeneralWindow::on_mapsList_doubleClicked(const QModelIndex& selectedIndex)
 
 void GeneralWindow::graphicLayerSelected(GraphicMap::VisibleGraphicLayer* visLayer)
 {
-    m_mapScene->drawGrid(visLayer->layer().width(), visLayer->layer().height(), CELL_H);
-    // TODO link tools to active layer
+    m_ui->toolbar_mapTools->setEnabled(true);
+    m_mapTools.setActiveLayer(visLayer);
 }
 void GeneralWindow::blockingLayerSelected(GraphicMap::BlockingGraphicLayer* blockLayer)
 {
-    m_mapScene->drawGrid(blockLayer->layer().width(), blockLayer->layer().height(), BLOCK_H);
-    // TODO link tools to active layer
+    m_ui->toolbar_mapTools->setEnabled(true);
+    m_mapTools.setActiveLayer(blockLayer);
+}
+
+void GeneralWindow::on_actionEraser_triggered()
+{
+    m_mapTools.setEraser();
+}
+
+void GeneralWindow::on_actionPen_triggered()
+{
+    m_mapTools.setPen();
+}
+
+void GeneralWindow::on_actionSelection_triggered()
+{
+    m_mapTools.setSelection();
+}
+
+void GeneralWindow::on_actionToggleGrid_triggered()
+{
+    m_mapTools.updateGridDisplay();
 }
 
 void GeneralWindow::on_actionCut_triggered()
@@ -320,6 +341,8 @@ void GeneralWindow::on_actionPaste_triggered()
 {
     Log::debug(tr("TODO : Action Paste"));
 }
+
+//////////////////////////////////////////////////////////////////////////////
 
 LoggerStatusBar::LoggerStatusBar(QStatusBar* stsBar)
     : m_statusBar(stsBar)

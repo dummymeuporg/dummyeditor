@@ -12,7 +12,7 @@ namespace LayerClipboard {
 class Clipboard
 {
 public:
-    Clipboard();
+    explicit Clipboard();
 
     // XXX: Should not belong here, yet it works.
     const QPoint& target() const { return m_target; }

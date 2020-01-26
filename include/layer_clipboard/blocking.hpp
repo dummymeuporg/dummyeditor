@@ -25,8 +25,8 @@ namespace LayerClipboard {
 class Blocking : public Clipboard
 {
 public:
-    Blocking(const QRect&, const std::vector<uint8_t>&);
-    Blocking(QRect&&, std::vector<uint8_t>&&);
+    explicit Blocking(const QRect&, const std::vector<uint8_t>&);
+    explicit Blocking(QRect&&, std::vector<uint8_t>&&);
 
     void paste(GraphicMap::BlockingGraphicLayer&);
 

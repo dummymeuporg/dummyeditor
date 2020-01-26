@@ -16,7 +16,6 @@ class GraphicLayer;
 } // namespace Editor
 
 namespace GraphicMap {
-class MapGraphicsScene;
 
 //////////////////////////////////////////////////////////////////////////////
 //  VisibleGraphicLayer class
@@ -26,7 +25,8 @@ class VisibleGraphicLayer : public MapSceneLayer
 {
     Q_OBJECT
 public:
-    VisibleGraphicLayer(Editor::GraphicLayer&, const QPixmap&, int);
+    explicit VisibleGraphicLayer(Editor::GraphicLayer&, const QPixmap&, int);
+
     const QPixmap& chipsetPixmap() const { return m_chipsetPixmap; }
     Editor::GraphicLayer& layer() { return m_graphicLayer; }
 

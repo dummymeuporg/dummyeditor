@@ -16,8 +16,8 @@ void ChipsetGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
     m_isSelecting    = true;
     m_selectionStart = mouseEvent->scenePos().toPoint();
 
-    if (m_selectionStart.x() >= width() || m_selectionStart.x() < 0
-        || m_selectionStart.y() >= height() || m_selectionStart.y() < 0) {
+    if (m_selectionStart.x() >= width() || m_selectionStart.x() < 0 || m_selectionStart.y() >= height()
+        || m_selectionStart.y() < 0) {
         return;
     }
 
@@ -66,12 +66,13 @@ void ChipsetGraphicsScene::drawGrid()
 {
     QPen pen(Qt::black, 0.5);
 
-    for (int x = 0; x <= m_chipset.width(); x += CELL_W) {
+    int chipW = m_chipset.width();
+    for (int x = 0; x <= chipW; x += CELL_W) {
         QGraphicsItem* item = addLine(x, 0, x, m_chipset.height(), pen);
         item->setZValue(Z_GRID);
     }
-
-    for (int y = 0; y <= m_chipset.height(); y += CELL_H) {
+    int chipH = m_chipset.height();
+    for (int y = 0; y <= chipH; y += CELL_H) {
         QGraphicsItem* item = addLine(0, y, m_chipset.width(), y, pen);
         item->setZValue(Z_GRID);
     }

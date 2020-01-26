@@ -34,11 +34,11 @@ public:
 
     void setFloors(const Editor::Floors& mapFloors, const QPixmap& chipset);
     void setPreview(const QPixmap& previewPix);
-    void setSelection(const QRect& selectionRect);
+    void setSelectRect(const QRect& selectionRect);
     void drawGrid(quint16 width, quint16 height, unsigned int unit);
 
     void clearPreview();
-    void clearSelection();
+    void clearSelectRect();
     void clearGrid();
 
     const vec_uniq<VisibleGraphicLayer>& graphicLayers() const;
@@ -48,6 +48,9 @@ public:
     // void mousePressEvent(QGraphicsSceneMouseEvent*) override;
     // void mouseMoveEvent(QGraphicsSceneMouseEvent*) override;
     // void mouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
+
+public slots:
+    void clear();
 
 private:
     void instantiateFloor(Editor::Floor&, const QPixmap& chip, int& zIdxInOut);

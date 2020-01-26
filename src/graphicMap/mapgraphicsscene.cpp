@@ -34,8 +34,6 @@ void MapGraphicsScene::setFloors(const Editor::Floors& mapFloors, const QPixmap&
 {
     // Clear the scene
     clear();
-    clearPreview();
-    clearGrid();
 
     // Clear the loaded layers
     m_visibleLayers.clear();
@@ -55,7 +53,7 @@ void MapGraphicsScene::setPreview(const QPixmap& previewPix)
     m_previewItem = new QGraphicsPixmapItem(previewPix);
 }
 
-void MapGraphicsScene::setSelection(const QRect& selectionRect)
+void MapGraphicsScene::setSelectRect(const QRect& selectionRect)
 {
     clearSelection();
 
@@ -85,6 +83,13 @@ void MapGraphicsScene::drawGrid(quint16 width, quint16 height, unsigned int unit
         m_gridItems.push_back(item);
     }
 }
+void MapGraphicsScene::clear()
+{
+    clearPreview();
+    clearSelectRect();
+    clearGrid();
+    QGraphicsScene::clear();
+}
 
 void MapGraphicsScene::clearPreview()
 {
@@ -94,7 +99,7 @@ void MapGraphicsScene::clearPreview()
     }
 }
 
-void MapGraphicsScene::clearSelection()
+void MapGraphicsScene::clearSelectRect()
 {
     if (nullptr != m_selectionRectItem) {
         removeItem(m_selectionRectItem);

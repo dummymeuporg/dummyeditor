@@ -26,8 +26,8 @@ namespace LayerClipboard {
 class Visible : public Clipboard
 {
 public:
-    Visible(const QRect&, const std::vector<std::pair<int8_t, int8_t>>&);
-    Visible(QRect&&, std::vector<std::pair<int8_t, int8_t>>&&);
+    explicit Visible(const QRect&, const std::vector<std::pair<int8_t, int8_t>>&);
+    explicit Visible(QRect&&, std::vector<std::pair<int8_t, int8_t>>&&);
 
     void paste(GraphicMap::VisibleGraphicLayer&);
 

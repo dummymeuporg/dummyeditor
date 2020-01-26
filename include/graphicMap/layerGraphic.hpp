@@ -22,7 +22,7 @@ class MapSceneLayer : public QObject
 {
     Q_OBJECT
 public:
-    MapSceneLayer(int zIndex);
+    explicit MapSceneLayer(int zIndex);
     virtual std::shared_ptr<LayerClipboard::Clipboard> getClipboardRegion(const QRect& clip) = 0;
 
     QGraphicsItemGroup* graphicItems() { return m_items; }

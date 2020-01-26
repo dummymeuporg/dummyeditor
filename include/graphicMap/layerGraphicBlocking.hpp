@@ -21,7 +21,8 @@ class BlockingGraphicLayer : public MapSceneLayer
 {
     Q_OBJECT
 public:
-    BlockingGraphicLayer(Editor::BlockingLayer&, int zValue);
+    explicit BlockingGraphicLayer(Editor::BlockingLayer&, int zValue);
+
     std::shared_ptr<LayerClipboard::Clipboard> getClipboardRegion(const QRect& clip) override;
     Editor::BlockingLayer& layer() { return m_blockingLayer; }
 

@@ -265,11 +265,13 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionEraser"/>
    <addaction name="actionPen"/>
+   <addaction name="actionEraser"/>
+   <addaction name="actionSelection"/>
    <addaction name="actionCut"/>
    <addaction name="actionCopy"/>
    <addaction name="actionPaste"/>
+   <addaction name="actionToggleGrid"/>
   </widget>
   <widget class="QToolBar" name="toolbar_gameTool">
    <property name="windowTitle">
@@ -302,6 +304,9 @@
    </property>
   </action>
   <action name="actionEraser">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="../icons.qrc">
      <normaloff>:/icons/icon_eraser.png</normaloff>:/icons/icon_eraser.png</iconset>
@@ -311,6 +316,9 @@
    </property>
   </action>
   <action name="actionPen">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="../icons.qrc">
      <normaloff>:/icons/icon_pen.png</normaloff>:/icons/icon_pen.png</iconset>
@@ -386,6 +394,9 @@
    </property>
   </action>
   <action name="actionPaste">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../icons.qrc">
      <normaloff>:/icons/past_Icon.png</normaloff>:/icons/past_Icon.png</iconset>
@@ -395,6 +406,30 @@
    </property>
    <property name="toolTip">
     <string>Paste the cutted/copied selection</string>
+   </property>
+  </action>
+  <action name="actionToggleGrid">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../icons.qrc">
+     <normaloff>:/icons/icon_penpath.png</normaloff>:/icons/icon_penpath.png</iconset>
+   </property>
+   <property name="text">
+    <string>Toggle Grid</string>
+   </property>
+  </action>
+  <action name="actionSelection">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../icons.qrc">
+     <normaloff>:/icons/icon_selection.png</normaloff>:/icons/icon_selection.png</iconset>
+   </property>
+   <property name="text">
+    <string>Selection</string>
    </property>
   </action>
  </widget>

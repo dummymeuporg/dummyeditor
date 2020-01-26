@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <memory>
 
+#include "MapTools.hpp"
+#include "chipsetGraphicsScene.hpp"
+#include "graphicMap/mapGraphicsScene.hpp"
 #include "utils/Logger.hpp"
 
 //////////////////////////////////////////////////////////////////////////////
@@ -48,6 +51,11 @@ private slots:
     void on_actionSave_triggered();
     void on_actionClose_triggered();
     void on_mapsList_doubleClicked(const QModelIndex& selectedIndex);
+
+    void on_actionEraser_triggered();
+    void on_actionPen_triggered();
+    void on_actionSelection_triggered();
+    void on_actionToggleGrid_triggered();
     void on_actionCut_triggered();
     void on_actionCopy_triggered();
     void on_actionPaste_triggered();
@@ -64,8 +72,10 @@ private:
     void cleanLoggers();
 
     std::unique_ptr<Ui::GeneralWindow> m_ui;
-    std::unique_ptr<ChipsetGraphicsScene> m_chipsetScene;
-    std::unique_ptr<GraphicMap::MapGraphicsScene> m_mapScene;
+
+    ChipsetGraphicsScene m_chipsetScene;
+    GraphicMap::MapGraphicsScene m_mapScene;
+    MapTools m_mapTools;
 
     std::shared_ptr<Editor::Project> m_loadedProject;
     std::vector<std::shared_ptr<Log::Logger>> m_loggers;
