@@ -1,6 +1,12 @@
 #include "utils/Logger.hpp"
 
 #include <iostream>
+#include <QDateTime>
+#include <QDebug>
+#include <QDir>
+#include <QFileDialog>
+#include <QTextStream>
+#include <QTime>
 
 namespace Log {
 
@@ -50,15 +56,46 @@ void LoggerConsole::print(const std::string& message, eLogType type)
     std::cout << "] \t" << message << std::endl;
 }
 
-LoggerFile::LoggerFile(const std::string& filePath)
+LoggerFile::LoggerFile()
 {
-    // TODO
-    // use a ofstream class member ?
+
+    QDir logpath("./log/");
+    if (!logpath.exists()){
+        QDir().mkdir("./log/");
+    }
+    m_logFile.setFileName("./log/"
+                          + QDate::currentDate().toString("yyyyMMdd") + "_"
+                          + QTime::currentTime().toString("hh-mm-ss")
+                          + "_logfile.txt");
+
+    if ( m_logFile.open(QFile::ReadWrite | QFile::Text) )
+    {
+        m_stream.setDevice( &m_logFile );
+    }
+
 }
 
 void LoggerFile::print(const std::string& message, eLogType type)
 {
-    // TODO print in file
+    m_line = QTime::currentTime().toString() + ' [';
+    switch (type) {
+    case eLogType::DEBUG:
+        m_line += "Debug";
+        break;
+    case eLogType::LOG:
+        m_line += "Log";
+        break;
+    case eLogType::INFORMATION:
+        m_line += "Info";
+        break;
+    case eLogType::ERROR:
+        m_line += "ERROR";
+        break;
+    default:
+        m_line += "Unknown type";
+    }
+    m_line += "] " + QString::fromStdString(message);
+    m_stream << m_line << endl;
 }
 
 ////////////////////////////////////////////////

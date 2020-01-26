@@ -1,6 +1,8 @@
 #ifndef LOGGER_HPP
 #define LOGGER_HPP
 
+#include <QFileDialog>
+#include <QTextStream>
 #include <QString>
 #include <memory>
 #include <vector>
@@ -46,8 +48,13 @@ public:
 class LoggerFile : public Logger
 {
 public:
-    explicit LoggerFile(const std::string& logFilePath);
+    explicit LoggerFile();
     void print(const std::string& message, eLogType type) override;
+
+private:
+    QFile m_logFile;
+    QTextStream m_stream;
+    QString m_line;
 };
 
 //////////////////////////

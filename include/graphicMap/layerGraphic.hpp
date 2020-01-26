@@ -1,7 +1,7 @@
 #ifndef GRAPHICLAYER_H
 #define GRAPHICLAYER_H
 
-#include <QGraphicsItemGroup >
+#include <QGraphicsItemGroup>
 #include <memory>
 
 //////////////////////////////////////////////////////////////////////////////

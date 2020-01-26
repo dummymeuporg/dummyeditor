@@ -184,6 +184,13 @@ void GeneralWindow::setupLoggers()
     std::shared_ptr<Log::Logger> pStatusBarLog = std::make_shared<LoggerStatusBar>(m_ui->statusbar);
     m_loggers.push_back(pStatusBarLog);
     Log::Logger::registerLogger(pStatusBarLog);
+
+    // File logger
+
+    std::shared_ptr<Log::Logger> pFileLog =
+        std::make_shared<Log::LoggerFile>();
+    m_loggers.push_back(pFileLog);
+    Log::Logger::registerLogger(pFileLog);
 }
 
 void GeneralWindow::cleanLoggers()
