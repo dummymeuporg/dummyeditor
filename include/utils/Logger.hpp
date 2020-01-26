@@ -1,9 +1,9 @@
 #ifndef LOGGER_HPP
 #define LOGGER_HPP
 
-#include <QFileDialog>
-#include <QTextStream>
+#include <QFile>
 #include <QString>
+#include <QTextStream>
 #include <memory>
 #include <vector>
 
@@ -33,6 +33,9 @@ public:
     static void unregisterLogger(const std::shared_ptr<Logger>& toRm);
     static void printAll(const std::string& message, eLogType type);
 
+protected:
+    static QString getTypeString(eLogType type);
+
 private:
     static std::vector<std::shared_ptr<Logger>> gLoggers;
 };
@@ -54,7 +57,6 @@ public:
 private:
     QFile m_logFile;
     QTextStream m_stream;
-    QString m_line;
 };
 
 //////////////////////////

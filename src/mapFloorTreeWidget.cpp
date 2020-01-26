@@ -2,7 +2,6 @@
 #include "ui_mapFloorTreeWidget.h"
 
 #include "mapFloorTreeModel.hpp"
-#include <QDebug>
 
 namespace MapFloorsList {
 
@@ -28,8 +27,6 @@ void FloorListWidget::reset()
 
 void FloorListWidget::on_treeViewFloors_doubleClicked(const QModelIndex& idx)
 {
-    // toggle Layer VisibleState
-    qDebug() << "Toggle Layer visibility: selectedIndex: " << idx;
     m_floorTreeModel->floorItemFromIdx(idx)->toggle();
 }
 

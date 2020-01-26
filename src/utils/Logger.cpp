@@ -1,12 +1,8 @@
 #include "utils/Logger.hpp"
 
-#include <iostream>
 #include <QDateTime>
-#include <QDebug>
 #include <QDir>
-#include <QFileDialog>
-#include <QTextStream>
-#include <QTime>
+#include <iostream>
 
 namespace Log {
 
@@ -19,8 +15,7 @@ void Logger::registerLogger(const std::shared_ptr<Logger>& toAdd)
 
 void Logger::unregisterLogger(const std::shared_ptr<Logger>& toRm)
 {
-    gLoggers.erase(std::remove(gLoggers.begin(), gLoggers.end(), toRm),
-                   gLoggers.end());
+    gLoggers.erase(std::remove(gLoggers.begin(), gLoggers.end(), toRm), gLoggers.end());
 }
 
 void Logger::printAll(const std::string& message, eLogType type)
@@ -30,72 +25,49 @@ void Logger::printAll(const std::string& message, eLogType type)
             logger->print(message, type);
 }
 
+QString Logger::getTypeString(eLogType type)
+{
+    switch (type) {
+    case eLogType::DEBUG:
+        return "Debug";
+    case eLogType::LOG:
+        return "Log";
+    case eLogType::INFORMATION:
+        return "Info";
+    case eLogType::ERROR:
+        return "ERROR";
+    default:
+        return "Unknown type";
+    }
+}
+
 ////////////////////////////////////////////////
 // Simple loggers
 ////////////////////////////////////////////////
 
 void LoggerConsole::print(const std::string& message, eLogType type)
 {
-    std::cout << '[';
-    switch (type) {
-    case eLogType::DEBUG:
-        std::cout << "Debug";
-        break;
-    case eLogType::LOG:
-        std::cout << "Log";
-        break;
-    case eLogType::INFORMATION:
-        std::cout << "Info";
-        break;
-    case eLogType::ERROR:
-        std::cout << "ERROR";
-        break;
-    default:
-        std::cout << "Unknown type";
-    }
-    std::cout << "] \t" << message << std::endl;
+    std::cout << '[' << getTypeString(type).toStdString() << "] \t" << message << std::endl;
 }
 
 LoggerFile::LoggerFile()
 {
-
     QDir logpath("./log/");
-    if (!logpath.exists()){
+    if (! logpath.exists()) {
         QDir().mkdir("./log/");
     }
-    m_logFile.setFileName("./log/"
-                          + QDate::currentDate().toString("yyyyMMdd") + "_"
-                          + QTime::currentTime().toString("hh-mm-ss")
-                          + "_logfile.txt");
+    m_logFile.setFileName("./log/" + QDate::currentDate().toString("yyyy-MM-dd") + "_logfile.txt");
 
-    if ( m_logFile.open(QFile::ReadWrite | QFile::Text) )
-    {
-        m_stream.setDevice( &m_logFile );
+    if (m_logFile.open(QFile::ReadWrite | QFile::Text | QFile::Append)) {
+        m_stream.setDevice(&m_logFile);
     }
-
 }
 
 void LoggerFile::print(const std::string& message, eLogType type)
 {
-    m_line = QTime::currentTime().toString() + ' [';
-    switch (type) {
-    case eLogType::DEBUG:
-        m_line += "Debug";
-        break;
-    case eLogType::LOG:
-        m_line += "Log";
-        break;
-    case eLogType::INFORMATION:
-        m_line += "Info";
-        break;
-    case eLogType::ERROR:
-        m_line += "ERROR";
-        break;
-    default:
-        m_line += "Unknown type";
-    }
-    m_line += "] " + QString::fromStdString(message);
-    m_stream << m_line << endl;
+    m_stream << QTime::currentTime().toString();
+    m_stream << " [" << getTypeString(type) << "] ";
+    m_stream << QString::fromStdString(message) << endl;
 }
 
 ////////////////////////////////////////////////
