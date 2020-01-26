@@ -1,6 +1,7 @@
 #ifndef MAPTOOLS_H
 #define MAPTOOLS_H
 
+#include <QRect>
 #include <cstdint>
 
 //////////////////////////////////////////////////////////////////////////////
@@ -37,14 +38,21 @@ public:
 
     void setPen();
     void setEraser();
-    void setSelection();
+    void setSelectTool();
 
     void setGrid(bool gridVisible = true);
     void updateGridDisplay();
 
+    void previewTool(const QRect& clickingRegion);
+    void useTool(const QRect& clickingRegion);
+
 private:
     void resetTools();
     void resetLayerLink();
+
+    QPoint adjustOnGrid(const QPoint& pxCoords);
+    QRect adjustOnGrid(const QRect& rawRect);
+    void forceInScene(QPoint& point); // set the point in the scene if it's out
 
     enum class eLayerType
     {

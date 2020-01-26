@@ -15,6 +15,8 @@ class Floor;
 using Floors = vec_uniq<Floor>;
 } // namespace Editor
 
+class MapTools;
+
 namespace GraphicMap {
 class VisibleGraphicLayer;
 class BlockingGraphicLayer;
@@ -36,6 +38,7 @@ public:
     void setPreview(const QPixmap& previewPix);
     void setSelectRect(const QRect& selectionRect);
     void drawGrid(quint16 width, quint16 height, unsigned int unit);
+    void linkToolSet(MapTools* tools) { m_tools = tools; }
 
     void clearPreview();
     void clearSelectRect();
@@ -45,9 +48,9 @@ public:
     const vec_uniq<BlockingGraphicLayer>& blockingLayers() const;
     const vec_uniq<EventsGraphicLayer>& eventLayers() const;
 
-    // void mousePressEvent(QGraphicsSceneMouseEvent*) override;
-    // void mouseMoveEvent(QGraphicsSceneMouseEvent*) override;
-    // void mouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
+    void mousePressEvent(QGraphicsSceneMouseEvent*) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent*) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
 
 public slots:
     void clear();
@@ -55,10 +58,15 @@ public slots:
 private:
     void instantiateFloor(Editor::Floor&, const QPixmap& chip, int& zIdxInOut);
 
+    // Layers
     vec_uniq<VisibleGraphicLayer> m_visibleLayers;
     vec_uniq<BlockingGraphicLayer> m_blockingLayers;
     vec_uniq<EventsGraphicLayer> m_eventLayers;
     MapSceneLayer* m_currentGraphicLayer = nullptr;
+
+    // Tools
+    MapTools* m_tools = nullptr;
+    QPoint m_firstClickPt;
 
     // QGraphicsScene deletes those
     std::vector<QGraphicsItem*> m_gridItems;

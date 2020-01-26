@@ -12,7 +12,9 @@ MapTools::MapTools(ChipsetGraphicsScene& chipset, GraphicMap::MapGraphicsScene& 
     : m_chipsetScene(chipset)
     , m_mapScene(map)
     , m_toolsUI(ui)
-{}
+{
+    m_mapScene.linkToolSet(this);
+}
 
 void MapTools::clear()
 {
@@ -22,7 +24,8 @@ void MapTools::clear()
 
 void MapTools::setActiveLayer(GraphicMap::VisibleGraphicLayer* layer)
 {
-    clear();
+    resetLayerLink();
+    m_mapScene.clearSelectRect();
 
     // update grid
     m_uiLayerW   = layer->layer().width();
@@ -38,7 +41,8 @@ void MapTools::setActiveLayer(GraphicMap::VisibleGraphicLayer* layer)
 
 void MapTools::setActiveLayer(GraphicMap::BlockingGraphicLayer* layer)
 {
-    clear();
+    resetLayerLink();
+    m_mapScene.clearSelectRect();
 
     // update grid
     m_uiLayerW   = layer->layer().width();
@@ -103,7 +107,7 @@ void MapTools::setEraser()
     m_currMode = eTools::Eraser;
 }
 
-void MapTools::setSelection()
+void MapTools::setSelectTool()
 {
     resetTools();
     m_toolsUI->actionSelection->setChecked(true);
@@ -112,4 +116,80 @@ void MapTools::setSelection()
     m_toolsUI->actionCopy->setEnabled(true);
     m_toolsUI->actionCut->setEnabled(true);
     m_toolsUI->actionPaste->setEnabled(true);
+}
+
+QPoint MapTools::adjustOnGrid(const QPoint& pxCoords)
+{
+    int iStep = static_cast<int>(m_uiGridStep);
+
+    QPoint cellsCoords;
+    cellsCoords.setX(pxCoords.x() - (pxCoords.x() % iStep));
+    cellsCoords.setY(pxCoords.y() - (pxCoords.y() % iStep));
+
+    return cellsCoords;
+}
+
+QRect MapTools::adjustOnGrid(const QRect& rawRect)
+{
+    int iStep = static_cast<int>(m_uiGridStep);
+
+    QRect normalized = rawRect.normalized();
+    QPoint p1        = adjustOnGrid(normalized.topLeft());
+    QPoint p2        = adjustOnGrid(normalized.bottomRight());
+    p2 += QPoint(iStep - 1, iStep - 1);
+
+    forceInScene(p1);
+    forceInScene(p2);
+
+    return QRect(p1, p2);
+}
+
+void MapTools::forceInScene(QPoint& point)
+{
+    int maxX = static_cast<int>(m_uiLayerW * m_uiGridStep) - 1;
+    int maxY = static_cast<int>(m_uiLayerH * m_uiGridStep) - 1;
+
+    if (point.x() < 0)
+        point.setX(0);
+    if (point.x() > maxX)
+        point.setX(maxX);
+
+    if (point.y() < 0)
+        point.setY(0);
+    if (point.y() > maxY)
+        point.setY(maxY);
+}
+
+void MapTools::previewTool(const QRect& clickingRegion)
+{
+    QRect adjustedRegion = adjustOnGrid(clickingRegion);
+
+    switch (m_currMode) {
+    case eTools::Pen:
+        break;
+    case eTools::Eraser:
+        break;
+    case eTools::Selection:
+        m_mapScene.setSelectRect(adjustedRegion);
+        break;
+    default:
+        break;
+    }
+}
+
+void MapTools::useTool(const QRect& clickingRegion)
+{
+    QRect adjustedRegion = adjustOnGrid(clickingRegion);
+
+    switch (m_currMode) {
+    case eTools::Pen:
+        break;
+    case eTools::Eraser:
+        break;
+    case eTools::Selection:
+        m_mapScene.setSelectRect(adjustedRegion);
+        break;
+    default:
+        break;
+    }
 }

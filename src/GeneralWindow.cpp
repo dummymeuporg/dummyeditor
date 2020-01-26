@@ -319,7 +319,7 @@ void GeneralWindow::on_actionPen_triggered()
 
 void GeneralWindow::on_actionSelection_triggered()
 {
-    m_mapTools.setSelection();
+    m_mapTools.setSelectTool();
 }
 
 void GeneralWindow::on_actionToggleGrid_triggered()

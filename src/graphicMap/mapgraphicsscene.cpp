@@ -1,11 +1,14 @@
 #include "graphicMap/mapGraphicsScene.hpp"
 
+#include "MapTools.hpp"
 #include "editor/floor.hpp"
 #include "editor/layer.hpp"
 #include "graphicMap/layerGraphicBlocking.hpp"
 #include "graphicMap/layerGraphicEvents.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
 #include "utils/definitions.hpp"
+
+#include <QGraphicsSceneMouseEvent>
 
 using std::unique_ptr;
 
@@ -55,7 +58,7 @@ void MapGraphicsScene::setPreview(const QPixmap& previewPix)
 
 void MapGraphicsScene::setSelectRect(const QRect& selectionRect)
 {
-    clearSelection();
+    clearSelectRect();
 
     QBrush brush(QColor(66, 135, 245));
 
@@ -139,6 +142,36 @@ void MapGraphicsScene::instantiateFloor(Editor::Floor& floor, const QPixmap& chi
         addItem(pEventLayer->graphicItems());
         m_eventLayers.push_back(std::move(pEventLayer));
     }
+}
+
+void MapGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* e)
+{
+    if (m_tools == nullptr //
+        || ! e->buttons().testFlag(Qt::LeftButton))
+        return;
+
+    m_firstClickPt = e->scenePos().toPoint();
+    m_tools->previewTool(QRect(m_firstClickPt, m_firstClickPt));
+}
+
+void MapGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* e)
+{
+    if (m_tools == nullptr //
+        || ! e->buttons().testFlag(Qt::LeftButton))
+        return;
+
+    QPoint otherClick = e->scenePos().toPoint();
+    m_tools->previewTool(QRect(m_firstClickPt, otherClick));
+}
+
+void MapGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* e)
+{
+    if (m_tools == nullptr //
+        || ! e->buttons().testFlag(Qt::LeftButton))
+        return;
+
+    QPoint otherClick = e->scenePos().toPoint();
+    m_tools->previewTool(QRect(m_firstClickPt, otherClick));
 }
 
 } // namespace GraphicMap
