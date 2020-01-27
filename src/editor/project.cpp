@@ -10,7 +10,6 @@
 #include "editor/layerEvents.hpp"
 #include "editor/layerGraphic.hpp"
 #include "editor/map.hpp"
-#include "editor/startingPoint.hpp"
 #include "mapsTree.hpp"
 #include "utils/Logger.hpp"
 #include "utils/mapDocument.hpp"
@@ -38,10 +37,10 @@ Project::Project(const std::string& projectFolder)
     if (startingPositionNodes.length() > 0) {
         const QDomNode& startingPositionNode(startingPositionNodes.at(0));
         const QDomNamedNodeMap& attributes(startingPositionNode.attributes());
-        m_startingPoint = std::make_unique<StartingPoint>(attributes.namedItem("map").nodeValue().toStdString().c_str(),
-                                                          attributes.namedItem("x").nodeValue().toUShort(),
-                                                          attributes.namedItem("y").nodeValue().toUShort(),
-                                                          attributes.namedItem("floor").nodeValue().toUShort());
+        m_startingPoint = StartingPoint(attributes.namedItem("map").nodeValue().toStdString().c_str(),
+                                        attributes.namedItem("x").nodeValue().toUShort(),
+                                        attributes.namedItem("y").nodeValue().toUShort(),
+                                        attributes.namedItem("floor").nodeValue().toUShort());
     }
 }
 
@@ -62,7 +61,7 @@ QMap<QString, std::shared_ptr<MapDocument>> Project::openedMaps() const
 
 void Project::setStartingPoint(const StartingPoint& startingPoint)
 {
-    m_startingPoint = std::make_unique<StartingPoint>(startingPoint);
+    m_startingPoint = startingPoint;
 }
 
 void Project::create(const QString& folder)
@@ -114,14 +113,12 @@ void Project::saveProject()
     doc.appendChild(projectNode);
     projectNode.appendChild(mapsNode);
 
-    if (nullptr != m_startingPoint) {
-        QDomElement startingPointNode = doc.createElement("starting_point");
-        startingPointNode.setAttribute("map", m_startingPoint->mapName());
-        startingPointNode.setAttribute("x", m_startingPoint->x());
-        startingPointNode.setAttribute("y", m_startingPoint->y());
-        startingPointNode.setAttribute("floor", static_cast<std::uint16_t>(m_startingPoint->floor()));
-        projectNode.appendChild(startingPointNode);
-    }
+    QDomElement startingPointNode = doc.createElement("starting_point");
+    startingPointNode.setAttribute("map", m_startingPoint.mapName());
+    startingPointNode.setAttribute("x", m_startingPoint.x());
+    startingPointNode.setAttribute("y", m_startingPoint.y());
+    startingPointNode.setAttribute("floor", static_cast<std::uint16_t>(m_startingPoint.floor()));
+    projectNode.appendChild(startingPointNode);
 
     dumpToXmlNode(doc, mapsNode, m_mapsModel->invisibleRootItem());
     QString xmlPath((m_coreProject.projectPath() / "project.xml").string().c_str());

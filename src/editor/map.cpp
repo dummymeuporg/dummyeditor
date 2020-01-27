@@ -166,10 +166,10 @@ void Map::saveGraphicLayers()
     ofs.write(reinterpret_cast<char*>(&m_floorsCount), sizeof(std::uint8_t));
 
     // write the chipset
-    _writeStdString(ofs, m_chipset);
+    writeStdString(ofs, m_chipset);
 
     // write the music
-    _writeStdString(ofs, m_music);
+    writeStdString(ofs, m_music);
 
     // write the floors
     for (const auto& floor : m_floors) {
@@ -177,7 +177,7 @@ void Map::saveGraphicLayers()
     }
 }
 
-void Map::_writeStdString(std::ofstream& ofs, const std::string& str)
+void Map::writeStdString(std::ofstream& ofs, const std::string& str)
 {
     std::uint32_t size = static_cast<std::uint32_t>(str.size());
     ofs.write(reinterpret_cast<const char*>(&size), sizeof(std::uint32_t));

@@ -28,7 +28,7 @@ class ChipsetGraphicsScene;
 class MapTools
 {
 public:
-    explicit MapTools(ChipsetGraphicsScene&, GraphicMap::MapGraphicsScene&, Ui::GeneralWindow*);
+    explicit MapTools(ChipsetGraphicsScene&, GraphicMap::MapGraphicsScene&, Ui::GeneralWindow&);
 
     void clear();
 
@@ -69,10 +69,9 @@ private:
         Selection,
     };
 
-    ChipsetGraphicsScene& m_chipsetScene;
+    const ChipsetGraphicsScene& m_chipsetScene;
     GraphicMap::MapGraphicsScene& m_mapScene;
-
-    Ui::GeneralWindow* m_toolsUI = nullptr;
+    Ui::GeneralWindow& m_toolsUI;
 
     eTools m_currMode                              = eTools::Pen;
     eLayerType m_currLayerType                     = eLayerType::None;

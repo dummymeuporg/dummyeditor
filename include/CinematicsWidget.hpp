@@ -14,7 +14,6 @@ class CinematicsWidget : public QWidget
 
 public:
     explicit CinematicsWidget(QWidget* parent = nullptr);
-    virtual ~CinematicsWidget() override;
 
 private:
     std::unique_ptr<Ui::CinematicsWidget> m_ui;

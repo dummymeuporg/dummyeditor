@@ -28,7 +28,6 @@ class MapEditDialog : public QDialog
     Q_OBJECT
 public:
     explicit MapEditDialog(QWidget* parent = nullptr);
-    ~MapEditDialog() override;
 
     void setup(const Editor::Project& project, const MapDocument* = nullptr);
 
@@ -45,7 +44,7 @@ public slots:
 
 private:
     bool inputsAreValid(QString* errorMessage = nullptr);
-    Ui::MapEditDialog* m_ui = nullptr;
+    std::unique_ptr<Ui::MapEditDialog> m_ui;
     QString m_chipsetPath;
 };
 

@@ -22,7 +22,7 @@ using Editor::Project;
 GeneralWindow::GeneralWindow(QWidget* parent)
     : QMainWindow(parent)
     , m_ui(new Ui::GeneralWindow)
-    , m_mapTools(m_chipsetScene, m_mapScene, m_ui.get())
+    , m_mapTools(m_chipsetScene, m_mapScene, *m_ui)
 {
     m_ui->setupUi(this);
     setupLoggers();

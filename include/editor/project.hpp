@@ -7,6 +7,8 @@
 
 #include <dummy/local/project.hpp>
 
+#include "editor/startingPoint.hpp"
+
 //////////////////////////////////////////////////////////////////////////////
 //  forward declaration
 //////////////////////////////////////////////////////////////////////////////
@@ -64,7 +66,7 @@ private:
     QDomDocument m_domDocument;
     MapsTreeModel* m_mapsModel = nullptr;
     bool m_isModified          = false;
-    std::unique_ptr<StartingPoint> m_startingPoint;
+    StartingPoint m_startingPoint;
 
     QMap<QString, std::shared_ptr<MapDocument>> m_openedMaps;
 };

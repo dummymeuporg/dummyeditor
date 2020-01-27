@@ -17,7 +17,7 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent*) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
 
-    const QPixmap& chipset() { return m_chipset; }
+    const QPixmap& chipset() const { return m_chipset; }
 
 public slots:
     void setChipset(const QString& chipsetPath);
