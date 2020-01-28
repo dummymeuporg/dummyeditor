@@ -18,6 +18,8 @@ public:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
 
     const QPixmap& chipset() const { return m_chipset; }
+    const QRect& selectionRect() const { return m_currentSelection; }
+    QPixmap selectionPixmap() const;
 
 public slots:
     void setChipset(const QString& chipsetPath);

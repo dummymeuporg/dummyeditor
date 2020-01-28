@@ -51,6 +51,14 @@ void ChipsetGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent*)
     m_isSelecting = false;
 }
 
+QPixmap ChipsetGraphicsScene::selectionPixmap() const
+{
+    if (m_currentSelection.isNull())
+        return QPixmap();
+
+    return m_chipset.copy(m_currentSelection);
+}
+
 void ChipsetGraphicsScene::setChipset(const QString& chipsetPath)
 {
     clear();
@@ -83,7 +91,7 @@ void ChipsetGraphicsScene::setSelectRect(const QRect& rect)
     m_currentSelection = rect;
 
     if (m_selectionRectItem != nullptr)
-        removeItem(m_selectionRectItem);
+        delete m_selectionRectItem;
 
     m_selectionRectItem = new QGraphicsRectItem(rect);
     QBrush brush(QColor(66, 135, 245));

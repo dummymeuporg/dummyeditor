@@ -7,3 +7,5 @@ CinematicsWidget::CinematicsWidget(QWidget* parent)
 {
     m_ui->setupUi(this);
 }
+
+CinematicsWidget::~CinematicsWidget() {}

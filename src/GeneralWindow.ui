@@ -417,6 +417,9 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="../icons.qrc">
      <normaloff>:/icons/icon_penpath.png</normaloff>:/icons/icon_penpath.png</iconset>

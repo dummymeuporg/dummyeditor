@@ -1,6 +1,7 @@
 #include "MapTools.hpp"
 #include "ui_GeneralWindow.h"
 
+#include "chipsetGraphicsScene.hpp"
 #include "editor/layerBlocking.hpp"
 #include "editor/layerGraphic.hpp"
 #include "graphicMap/layerGraphicBlocking.hpp"
@@ -31,7 +32,6 @@ void MapTools::setActiveLayer(GraphicMap::VisibleGraphicLayer* layer)
     m_uiLayerW   = layer->layer().width();
     m_uiLayerH   = layer->layer().height();
     m_uiGridStep = CELL_H;
-    m_toolsUI.actionToggleGrid->setChecked(true);
 
     m_currLayerType = eLayerType::Visible;
     m_visLayer      = layer;
@@ -48,7 +48,6 @@ void MapTools::setActiveLayer(GraphicMap::BlockingGraphicLayer* layer)
     m_uiLayerW   = layer->layer().width();
     m_uiLayerH   = layer->layer().height();
     m_uiGridStep = BLOCK_H;
-    m_toolsUI.actionToggleGrid->setChecked(true);
 
     m_currLayerType = eLayerType::Blocking;
     m_blockLayer    = layer;
@@ -127,6 +126,8 @@ void MapTools::setPasteTool()
 QPoint MapTools::adjustOnGrid(const QPoint& pxCoords)
 {
     int iStep = static_cast<int>(m_uiGridStep);
+    if (iStep == 0)
+        return pxCoords; // cannot do anything with % 0
 
     QPoint cellsCoords;
     cellsCoords.setX(pxCoords.x() - (pxCoords.x() % iStep));
@@ -166,6 +167,70 @@ void MapTools::forceInScene(QPoint& point)
         point.setY(maxY);
 }
 
+QPixmap MapTools::previewVisible(const QRect& region)
+{
+    const QPixmap chipsetSelection = m_chipsetScene.selectionPixmap();
+    if (chipsetSelection.isNull())
+        return QPixmap();
+
+    QPixmap previewImg(region.size());
+    QPainter painter(&previewImg);
+    const int rectW = region.width();
+    const int rectH = region.height();
+    const int dX    = static_cast<int>(chipsetSelection.width());
+    const int dY    = static_cast<int>(chipsetSelection.height());
+
+    for (int y = 0; y < rectH; y += dY) {
+        for (int x = 0; x < rectW; x += dX) {
+            painter.drawPixmap(QRect(x, y, dX, dY), chipsetSelection);
+        }
+    }
+
+    return previewImg;
+}
+
+void MapTools::drawVisible(const QRect& region)
+{
+    if (m_currLayerType != eLayerType::Visible || m_visLayer == nullptr)
+        return;
+
+    const QRect& chipsetSelection = m_chipsetScene.selectionRect();
+    if (chipsetSelection.isNull())
+        return;
+
+    quint16 chipOffsetX = static_cast<quint16>(chipsetSelection.x()) / CELL_W;
+    quint16 chipOffsetY = static_cast<quint16>(chipsetSelection.y()) / CELL_H;
+    quint16 chipW       = static_cast<quint16>(chipsetSelection.width()) / CELL_W;
+    quint16 chipH       = static_cast<quint16>(chipsetSelection.height()) / CELL_H;
+
+    quint16 minX = static_cast<quint16>(region.left() / CELL_W);
+    quint16 maxX = static_cast<quint16>(region.right() / CELL_W);
+    quint16 minY = static_cast<quint16>(region.top() / CELL_H);
+    quint16 maxY = static_cast<quint16>(region.bottom() / CELL_H);
+
+    for (quint16 x = minX; x <= maxX; ++x)
+        for (quint16 y = minY; y <= maxY; ++y) {
+            quint16 dx = x - minX;
+            quint16 dy = y - minY;
+            m_visLayer->setTile(x, y, (dx % chipW) + chipOffsetX, (dy % chipH) + chipOffsetY);
+        }
+}
+
+void MapTools::drawBlocking(const QRect& region)
+{
+    if (m_currLayerType != eLayerType::Blocking || m_blockLayer == nullptr)
+        return;
+
+    quint16 minX = static_cast<quint16>(region.left() / BLOCK_W);
+    quint16 maxX = static_cast<quint16>(region.right() / BLOCK_W);
+    quint16 minY = static_cast<quint16>(region.top() / BLOCK_H);
+    quint16 maxY = static_cast<quint16>(region.bottom() / BLOCK_H);
+
+    for (quint16 x = minX; x <= maxX; ++x)
+        for (quint16 y = minY; y <= maxY; ++y)
+            m_blockLayer->setTile(x, y, true);
+}
+
 void MapTools::eraseVisible(const QRect& region)
 {
     if (m_currLayerType != eLayerType::Visible || m_visLayer == nullptr)
@@ -179,8 +244,6 @@ void MapTools::eraseVisible(const QRect& region)
     for (quint16 x = minX; x <= maxX; ++x)
         for (quint16 y = minY; y <= maxY; ++y)
             m_visLayer->setTile(x, y, -1, -1);
-
-    m_mapScene.update(region);
 }
 
 void MapTools::eraseBlocking(const QRect& region)
@@ -196,16 +259,24 @@ void MapTools::eraseBlocking(const QRect& region)
     for (quint16 x = minX; x <= maxX; ++x)
         for (quint16 y = minY; y <= maxY; ++y)
             m_blockLayer->setTile(x, y, false);
-
-    m_mapScene.update(region);
 }
 
 void MapTools::previewTool(const QRect& clickingRegion)
 {
     QRect adjustedRegion = adjustOnGrid(clickingRegion);
+    QPixmap previewImg;
 
     switch (m_currMode) {
     case eTools::Pen:
+
+        if (m_currLayerType == eLayerType::Visible) {
+            previewImg = previewVisible(adjustedRegion);
+        } else if (m_currLayerType == eLayerType::Blocking) {
+            previewImg = QPixmap(adjustedRegion.size());
+            previewImg.fill(QColor(255, 0, 0, 50));
+        }
+
+        m_mapScene.setPreview(previewImg, adjustedRegion.topLeft());
         break;
 
     case eTools::Eraser:
@@ -230,6 +301,14 @@ void MapTools::useTool(const QRect& clickingRegion)
 
     switch (m_currMode) {
     case eTools::Pen:
+        // Hide preview
+        m_mapScene.clearPreview();
+        // and actually erase
+        if (m_currLayerType == eLayerType::Visible)
+            drawVisible(adjustedRegion);
+        else if (m_currLayerType == eLayerType::Blocking)
+            drawBlocking(adjustedRegion);
+
         break;
 
     case eTools::Eraser:

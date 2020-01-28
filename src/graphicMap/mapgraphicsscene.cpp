@@ -42,7 +42,6 @@ void MapGraphicsScene::setFloors(const Editor::Floors& mapFloors, const QPixmap&
     m_visibleLayers.clear();
     m_blockingLayers.clear();
     m_eventLayers.clear();
-    m_currentGraphicLayer = nullptr;
 
     int zindex = 0;
     for (const auto& floor : mapFloors) {
@@ -50,10 +49,13 @@ void MapGraphicsScene::setFloors(const Editor::Floors& mapFloors, const QPixmap&
     }
 }
 
-void MapGraphicsScene::setPreview(const QPixmap& previewPix)
+void MapGraphicsScene::setPreview(const QPixmap& previewPix, const QPoint& pos)
 {
     clearPreview();
-    m_previewItem = new QGraphicsPixmapItem(previewPix);
+    m_previewItem = std::unique_ptr<QGraphicsPixmapItem>(new QGraphicsPixmapItem(previewPix));
+    m_previewItem->setZValue(Z_PREVIEW);
+    m_previewItem->setPos(pos);
+    addItem(m_previewItem.get());
 }
 
 void MapGraphicsScene::setSelectRect(const QRect& selectionRect)
@@ -62,7 +64,7 @@ void MapGraphicsScene::setSelectRect(const QRect& selectionRect)
 
     QBrush brush(QColor(66, 135, 245));
 
-    m_selectionRectItem = addRect(selectionRect);
+    m_selectionRectItem = std::unique_ptr<QGraphicsRectItem>(addRect(selectionRect));
     m_selectionRectItem->setZValue(Z_SELEC);
     m_selectionRectItem->setBrush(brush);
     m_selectionRectItem->setOpacity(0.5);
@@ -77,13 +79,13 @@ void MapGraphicsScene::drawGrid(quint16 width, quint16 height, unsigned int unit
     for (int i = 0; i <= width; ++i) {
         QGraphicsItem* item = addLine(i * unit, 0, i * unit, unit * height, pen);
         item->setZValue(Z_GRID);
-        m_gridItems.push_back(item);
+        m_gridItems.push_back(std::unique_ptr<QGraphicsItem>(item));
     }
 
     for (int i = 0; i <= height; ++i) {
         QGraphicsItem* item = addLine(0, i * unit, unit * width, unit * i, pen);
         item->setZValue(Z_GRID);
-        m_gridItems.push_back(item);
+        m_gridItems.push_back(std::unique_ptr<QGraphicsItem>(item));
     }
 }
 void MapGraphicsScene::clear()
@@ -96,27 +98,16 @@ void MapGraphicsScene::clear()
 
 void MapGraphicsScene::clearPreview()
 {
-    if (nullptr != m_previewItem) {
-        removeItem(m_previewItem);
-        m_previewItem = nullptr;
-    }
+    m_previewItem.reset();
 }
 
 void MapGraphicsScene::clearSelectRect()
 {
-    if (nullptr != m_selectionRectItem) {
-        removeItem(m_selectionRectItem);
-        m_selectionRectItem = nullptr;
-    }
+    m_selectionRectItem.reset();
 }
 
 void MapGraphicsScene::clearGrid()
 {
-    const size_t nbCells = m_gridItems.size();
-
-    for (size_t i = 0; i < nbCells; ++i)
-        removeItem(m_gridItems[i]);
-
     m_gridItems.clear();
 }
 

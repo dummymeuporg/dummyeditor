@@ -33,14 +33,10 @@ void GraphicItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWid
         painter->drawLine(0, BLOCK_H, BLOCK_W, 0);
         break;
     case eGraphicItemType::eBlockingSquare:
-        painter->setBrush(Qt::red);
-        painter->setOpacity(0.5);
-        painter->drawRect(0, 0, BLOCK_W, BLOCK_H);
+        painter->fillRect(QRect(0, 0, BLOCK_W, BLOCK_H), QColor(255, 0, 0, 100));
         break;
     case eGraphicItemType::eEvent:
-        painter->setBrush(Qt::white);
-        painter->setOpacity(0.5);
-        painter->drawRect(0, 0, CELL_W, CELL_H);
+        painter->fillRect(QRect(0, 0, CELL_W, CELL_H), QColor(255, 255, 255, 100));
         break;
     default:
         break;

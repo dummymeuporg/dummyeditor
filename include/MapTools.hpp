@@ -1,6 +1,7 @@
 #ifndef MAPTOOLS_H
 #define MAPTOOLS_H
 
+#include <QPixmap>
 #include <QRect>
 #include <cstdint>
 
@@ -55,6 +56,11 @@ private:
     QRect adjustOnGrid(const QRect& rawRect);
     void forceInScene(QPoint& point); // set the point in the scene if it's out
 
+    QPixmap previewVisible(const QRect&);
+
+    void drawBlocking(const QRect&);
+    void drawVisible(const QRect&);
+
     void eraseBlocking(const QRect&);
     void eraseVisible(const QRect&);
 
@@ -72,7 +78,7 @@ private:
         Pen,
         Eraser,
         Selection,
-        Paste
+        Paste,
     };
 
     const ChipsetGraphicsScene& m_chipsetScene;

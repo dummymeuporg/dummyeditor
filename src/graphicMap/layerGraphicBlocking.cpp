@@ -24,8 +24,8 @@ BlockingGraphicLayer::BlockingGraphicLayer(Editor::BlockingLayer& blockingLayer,
 
     for (size_t index = 0; index < nbCells; ++index) {
         if (m_blockingLayer[index] != 0) {
-            const size_t posX((index % (m_blockingLayer.width())) * BLOCK_W);
-            const size_t posY((index / (m_blockingLayer.width())) * BLOCK_H);
+            const size_t posX(index % (m_blockingLayer.width()));
+            const size_t posY(index / (m_blockingLayer.width()));
 
             setTile(static_cast<quint16>(posX), static_cast<quint16>(posY), true);
         }
@@ -40,7 +40,7 @@ MapSceneLayer& BlockingGraphicLayer::removeTile(quint16 x, quint16 y)
         int index((y / 8) * m_blockingLayer.width() + (x / 8));
         m_blockingLayer[index] = false;
         if (nullptr != m_layerItems[index]) {
-            m_mapGraphicsScene.removeItem(m_layerItems[index]);
+            delete m_layerItems[index];
             m_layerItems[index] = nullptr;
         }
     }
@@ -54,10 +54,10 @@ void BlockingGraphicLayer::setSelected()
 
 void BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
 {
-    if (x > (m_blockingLayer.width() * BLOCK_W) || y > (m_blockingLayer.height() * BLOCK_H))
+    if (x > m_blockingLayer.width() || y > m_blockingLayer.height())
         return;
 
-    size_t index = ((y / BLOCK_H) * m_blockingLayer.width()) + (x / BLOCK_W);
+    size_t index = (y * m_blockingLayer.width() + x);
 
     if (m_blockingLayer[index] != 0) {
         setTile(x, y, false);
@@ -68,10 +68,10 @@ void BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
 
 void BlockingGraphicLayer::setTile(quint16 x, quint16 y, bool isBlocking)
 {
-    if (x > (m_blockingLayer.width() * BLOCK_W) || y < (m_blockingLayer.height() * BLOCK_H))
+    if (x > m_blockingLayer.width() || y > m_blockingLayer.height())
         return;
 
-    size_t index(((y / BLOCK_H) * m_blockingLayer.width()) + (x / BLOCK_W));
+    size_t index((y * m_blockingLayer.width()) + x);
 
     if (nullptr != indexedItems()[index]) {
         delete indexedItems()[index];
@@ -80,7 +80,7 @@ void BlockingGraphicLayer::setTile(quint16 x, quint16 y, bool isBlocking)
 
     if (isBlocking) {
         indexedItems()[index] = new GraphicItem(GraphicItem::eGraphicItemType::eBlockingSquare);
-        indexedItems()[index]->setPos(QPointF(x - (x % BLOCK_W), y - (y % BLOCK_H)));
+        indexedItems()[index]->setPos(QPointF(x * BLOCK_W, y * BLOCK_H));
         graphicItems()->addToGroup(indexedItems()[index]);
     }
 

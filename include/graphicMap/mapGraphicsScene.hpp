@@ -35,7 +35,7 @@ public:
     virtual ~MapGraphicsScene() override;
 
     void setFloors(const Editor::Floors& mapFloors, const QPixmap& chipset);
-    void setPreview(const QPixmap& previewPix);
+    void setPreview(const QPixmap& previewPix, const QPoint& pos);
     void setSelectRect(const QRect& selectionRect);
     void drawGrid(quint16 width, quint16 height, unsigned int unit);
     void linkToolSet(MapTools* tools) { m_tools = tools; }
@@ -62,7 +62,6 @@ private:
     vec_uniq<VisibleGraphicLayer> m_visibleLayers;
     vec_uniq<BlockingGraphicLayer> m_blockingLayers;
     vec_uniq<EventsGraphicLayer> m_eventLayers;
-    MapSceneLayer* m_currentGraphicLayer = nullptr;
 
     // Tools
     MapTools* m_tools = nullptr;
@@ -70,9 +69,9 @@ private:
     bool m_isUsingTool = false;
 
     // QGraphicsScene deletes those
-    std::vector<QGraphicsItem*> m_gridItems;
-    QGraphicsRectItem* m_selectionRectItem = nullptr;
-    QGraphicsPixmapItem* m_previewItem     = nullptr;
+    vec_uniq<QGraphicsItem> m_gridItems;
+    std::unique_ptr<QGraphicsRectItem> m_selectionRectItem;
+    std::unique_ptr<QGraphicsPixmapItem> m_previewItem;
 };
 
 } // namespace GraphicMap
