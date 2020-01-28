@@ -150,14 +150,14 @@ void MapGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* e)
         || ! e->buttons().testFlag(Qt::LeftButton))
         return;
 
+    m_isUsingTool  = true;
     m_firstClickPt = e->scenePos().toPoint();
     m_tools->previewTool(QRect(m_firstClickPt, m_firstClickPt));
 }
 
 void MapGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* e)
 {
-    if (m_tools == nullptr //
-        || ! e->buttons().testFlag(Qt::LeftButton))
+    if (m_tools == nullptr || ! m_isUsingTool)
         return;
 
     QPoint otherClick = e->scenePos().toPoint();
@@ -166,12 +166,12 @@ void MapGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* e)
 
 void MapGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* e)
 {
-    if (m_tools == nullptr //
-        || ! e->buttons().testFlag(Qt::LeftButton))
+    if (m_tools == nullptr || ! m_isUsingTool)
         return;
 
+    m_isUsingTool     = false;
     QPoint otherClick = e->scenePos().toPoint();
-    m_tools->previewTool(QRect(m_firstClickPt, otherClick));
+    m_tools->useTool(QRect(m_firstClickPt, otherClick));
 }
 
 } // namespace GraphicMap

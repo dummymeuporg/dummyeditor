@@ -79,10 +79,10 @@ void MapTools::resetTools()
     m_toolsUI.actionPen->setChecked(false);
     m_toolsUI.actionEraser->setChecked(false);
     m_toolsUI.actionSelection->setChecked(false);
+    m_toolsUI.actionPaste->setChecked(false);
 
     m_toolsUI.actionCopy->setEnabled(false);
     m_toolsUI.actionCut->setEnabled(false);
-    m_toolsUI.actionPaste->setEnabled(false);
 }
 
 void MapTools::resetLayerLink()
@@ -115,7 +115,13 @@ void MapTools::setSelectTool()
 
     m_toolsUI.actionCopy->setEnabled(true);
     m_toolsUI.actionCut->setEnabled(true);
-    m_toolsUI.actionPaste->setEnabled(true);
+}
+
+void MapTools::setPasteTool()
+{
+    resetTools();
+    m_toolsUI.actionPaste->setChecked(true);
+    m_currMode = eTools::Paste;
 }
 
 QPoint MapTools::adjustOnGrid(const QPoint& pxCoords)
@@ -160,6 +166,40 @@ void MapTools::forceInScene(QPoint& point)
         point.setY(maxY);
 }
 
+void MapTools::eraseVisible(const QRect& region)
+{
+    if (m_currLayerType != eLayerType::Visible || m_visLayer == nullptr)
+        return;
+
+    quint16 minX = static_cast<quint16>(region.left() / CELL_W);
+    quint16 maxX = static_cast<quint16>(region.right() / CELL_W);
+    quint16 minY = static_cast<quint16>(region.top() / CELL_H);
+    quint16 maxY = static_cast<quint16>(region.bottom() / CELL_H);
+
+    for (quint16 x = minX; x <= maxX; ++x)
+        for (quint16 y = minY; y <= maxY; ++y)
+            m_visLayer->setTile(x, y, -1, -1);
+
+    m_mapScene.update(region);
+}
+
+void MapTools::eraseBlocking(const QRect& region)
+{
+    if (m_currLayerType != eLayerType::Blocking || m_blockLayer == nullptr)
+        return;
+
+    quint16 minX = static_cast<quint16>(region.left() / BLOCK_W);
+    quint16 maxX = static_cast<quint16>(region.right() / BLOCK_W);
+    quint16 minY = static_cast<quint16>(region.top() / BLOCK_H);
+    quint16 maxY = static_cast<quint16>(region.bottom() / BLOCK_H);
+
+    for (quint16 x = minX; x <= maxX; ++x)
+        for (quint16 y = minY; y <= maxY; ++y)
+            m_blockLayer->setTile(x, y, false);
+
+    m_mapScene.update(region);
+}
+
 void MapTools::previewTool(const QRect& clickingRegion)
 {
     QRect adjustedRegion = adjustOnGrid(clickingRegion);
@@ -167,11 +207,18 @@ void MapTools::previewTool(const QRect& clickingRegion)
     switch (m_currMode) {
     case eTools::Pen:
         break;
+
     case eTools::Eraser:
+        m_mapScene.setSelectRect(adjustedRegion); // show a preview with selection rect
         break;
+
     case eTools::Selection:
         m_mapScene.setSelectRect(adjustedRegion);
         break;
+
+    case eTools::Paste:
+        break;
+
     default:
         break;
     }
@@ -184,11 +231,25 @@ void MapTools::useTool(const QRect& clickingRegion)
     switch (m_currMode) {
     case eTools::Pen:
         break;
+
     case eTools::Eraser:
+        // Hide preview
+        m_mapScene.setSelectRect(QRect());
+        // and actually erase
+        if (m_currLayerType == eLayerType::Visible)
+            eraseVisible(adjustedRegion);
+        else if (m_currLayerType == eLayerType::Blocking)
+            eraseBlocking(adjustedRegion);
+
         break;
+
     case eTools::Selection:
         m_mapScene.setSelectRect(adjustedRegion);
         break;
+
+    case eTools::Paste:
+        break;
+
     default:
         break;
     }

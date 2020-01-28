@@ -16,6 +16,8 @@ MapEditDialog::MapEditDialog(QWidget* parent)
     m_ui->setupUi(this);
 }
 
+MapEditDialog::~MapEditDialog() {}
+
 void MapEditDialog::setup(const Editor::Project& project, const MapDocument* mapDocument)
 {
     // TODO clean/reset ?

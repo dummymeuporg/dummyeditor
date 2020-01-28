@@ -39,6 +39,7 @@ public:
     void setPen();
     void setEraser();
     void setSelectTool();
+    void setPasteTool();
 
     void setGrid(bool gridVisible = true);
     void updateGridDisplay();
@@ -54,6 +55,10 @@ private:
     QRect adjustOnGrid(const QRect& rawRect);
     void forceInScene(QPoint& point); // set the point in the scene if it's out
 
+    void eraseBlocking(const QRect&);
+    void eraseVisible(const QRect&);
+
+
     enum class eLayerType
     {
         None,
@@ -67,6 +72,7 @@ private:
         Pen,
         Eraser,
         Selection,
+        Paste
     };
 
     const ChipsetGraphicsScene& m_chipsetScene;

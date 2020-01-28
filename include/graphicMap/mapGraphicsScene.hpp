@@ -67,6 +67,7 @@ private:
     // Tools
     MapTools* m_tools = nullptr;
     QPoint m_firstClickPt;
+    bool m_isUsingTool = false;
 
     // QGraphicsScene deletes those
     std::vector<QGraphicsItem*> m_gridItems;

@@ -74,7 +74,7 @@ void BlockingGraphicLayer::setTile(quint16 x, quint16 y, bool isBlocking)
     size_t index(((y / BLOCK_H) * m_blockingLayer.width()) + (x / BLOCK_W));
 
     if (nullptr != indexedItems()[index]) {
-        graphicItems()->removeFromGroup(indexedItems()[index]);
+        delete indexedItems()[index];
         indexedItems()[index] = nullptr;
     }
 

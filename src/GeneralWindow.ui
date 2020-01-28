@@ -268,9 +268,11 @@
    <addaction name="actionPen"/>
    <addaction name="actionEraser"/>
    <addaction name="actionSelection"/>
+   <addaction name="separator"/>
    <addaction name="actionCut"/>
    <addaction name="actionCopy"/>
    <addaction name="actionPaste"/>
+   <addaction name="separator"/>
    <addaction name="actionToggleGrid"/>
   </widget>
   <widget class="QToolBar" name="toolbar_gameTool">
@@ -317,6 +319,9 @@
   </action>
   <action name="actionPen">
    <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
     <bool>true</bool>
    </property>
    <property name="icon">
@@ -395,7 +400,7 @@
   </action>
   <action name="actionPaste">
    <property name="checkable">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="icon">
     <iconset resource="../icons.qrc">

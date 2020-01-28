@@ -24,10 +24,10 @@ VisibleGraphicLayer::VisibleGraphicLayer(Editor::GraphicLayer& layer, const QPix
     size_t index = 0;
     for (const auto& cellCoord : m_graphicLayer.layer()) {
         indexedItems()[index] = nullptr;
-        qint16 x              = cellCoord.first * CELL_W;
-        qint16 y              = cellCoord.second * CELL_H;
-        quint16 posX          = (index % m_graphicLayer.width()) * CELL_W;
-        quint16 posY          = (index / m_graphicLayer.width()) * CELL_H;
+        qint16 x              = cellCoord.first;
+        qint16 y              = cellCoord.second;
+        quint16 posX          = (index % m_graphicLayer.width());
+        quint16 posY          = (index / m_graphicLayer.width());
 
         setTile(posX, posY, x, y);
         ++index;
@@ -41,23 +41,23 @@ void VisibleGraphicLayer::setSelected()
 
 void VisibleGraphicLayer::setTile(quint16 x, quint16 y, qint16 chipsetX, qint16 chipsetY)
 {
-    if (x > (m_graphicLayer.width() * CELL_W) || y > (m_graphicLayer.height() * CELL_H))
+    if (x > m_graphicLayer.width() || y > m_graphicLayer.height())
         return;
 
-    size_t index = ((y / CELL_H) * m_graphicLayer.width()) + (x / CELL_W);
+    size_t index = (y * m_graphicLayer.width()) + x;
 
     if (nullptr != indexedItems()[index]) {
-        graphicItems()->removeFromGroup(indexedItems()[index]);
+        delete indexedItems()[index];
         indexedItems()[index] = nullptr;
     }
 
     if (chipsetX >= 0 && chipsetY >= 0) {
         indexedItems()[index] =
-            new QGraphicsPixmapItem(m_chipsetPixmap.copy(QRect(chipsetX, chipsetY, CELL_W, CELL_H)));
-        indexedItems()[index]->setPos(x, y);
+            new QGraphicsPixmapItem(m_chipsetPixmap.copy(QRect(chipsetX * CELL_W, chipsetY * CELL_H, CELL_W, CELL_H)));
+        indexedItems()[index]->setPos(x * CELL_W, y * CELL_H);
         graphicItems()->addToGroup(indexedItems()[index]);
 
-        m_graphicLayer[index] = std::pair<std::int8_t, std::int8_t>(chipsetX / CELL_W, chipsetY / CELL_H);
+        m_graphicLayer[index] = std::pair<std::int8_t, std::int8_t>(chipsetX, chipsetY);
     } else {
         m_graphicLayer[index] = std::pair<std::int8_t, std::int8_t>(-1, -1);
     }

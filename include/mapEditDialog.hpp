@@ -28,6 +28,7 @@ class MapEditDialog : public QDialog
     Q_OBJECT
 public:
     explicit MapEditDialog(QWidget* parent = nullptr);
+    virtual ~MapEditDialog() override; // we need this because of smart ptr + forward declaration..
 
     void setup(const Editor::Project& project, const MapDocument* = nullptr);
 
