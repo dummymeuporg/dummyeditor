@@ -82,12 +82,14 @@ void print(const QString& message, eLogType type)
 {
     Logger::printAll(message.toStdString(), type);
 }
+#ifdef QT_DEBUG
 void debug(const QString& message)
 {
-#ifdef QT_DEBUG
-    Logger::printAll(message.toStdString(), eLogType::DEBUG);
-#endif // QT_DEBUT
+  Logger::printAll(message.toStdString(), eLogType::DEBUG);
 }
+#else
+void debug(const QString&) {}
+#endif // QT_DEBUT
 void log(const QString& message)
 {
     Logger::printAll(message.toStdString(), eLogType::LOG);

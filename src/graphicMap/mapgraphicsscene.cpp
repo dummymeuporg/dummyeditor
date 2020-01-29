@@ -115,21 +115,21 @@ void MapGraphicsScene::instantiateFloor(Editor::Floor& floor, const QPixmap& chi
 {
     // Add graphic layers
     for (const auto& [position, layer] : floor.graphicLayers()) {
-        auto pGraphicLayer = make_unique<VisibleGraphicLayer>(*layer, chipset, ++zindex);
+        auto pGraphicLayer = std::make_unique<VisibleGraphicLayer>(*layer, chipset, ++zindex);
         addItem(pGraphicLayer->graphicItems());
         m_visibleLayers.push_back(std::move(pGraphicLayer));
     }
 
     // Add 1 blocking layer
     {
-        auto pBlockingLayer = make_unique<BlockingGraphicLayer>(floor.blockingLayer(), ++zindex);
+        auto pBlockingLayer = std::make_unique<BlockingGraphicLayer>(floor.blockingLayer(), ++zindex);
         addItem(pBlockingLayer->graphicItems());
         m_blockingLayers.push_back(std::move(pBlockingLayer));
     }
 
     // Add 1 event layer
     {
-        auto pEventLayer = make_unique<EventsGraphicLayer>(floor.eventsLayer(), ++zindex);
+        auto pEventLayer = std::make_unique<EventsGraphicLayer>(floor.eventsLayer(), ++zindex);
         addItem(pEventLayer->graphicItems());
         m_eventLayers.push_back(std::move(pEventLayer));
     }

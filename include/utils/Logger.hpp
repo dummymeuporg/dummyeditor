@@ -27,6 +27,7 @@ enum class eLogType
 class Logger
 {
 public:
+    virtual ~Logger() {}
     virtual void print(const std::string& message, eLogType type) = 0;
 
     static void registerLogger(const std::shared_ptr<Logger>& toAdd);
@@ -71,6 +72,6 @@ void info(const QString& message);
 void error(const QString& message);
 
 
-}; // namespace Log
+} // namespace Log
 
 #endif // LOGGER_HPP
