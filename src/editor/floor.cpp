@@ -11,8 +11,6 @@ Floor::Floor(Dummy::Local::Floor& floor)
     , m_eventsLayer(m_floor)
 {
     for (auto& [position, layer] : m_floor.graphicLayers()) {
-        // TODO same here, make_unique takes ownership, I'm not sure this is
-        // intented (nor explicit) here
         m_graphicLayers[position] = std::make_unique<GraphicLayer>(layer);
     }
 }

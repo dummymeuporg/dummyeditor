@@ -52,7 +52,7 @@ void MapGraphicsScene::setFloors(const Editor::Floors& mapFloors, const QPixmap&
 void MapGraphicsScene::setPreview(const QPixmap& previewPix, const QPoint& pos)
 {
     clearPreview();
-    m_previewItem = std::unique_ptr<QGraphicsPixmapItem>(new QGraphicsPixmapItem(previewPix));
+    m_previewItem = std::make_unique<QGraphicsPixmapItem>(previewPix);
     m_previewItem->setZValue(Z_PREVIEW);
     m_previewItem->setPos(pos);
     addItem(m_previewItem.get());
@@ -115,21 +115,21 @@ void MapGraphicsScene::instantiateFloor(Editor::Floor& floor, const QPixmap& chi
 {
     // Add graphic layers
     for (const auto& [position, layer] : floor.graphicLayers()) {
-        unique_ptr<VisibleGraphicLayer> pGraphicLayer(new VisibleGraphicLayer(*layer, chipset, ++zindex));
+        auto pGraphicLayer = make_unique<VisibleGraphicLayer>(*layer, chipset, ++zindex);
         addItem(pGraphicLayer->graphicItems());
         m_visibleLayers.push_back(std::move(pGraphicLayer));
     }
 
     // Add 1 blocking layer
     {
-        unique_ptr<BlockingGraphicLayer> pBlockingLayer(new BlockingGraphicLayer(floor.blockingLayer(), ++zindex));
+        auto pBlockingLayer = make_unique<BlockingGraphicLayer>(floor.blockingLayer(), ++zindex);
         addItem(pBlockingLayer->graphicItems());
         m_blockingLayers.push_back(std::move(pBlockingLayer));
     }
 
     // Add 1 event layer
     {
-        unique_ptr<EventsGraphicLayer> pEventLayer(new EventsGraphicLayer(floor.eventsLayer(), ++zindex));
+        auto pEventLayer = make_unique<EventsGraphicLayer>(floor.eventsLayer(), ++zindex);
         addItem(pEventLayer->graphicItems());
         m_eventLayers.push_back(std::move(pEventLayer));
     }
