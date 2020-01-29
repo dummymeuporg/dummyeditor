@@ -83,7 +83,7 @@ add_executable(dummyeditor ${SOURCES} ${HEADERS} icons.qrc)
 if(MSVC)
   target_compile_options(dummyeditor PRIVATE /W4 /W14640)
 else()
-  target_compile_options(dummyeditor PRIVATE -Weverything)
+  target_compile_options(dummyeditor PRIVATE -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic)
 endif()
 
 IF (WIN32)
