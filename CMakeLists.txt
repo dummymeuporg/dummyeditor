@@ -11,6 +11,16 @@ include_directories(
 # Specify C++ version
 set(CMAKE_CXX_STANDARD 17)
 
+# Add compilation warnings
+if(MSVC)
+  target_compile_options(${TARGET_NAME} PRIVATE /W4 /W14640)
+else()
+  target_compile_options(${TARGET_NAME} PRIVATE -Weverything)
+endif()
+
+# Silence an annoying Boost/C++17 warning
+add_definitions(-D_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING)
+
 # enable a sub-cmake
 add_subdirectory("vendor/libdummy")
 
@@ -27,9 +37,6 @@ find_package(Qt5Xml REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Boost 1.69.0 REQUIRED)
 find_package(Lua 5.3 REQUIRED)
-
-# Silence an annoying Boost/C++17 warning
-add_definitions(-D_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING)
 
 file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.ui")
 file(GLOB_RECURSE HEADERS "include/*.hpp")
