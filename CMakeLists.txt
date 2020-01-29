@@ -13,9 +13,9 @@ set(CMAKE_CXX_STANDARD 17)
 
 # Add compilation warnings
 if(MSVC)
-  target_compile_options(${TARGET_NAME} PRIVATE /W4 /W14640)
+  target_compile_options(dummyeditor PRIVATE /W4 /W14640)
 else()
-  target_compile_options(${TARGET_NAME} PRIVATE -Weverything)
+  target_compile_options(dummyeditor PRIVATE -Weverything)
 endif()
 
 # Silence an annoying Boost/C++17 warning
