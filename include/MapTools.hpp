@@ -29,7 +29,7 @@ class ChipsetGraphicsScene;
 class MapTools
 {
 public:
-    explicit MapTools(ChipsetGraphicsScene&, GraphicMap::MapGraphicsScene&, Ui::GeneralWindow&);
+    explicit MapTools(const ChipsetGraphicsScene&, GraphicMap::MapGraphicsScene&, Ui::GeneralWindow&);
 
     void clear();
 

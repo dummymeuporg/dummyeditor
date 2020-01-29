@@ -9,7 +9,7 @@
 #include "graphicMap/mapGraphicsScene.hpp"
 #include "utils/definitions.hpp"
 
-MapTools::MapTools(ChipsetGraphicsScene& chipset, GraphicMap::MapGraphicsScene& map, Ui::GeneralWindow& ui)
+MapTools::MapTools(const ChipsetGraphicsScene& chipset, GraphicMap::MapGraphicsScene& map, Ui::GeneralWindow& ui)
     : m_chipsetScene(chipset)
     , m_mapScene(map)
     , m_toolsUI(ui)

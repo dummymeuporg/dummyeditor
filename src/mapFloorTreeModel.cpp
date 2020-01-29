@@ -51,8 +51,7 @@ FloorTreeItem::FloorTreeItem(Editor::Floor& floor, std::size_t index)
 
     // Then put other layers
     for (auto& layer : floor.graphicLayers()) {
-        appendRow(new LayerTreeItem(*(layer.second), eLayerType::Graphic,
-                                    layer.first));
+        appendRow(new LayerTreeItem(*(layer.second), eLayerType::Graphic, layer.first));
     }
 }
 

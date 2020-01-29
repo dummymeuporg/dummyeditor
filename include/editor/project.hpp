@@ -8,14 +8,13 @@
 #include <dummy/local/project.hpp>
 
 #include "editor/startingPoint.hpp"
+#include "mapsTree.hpp"
 
 //////////////////////////////////////////////////////////////////////////////
 //  forward declaration
 //////////////////////////////////////////////////////////////////////////////
 
 struct MapDocument;
-class QStandardItem;
-class MapsTreeModel;
 
 namespace Editor {
 class StartingPoint;
@@ -36,7 +35,6 @@ class Project
 {
 public:
     explicit Project(const std::string& folder);
-    virtual ~Project();
 
     // Getters
     MapsTreeModel* mapsModel();
@@ -64,8 +62,8 @@ private:
 private:
     Dummy::Local::Project m_coreProject;
     QDomDocument m_domDocument;
-    MapsTreeModel* m_mapsModel = nullptr;
-    bool m_isModified          = false;
+    std::unique_ptr<MapsTreeModel> m_mapsModel;
+    bool m_isModified = false;
     StartingPoint m_startingPoint;
 
     QMap<QString, std::shared_ptr<MapDocument>> m_openedMaps;

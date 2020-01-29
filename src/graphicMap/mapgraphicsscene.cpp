@@ -74,7 +74,7 @@ void MapGraphicsScene::drawGrid(quint16 width, quint16 height, unsigned int unit
 {
     clearGrid();
 
-    QPen pen(Qt::black, 0.5);
+    QPen pen(QColor(0, 0, 0, 155), 0.5);
 
     for (int i = 0; i <= width; ++i) {
         QGraphicsItem* item = addLine(i * unit, 0, i * unit, unit * height, pen);
