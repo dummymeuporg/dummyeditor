@@ -11,13 +11,6 @@ include_directories(
 # Specify C++ version
 set(CMAKE_CXX_STANDARD 17)
 
-# Add compilation warnings
-if(MSVC)
-  target_compile_options(dummyeditor PRIVATE /W4 /W14640)
-else()
-  target_compile_options(dummyeditor PRIVATE -Weverything)
-endif()
-
 # Silence an annoying Boost/C++17 warning
 add_definitions(-D_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING)
 
@@ -85,6 +78,13 @@ if (UNIX)
 endif (UNIX)
 
 add_executable(dummyeditor ${SOURCES} ${HEADERS} icons.qrc)
+
+# Add compilation warnings
+if(MSVC)
+  target_compile_options(dummyeditor PRIVATE /W4 /W14640)
+else()
+  target_compile_options(dummyeditor PRIVATE -Weverything)
+endif()
 
 IF (WIN32)
     SET_TARGET_PROPERTIES (dummyeditor
