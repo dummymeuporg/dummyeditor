@@ -329,17 +329,17 @@ void GeneralWindow::on_actionToggleGrid_triggered()
 
 void GeneralWindow::on_actionCut_triggered()
 {
-    Log::debug(tr("TODO : Action Cut"));
+    m_mapTools.cut();
 }
 
 void GeneralWindow::on_actionCopy_triggered()
 {
-    Log::debug(tr("TODO : Action Copy"));
+    m_mapTools.copy();
 }
 
 void GeneralWindow::on_actionPaste_triggered()
 {
-    Log::debug(tr("TODO : Action Paste"));
+    m_mapTools.paste();
 }
 
 //////////////////////////////////////////////////////////////////////////////

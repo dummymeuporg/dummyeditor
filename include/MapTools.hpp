@@ -48,6 +48,10 @@ public:
     void previewTool(const QRect& clickingRegion);
     void useTool(const QRect& clickingRegion);
 
+    void cut();
+    void copy();
+    void paste();
+
 private:
     void resetTools();
     void resetLayerLink();
@@ -81,6 +85,12 @@ private:
         Paste,
     };
 
+    struct tVisibleClipboard {
+        int16_t width = 0;
+        int16_t height = 0;
+        std::vector<std::pair<int8_t, int8_t>> content;
+    };
+
     const ChipsetGraphicsScene& m_chipsetScene;
     GraphicMap::MapGraphicsScene& m_mapScene;
     Ui::GeneralWindow& m_toolsUI;
@@ -90,6 +100,8 @@ private:
     GraphicMap::VisibleGraphicLayer* m_visLayer    = nullptr;
     GraphicMap::BlockingGraphicLayer* m_blockLayer = nullptr;
     GraphicMap::EventGraphicLayer* m_eventLayer    = nullptr;
+    QRectF selectedRect;
+    tVisibleClipboard m_visibleClipboard;
 
     uint16_t m_uiLayerW   = 0;
     uint16_t m_uiLayerH   = 0;

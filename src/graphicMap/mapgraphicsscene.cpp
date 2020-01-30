@@ -165,4 +165,11 @@ void MapGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* e)
     m_tools->useTool(QRect(m_firstClickPt, otherClick));
 }
 
+QRectF MapGraphicsScene::selectionRectItem()
+{
+    if (m_selectionRectItem == nullptr)
+        return QRectF();
+    else
+        return m_selectionRectItem->rect();
+}
 } // namespace GraphicMap

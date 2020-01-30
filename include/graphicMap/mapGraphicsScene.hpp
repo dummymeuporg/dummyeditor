@@ -40,6 +40,8 @@ public:
     void drawGrid(quint16 width, quint16 height, unsigned int unit);
     void linkToolSet(MapTools* tools) { m_tools = tools; }
 
+    QRectF selectionRectItem();
+
     void clearPreview();
     void clearSelectRect();
     void clearGrid();
