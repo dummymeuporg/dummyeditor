@@ -3,6 +3,7 @@
 
 #include <QGraphicsRectItem>
 #include <QGraphicsScene>
+#include <memory>
 
 //////////////////////////////////////////////////////////////////////////////
 //  ChipsetGraphicsScene class
@@ -23,6 +24,8 @@ public:
 
 public slots:
     void setChipset(const QString& chipsetPath);
+    void clear();
+    void setGridVisible(bool visible = true);
 
 private:
     void drawGrid();
@@ -30,8 +33,9 @@ private:
 
 private:
     QPixmap m_chipset;
-    QGraphicsRectItem* m_selectionRectItem = nullptr; // Qt deletes it
-    bool m_isSelecting                     = false;
+    std::unique_ptr<QGraphicsRectItem> m_selectionRectItem;
+    std::vector<std::unique_ptr<QGraphicsItem>> m_gridItems;
+    bool m_isSelecting = false;
     QRect m_currentSelection;
     QPoint m_selectionStart;
 };

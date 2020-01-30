@@ -296,6 +296,11 @@ void GeneralWindow::on_mapsList_doubleClicked(const QModelIndex& selectedIndex)
     m_ui->maps_panel->setCurrentIndex(1);
 }
 
+void GeneralWindow::on_toogleGridChipset_clicked(bool isDown)
+{
+    m_chipsetScene.setGridVisible(isDown);
+}
+
 void GeneralWindow::graphicLayerSelected(GraphicMap::VisibleGraphicLayer* visLayer)
 {
     m_ui->toolbar_mapTools->setEnabled(true);
