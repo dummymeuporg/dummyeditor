@@ -59,10 +59,23 @@ QPixmap ChipsetGraphicsScene::selectionPixmap() const
     return m_chipset.copy(m_currentSelection);
 }
 
+void ChipsetGraphicsScene::clear()
+{
+    m_selectionRectItem.reset();
+    m_gridItems.clear();
+}
+
+void ChipsetGraphicsScene::setGridVisible(bool visible)
+{
+    if (visible)
+        drawGrid();
+    else
+        m_gridItems.clear();
+}
+
 void ChipsetGraphicsScene::setChipset(const QString& chipsetPath)
 {
     clear();
-    m_selectionRectItem = nullptr; // deleted while clearing the scene
 
     m_chipset = QPixmap(chipsetPath);
     addPixmap(m_chipset);
@@ -72,17 +85,22 @@ void ChipsetGraphicsScene::setChipset(const QString& chipsetPath)
 
 void ChipsetGraphicsScene::drawGrid()
 {
+    m_gridItems.clear();
+
     QPen pen(Qt::black, 0.5);
 
     int chipW = m_chipset.width();
     for (int x = 0; x <= chipW; x += CELL_W) {
         QGraphicsItem* item = addLine(x, 0, x, m_chipset.height(), pen);
         item->setZValue(Z_GRID);
+        m_gridItems.push_back(std::unique_ptr<QGraphicsItem>(item));
     }
+
     int chipH = m_chipset.height();
     for (int y = 0; y <= chipH; y += CELL_H) {
         QGraphicsItem* item = addLine(0, y, m_chipset.width(), y, pen);
         item->setZValue(Z_GRID);
+        m_gridItems.push_back(std::unique_ptr<QGraphicsItem>(item));
     }
 }
 
@@ -90,12 +108,9 @@ void ChipsetGraphicsScene::setSelectRect(const QRect& rect)
 {
     m_currentSelection = rect;
 
-    if (m_selectionRectItem != nullptr)
-        delete m_selectionRectItem;
-
-    m_selectionRectItem = new QGraphicsRectItem(rect);
+    m_selectionRectItem = std::make_unique<QGraphicsRectItem>(rect);
     QBrush brush(QColor(66, 135, 245));
     m_selectionRectItem->setBrush(brush);
     m_selectionRectItem->setOpacity(0.5);
-    addItem(m_selectionRectItem);
+    addItem(m_selectionRectItem.get());
 }
