@@ -33,8 +33,6 @@ public:
     void setTile(quint16 x, quint16 y, qint16 chipsetX, qint16 chipsetY);
     void setChipsetPixmap(const QPixmap*);
 
-    std::shared_ptr<LayerClipboard::Clipboard> getClipboardRegion(const QRect& clip) override;
-
 public slots:
     void setSelected() override;
 

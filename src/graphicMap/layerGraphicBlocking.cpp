@@ -6,7 +6,6 @@
 #include "editor/map.hpp"
 #include "graphicMap/graphicItem.hpp"
 #include "graphicMap/mapGraphicsScene.hpp"
-#include "layer_clipboard/blocking.hpp"
 #include "utils/Logger.hpp"
 #include "utils/definitions.hpp"
 
@@ -31,21 +30,6 @@ BlockingGraphicLayer::BlockingGraphicLayer(Editor::BlockingLayer& blockingLayer,
         }
     }
 }
-
-/*
-MapSceneLayer& BlockingGraphicLayer::removeTile(quint16 x, quint16 y)
-{
-    qDebug() << "Toggle tile." << x << y;
-    if (x < m_blockingLayer.width() * 8 && y < m_blockingLayer.height() * 8) {
-        int index((y / 8) * m_blockingLayer.width() + (x / 8));
-        m_blockingLayer[index] = false;
-        if (nullptr != m_layerItems[index]) {
-            delete m_layerItems[index];
-            m_layerItems[index] = nullptr;
-        }
-    }
-    return *this;
-}*/
 
 void BlockingGraphicLayer::setSelected()
 {
@@ -85,25 +69,6 @@ void BlockingGraphicLayer::setTile(quint16 x, quint16 y, bool isBlocking)
     }
 
     m_blockingLayer[index] = isBlocking;
-}
-
-std::shared_ptr<LayerClipboard::Clipboard> BlockingGraphicLayer::getClipboardRegion(const QRect& clip)
-{
-    unsigned x(clip.x() / BLOCK_W);
-    unsigned y(clip.y() / BLOCK_H);
-    unsigned width((clip.width() / BLOCK_W) + 1);
-    unsigned height((clip.height() / BLOCK_H) + 1);
-
-    std::vector<std::uint8_t> content;
-
-    for (unsigned j = y; j <= (y + height); ++j) {
-        for (unsigned i = x; i <= (x + width); ++i) {
-            unsigned index((j * m_blockingLayer.width()) + i);
-            content.push_back(m_blockingLayer.layer().at(index));
-        }
-    }
-
-    return std::make_shared<LayerClipboard::Blocking>(std::move(clip), std::move(content));
 }
 
 } // namespace GraphicMap

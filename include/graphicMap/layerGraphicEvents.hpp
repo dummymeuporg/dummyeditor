@@ -23,8 +23,6 @@ class EventsGraphicLayer : public MapSceneLayer
 public:
     explicit EventsGraphicLayer(Editor::EventsLayer&, int zIdx);
 
-    std::shared_ptr<LayerClipboard::Clipboard> getClipboardRegion(const QRect& clip) override;
-
 private:
     void setTile(quint16, quint16, int);
 

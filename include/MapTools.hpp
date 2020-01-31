@@ -29,6 +29,19 @@ class ChipsetGraphicsScene;
 class MapTools
 {
 public:
+    enum class eTools
+    {
+        Pen,
+        Eraser,
+        Selection,
+        Paste,
+    };
+    enum class eCopyCut
+    {
+        Copy,
+        Cut,
+    };
+
     explicit MapTools(const ChipsetGraphicsScene&, GraphicMap::MapGraphicsScene&, Ui::GeneralWindow&);
 
     void clear();
@@ -37,10 +50,7 @@ public:
     void setActiveLayer(GraphicMap::BlockingGraphicLayer*);
     void setActiveLayer(GraphicMap::EventGraphicLayer*);
 
-    void setPen();
-    void setEraser();
-    void setSelectTool();
-    void setPasteTool();
+    void setTool(eTools tool);
 
     void setGrid(bool gridVisible = true);
     void updateGridDisplay();
@@ -48,15 +58,7 @@ public:
     void previewTool(const QRect& clickingRegion);
     void useTool(const QRect& clickingRegion);
 
-    enum class eCopyCutEnum
-    {
-        Copy,
-        Cut,
-    };
-
-    void copyCut(eCopyCutEnum);
-    void paste();
-
+    void copyCut(eCopyCut);
 
 private:
     void resetTools();
@@ -74,6 +76,8 @@ private:
     void eraseBlocking(const QRect&);
     void eraseVisible(const QRect&);
 
+    void paste(const QPoint&);
+
 
     enum class eLayerType
     {
@@ -83,16 +87,9 @@ private:
         Event,
     };
 
-    enum class eTools
+    struct tVisibleClipboard
     {
-        Pen,
-        Eraser,
-        Selection,
-        Paste,
-    };
-
-    struct tVisibleClipboard {
-        int16_t width = 0;
+        int16_t width  = 0;
         int16_t height = 0;
         std::vector<std::pair<int8_t, int8_t>> content;
     };

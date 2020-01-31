@@ -314,17 +314,17 @@ void GeneralWindow::blockingLayerSelected(GraphicMap::BlockingGraphicLayer* bloc
 
 void GeneralWindow::on_actionEraser_triggered()
 {
-    m_mapTools.setEraser();
+    m_mapTools.setTool(MapTools::eTools::Eraser);
 }
 
 void GeneralWindow::on_actionPen_triggered()
 {
-    m_mapTools.setPen();
+    m_mapTools.setTool(MapTools::eTools::Pen);
 }
 
 void GeneralWindow::on_actionSelection_triggered()
 {
-    m_mapTools.setSelectTool();
+    m_mapTools.setTool(MapTools::eTools::Selection);
 }
 
 void GeneralWindow::on_actionToggleGrid_triggered()
@@ -334,21 +334,17 @@ void GeneralWindow::on_actionToggleGrid_triggered()
 
 void GeneralWindow::on_actionCut_triggered()
 {
-    Log::debug(tr("action Cut triggered"));
-    m_mapTools.copyCut(MapTools::eCopyCutEnum::Cut);
+    m_mapTools.copyCut(MapTools::eCopyCut::Cut);
 }
 
 void GeneralWindow::on_actionCopy_triggered()
 {
-    Log::debug(tr("action Copy triggered"));
-    m_mapTools.copyCut(MapTools::eCopyCutEnum::Copy);
+    m_mapTools.copyCut(MapTools::eCopyCut::Copy);
 }
 
 void GeneralWindow::on_actionPaste_triggered()
 {
-    Log::debug(tr("action Paste triggered"));
-    m_mapTools.paste();
-
+    m_mapTools.setTool(MapTools::eTools::Paste);
 }
 
 //////////////////////////////////////////////////////////////////////////////

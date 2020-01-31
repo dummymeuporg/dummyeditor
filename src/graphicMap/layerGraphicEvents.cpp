@@ -15,20 +15,6 @@ EventsGraphicLayer::EventsGraphicLayer(Editor::EventsLayer& eventsLayer, int zIn
     const auto& floor(eventsLayer.floor());
     indexedItems().resize(nbCells);
 
-    /*
-
-    for (auto it = m_layerItems.begin(); it != m_layerItems.end(); ++it,
-    ++index)
-    {
-        *it = nullptr;
-        if (touchEvents.find(index) != std::end(touchEvents))
-        {
-            qreal posX((index % (floor.width())) * 16);
-            qreal posY((index / (floor.width())) * 16);
-            draw(index, quint16(posX), quint16(posY));
-        }
-    }
-     */
     for (size_t index = 0; index < nbCells; ++index) {
         if (touchEvents.find(index) != std::end(touchEvents)) {
             qreal posX((index % (floor.width())) * CELL_W);
@@ -50,12 +36,5 @@ void EventsGraphicLayer::setTile(quint16 x, quint16 y, int index)
     indexedItems()[index]->setPos(QPointF(x - (x % CELL_W), y - (y % CELL_H)));
     graphicItems()->addToGroup(indexedItems()[index]);
 }
-
-std::shared_ptr<LayerClipboard::Clipboard> EventsGraphicLayer::getClipboardRegion(const QRect& clip)
-{
-    // XXX: Todo later.
-    return nullptr;
-}
-
 
 } // namespace GraphicMap

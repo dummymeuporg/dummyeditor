@@ -7,8 +7,6 @@
 #include "graphicMap/mapGraphicsScene.hpp"
 #include "utils/definitions.hpp"
 
-#include "layer_clipboard/visible.hpp"
-
 namespace GraphicMap {
 
 VisibleGraphicLayer::VisibleGraphicLayer(Editor::GraphicLayer& layer, const QPixmap& chipsetPixmap, int zIndex)
@@ -61,25 +59,6 @@ void VisibleGraphicLayer::setTile(quint16 x, quint16 y, qint16 chipsetX, qint16 
     } else {
         m_graphicLayer[index] = std::pair<std::int8_t, std::int8_t>(-1, -1);
     }
-}
-
-std::shared_ptr<LayerClipboard::Clipboard> VisibleGraphicLayer::getClipboardRegion(const QRect& clip)
-{
-    const size_t x(clip.x() / CELL_W);
-    const size_t y(clip.y() / CELL_H);
-    const size_t width(clip.width() / CELL_W);
-    const size_t height(clip.height() / CELL_H);
-
-    std::vector<std::pair<std::int8_t, std::int8_t>> content;
-
-    for (unsigned j = y; j <= (y + height); ++j) {
-        for (size_t i = x; i <= (x + width); ++i) {
-            size_t index((j * m_graphicLayer.width()) + i);
-            content.push_back(m_graphicLayer.layer().at(index));
-        }
-    }
-
-    return std::make_shared<LayerClipboard::Visible>(std::move(clip), std::move(content));
 }
 
 } // namespace GraphicMap

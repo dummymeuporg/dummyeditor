@@ -297,6 +297,8 @@
    <addaction name="actionCopy"/>
    <addaction name="actionPaste"/>
    <addaction name="separator"/>
+   <addaction name="actionZoomIn"/>
+   <addaction name="actionZoomOut"/>
    <addaction name="actionToggleGrid"/>
   </widget>
   <widget class="QToolBar" name="toolbar_gameTool">
@@ -462,6 +464,16 @@
    </property>
    <property name="text">
     <string>Selection</string>
+   </property>
+  </action>
+  <action name="actionZoomIn">
+   <property name="text">
+    <string>Zoom +</string>
+   </property>
+  </action>
+  <action name="actionZoomOut">
+   <property name="text">
+    <string>Zoom -</string>
    </property>
   </action>
  </widget>
