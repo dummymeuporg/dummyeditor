@@ -48,13 +48,13 @@ public:
     void previewTool(const QRect& clickingRegion);
     void useTool(const QRect& clickingRegion);
 
-    enum class copyCutEnum
+    enum class eCopyCutEnum
     {
-        copy,
-        cut,
+        Copy,
+        Cut,
     };
 
-    void copyCut(copyCutEnum);
+    void copyCut(eCopyCutEnum);
     void paste();
 
 
@@ -106,7 +106,6 @@ private:
     GraphicMap::VisibleGraphicLayer* m_visLayer    = nullptr;
     GraphicMap::BlockingGraphicLayer* m_blockLayer = nullptr;
     GraphicMap::EventGraphicLayer* m_eventLayer    = nullptr;
-    QRectF selectedRect;
     tVisibleClipboard m_visibleClipboard;
 
     uint16_t m_uiLayerW   = 0;

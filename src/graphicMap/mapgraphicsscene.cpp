@@ -165,7 +165,7 @@ void MapGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* e)
     m_tools->useTool(QRect(m_firstClickPt, otherClick));
 }
 
-QRectF MapGraphicsScene::selectionRectItem()
+QRectF MapGraphicsScene::selectionRect()
 {
     if (m_selectionRectItem == nullptr)
         return QRectF();

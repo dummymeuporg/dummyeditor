@@ -335,13 +335,13 @@ void GeneralWindow::on_actionToggleGrid_triggered()
 void GeneralWindow::on_actionCut_triggered()
 {
     Log::debug(tr("action Cut triggered"));
-    m_mapTools.copyCut(MapTools::copyCutEnum::cut);
+    m_mapTools.copyCut(MapTools::eCopyCutEnum::Cut);
 }
 
 void GeneralWindow::on_actionCopy_triggered()
 {
     Log::debug(tr("action Copy triggered"));
-    m_mapTools.copyCut(MapTools::copyCutEnum::copy);
+    m_mapTools.copyCut(MapTools::eCopyCutEnum::Copy);
 }
 
 void GeneralWindow::on_actionPaste_triggered()
