@@ -334,17 +334,21 @@ void GeneralWindow::on_actionToggleGrid_triggered()
 
 void GeneralWindow::on_actionCut_triggered()
 {
-    m_mapTools.cut();
+    Log::debug(tr("action Cut triggered"));
+    m_mapTools.copyCut(MapTools::copyCutEnum::cut);
 }
 
 void GeneralWindow::on_actionCopy_triggered()
 {
-    m_mapTools.copy();
+    Log::debug(tr("action Copy triggered"));
+    m_mapTools.copyCut(MapTools::copyCutEnum::copy);
 }
 
 void GeneralWindow::on_actionPaste_triggered()
 {
+    Log::debug(tr("action Paste triggered"));
     m_mapTools.paste();
+
 }
 
 //////////////////////////////////////////////////////////////////////////////

@@ -335,51 +335,6 @@ void MapTools::useTool(const QRect& clickingRegion)
     }
 }
 
-void MapTools::cut()
-{
-    std::vector<std::pair<int8_t, int8_t>> valuesInPatch;
-    selectedRect = m_mapScene.selectionRectItem();
-    qint16 minX = static_cast<quint16>(selectedRect.x()) / CELL_W;
-    qint16 minY = static_cast<quint16>(selectedRect.y()) / CELL_H;
-    qint16 selectionW = static_cast<quint16>(selectedRect.width()) / CELL_W;
-    qint16 selectionH = static_cast<quint16>(selectedRect.height()) / CELL_H;
-    qint16 maxX = minX + selectionW - 1;
-    qint16 maxY = minY + selectionH - 1;
-    for (qint16 y = minY; y <= maxY; ++y)
-        for (qint16 x = minX; x <= maxX; ++x) {
-            size_t indexInLayer = y * m_visLayer->layer().width() + x;
-            auto value = m_visLayer->layer()[indexInLayer];
-            valuesInPatch.push_back(value);
-            m_visLayer->setTile(x,y,-1,-1);
-        }
-    m_visibleClipboard.width = maxX - minX;
-    m_visibleClipboard.height = maxY - minY;
-    m_visibleClipboard.content = valuesInPatch;
-}
-
-void MapTools::copy()
-{
-
-    std::vector<std::pair<int8_t, int8_t>> valuesInPatch;
-    selectedRect = m_mapScene.selectionRectItem();
-    qint16 minX = static_cast<quint16>(selectedRect.x()) / CELL_W;
-    qint16 minY = static_cast<quint16>(selectedRect.y()) / CELL_H;
-    qint16 selectionW = static_cast<quint16>(selectedRect.width()) / CELL_W;
-    qint16 selectionH = static_cast<quint16>(selectedRect.height()) / CELL_H;
-    qint16 maxX = minX + selectionW - 1;
-    qint16 maxY = minY + selectionH - 1;
-    for (qint16 y = minY; y <= maxY; ++y)
-        for (qint16 x = minX; x <= maxX; ++x) {
-            size_t indexInLayer = y * m_visLayer->layer().width() + x;
-            auto value = m_visLayer->layer()[indexInLayer];
-            valuesInPatch.push_back(value);
-        }
-    m_visibleClipboard.width = maxX - minX;
-    m_visibleClipboard.height = maxY - minY;
-    m_visibleClipboard.content = valuesInPatch;
-
-}
-
 void MapTools::paste()
 {
     if (selectedRect.isNull())
@@ -403,4 +358,29 @@ void MapTools::paste()
             qint16 dy = m_visibleClipboard.content[(y-minY) * selectionW + (x-minX)].second;
             m_visLayer->setTile(x, y, dx, dy);
     }
+}
+
+void MapTools::copyCut(copyCutEnum action)
+{
+    selectedRect = m_mapScene.selectionRectItem().toRect();
+    std::vector<std::pair<int8_t, int8_t>> valuesInPatch;
+    qint16 minX = static_cast<quint16>(selectedRect.x()) / CELL_W;
+    qint16 minY = static_cast<quint16>(selectedRect.y()) / CELL_H;
+    qint16 selectionW = static_cast<quint16>(selectedRect.width()) / CELL_W;
+    qint16 selectionH = static_cast<quint16>(selectedRect.height()) / CELL_H;
+    qint16 maxX = minX + selectionW - 1;
+    qint16 maxY = minY + selectionH - 1;
+    for (qint16 y = minY; y <= maxY; ++y)
+        for (qint16 x = minX; x <= maxX; ++x) {
+            size_t indexInLayer = y * m_visLayer->layer().width() + x;
+            auto value = m_visLayer->layer()[indexInLayer];
+            valuesInPatch.push_back(value);
+            if (action == copyCutEnum::cut)
+            {
+                m_visLayer->setTile(x,y,-1,-1);
+            }
+        }
+    m_visibleClipboard.width = maxX - minX;
+    m_visibleClipboard.height = maxY - minY;
+    m_visibleClipboard.content = valuesInPatch;
 }

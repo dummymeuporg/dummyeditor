@@ -48,9 +48,15 @@ public:
     void previewTool(const QRect& clickingRegion);
     void useTool(const QRect& clickingRegion);
 
-    void cut();
-    void copy();
+    enum class copyCutEnum
+    {
+        copy,
+        cut,
+    };
+
+    void copyCut(copyCutEnum);
     void paste();
+
 
 private:
     void resetTools();
