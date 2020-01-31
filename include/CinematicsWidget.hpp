@@ -14,7 +14,7 @@ class CinematicsWidget : public QWidget
 
 public:
     explicit CinematicsWidget(QWidget* parent = nullptr);
-    virtual ~CinematicsWidget() override; // we need this because of smart ptr + forward declaration..
+    virtual ~CinematicsWidget(); // we need this because of smart ptr + forward declaration..
 
 private:
     std::unique_ptr<Ui::CinematicsWidget> m_ui;

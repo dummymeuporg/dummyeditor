@@ -18,7 +18,6 @@ MapsTreeView::MapsTreeView(QWidget* parent)
     , m_newMapDialog(new MapEditDialog(this))
     , m_editDialog(new MapEditDialog(this))
 {
-
     // add actions to menu
     m_mapMenu->addAction(m_newMapAction);
     m_mapMenu->addAction(m_editAction);

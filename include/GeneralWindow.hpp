@@ -39,7 +39,7 @@ class GeneralWindow : public QMainWindow
 
 public:
     explicit GeneralWindow(QWidget* parent = nullptr);
-    virtual ~GeneralWindow() override;
+    virtual ~GeneralWindow();
 
 public:
     bool loadProject(const QString& path);
