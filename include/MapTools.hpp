@@ -89,9 +89,16 @@ private:
 
     struct tVisibleClipboard
     {
-        int16_t width  = 0;
-        int16_t height = 0;
-        std::vector<std::pair<int8_t, int8_t>> content;
+      int16_t width  = 0;
+      int16_t height = 0;
+      std::vector<std::pair<int8_t, int8_t>> content;
+    };
+
+    struct tBlockingClipboard
+    {
+      int16_t width  = 0;
+      int16_t height = 0;
+      std::vector<bool> content;
     };
 
     const ChipsetGraphicsScene& m_chipsetScene;
