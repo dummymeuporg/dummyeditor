@@ -4,6 +4,7 @@
 #include <QPixmap>
 #include <QRect>
 #include <cstdint>
+#include <memory>
 
 //////////////////////////////////////////////////////////////////////////////
 //  forward declaration
@@ -29,6 +30,7 @@ class ChipsetGraphicsScene;
 class Command
 {
 public:
+    virtual ~Command() {}
     virtual void execute() = 0;
     virtual void undo()    = 0;
 };
