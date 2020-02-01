@@ -66,6 +66,12 @@ GeneralWindow::GeneralWindow(QWidget* parent)
     m_ui->actionPaste->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_V));
     m_ui->actionPaste->setShortcutContext(Qt::ApplicationShortcut);
 
+    m_ui->actionUndo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
+    m_ui->actionUndo->setShortcutContext(Qt::ApplicationShortcut);
+
+    m_ui->actionRedo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y));
+    m_ui->actionRedo->setShortcutContext(Qt::ApplicationShortcut);
+
     // connect ui items
     connect(m_ui->btnNewMap, SIGNAL(clicked()), m_ui->mapsList, SLOT(addMapAtRoot()));
     connect(m_ui->mapsList, SIGNAL(chipsetMapChanged(QString)), &m_chipsetScene, SLOT(setChipset(QString)));
@@ -345,6 +351,14 @@ void GeneralWindow::on_actionCopy_triggered()
 void GeneralWindow::on_actionPaste_triggered()
 {
     m_mapTools.setTool(MapTools::eTools::Paste);
+}
+void GeneralWindow::on_actionUndo_triggered()
+{
+    m_mapTools.undo();
+}
+void GeneralWindow::on_actionRedo_triggered()
+{
+    m_mapTools.redo();
 }
 
 //////////////////////////////////////////////////////////////////////////////

@@ -297,6 +297,9 @@
    <addaction name="actionCopy"/>
    <addaction name="actionPaste"/>
    <addaction name="separator"/>
+   <addaction name="actionUndo"/>
+   <addaction name="actionRedo"/>
+   <addaction name="separator"/>
    <addaction name="actionZoomIn"/>
    <addaction name="actionZoomOut"/>
    <addaction name="actionToggleGrid"/>
@@ -320,15 +323,6 @@
    </property>
    <property name="text">
     <string>New project</string>
-   </property>
-  </action>
-  <action name="actionUndo">
-   <property name="icon">
-    <iconset resource="../icons.qrc">
-     <normaloff>:/icons/Undo_icon.png</normaloff>:/icons/Undo_icon.png</iconset>
-   </property>
-   <property name="text">
-    <string>Undo</string>
    </property>
   </action>
   <action name="actionEraser">
@@ -474,6 +468,30 @@
   <action name="actionZoomOut">
    <property name="text">
     <string>Zoom -</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../icons.qrc">
+     <normaloff>:/icons/Undo_icon.png</normaloff>:/icons/Undo_icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Undo</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../icons.qrc">
+     <normaloff>:/icons/Redo_icon.png</normaloff>:/icons/Redo_icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Redo</string>
    </property>
   </action>
  </widget>

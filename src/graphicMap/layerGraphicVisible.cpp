@@ -22,12 +22,10 @@ VisibleGraphicLayer::VisibleGraphicLayer(Editor::GraphicLayer& layer, const QPix
     size_t index = 0;
     for (const auto& cellCoord : m_graphicLayer.layer()) {
         indexedItems()[index] = nullptr;
-        qint16 x              = cellCoord.first;
-        qint16 y              = cellCoord.second;
         quint16 posX          = (index % m_graphicLayer.width());
         quint16 posY          = (index / m_graphicLayer.width());
 
-        setTile(posX, posY, x, y);
+        setTile(posX, posY, cellCoord);
         ++index;
     }
 }
@@ -37,7 +35,15 @@ void VisibleGraphicLayer::setSelected()
     emit layerSelected(this);
 }
 
-void VisibleGraphicLayer::setTile(quint16 x, quint16 y, qint16 chipsetX, qint16 chipsetY)
+std::pair<int8_t, int8_t> VisibleGraphicLayer::tile(quint16 x, quint16 y) const
+{
+    if (x > m_graphicLayer.width() || y > m_graphicLayer.height())
+        return {-1, -1};
+    size_t index = (y * m_graphicLayer.width()) + x;
+    return m_graphicLayer[index];
+}
+
+void VisibleGraphicLayer::setTile(quint16 x, quint16 y, std::pair<int8_t, int8_t> values)
 {
     if (x > m_graphicLayer.width() || y > m_graphicLayer.height())
         return;
@@ -49,15 +55,17 @@ void VisibleGraphicLayer::setTile(quint16 x, quint16 y, qint16 chipsetX, qint16 
         indexedItems()[index] = nullptr;
     }
 
+    int chipsetX = values.first;
+    int chipsetY = values.second;
     if (chipsetX >= 0 && chipsetY >= 0) {
         indexedItems()[index] =
             new QGraphicsPixmapItem(m_chipsetPixmap.copy(QRect(chipsetX * CELL_W, chipsetY * CELL_H, CELL_W, CELL_H)));
         indexedItems()[index]->setPos(x * CELL_W, y * CELL_H);
         graphicItems()->addToGroup(indexedItems()[index]);
 
-        m_graphicLayer[index] = std::pair<std::int8_t, std::int8_t>(chipsetX, chipsetY);
+        m_graphicLayer[index] = values;
     } else {
-        m_graphicLayer[index] = std::pair<std::int8_t, std::int8_t>(-1, -1);
+        m_graphicLayer[index] = std::pair<int8_t, int8_t>(-1, -1);
     }
 }
 

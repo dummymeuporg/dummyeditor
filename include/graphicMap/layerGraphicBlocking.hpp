@@ -24,6 +24,7 @@ public:
     explicit BlockingGraphicLayer(Editor::BlockingLayer&, int zValue);
 
     Editor::BlockingLayer& layer() { return m_blockingLayer; }
+    bool tile(quint16, quint16) const;
 
     void toggleTile(quint16, quint16);
     void setTile(quint16, quint16, bool);

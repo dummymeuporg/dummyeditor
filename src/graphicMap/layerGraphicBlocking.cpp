@@ -50,6 +50,14 @@ void BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
     }
 }
 
+bool BlockingGraphicLayer::tile(quint16 x, quint16 y) const
+{
+    if (x > m_blockingLayer.width() || y > m_blockingLayer.height())
+        return false;
+
+    return m_blockingLayer[(y * m_blockingLayer.width()) + x];
+}
+
 void BlockingGraphicLayer::setTile(quint16 x, quint16 y, bool isBlocking)
 {
     if (x > m_blockingLayer.width() || y > m_blockingLayer.height())

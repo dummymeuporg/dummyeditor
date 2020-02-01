@@ -75,6 +75,8 @@ void MapTools::updateGridDisplay()
 
 void MapTools::resetTools()
 {
+    m_mapScene.setSelectRect(QRect());
+
     m_toolsUI.actionPen->setChecked(false);
     m_toolsUI.actionEraser->setChecked(false);
     m_toolsUI.actionSelection->setChecked(false);
@@ -90,6 +92,11 @@ void MapTools::resetLayerLink()
     m_visLayer      = nullptr;
     m_blockLayer    = nullptr;
     m_eventLayer    = nullptr;
+
+    m_commandsHistory.clear();
+    m_toolsUI.actionUndo->setEnabled(false);
+    m_toolsUI.actionRedo->setEnabled(false);
+    m_nbCommandsValid = 0;
 }
 void MapTools::setTool(eTools tool)
 {
@@ -191,22 +198,20 @@ void MapTools::drawVisible(const QRect& region)
     if (chipsetSelection.isNull())
         return;
 
-    quint16 chipOffsetX = static_cast<quint16>(chipsetSelection.x()) / CELL_W;
-    quint16 chipOffsetY = static_cast<quint16>(chipsetSelection.y()) / CELL_H;
-    quint16 chipW       = static_cast<quint16>(chipsetSelection.width()) / CELL_W;
-    quint16 chipH       = static_cast<quint16>(chipsetSelection.height()) / CELL_H;
+    tVisibleClipboard toDraw;
+    toDraw.width  = static_cast<quint16>(region.width()) / CELL_W;
+    toDraw.height = static_cast<quint16>(region.height()) / CELL_H;
+    toDraw.content.resize(static_cast<size_t>(toDraw.width * toDraw.height));
 
-    quint16 minX = static_cast<quint16>(region.left() / CELL_W);
-    quint16 maxX = static_cast<quint16>(region.right() / CELL_W);
-    quint16 minY = static_cast<quint16>(region.top() / CELL_H);
-    quint16 maxY = static_cast<quint16>(region.bottom() / CELL_H);
+    for (int x = 0; x < toDraw.width; ++x)
+        for (int y = 0; y < toDraw.height; ++y) {
+            int8_t newX = (chipsetSelection.x() / CELL_W) + (x % (chipsetSelection.width() / CELL_W));
+            int8_t newY = (chipsetSelection.y() / CELL_H) + (y % (chipsetSelection.height() / CELL_H));
 
-    for (quint16 x = minX; x <= maxX; ++x)
-        for (quint16 y = minY; y <= maxY; ++y) {
-            quint16 dx = x - minX;
-            quint16 dy = y - minY;
-            m_visLayer->setTile(x, y, (dx % chipW) + chipOffsetX, (dy % chipH) + chipOffsetY);
+            toDraw.content[x + y * toDraw.width] = {newX, newY};
         }
+
+    doCommand(std::make_unique<CommandPaint>(*this, region.topLeft(), std::move(toDraw)));
 }
 
 void MapTools::drawBlocking(const QRect& region)
@@ -214,14 +219,11 @@ void MapTools::drawBlocking(const QRect& region)
     if (m_currLayerType != eLayerType::Blocking || m_blockLayer == nullptr)
         return;
 
-    quint16 minX = static_cast<quint16>(region.left() / BLOCK_W);
-    quint16 maxX = static_cast<quint16>(region.right() / BLOCK_W);
-    quint16 minY = static_cast<quint16>(region.top() / BLOCK_H);
-    quint16 maxY = static_cast<quint16>(region.bottom() / BLOCK_H);
-
-    for (quint16 x = minX; x <= maxX; ++x)
-        for (quint16 y = minY; y <= maxY; ++y)
-            m_blockLayer->setTile(x, y, true);
+    tBlockingClipboard toDraw;
+    toDraw.width  = static_cast<quint16>(region.width()) / BLOCK_W;
+    toDraw.height = static_cast<quint16>(region.height()) / BLOCK_H;
+    toDraw.content.resize(static_cast<size_t>(toDraw.width * toDraw.height), true);
+    doCommand(std::make_unique<CommandPaintBlocking>(*this, region.topLeft(), std::move(toDraw)));
 }
 
 void MapTools::eraseVisible(const QRect& region)
@@ -229,14 +231,12 @@ void MapTools::eraseVisible(const QRect& region)
     if (m_currLayerType != eLayerType::Visible || m_visLayer == nullptr)
         return;
 
-    quint16 minX = static_cast<quint16>(region.left() / CELL_W);
-    quint16 maxX = static_cast<quint16>(region.right() / CELL_W);
-    quint16 minY = static_cast<quint16>(region.top() / CELL_H);
-    quint16 maxY = static_cast<quint16>(region.bottom() / CELL_H);
+    tVisibleClipboard toErase;
+    toErase.width  = static_cast<quint16>(region.width()) / CELL_W;
+    toErase.height = static_cast<quint16>(region.height()) / CELL_H;
+    toErase.content.resize(static_cast<size_t>(toErase.width * toErase.height), {-1, -1});
 
-    for (quint16 x = minX; x <= maxX; ++x)
-        for (quint16 y = minY; y <= maxY; ++y)
-            m_visLayer->setTile(x, y, -1, -1);
+    doCommand(std::make_unique<CommandPaint>(*this, region.topLeft(), std::move(toErase)));
 }
 
 void MapTools::eraseBlocking(const QRect& region)
@@ -244,14 +244,11 @@ void MapTools::eraseBlocking(const QRect& region)
     if (m_currLayerType != eLayerType::Blocking || m_blockLayer == nullptr)
         return;
 
-    quint16 minX = static_cast<quint16>(region.left() / BLOCK_W);
-    quint16 maxX = static_cast<quint16>(region.right() / BLOCK_W);
-    quint16 minY = static_cast<quint16>(region.top() / BLOCK_H);
-    quint16 maxY = static_cast<quint16>(region.bottom() / BLOCK_H);
-
-    for (quint16 x = minX; x <= maxX; ++x)
-        for (quint16 y = minY; y <= maxY; ++y)
-            m_blockLayer->setTile(x, y, false);
+    tBlockingClipboard toErase;
+    toErase.width  = static_cast<quint16>(region.width()) / BLOCK_W;
+    toErase.height = static_cast<quint16>(region.height()) / BLOCK_H;
+    toErase.content.resize(static_cast<size_t>(toErase.width * toErase.height), false);
+    doCommand(std::make_unique<CommandPaintBlocking>(*this, region.topLeft(), std::move(toErase)));
 }
 void MapTools::copyCut(eCopyCut action)
 {
@@ -273,7 +270,7 @@ void MapTools::copyCut(eCopyCut action)
             auto value          = m_visLayer->layer()[indexInLayer];
             valuesInPatch.push_back(value);
             if (action == eCopyCut::Cut) {
-                m_visLayer->setTile(x, y, -1, -1);
+                m_visLayer->setTile(x, y, {-1, -1});
             }
         }
     m_visibleClipboard.width   = selectionW;
@@ -289,17 +286,7 @@ void MapTools::paste(const QPoint& point)
     if (m_currLayerType != eLayerType::Visible || m_visLayer == nullptr)
         return;
 
-    QRect pasteregion = m_mapScene.selectionRect().toRect();
-    quint16 minX      = static_cast<quint16>(point.x() / CELL_W);
-    quint16 minY      = static_cast<quint16>(point.y() / CELL_H);
-    quint16 maxX      = minX + m_visibleClipboard.width - 1;
-    quint16 maxY      = minY + m_visibleClipboard.height - 1;
-    for (quint16 y = minY; y <= maxY && y < m_uiLayerH; ++y)
-        for (quint16 x = minX; x <= maxX && x < m_uiLayerW; ++x) {
-            qint16 dx = m_visibleClipboard.content[(y - minY) * m_visibleClipboard.width + (x - minX)].first;
-            qint16 dy = m_visibleClipboard.content[(y - minY) * m_visibleClipboard.width + (x - minX)].second;
-            m_visLayer->setTile(x, y, dx, dy);
-        }
+    doCommand(std::make_unique<CommandPaint>(*this, QPoint(point), tVisibleClipboard(m_visibleClipboard)));
 }
 
 void MapTools::previewTool(const QRect& clickingRegion)
@@ -371,5 +358,137 @@ void MapTools::useTool(const QRect& clickingRegion)
 
     default:
         break;
+    }
+}
+
+
+// Commands history
+
+void MapTools::doCommand(std::unique_ptr<Command>&& c)
+{
+    c->execute();
+
+    // Here we don't consider overflow of a max of commands to remember because the commands history is reset each time
+    // the active layer is changed.
+    auto& histo = m_commandsHistory; // alias
+
+    if (m_nbCommandsValid < histo.size())
+        histo.erase(histo.begin() + static_cast<long>(m_nbCommandsValid), histo.end());
+
+    histo.push_back(std::move(c));
+    ++m_nbCommandsValid;
+
+    // update UI
+    m_toolsUI.actionUndo->setEnabled(true);
+    m_toolsUI.actionRedo->setEnabled(false);
+}
+
+void MapTools::undo()
+{
+    if (m_nbCommandsValid == 0)
+        return;
+
+    m_commandsHistory[m_nbCommandsValid - 1]->undo();
+    --m_nbCommandsValid;
+
+    // update UI
+    m_toolsUI.actionUndo->setEnabled(m_nbCommandsValid > 0);
+    m_toolsUI.actionRedo->setEnabled(true);
+}
+
+void MapTools::redo()
+{
+    if (m_nbCommandsValid >= m_commandsHistory.size())
+        return;
+
+    ++m_nbCommandsValid;
+    m_commandsHistory[m_nbCommandsValid - 1]->execute();
+
+    // update UI
+    m_toolsUI.actionUndo->setEnabled(true);
+    m_toolsUI.actionRedo->setEnabled(m_nbCommandsValid < m_commandsHistory.size());
+}
+
+MapTools::CommandPaint::CommandPaint(MapTools& parent, QPoint&& pxCoord, tVisibleClipboard&& clip)
+    : m_parent(parent)
+    , m_position(pxCoord)
+    , m_toDraw(clip)
+{}
+
+void MapTools::CommandPaint::execute()
+{
+    m_replacedTiles = m_toDraw;
+
+    if (m_parent.m_currLayerType != eLayerType::Visible || m_parent.m_visLayer == nullptr)
+        return;
+
+    int minX = m_position.x() / CELL_W;
+    int minY = m_position.y() / CELL_H;
+    for (int y = minY; y < (m_toDraw.height + minY) && y < m_parent.m_uiLayerH; ++y) {
+        for (int x = minX; x < (m_toDraw.width + minX) && x < m_parent.m_uiLayerW; ++x) {
+            size_t idxInClipboard                   = static_cast<size_t>((y - minY) * m_toDraw.width + (x - minX));
+            m_replacedTiles.content[idxInClipboard] = m_parent.m_visLayer->tile(x, y);
+
+            auto newValue = m_toDraw.content[idxInClipboard];
+            m_parent.m_visLayer->setTile(static_cast<quint16>(x), static_cast<quint16>(y), newValue);
+        }
+    }
+}
+
+void MapTools::CommandPaint::undo()
+{
+    if (m_parent.m_currLayerType != eLayerType::Visible || m_parent.m_visLayer == nullptr)
+        return;
+
+    int minX = m_position.x() / CELL_W;
+    int minY = m_position.y() / CELL_H;
+    for (int y = minY; y < (m_toDraw.height + minY) && y < m_parent.m_uiLayerH; ++y) {
+        for (int x = minX; x < (m_toDraw.width + minX) && x < m_parent.m_uiLayerW; ++x) {
+            size_t idxInClipboard = static_cast<size_t>((y - minY) * m_toDraw.width + (x - minX));
+            auto newValue         = m_replacedTiles.content[idxInClipboard];
+            m_parent.m_visLayer->setTile(static_cast<quint16>(x), static_cast<quint16>(y), newValue);
+        }
+    }
+}
+
+MapTools::CommandPaintBlocking::CommandPaintBlocking(MapTools& parent, QPoint&& pxCoord, tBlockingClipboard&& clip)
+    : m_parent(parent)
+    , m_position(pxCoord)
+    , m_toDraw(clip)
+{}
+
+void MapTools::CommandPaintBlocking::execute()
+{
+    m_replacedTiles = m_toDraw;
+
+    if (m_parent.m_currLayerType != eLayerType::Blocking || m_parent.m_blockLayer == nullptr)
+        return;
+
+    int minX = m_position.x() / BLOCK_W;
+    int minY = m_position.y() / BLOCK_H;
+    for (int y = minY; y < (m_toDraw.height + minY) && y < m_parent.m_uiLayerH; ++y) {
+        for (int x = minX; x < (m_toDraw.width + minX) && x < m_parent.m_uiLayerW; ++x) {
+            size_t idxInClipboard                   = static_cast<size_t>((y - minY) * m_toDraw.width + (x - minX));
+            m_replacedTiles.content[idxInClipboard] = m_parent.m_blockLayer->tile(x, y);
+
+            auto newValue = m_toDraw.content[idxInClipboard];
+            m_parent.m_blockLayer->setTile(static_cast<quint16>(x), static_cast<quint16>(y), newValue);
+        }
+    }
+}
+
+void MapTools::CommandPaintBlocking::undo()
+{
+    if (m_parent.m_currLayerType != eLayerType::Blocking || m_parent.m_blockLayer == nullptr)
+        return;
+
+    int minX = m_position.x() / BLOCK_W;
+    int minY = m_position.y() / BLOCK_H;
+    for (int y = minY; y < (m_toDraw.height + minY) && y < m_parent.m_uiLayerH; ++y) {
+        for (int x = minX; x < (m_toDraw.width + minX) && x < m_parent.m_uiLayerW; ++x) {
+            size_t idxInClipboard = static_cast<size_t>((y - minY) * m_toDraw.width + (x - minX));
+            auto newValue         = m_replacedTiles.content[idxInClipboard];
+            m_parent.m_blockLayer->setTile(static_cast<quint16>(x), static_cast<quint16>(y), newValue);
+        }
     }
 }

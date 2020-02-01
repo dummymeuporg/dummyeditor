@@ -29,8 +29,9 @@ public:
 
     const QPixmap& chipsetPixmap() const { return m_chipsetPixmap; }
     Editor::GraphicLayer& layer() { return m_graphicLayer; }
+    std::pair<int8_t, int8_t> tile(quint16 x, quint16 y) const;
 
-    void setTile(quint16 x, quint16 y, qint16 chipsetX, qint16 chipsetY);
+    void setTile(quint16 x, quint16 y, std::pair<int8_t, int8_t> values);
     void setChipsetPixmap(const QPixmap*);
 
 public slots:
