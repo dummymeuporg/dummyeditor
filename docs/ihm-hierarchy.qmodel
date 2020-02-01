@@ -50,29 +50,8 @@
                          <object>{ca9252c5-d1e0-4a1a-b94f-66236f833cd6}</object>
                          <context>Include</context>
                          <name>ChipsetGraphicsScene</name>
-                         <pos>x:585;y:190</pos>
-                         <rect>x:-65;y:-30;w:130;h:60</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{f1df236f-d7a7-4bfc-87cb-d4ee43c5f645}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{47efe79e-43a0-4508-9c77-00657e8fa495}</object>
-                         <context>Include</context>
-                         <name>MainWindow</name>
-                         <pos>x:565;y:495</pos>
-                         <rect>x:-55;y:-45;w:110;h:90</rect>
+                         <pos>x:130;y:225</pos>
+                         <rect>x:-135;y:-30;w:270;h:60</rect>
                          <auto-sized>false</auto-sized>
                          <visual-role>5</visual-role>
                         </DObject>
@@ -93,7 +72,7 @@
                          <object>{c12279c4-2e9f-4e7c-a3aa-22a2d8925d70}</object>
                          <context>Include</context>
                          <name>MapDocument</name>
-                         <pos>x:685;y:295</pos>
+                         <pos>x:880;y:190</pos>
                          <rect>x:-45;y:-35;w:90;h:70</rect>
                          <visual-role>6</visual-role>
                         </DObject>
@@ -115,7 +94,7 @@
                          <object>{30dd747e-a7f1-4a19-bae4-351fa32ce7b3}</object>
                          <context>Include</context>
                          <name>MapEditDialog</name>
-                         <pos>x:570;y:395</pos>
+                         <pos>x:50;y:715</pos>
                          <rect>x:-65;y:-35;w:130;h:70</rect>
                          <auto-sized>false</auto-sized>
                          <visual-role>5</visual-role>
@@ -137,83 +116,13 @@
                          <object>{ac3e8a89-802e-454a-b282-039c127353e3}</object>
                          <context>Include</context>
                          <name>MapTreeModel</name>
-                         <pos>x:945;y:610</pos>
+                         <pos>x:185;y:610</pos>
                          <rect>x:-45;y:-35;w:90;h:70</rect>
-                         <visual-role>6</visual-role>
+                         <visual-role>0</visual-role>
                         </DObject>
                        </base-DObject>
                        <namespace>Misc</namespace>
                       </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{17ea328d-9ddb-4e92-a1d4-58ca62d7d81b}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{ad63295a-e85f-4b8b-b134-73aabaa47621}</object>
-                         <stereotypes>
-                          <qlist>
-                           <item>interface</item>
-                          </qlist>
-                         </stereotypes>
-                         <context>Include</context>
-                         <name>MapsTreeViewError</name>
-                         <pos>x:1065;y:595</pos>
-                         <rect>x:-20;y:-20;w:40;h:40</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{79f752c0-2c35-43fd-b915-0c9b680033ff}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{6ee89e4f-391e-4d12-a72b-bab3041755e3}</object>
-                         <stereotypes>
-                          <qlist>
-                           <item>entity</item>
-                          </qlist>
-                         </stereotypes>
-                         <context>Include</context>
-                         <name>ProjectNotSet</name>
-                         <pos>x:1160;y:595</pos>
-                         <rect>x:-20;y:-20;w:40;h:40</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{43429a19-b1d7-4fc2-a73f-d5314419713f}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{1ce96693-2706-463f-bb79-22faaf84eccc}</object>
-                         <a>{79f752c0-2c35-43fd-b915-0c9b680033ff}</a>
-                         <b>{17ea328d-9ddb-4e92-a1d4-58ca62d7d81b}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
                      </instance>
                     </item>
                     <item>
@@ -229,435 +138,12 @@
                          <object>{9a1f6c24-3229-4f96-bd31-2d869a43cb36}</object>
                          <context>Include</context>
                          <name>MapsTreeView</name>
-                         <pos>x:830;y:615</pos>
-                         <rect>x:-70;y:-40;w:140;h:80</rect>
+                         <pos>x:120;y:535</pos>
+                         <rect>x:-145;y:-30;w:290;h:60</rect>
                          <auto-sized>false</auto-sized>
                          <visual-role>5</visual-role>
                         </DObject>
                        </base-DObject>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DBoundary">
-                      <DBoundary>
-                       <base-DElement>
-                        <DElement>
-                         <uid>{792186d8-c941-4567-8a57-f561b8ca79b7}</uid>
-                        </DElement>
-                       </base-DElement>
-                       <text>Drawing Tools</text>
-                       <pos>x:300;y:1040</pos>
-                       <rect>x:-365;y:-200;w:730;h:400</rect>
-                      </DBoundary>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{7ab9e646-1a6c-4244-a001-fbb1ee56939d}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{8d05808c-b2ff-4450-b4df-3a3ced56f0cf}</object>
-                         <context>Drawing Tool</context>
-                         <name>DrawingTool</name>
-                         <pos>x:295;y:910</pos>
-                         <rect>x:-40;y:-35;w:80;h:70</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>DrawingTool</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{3272dca8-90b0-4c8d-acf7-60aa78c441e1}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{1e71bb1c-6c95-45ff-abf8-4b0a01ff2359}</object>
-                         <context>Drawing Tool</context>
-                         <name>GraphicGeneralTool</name>
-                         <pos>x:295;y:1010</pos>
-                         <rect>x:-60;y:-35;w:120;h:70</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>DrawingTools</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{32e40671-88b4-4ad9-94a2-5549e76981c1}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{fabb3fe6-144c-4982-8df2-65adf5da9d3e}</object>
-                         <a>{3272dca8-90b0-4c8d-acf7-60aa78c441e1}</a>
-                         <b>{7ab9e646-1a6c-4244-a001-fbb1ee56939d}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{279db8ac-3be1-4ed6-92a5-0e2c99d1ff1c}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{f9dbbcfa-6969-4177-a96f-3cadc418949c}</object>
-                         <context>Drawing Tool</context>
-                         <name>BlockingGeneralTool</name>
-                         <pos>x:60;y:1015</pos>
-                         <rect>x:-60;y:-35;w:120;h:70</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>DrawingTools</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{a1393fb1-9722-4381-a441-ab3666ab8f69}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{991fc8ad-873d-4f01-a3ad-345e8dcb134e}</object>
-                         <a>{279db8ac-3be1-4ed6-92a5-0e2c99d1ff1c}</a>
-                         <b>{7ab9e646-1a6c-4244-a001-fbb1ee56939d}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{dcdf7dea-b9a7-4400-ab23-e80205fb1f92}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{d0e2b3f8-a8cd-45d2-953f-237fd933d878}</object>
-                         <context>Drawing Tool</context>
-                         <name>BlockingEraser</name>
-                         <pos>x:75;y:1100</pos>
-                         <rect>x:-45;y:-35;w:90;h:70</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>DrawingTools</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{f91beb34-0c4a-4e86-8ba1-97398a215d1d}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{b7fc49df-f7d5-4ae4-b35d-c0612ead6135}</object>
-                         <context>Drawing Tool</context>
-                         <name>BlockingPen</name>
-                         <pos>x:-20;y:1100</pos>
-                         <rect>x:-40;y:-35;w:80;h:70</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>DrawingTools</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{0335e084-568a-44f5-a3ef-c53739039717}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{668357ef-fc29-4aea-9b63-a1509a3f7c9f}</object>
-                         <a>{dcdf7dea-b9a7-4400-ab23-e80205fb1f92}</a>
-                         <b>{279db8ac-3be1-4ed6-92a5-0e2c99d1ff1c}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{c7ce9cb5-822e-4ec6-9909-decb96379706}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{6e58cf81-1d9d-48f2-bc83-3d6713242ae2}</object>
-                         <a>{f91beb34-0c4a-4e86-8ba1-97398a215d1d}</a>
-                         <b>{279db8ac-3be1-4ed6-92a5-0e2c99d1ff1c}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{222b3a97-f7f9-4345-b6f6-50000b6be819}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{8739905c-7677-481a-8ecb-7f09620cefc9}</object>
-                         <context>Drawing Tool</context>
-                         <name>GraphicEraser</name>
-                         <pos>x:230;y:1100</pos>
-                         <rect>x:-45;y:-35;w:90;h:70</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>DrawingTools</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{64398c3b-d81e-46d5-9bd3-dc7d1b463b61}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{cdf3d2ad-4a7b-4971-8c5b-b03eaabb15ac}</object>
-                         <a>{222b3a97-f7f9-4345-b6f6-50000b6be819}</a>
-                         <b>{3272dca8-90b0-4c8d-acf7-60aa78c441e1}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{f1094c5f-d2b5-4832-8518-47d09f43e60e}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{a9be0a2d-795b-4f48-a57e-47e2e6fca276}</object>
-                         <context>Drawing Tool</context>
-                         <name>GraphicPaletteTool</name>
-                         <pos>x:335;y:1100</pos>
-                         <rect>x:-55;y:-35;w:110;h:70</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>DrawingTools</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{fd0aa597-5e9e-49ea-8842-e625c8ca8e89}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{ceff9e4f-a4b6-49e8-9943-3177c829cc1c}</object>
-                         <a>{f1094c5f-d2b5-4832-8518-47d09f43e60e}</a>
-                         <b>{3272dca8-90b0-4c8d-acf7-60aa78c441e1}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{bf3cf374-870b-4de2-9537-8edb055e9a13}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{91952b16-00bc-4125-b89d-5591921b6512}</object>
-                         <context>Drawing Tool</context>
-                         <name>GraphicPen</name>
-                         <pos>x:270;y:1190</pos>
-                         <rect>x:-40;y:-35;w:80;h:70</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>DrawingTools</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{3da98824-2389-4981-be73-6efb903bcf26}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{1a61d0e8-422b-475e-979d-e63f51bc87e7}</object>
-                         <a>{bf3cf374-870b-4de2-9537-8edb055e9a13}</a>
-                         <b>{f1094c5f-d2b5-4832-8518-47d09f43e60e}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{126b5af6-2e4b-44e4-b85f-e8fd80bb0617}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{43ba259f-b79e-4f16-8694-1225f2fdfd3b}</object>
-                         <context>Drawing Tool</context>
-                         <name>GraphicRectangle</name>
-                         <pos>x:375;y:1190</pos>
-                         <rect>x:-55;y:-35;w:110;h:70</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>DrawingTools</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{7383948d-82f1-41ab-b730-0d395c949362}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{29e9d6b4-d95a-40ec-a5d6-c6735e9012a3}</object>
-                         <a>{126b5af6-2e4b-44e4-b85f-e8fd80bb0617}</a>
-                         <b>{f1094c5f-d2b5-4832-8518-47d09f43e60e}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{efd6df72-7b01-467c-82fa-ce19e15246e7}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{1c361447-5cd8-402e-8719-999cb7f5f776}</object>
-                         <context>Drawing Tool</context>
-                         <name>SelectionTool</name>
-                         <pos>x:505;y:1005</pos>
-                         <rect>x:-45;y:-35;w:90;h:70</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>DrawingTools</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{f56e7b39-41d5-49ac-b26e-dc32fd917d9f}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{28f749a0-7fee-4629-bd00-34959f4d9efd}</object>
-                         <a>{efd6df72-7b01-467c-82fa-ce19e15246e7}</a>
-                         <b>{7ab9e646-1a6c-4244-a001-fbb1ee56939d}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{b802a4fa-211b-4954-b6dc-51f066b9459d}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{f94d9df5-7aec-4ab8-b76a-6010bcd3a4b9}</object>
-                         <stereotypes>
-                          <qlist>
-                           <item>interface</item>
-                          </qlist>
-                         </stereotypes>
-                         <context>Drawing Tool</context>
-                         <name>DrawingVisitor</name>
-                         <pos>x:600;y:1105</pos>
-                         <rect>x:-20;y:-20;w:40;h:40</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>DrawingTools</namespace>
                       </DClass>
                      </instance>
                     </item>
@@ -674,7 +160,7 @@
                          <object>{541a2d0a-7a86-4563-9943-35ecd3ab3adc}</object>
                          <context>Editor</context>
                          <name>Map</name>
-                         <pos>x:870;y:290</pos>
+                         <pos>x:1035;y:250</pos>
                          <rect>x:-40;y:-35;w:80;h:70</rect>
                          <visual-role>6</visual-role>
                         </DObject>
@@ -696,7 +182,7 @@
                          <object>{79e427fd-6f4c-48f8-be1c-3b0d47411f20}</object>
                          <context>Editor</context>
                          <name>Project</name>
-                         <pos>x:875;y:205</pos>
+                         <pos>x:1040;y:165</pos>
                          <rect>x:-50;y:-40;w:100;h:80</rect>
                          <auto-sized>false</auto-sized>
                          <visual-role>6</visual-role>
@@ -719,7 +205,7 @@
                          <object>{f1699f07-63db-4871-8d59-7673e9e21af2}</object>
                          <context>Editor</context>
                          <name>StartingPoint</name>
-                         <pos>x:960;y:290</pos>
+                         <pos>x:1125;y:250</pos>
                          <rect>x:-40;y:-35;w:80;h:70</rect>
                          <visual-role>6</visual-role>
                         </DObject>
@@ -735,85 +221,13 @@
                         <DObject>
                          <base-DElement>
                           <DElement>
-                           <uid>{dc4a4cf1-25ee-4df8-86b8-87a7dfc145d0}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{492b76ad-602b-462d-ab6f-cc313df67d67}</object>
-                         <stereotypes>
-                          <qlist>
-                           <item>entity</item>
-                          </qlist>
-                         </stereotypes>
-                         <context>Editor</context>
-                         <name>NoStartingPoint</name>
-                         <pos>x:1050;y:285</pos>
-                         <rect>x:-20;y:-20;w:40;h:40</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>Editor</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{7d5ed106-c6b7-4e09-9b77-0a8d993874e0}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{2b447e8f-75b0-41e4-9d24-15f47e72d5c1}</object>
-                         <stereotypes>
-                          <qlist>
-                           <item>interface</item>
-                          </qlist>
-                         </stereotypes>
-                         <context>Editor</context>
-                         <name>ProjectError</name>
-                         <pos>x:1155;y:285</pos>
-                         <rect>x:-20;y:-20;w:40;h:40</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>Editor</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{ad21c22d-b8da-412b-811a-c38a8e6dd132}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{27d2b3dd-b451-49ca-b98e-32ad9e9dc84e}</object>
-                         <a>{dc4a4cf1-25ee-4df8-86b8-87a7dfc145d0}</a>
-                         <b>{7d5ed106-c6b7-4e09-9b77-0a8d993874e0}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
                            <uid>{03df32a9-439e-4121-98f7-94cfd901f5c8}</uid>
                           </DElement>
                          </base-DElement>
                          <object>{641291f3-3068-4edf-b882-4f421490d1fb}</object>
                          <context>Editor</context>
                          <name>Layer</name>
-                         <pos>x:870;y:375</pos>
+                         <pos>x:1035;y:335</pos>
                          <rect>x:-40;y:-35;w:80;h:70</rect>
                          <visual-role>6</visual-role>
                         </DObject>
@@ -835,7 +249,7 @@
                          <object>{64c6edc6-ff5e-4137-9bee-90b29781d871}</object>
                          <context>Editor</context>
                          <name>Floor</name>
-                         <pos>x:770;y:375</pos>
+                         <pos>x:935;y:335</pos>
                          <rect>x:-40;y:-35;w:80;h:70</rect>
                          <visual-role>6</visual-role>
                         </DObject>
@@ -857,7 +271,7 @@
                          <object>{7c612f99-1947-4581-9a0a-abb3ee8d12f9}</object>
                          <context>Editor</context>
                          <name>BlockingLayer</name>
-                         <pos>x:780;y:475</pos>
+                         <pos>x:945;y:435</pos>
                          <rect>x:-45;y:-35;w:90;h:70</rect>
                          <visual-role>6</visual-role>
                         </DObject>
@@ -897,7 +311,7 @@
                          <object>{c6be1a03-27cb-4e4d-b532-459e71c3ca89}</object>
                          <context>Editor</context>
                          <name>GraphicLayer</name>
-                         <pos>x:875;y:475</pos>
+                         <pos>x:1040;y:435</pos>
                          <rect>x:-40;y:-35;w:80;h:70</rect>
                          <visual-role>6</visual-role>
                         </DObject>
@@ -937,7 +351,7 @@
                          <object>{4ad653cb-72db-4f5e-abd1-ba927817b090}</object>
                          <context>Editor</context>
                          <name>EventsLayer</name>
-                         <pos>x:965;y:475</pos>
+                         <pos>x:1130;y:435</pos>
                          <rect>x:-40;y:-35;w:80;h:70</rect>
                          <visual-role>6</visual-role>
                         </DObject>
@@ -973,8 +387,8 @@
                         </DElement>
                        </base-DElement>
                        <text>Project data</text>
-                       <pos>x:950;y:335</pos>
-                       <rect>x:-260;y:-205;w:520;h:410</rect>
+                       <pos>x:1025;y:295</pos>
+                       <rect>x:-170;y:-205;w:340;h:410</rect>
                       </DBoundary>
                      </instance>
                     </item>
@@ -991,9 +405,10 @@
                          <object>{5d633791-cf55-482f-9643-0168639370a9}</object>
                          <context>Graphicmap</context>
                          <name>MapGraphicsScene</name>
-                         <pos>x:175;y:190</pos>
-                         <rect>x:-55;y:-35;w:110;h:70</rect>
-                         <visual-role>0</visual-role>
+                         <pos>x:545;y:230</pos>
+                         <rect>x:-245;y:-35;w:490;h:70</rect>
+                         <auto-sized>false</auto-sized>
+                         <visual-role>5</visual-role>
                         </DObject>
                        </base-DObject>
                        <namespace>GraphicMap</namespace>
@@ -1013,7 +428,7 @@
                          <object>{07c6e6de-7050-4140-8fb2-b0f70af41dc9}</object>
                          <context>Graphicmap</context>
                          <name>MapSceneLayer</name>
-                         <pos>x:175;y:310</pos>
+                         <pos>x:405;y:315</pos>
                          <rect>x:-55;y:-40;w:110;h:80</rect>
                          <auto-sized>false</auto-sized>
                          <visual-role>0</visual-role>
@@ -1036,7 +451,7 @@
                          <object>{0fd86508-6ea7-4a09-924c-a9082bbacd8a}</object>
                          <context>Graphicmap</context>
                          <name>EventsGraphicLayer</name>
-                         <pos>x:175;y:450</pos>
+                         <pos>x:485;y:410</pos>
                          <rect>x:-60;y:-35;w:120;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1076,7 +491,7 @@
                          <object>{c2f53952-a318-40f6-9c6b-1b6992592119}</object>
                          <context>Graphicmap</context>
                          <name>BlockingGraphicLayer</name>
-                         <pos>x:40;y:450</pos>
+                         <pos>x:355;y:410</pos>
                          <rect>x:-60;y:-35;w:120;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1116,7 +531,7 @@
                          <object>{80b11409-7673-4860-805c-6a3862f6be9e}</object>
                          <context>Graphicmap</context>
                          <name>VisibleGraphicLayer</name>
-                         <pos>x:305;y:450</pos>
+                         <pos>x:610;y:410</pos>
                          <rect>x:-60;y:-35;w:120;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1144,72 +559,6 @@
                      </instance>
                     </item>
                     <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{51bf8441-7aef-4353-8600-150159976d6c}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{6a80e680-9964-4922-8e82-e2fbf80e3492}</object>
-                         <context>Graphicmap</context>
-                         <name>BlockingCrossItem</name>
-                         <pos>x:65;y:540</pos>
-                         <rect>x:-55;y:-35;w:110;h:70</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>GraphicMap</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{40ff9f89-c7bb-43ed-a887-c7fcf49087e4}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{40163e7d-3f9e-4395-938f-678118cf1a3a}</object>
-                         <context>Graphicmap</context>
-                         <name>BlockingSquareItem</name>
-                         <pos>x:190;y:540</pos>
-                         <rect>x:-60;y:-35;w:120;h:70</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>GraphicMap</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{620f4fc5-25e4-48d5-8310-0ad74ac9ee08}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{b1800c77-776e-44d8-9fdc-37702cbde9ea}</object>
-                         <context>Graphicmap</context>
-                         <name>EventSquareItem</name>
-                         <pos>x:310;y:540</pos>
-                         <rect>x:-50;y:-35;w:100;h:70</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>GraphicMap</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
                      <instance type="DBoundary">
                       <DBoundary>
                        <base-DElement>
@@ -1218,81 +567,9 @@
                         </DElement>
                        </base-DElement>
                        <text>Map Display</text>
-                       <pos>x:215;y:360</pos>
-                       <rect>x:-265;y:-235;w:530;h:470</rect>
+                       <pos>x:545;y:310</pos>
+                       <rect>x:-265;y:-150;w:530;h:300</rect>
                       </DBoundary>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{3922c61e-0b1c-4aa8-acec-0f398b8014fe}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{adbc3003-cd3e-4352-a289-eb0b379d2edd}</object>
-                         <stereotypes>
-                          <qlist>
-                           <item>interface</item>
-                          </qlist>
-                         </stereotypes>
-                         <context>Graphicmap</context>
-                         <name>GraphicLayerVisitor</name>
-                         <pos>x:425;y:520</pos>
-                         <rect>x:-20;y:-20;w:40;h:40</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>GraphicMap</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{2ecf7532-0216-4ea2-8b99-a820d5aa6c5b}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{afe03c6a-cff6-4b82-bc73-fca7888153c1}</object>
-                         <a>{7ab9e646-1a6c-4244-a001-fbb1ee56939d}</a>
-                         <b>{3922c61e-0b1c-4aa8-acec-0f398b8014fe}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{779541b8-ec79-426f-a4ca-f6b2d22d13d6}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{b4e4871b-33ea-4b76-9584-97ffdc254cd5}</object>
-                         <stereotypes>
-                          <qlist>
-                           <item>entity</item>
-                          </qlist>
-                         </stereotypes>
-                         <context>Graphicmap</context>
-                         <name>GraphicLayerNotSupported</name>
-                         <pos>x:360;y:305</pos>
-                         <rect>x:-20;y:-20;w:40;h:40</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>GraphicMap</namespace>
-                      </DClass>
                      </instance>
                     </item>
                     <item>
@@ -1304,143 +581,9 @@
                         </DElement>
                        </base-DElement>
                        <text>Chipset display</text>
-                       <pos>x:585;y:185</pos>
-                       <rect>x:-95;y:-60;w:190;h:120</rect>
+                       <pos>x:120;y:220</pos>
+                       <rect>x:-155;y:-60;w:310;h:120</rect>
                       </DBoundary>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DBoundary">
-                      <DBoundary>
-                       <base-DElement>
-                        <DElement>
-                         <uid>{8b2b1080-4a35-415e-929e-71af8d3b7709}</uid>
-                        </DElement>
-                       </base-DElement>
-                       <text>Clipboard</text>
-                       <pos>x:205;y:710</pos>
-                       <rect>x:-115;y:-100;w:230;h:200</rect>
-                      </DBoundary>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{c9433f13-73ce-4eca-8e62-49e91aa0f168}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{328b4a60-5fd5-42f0-a0fb-69f519839049}</object>
-                         <context>Layer Clipboard</context>
-                         <name>Clipboard</name>
-                         <pos>x:200;y:670</pos>
-                         <rect>x:-40;y:-35;w:80;h:70</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>LayerClipboard</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{e795a6c2-d5f3-430a-957c-14c1a4b4fad0}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{8386f3cb-97da-4bbf-9773-818af7d35f87}</object>
-                         <a>{c9433f13-73ce-4eca-8e62-49e91aa0f168}</a>
-                         <b>{3922c61e-0b1c-4aa8-acec-0f398b8014fe}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{7a74bc5b-c520-49d0-9eb0-cb580570be73}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{25c88596-7def-4e43-8b83-331fe27410a5}</object>
-                         <context>Layer Clipboard</context>
-                         <name>Visible</name>
-                         <pos>x:245;y:760</pos>
-                         <rect>x:-40;y:-35;w:80;h:70</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>LayerClipboard</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{7d4ff786-cd06-4a19-a2ab-a406a859b301}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{cae5ae6c-4837-41fd-b19a-a30fce999d7f}</object>
-                         <a>{7a74bc5b-c520-49d0-9eb0-cb580570be73}</a>
-                         <b>{c9433f13-73ce-4eca-8e62-49e91aa0f168}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{7757b174-3493-424b-9c56-c66cd970462b}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{91ec33c6-bd56-4967-91a9-436043579c76}</object>
-                         <context>Layer Clipboard</context>
-                         <name>Blocking</name>
-                         <pos>x:140;y:760</pos>
-                         <rect>x:-40;y:-35;w:80;h:70</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>LayerClipboard</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{e5bf17d5-97c7-4a07-9ee5-c409dbbb27fe}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{56d40dbf-d585-4857-83ba-a51b7002382b}</object>
-                         <a>{7757b174-3493-424b-9c56-c66cd970462b}</a>
-                         <b>{c9433f13-73ce-4eca-8e62-49e91aa0f168}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
                      </instance>
                     </item>
                     <item>
@@ -1451,69 +594,10 @@
                          <uid>{a9b48f32-7dce-41aa-ad92-b12ab0872d5e}</uid>
                         </DElement>
                        </base-DElement>
-                       <text>Widget Map Floors list</text>
-                       <pos>x:950;y:780</pos>
-                       <rect>x:-255;y:-100;w:510;h:200</rect>
+                       <text>List of floors and layers of a map</text>
+                       <pos>x:545;y:615</pos>
+                       <rect>x:-265;y:-145;w:530;h:290</rect>
                       </DBoundary>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{c709b6f3-6504-4e64-a543-d94fef412a14}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{d5f59ee5-305b-4cca-a7a1-5d02b5483f9d}</object>
-                         <context>Widget MapFloorsList</context>
-                         <name>Widget</name>
-                         <pos>x:770;y:725</pos>
-                         <rect>x:-55;y:-35;w:110;h:70</rect>
-                         <auto-sized>false</auto-sized>
-                         <visual-role>5</visual-role>
-                        </DObject>
-                       </base-DObject>
-                       <namespace>MapFloorsList</namespace>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{243ed82a-979b-4d86-97ec-b112ee0d493f}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{d72fd2f4-0961-4f92-8c2f-b7f0a4165fc7}</object>
-                         <a>{c709b6f3-6504-4e64-a543-d94fef412a14}</a>
-                         <b>{b802a4fa-211b-4954-b6dc-51f066b9459d}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{c0be554a-d1b7-48d0-b90c-337536f35a34}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{ef8bdfa7-4094-484f-8a34-508cbbf899b4}</object>
-                         <a>{c709b6f3-6504-4e64-a543-d94fef412a14}</a>
-                         <b>{3922c61e-0b1c-4aa8-acec-0f398b8014fe}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
                      </instance>
                     </item>
                     <item>
@@ -1529,7 +613,7 @@
                          <object>{2dbfbac1-1fbe-43f8-be3a-642cb3621ae7}</object>
                          <context>Widget MapFloorsList</context>
                          <name>MapFloorTreeModel</name>
-                         <pos>x:1110;y:735</pos>
+                         <pos>x:720;y:620</pos>
                          <rect>x:-60;y:-35;w:120;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1551,7 +635,7 @@
                          <object>{b3f37573-3715-4235-a565-63e943a016bc}</object>
                          <context>Widget MapFloorsList</context>
                          <name>MapTreeItem</name>
-                         <pos>x:945;y:750</pos>
+                         <pos>x:375;y:615</pos>
                          <rect>x:-55;y:-35;w:110;h:70</rect>
                          <auto-sized>false</auto-sized>
                          <visual-role>0</visual-role>
@@ -1574,7 +658,7 @@
                          <object>{4d28dc15-638b-4f41-b20f-93a8a6c03c24}</object>
                          <context>Widget MapFloorsList</context>
                          <name>MapLayerTreeItem</name>
-                         <pos>x:880;y:835</pos>
+                         <pos>x:375;y:705</pos>
                          <rect>x:-55;y:-35;w:110;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1614,7 +698,7 @@
                          <object>{2038beb8-7d1a-4482-8ae3-55a101c1bb05}</object>
                          <context>Widget MapFloorsList</context>
                          <name>MapFloorTreeItem</name>
-                         <pos>x:1005;y:835</pos>
+                         <pos>x:495;y:705</pos>
                          <rect>x:-55;y:-35;w:110;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1648,15 +732,253 @@
                         <DObject>
                          <base-DElement>
                           <DElement>
-                           <uid>{88049d83-a757-4ead-8d81-b9c2ef58fd4a}</uid>
+                           <uid>{40936c4c-b80f-410a-9ceb-002ddd469a57}</uid>
                           </DElement>
                          </base-DElement>
-                         <object>{8ecc250f-7928-4147-a89c-c35fa84189a6}</object>
+                         <object>{481ef220-9005-4440-b8d7-bfa52fecf673}</object>
+                         <context>Graphicmap</context>
+                         <name>GraphicItem</name>
+                         <pos>x:720;y:320</pos>
+                         <rect>x:-40;y:-35;w:80;h:70</rect>
+                         <visual-role>0</visual-role>
+                        </DObject>
+                       </base-DObject>
+                       <namespace>GraphicMap</namespace>
+                      </DClass>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DClass">
+                      <DClass>
+                       <base-DObject>
+                        <DObject>
+                         <base-DElement>
+                          <DElement>
+                           <uid>{4d2580e4-825f-4277-a97b-58def7e14679}</uid>
+                          </DElement>
+                         </base-DElement>
+                         <object>{70d95178-bed1-4590-abc8-5240f6806d80}</object>
                          <context>Include</context>
-                         <name>DrawingToolBarWidget</name>
-                         <pos>x:590;y:715</pos>
-                         <rect>x:-65;y:-40;w:130;h:80</rect>
+                         <name>GeneralWindow</name>
+                         <pos>x:390;y:100</pos>
+                         <rect>x:-430;y:-50;w:860;h:100</rect>
+                         <auto-sized>false</auto-sized>
                          <visual-role>5</visual-role>
+                        </DObject>
+                       </base-DObject>
+                      </DClass>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DClass">
+                      <DClass>
+                       <base-DObject>
+                        <DObject>
+                         <base-DElement>
+                          <DElement>
+                           <uid>{41301a3a-03ec-48a4-a6d5-4b654bbe025b}</uid>
+                          </DElement>
+                         </base-DElement>
+                         <object>{9cc97067-9d0e-48ff-b54f-d7373762fd42}</object>
+                         <context>Include</context>
+                         <name>FloorListWidget</name>
+                         <pos>x:540;y:535</pos>
+                         <rect>x:-245;y:-35;w:490;h:70</rect>
+                         <auto-sized>false</auto-sized>
+                         <visual-role>5</visual-role>
+                        </DObject>
+                       </base-DObject>
+                       <namespace>MapFloorsList</namespace>
+                      </DClass>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DBoundary">
+                      <DBoundary>
+                       <base-DElement>
+                        <DElement>
+                         <uid>{8ce76378-7f45-4b86-b394-48e39f1fec36}</uid>
+                        </DElement>
+                       </base-DElement>
+                       <text>List of maps</text>
+                       <pos>x:120;y:615</pos>
+                       <rect>x:-155;y:-145;w:310;h:290</rect>
+                      </DBoundary>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DClass">
+                      <DClass>
+                       <base-DObject>
+                        <DObject>
+                         <base-DElement>
+                          <DElement>
+                           <uid>{94a79865-d415-44c2-963d-fe9886d1d6bb}</uid>
+                          </DElement>
+                         </base-DElement>
+                         <object>{d2ff4436-11ab-4ab7-a6ee-1f61efd4fadd}</object>
+                         <context>Utils</context>
+                         <name>Logger</name>
+                         <pos>x:1020;y:575</pos>
+                         <rect>x:-55;y:-35;w:110;h:70</rect>
+                         <auto-sized>false</auto-sized>
+                         <visual-role>0</visual-role>
+                        </DObject>
+                       </base-DObject>
+                       <namespace>Log</namespace>
+                      </DClass>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DBoundary">
+                      <DBoundary>
+                       <base-DElement>
+                        <DElement>
+                         <uid>{a397a1b6-a5f1-4ed6-a4da-15b63921843d}</uid>
+                        </DElement>
+                       </base-DElement>
+                       <text>Log system</text>
+                       <pos>x:1020;y:635</pos>
+                       <rect>x:-170;y:-120;w:340;h:240</rect>
+                      </DBoundary>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DClass">
+                      <DClass>
+                       <base-DObject>
+                        <DObject>
+                         <base-DElement>
+                          <DElement>
+                           <uid>{edcf3e7c-a67a-4e44-8f83-ee9f6ded65c4}</uid>
+                          </DElement>
+                         </base-DElement>
+                         <object>{840da0ae-e28b-4f9b-bb67-f8fc33c50fc4}</object>
+                         <context>Utils</context>
+                         <name>LoggerConsole</name>
+                         <pos>x:930;y:690</pos>
+                         <rect>x:-45;y:-35;w:90;h:70</rect>
+                         <visual-role>0</visual-role>
+                        </DObject>
+                       </base-DObject>
+                       <namespace>Log</namespace>
+                      </DClass>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DInheritance">
+                      <DInheritance>
+                       <base-DRelation>
+                        <DRelation>
+                         <base-DElement>
+                          <DElement>
+                           <uid>{49e8ba13-e72b-48fe-b606-e15344ea5422}</uid>
+                          </DElement>
+                         </base-DElement>
+                         <object>{9665302b-4e40-4fb3-bbb5-cd3018702ce3}</object>
+                         <a>{edcf3e7c-a67a-4e44-8f83-ee9f6ded65c4}</a>
+                         <b>{94a79865-d415-44c2-963d-fe9886d1d6bb}</b>
+                        </DRelation>
+                       </base-DRelation>
+                      </DInheritance>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DClass">
+                      <DClass>
+                       <base-DObject>
+                        <DObject>
+                         <base-DElement>
+                          <DElement>
+                           <uid>{e413cbf0-832d-4b3c-b0b7-284b24d7b3d4}</uid>
+                          </DElement>
+                         </base-DElement>
+                         <object>{c881d460-009e-433c-b91a-abb90b9e8938}</object>
+                         <context>Utils</context>
+                         <name>LoggerFile</name>
+                         <pos>x:1020;y:690</pos>
+                         <rect>x:-40;y:-35;w:80;h:70</rect>
+                         <visual-role>0</visual-role>
+                        </DObject>
+                       </base-DObject>
+                       <namespace>Log</namespace>
+                      </DClass>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DInheritance">
+                      <DInheritance>
+                       <base-DRelation>
+                        <DRelation>
+                         <base-DElement>
+                          <DElement>
+                           <uid>{ac410223-fbfe-42b7-8a91-b4ca18be11cd}</uid>
+                          </DElement>
+                         </base-DElement>
+                         <object>{90d9aa25-b31d-4583-bfbf-9cdc9acabda8}</object>
+                         <a>{e413cbf0-832d-4b3c-b0b7-284b24d7b3d4}</a>
+                         <b>{94a79865-d415-44c2-963d-fe9886d1d6bb}</b>
+                        </DRelation>
+                       </base-DRelation>
+                      </DInheritance>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DClass">
+                      <DClass>
+                       <base-DObject>
+                        <DObject>
+                         <base-DElement>
+                          <DElement>
+                           <uid>{1f5b8390-443f-4cdd-915b-4e50a263a4cc}</uid>
+                          </DElement>
+                         </base-DElement>
+                         <object>{28bda793-2c65-492c-9a65-6024ed0998bd}</object>
+                         <context>Include</context>
+                         <name>LoggerStatusBar</name>
+                         <pos>x:1125;y:685</pos>
+                         <rect>x:-50;y:-30;w:100;h:60</rect>
+                         <visual-role>0</visual-role>
+                        </DObject>
+                       </base-DObject>
+                      </DClass>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DInheritance">
+                      <DInheritance>
+                       <base-DRelation>
+                        <DRelation>
+                         <base-DElement>
+                          <DElement>
+                           <uid>{29e611fa-69c1-49aa-acb0-d188a8675555}</uid>
+                          </DElement>
+                         </base-DElement>
+                         <object>{4cb26a0a-288e-4e34-bce3-ce53c60bbaa1}</object>
+                         <a>{1f5b8390-443f-4cdd-915b-4e50a263a4cc}</a>
+                         <b>{94a79865-d415-44c2-963d-fe9886d1d6bb}</b>
+                        </DRelation>
+                       </base-DRelation>
+                      </DInheritance>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DClass">
+                      <DClass>
+                       <base-DObject>
+                        <DObject>
+                         <base-DElement>
+                          <DElement>
+                           <uid>{8616c242-8692-4601-af95-9a1932e93ec9}</uid>
+                          </DElement>
+                         </base-DElement>
+                         <object>{699682a3-fbe1-48f5-ad60-e528f07aa2c0}</object>
+                         <context>Include</context>
+                         <name>MapTools</name>
+                         <pos>x:190;y:340</pos>
+                         <rect>x:-100;y:-70;w:200;h:140</rect>
+                         <auto-sized>false</auto-sized>
+                         <visual-role>0</visual-role>
                         </DObject>
                        </base-DObject>
                       </DClass>
@@ -1664,7 +986,7 @@
                     </item>
                    </qlist>
                   </elements>
-                  <last-modified>1579366678843</last-modified>
+                  <last-modified>1580514861886</last-modified>
                   <toolbarid>General</toolbarid>
                  </MDiagram>
                 </base-MDiagram>
@@ -1945,7 +1267,7 @@
                                           <flags>1</flags>
                                          </MElement>
                                         </base-MElement>
-                                        <name>DrawingTool</name>
+                                        <name>rawingTool</name>
                                         <relations>
                                          <handles>
                                           <handles>
@@ -2588,7 +1910,7 @@
                                           <flags>1</flags>
                                          </MElement>
                                         </base-MElement>
-                                        <name>GraphicGeneralTool</name>
+                                        <name>GraphicGeneralTol</name>
                                         <relations>
                                          <handles>
                                           <handles>
@@ -2694,7 +2016,7 @@
                                           <flags>1</flags>
                                          </MElement>
                                         </base-MElement>
-                                        <name>BlockingEraser</name>
+                                        <name>ockingEraser</name>
                                         <relations>
                                          <handles>
                                           <handles>
@@ -2747,7 +2069,7 @@
                                           <flags>1</flags>
                                          </MElement>
                                         </base-MElement>
-                                        <name>BlockingPen</name>
+                                        <name>lockingPen</name>
                                         <relations>
                                          <handles>
                                           <handles>
@@ -3483,7 +2805,7 @@
                                           <flags>1</flags>
                                          </MElement>
                                         </base-MElement>
-                                        <name>BlockingSquareItem</name>
+                                        <name>BlockingSuareItem</name>
                                        </MObject>
                                       </base-MObject>
                                       <namespace>GraphicMap</namespace>
@@ -3687,6 +3009,29 @@
                                           </handles>
                                          </handles>
                                         </relations>
+                                       </MObject>
+                                      </base-MObject>
+                                      <namespace>GraphicMap</namespace>
+                                     </MClass>
+                                    </instance>
+                                   </target>
+                                  </handle>
+                                 </item>
+                                 <item>
+                                  <handle>
+                                   <uid>{481ef220-9005-4440-b8d7-bfa52fecf673}</uid>
+                                   <target>
+                                    <instance type="MClass">
+                                     <MClass>
+                                      <base-MObject>
+                                       <MObject>
+                                        <base-MElement>
+                                         <MElement>
+                                          <uid>{481ef220-9005-4440-b8d7-bfa52fecf673}</uid>
+                                          <flags>1</flags>
+                                         </MElement>
+                                        </base-MElement>
+                                        <name>GraphicItem</name>
                                        </MObject>
                                       </base-MObject>
                                       <namespace>GraphicMap</namespace>
@@ -5067,7 +4412,7 @@
                                           <flags>1</flags>
                                          </MElement>
                                         </base-MElement>
-                                        <name>Visible</name>
+                                        <name>Visibl</name>
                                         <relations>
                                          <handles>
                                           <handles>
@@ -5917,6 +5262,329 @@
                         </target>
                        </handle>
                       </item>
+                      <item>
+                       <handle>
+                        <uid>{70d95178-bed1-4590-abc8-5240f6806d80}</uid>
+                        <target>
+                         <instance type="MClass">
+                          <MClass>
+                           <base-MObject>
+                            <MObject>
+                             <base-MElement>
+                              <MElement>
+                               <uid>{70d95178-bed1-4590-abc8-5240f6806d80}</uid>
+                               <flags>1</flags>
+                              </MElement>
+                             </base-MElement>
+                             <name>GeneralWindow</name>
+                            </MObject>
+                           </base-MObject>
+                          </MClass>
+                         </instance>
+                        </target>
+                       </handle>
+                      </item>
+                      <item>
+                       <handle>
+                        <uid>{9cc97067-9d0e-48ff-b54f-d7373762fd42}</uid>
+                        <target>
+                         <instance type="MClass">
+                          <MClass>
+                           <base-MObject>
+                            <MObject>
+                             <base-MElement>
+                              <MElement>
+                               <uid>{9cc97067-9d0e-48ff-b54f-d7373762fd42}</uid>
+                               <flags>1</flags>
+                              </MElement>
+                             </base-MElement>
+                             <name>FloorListWidget</name>
+                            </MObject>
+                           </base-MObject>
+                           <namespace>MapFloorsList</namespace>
+                          </MClass>
+                         </instance>
+                        </target>
+                       </handle>
+                      </item>
+                      <item>
+                       <handle>
+                        <uid>{8973b164-adbf-4668-b406-471d6806a015}</uid>
+                        <target>
+                         <instance type="MPackage">
+                          <MPackage>
+                           <base-MObject>
+                            <MObject>
+                             <base-MElement>
+                              <MElement>
+                               <uid>{8973b164-adbf-4668-b406-471d6806a015}</uid>
+                               <flags>1</flags>
+                              </MElement>
+                             </base-MElement>
+                             <name>Utils</name>
+                             <children>
+                              <handles>
+                               <handles>
+                                <qlist>
+                                 <item>
+                                  <handle>
+                                   <uid>{840da0ae-e28b-4f9b-bb67-f8fc33c50fc4}</uid>
+                                   <target>
+                                    <instance type="MClass">
+                                     <MClass>
+                                      <base-MObject>
+                                       <MObject>
+                                        <base-MElement>
+                                         <MElement>
+                                          <uid>{840da0ae-e28b-4f9b-bb67-f8fc33c50fc4}</uid>
+                                          <flags>1</flags>
+                                         </MElement>
+                                        </base-MElement>
+                                        <name>LoggerConsole</name>
+                                        <relations>
+                                         <handles>
+                                          <handles>
+                                           <qlist>
+                                            <item>
+                                             <handle>
+                                              <uid>{9665302b-4e40-4fb3-bbb5-cd3018702ce3}</uid>
+                                              <target>
+                                               <instance type="MInheritance">
+                                                <MInheritance>
+                                                 <base-MRelation>
+                                                  <MRelation>
+                                                   <base-MElement>
+                                                    <MElement>
+                                                     <uid>{9665302b-4e40-4fb3-bbb5-cd3018702ce3}</uid>
+                                                    </MElement>
+                                                   </base-MElement>
+                                                   <a>{840da0ae-e28b-4f9b-bb67-f8fc33c50fc4}</a>
+                                                   <b>{d2ff4436-11ab-4ab7-a6ee-1f61efd4fadd}</b>
+                                                  </MRelation>
+                                                 </base-MRelation>
+                                                </MInheritance>
+                                               </instance>
+                                              </target>
+                                             </handle>
+                                            </item>
+                                           </qlist>
+                                          </handles>
+                                         </handles>
+                                        </relations>
+                                       </MObject>
+                                      </base-MObject>
+                                      <namespace>Log</namespace>
+                                     </MClass>
+                                    </instance>
+                                   </target>
+                                  </handle>
+                                 </item>
+                                 <item>
+                                  <handle>
+                                   <uid>{c881d460-009e-433c-b91a-abb90b9e8938}</uid>
+                                   <target>
+                                    <instance type="MClass">
+                                     <MClass>
+                                      <base-MObject>
+                                       <MObject>
+                                        <base-MElement>
+                                         <MElement>
+                                          <uid>{c881d460-009e-433c-b91a-abb90b9e8938}</uid>
+                                          <flags>1</flags>
+                                         </MElement>
+                                        </base-MElement>
+                                        <name>LoggerFile</name>
+                                        <relations>
+                                         <handles>
+                                          <handles>
+                                           <qlist>
+                                            <item>
+                                             <handle>
+                                              <uid>{90d9aa25-b31d-4583-bfbf-9cdc9acabda8}</uid>
+                                              <target>
+                                               <instance type="MInheritance">
+                                                <MInheritance>
+                                                 <base-MRelation>
+                                                  <MRelation>
+                                                   <base-MElement>
+                                                    <MElement>
+                                                     <uid>{90d9aa25-b31d-4583-bfbf-9cdc9acabda8}</uid>
+                                                    </MElement>
+                                                   </base-MElement>
+                                                   <a>{c881d460-009e-433c-b91a-abb90b9e8938}</a>
+                                                   <b>{d2ff4436-11ab-4ab7-a6ee-1f61efd4fadd}</b>
+                                                  </MRelation>
+                                                 </base-MRelation>
+                                                </MInheritance>
+                                               </instance>
+                                              </target>
+                                             </handle>
+                                            </item>
+                                           </qlist>
+                                          </handles>
+                                         </handles>
+                                        </relations>
+                                       </MObject>
+                                      </base-MObject>
+                                      <namespace>Log</namespace>
+                                     </MClass>
+                                    </instance>
+                                   </target>
+                                  </handle>
+                                 </item>
+                                </qlist>
+                               </handles>
+                              </handles>
+                             </children>
+                            </MObject>
+                           </base-MObject>
+                          </MPackage>
+                         </instance>
+                        </target>
+                       </handle>
+                      </item>
+                      <item>
+                       <handle>
+                        <uid>{28bda793-2c65-492c-9a65-6024ed0998bd}</uid>
+                        <target>
+                         <instance type="MClass">
+                          <MClass>
+                           <base-MObject>
+                            <MObject>
+                             <base-MElement>
+                              <MElement>
+                               <uid>{28bda793-2c65-492c-9a65-6024ed0998bd}</uid>
+                               <flags>1</flags>
+                              </MElement>
+                             </base-MElement>
+                             <name>LoggerStatusBar</name>
+                             <relations>
+                              <handles>
+                               <handles>
+                                <qlist>
+                                 <item>
+                                  <handle>
+                                   <uid>{4cb26a0a-288e-4e34-bce3-ce53c60bbaa1}</uid>
+                                   <target>
+                                    <instance type="MInheritance">
+                                     <MInheritance>
+                                      <base-MRelation>
+                                       <MRelation>
+                                        <base-MElement>
+                                         <MElement>
+                                          <uid>{4cb26a0a-288e-4e34-bce3-ce53c60bbaa1}</uid>
+                                         </MElement>
+                                        </base-MElement>
+                                        <a>{28bda793-2c65-492c-9a65-6024ed0998bd}</a>
+                                        <b>{d2ff4436-11ab-4ab7-a6ee-1f61efd4fadd}</b>
+                                       </MRelation>
+                                      </base-MRelation>
+                                     </MInheritance>
+                                    </instance>
+                                   </target>
+                                  </handle>
+                                 </item>
+                                </qlist>
+                               </handles>
+                              </handles>
+                             </relations>
+                            </MObject>
+                           </base-MObject>
+                          </MClass>
+                         </instance>
+                        </target>
+                       </handle>
+                      </item>
+                      <item>
+                       <handle>
+                        <uid>{e5be8f05-5e9f-4a50-bd31-7051e051b2a3}</uid>
+                        <target>
+                         <instance type="MClass">
+                          <MClass>
+                           <base-MObject>
+                            <MObject>
+                             <base-MElement>
+                              <MElement>
+                               <uid>{e5be8f05-5e9f-4a50-bd31-7051e051b2a3}</uid>
+                               <flags>1</flags>
+                              </MElement>
+                             </base-MElement>
+                             <name>CinematicsWidget</name>
+                            </MObject>
+                           </base-MObject>
+                          </MClass>
+                         </instance>
+                        </target>
+                       </handle>
+                      </item>
+                      <item>
+                       <handle>
+                        <uid>{699682a3-fbe1-48f5-ad60-e528f07aa2c0}</uid>
+                        <target>
+                         <instance type="MClass">
+                          <MClass>
+                           <base-MObject>
+                            <MObject>
+                             <base-MElement>
+                              <MElement>
+                               <uid>{699682a3-fbe1-48f5-ad60-e528f07aa2c0}</uid>
+                               <flags>1</flags>
+                              </MElement>
+                             </base-MElement>
+                             <name>MapTools</name>
+                            </MObject>
+                           </base-MObject>
+                          </MClass>
+                         </instance>
+                        </target>
+                       </handle>
+                      </item>
+                      <item>
+                       <handle>
+                        <uid>{873d122a-edf7-47aa-abb6-270576ea4e44}</uid>
+                        <target>
+                         <instance type="MClass">
+                          <MClass>
+                           <base-MObject>
+                            <MObject>
+                             <base-MElement>
+                              <MElement>
+                               <uid>{873d122a-edf7-47aa-abb6-270576ea4e44}</uid>
+                               <flags>1</flags>
+                              </MElement>
+                             </base-MElement>
+                             <name>tVisibleClipboard</name>
+                            </MObject>
+                           </base-MObject>
+                           <namespace>MapTools</namespace>
+                          </MClass>
+                         </instance>
+                        </target>
+                       </handle>
+                      </item>
+                      <item>
+                       <handle>
+                        <uid>{771a7614-fce4-4236-b5d2-cda6f46b4e9c}</uid>
+                        <target>
+                         <instance type="MClass">
+                          <MClass>
+                           <base-MObject>
+                            <MObject>
+                             <base-MElement>
+                              <MElement>
+                               <uid>{771a7614-fce4-4236-b5d2-cda6f46b4e9c}</uid>
+                               <flags>1</flags>
+                              </MElement>
+                             </base-MElement>
+                             <name>tBlockingClipboard</name>
+                            </MObject>
+                           </base-MObject>
+                           <namespace>MapTools</namespace>
+                          </MClass>
+                         </instance>
+                        </target>
+                       </handle>
+                      </item>
                      </qlist>
                     </handles>
                    </handles>
@@ -5966,6 +5634,89 @@
                  </MObject>
                 </base-MObject>
                </MComponent>
+              </instance>
+             </target>
+            </handle>
+           </item>
+           <item>
+            <handle>
+             <uid>{21ab07f5-2669-46f3-80ce-a19f4c7fe45e}</uid>
+             <target>
+              <instance type="MPackage">
+               <MPackage>
+                <base-MObject>
+                 <MObject>
+                  <base-MElement>
+                   <MElement>
+                    <uid>{21ab07f5-2669-46f3-80ce-a19f4c7fe45e}</uid>
+                    <flags>1</flags>
+                   </MElement>
+                  </base-MElement>
+                  <name>Src</name>
+                  <children>
+                   <handles>
+                    <handles>
+                     <qlist>
+                      <item>
+                       <handle>
+                        <uid>{187b5c84-ccfc-4439-b3ea-59b5a024b5b9}</uid>
+                        <target>
+                         <instance type="MPackage">
+                          <MPackage>
+                           <base-MObject>
+                            <MObject>
+                             <base-MElement>
+                              <MElement>
+                               <uid>{187b5c84-ccfc-4439-b3ea-59b5a024b5b9}</uid>
+                               <flags>1</flags>
+                              </MElement>
+                             </base-MElement>
+                             <name>Utils</name>
+                             <children>
+                              <handles>
+                               <handles>
+                                <qlist>
+                                 <item>
+                                  <handle>
+                                   <uid>{d2ff4436-11ab-4ab7-a6ee-1f61efd4fadd}</uid>
+                                   <target>
+                                    <instance type="MClass">
+                                     <MClass>
+                                      <base-MObject>
+                                       <MObject>
+                                        <base-MElement>
+                                         <MElement>
+                                          <uid>{d2ff4436-11ab-4ab7-a6ee-1f61efd4fadd}</uid>
+                                          <flags>1</flags>
+                                         </MElement>
+                                        </base-MElement>
+                                        <name>Logger</name>
+                                       </MObject>
+                                      </base-MObject>
+                                      <namespace>Log</namespace>
+                                     </MClass>
+                                    </instance>
+                                   </target>
+                                  </handle>
+                                 </item>
+                                </qlist>
+                               </handles>
+                              </handles>
+                             </children>
+                            </MObject>
+                           </base-MObject>
+                          </MPackage>
+                         </instance>
+                        </target>
+                       </handle>
+                      </item>
+                     </qlist>
+                    </handles>
+                   </handles>
+                  </children>
+                 </MObject>
+                </base-MObject>
+               </MPackage>
               </instance>
              </target>
             </handle>

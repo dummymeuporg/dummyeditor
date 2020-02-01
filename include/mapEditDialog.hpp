@@ -28,10 +28,9 @@ class MapEditDialog : public QDialog
     Q_OBJECT
 public:
     explicit MapEditDialog(QWidget* parent = nullptr);
-    ~MapEditDialog() override;
+    virtual ~MapEditDialog(); // we need this because of smart ptr + forward declaration..
 
-    void setup(const Editor::Project& project,
-               std::shared_ptr<MapDocument> = nullptr);
+    void setup(const Editor::Project& project, const MapDocument* = nullptr);
 
     QString getMapName() const;
     quint16 getWidth() const;
@@ -46,7 +45,7 @@ public slots:
 
 private:
     bool inputsAreValid(QString* errorMessage = nullptr);
-    Ui::MapEditDialog* m_ui = nullptr;
+    std::unique_ptr<Ui::MapEditDialog> m_ui;
     QString m_chipsetPath;
 };
 

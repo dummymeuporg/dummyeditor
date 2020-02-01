@@ -6,14 +6,15 @@
 
 #include <dummy/local/floor.hpp>
 
+#include "editor/layerBlocking.hpp"
+#include "editor/layerEvents.hpp"
+#include "editor/layerGraphic.hpp"
+
 //////////////////////////////////////////////////////////////////////////////
 //  forward declaration
 //////////////////////////////////////////////////////////////////////////////
 
 namespace Editor {
-class BlockingLayer;
-class EventsLayer;
-class GraphicLayer;
 using GraphicLayers = std::map<int8_t, std::unique_ptr<GraphicLayer>>;
 
 //////////////////////////////////////////////////////////////////////////////
@@ -30,24 +31,15 @@ public:
     bool visible() const { return m_visible; }
     void setVisible(bool);
 
-    BlockingLayer& blockingLayer() { return *m_blockingLayer; }
-    EventsLayer& eventsLayer() { return *m_eventsLayer; }
+    BlockingLayer& blockingLayer() { return m_blockingLayer; }
+    EventsLayer& eventsLayer() { return m_eventsLayer; }
     Dummy::Local::Floor& localFloor() { return m_floor; }
-
-    /*
-     * I comment this one, it is unused and may become problematic if
-     * m_graphicLayers.at(position) returns nullptr
-
-    GraphicLayer& graphicLayer(std::int8_t position) {
-        return *(m_graphicLayers.at(position));
-    }
-    */
 
 private:
     Dummy::Local::Floor& m_floor;
     GraphicLayers m_graphicLayers;
-    std::unique_ptr<BlockingLayer> m_blockingLayer;
-    std::unique_ptr<EventsLayer> m_eventsLayer;
+    BlockingLayer m_blockingLayer;
+    EventsLayer m_eventsLayer;
     bool m_visible = true;
 };
 
