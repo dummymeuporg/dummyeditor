@@ -252,41 +252,69 @@ void MapTools::eraseBlocking(const QRect& region)
 }
 void MapTools::copyCut(eCopyCut action)
 {
-    if (m_currLayerType != eLayerType::Visible || m_visLayer == nullptr)
-        return;
+    if (m_currLayerType == eLayerType::Visible && m_visLayer != nullptr)
+    {
+        QRectF selectedRect = m_mapScene.selectionRect().toRect();
 
-    QRectF selectedRect = m_mapScene.selectionRect().toRect();
-
-    std::vector<std::pair<int8_t, int8_t>> valuesInPatch;
-    qint16 minX       = static_cast<quint16>(selectedRect.x()) / CELL_W;
-    qint16 minY       = static_cast<quint16>(selectedRect.y()) / CELL_H;
-    qint16 selectionW = static_cast<quint16>(selectedRect.width()) / CELL_W;
-    qint16 selectionH = static_cast<quint16>(selectedRect.height()) / CELL_H;
-    qint16 maxX       = minX + selectionW - 1;
-    qint16 maxY       = minY + selectionH - 1;
-    for (qint16 y = minY; y <= maxY; ++y)
-        for (qint16 x = minX; x <= maxX; ++x) {
-            size_t indexInLayer = y * m_visLayer->layer().width() + x;
-            auto value          = m_visLayer->layer()[indexInLayer];
-            valuesInPatch.push_back(value);
-            if (action == eCopyCut::Cut) {
-                m_visLayer->setTile(x, y, {-1, -1});
+        std::vector<std::pair<int8_t, int8_t>> valuesInPatch;
+        qint16 minX       = static_cast<quint16>(selectedRect.x()) / CELL_W;
+        qint16 minY       = static_cast<quint16>(selectedRect.y()) / CELL_H;
+        qint16 selectionW = static_cast<quint16>(selectedRect.width()) / CELL_W;
+        qint16 selectionH = static_cast<quint16>(selectedRect.height()) / CELL_H;
+        qint16 maxX       = minX + selectionW - 1;
+        qint16 maxY       = minY + selectionH - 1;
+        for (qint16 y = minY; y <= maxY; ++y)
+            for (qint16 x = minX; x <= maxX; ++x) {
+                size_t indexInLayer = y * m_visLayer->layer().width() + x;
+                auto value          = m_visLayer->layer()[indexInLayer];
+                valuesInPatch.push_back(value);
+                if (action == eCopyCut::Cut) {
+                    m_visLayer->setTile(x, y, {-1, -1});
+                }
             }
-        }
-    m_visibleClipboard.width   = selectionW;
-    m_visibleClipboard.height  = selectionH;
-    m_visibleClipboard.content = valuesInPatch;
+        m_visibleClipboard.width   = selectionW;
+        m_visibleClipboard.height  = selectionH;
+        m_visibleClipboard.content = valuesInPatch;
+    }
+    else if (m_currLayerType == eLayerType::Blocking && m_blockLayer != nullptr) {
+        QRectF selectedRect = m_mapScene.selectionRect().toRect();
+        std::vector<bool> valuesInPatch;
+        qint16 minX       = static_cast<quint16>(selectedRect.x()) / BLOCK_W;
+        qint16 minY       = static_cast<quint16>(selectedRect.y()) / BLOCK_H;
+        qint16 selectionW = static_cast<quint16>(selectedRect.width()) / BLOCK_W;
+        qint16 selectionH = static_cast<quint16>(selectedRect.height()) / BLOCK_H;
+        qint16 maxX       = minX + selectionW - 1;
+        qint16 maxY       = minY + selectionH - 1;
+        for (qint16 y = minY; y <= maxY; ++y)
+            for (qint16 x = minX; x <= maxX; ++x) {
+                size_t indexInLayer = y * m_blockLayer->layer().width() + x;
+                auto value          = m_blockLayer->layer()[indexInLayer];
+                valuesInPatch.push_back(value);
+                if (action == eCopyCut::Cut) {
+                    m_blockLayer->setTile(x, y, false);
+                }
+            }
+        m_blockingClipboard.width = selectionW;
+        m_blockingClipboard.height = selectionH;
+        m_blockingClipboard.content = valuesInPatch;
+    }
 }
 
 void MapTools::paste(const QPoint& point)
 {
-    if (m_visibleClipboard.width == 0 || m_visibleClipboard.height == 0)
-        return;
 
-    if (m_currLayerType != eLayerType::Visible || m_visLayer == nullptr)
-        return;
 
-    doCommand(std::make_unique<CommandPaint>(*this, QPoint(point), tVisibleClipboard(m_visibleClipboard)));
+    if (m_currLayerType == eLayerType::Visible && m_visLayer != nullptr)
+    {
+        if (m_visibleClipboard.width == 0 || m_visibleClipboard.height == 0)
+            return;
+        doCommand(std::make_unique<CommandPaint>(*this, QPoint(point), tVisibleClipboard(m_visibleClipboard)));
+    }
+    else if (m_currLayerType == eLayerType::Blocking && m_blockLayer != nullptr) {
+        if (m_blockingClipboard.width == 0 || m_blockingClipboard.height == 0)
+            return;
+        doCommand(std::make_unique<CommandPaintBlocking>(*this, QPoint(point), tBlockingClipboard(m_blockingClipboard)));
+    }
 }
 
 void MapTools::previewTool(const QRect& clickingRegion)
