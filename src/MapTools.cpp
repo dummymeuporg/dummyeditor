@@ -254,7 +254,7 @@ void MapTools::copyCut(eCopyCut action)
 {
     if (m_currLayerType == eLayerType::Visible && m_visLayer != nullptr)
     {
-        QRectF selectedRect = m_mapScene.selectionRect().toRect();
+        QRect selectedRect = m_mapScene.selectionRect().toRect();
 
         std::vector<std::pair<int8_t, int8_t>> valuesInPatch;
         qint16 minX       = static_cast<quint16>(selectedRect.x()) / CELL_W;
@@ -268,16 +268,16 @@ void MapTools::copyCut(eCopyCut action)
                 size_t indexInLayer = y * m_visLayer->layer().width() + x;
                 auto value          = m_visLayer->layer()[indexInLayer];
                 valuesInPatch.push_back(value);
-                if (action == eCopyCut::Cut) {
-                    m_visLayer->setTile(x, y, {-1, -1});
-                }
             }
         m_visibleClipboard.width   = selectionW;
         m_visibleClipboard.height  = selectionH;
         m_visibleClipboard.content = valuesInPatch;
+        if (action == eCopyCut::Cut) {
+            eraseVisible(selectedRect);
+        }
     }
     else if (m_currLayerType == eLayerType::Blocking && m_blockLayer != nullptr) {
-        QRectF selectedRect = m_mapScene.selectionRect().toRect();
+        QRect selectedRect = m_mapScene.selectionRect().toRect();
         std::vector<bool> valuesInPatch;
         qint16 minX       = static_cast<quint16>(selectedRect.x()) / BLOCK_W;
         qint16 minY       = static_cast<quint16>(selectedRect.y()) / BLOCK_H;
@@ -290,13 +290,13 @@ void MapTools::copyCut(eCopyCut action)
                 size_t indexInLayer = y * m_blockLayer->layer().width() + x;
                 auto value          = m_blockLayer->layer()[indexInLayer];
                 valuesInPatch.push_back(value);
-                if (action == eCopyCut::Cut) {
-                    m_blockLayer->setTile(x, y, false);
-                }
             }
         m_blockingClipboard.width = selectionW;
         m_blockingClipboard.height = selectionH;
         m_blockingClipboard.content = valuesInPatch;
+        if (action == eCopyCut::Cut) {
+            eraseBlocking(selectedRect);
+        }
     }
 }
 
