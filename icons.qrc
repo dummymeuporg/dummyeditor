@@ -35,5 +35,6 @@
         <file>icons/close_icon_red.png</file>
         <file>icons/icon_zoom_in.png</file>
         <file>icons/icon_zoom_out.png</file>
+        <file>icons/icon_resize.png</file>
     </qresource>
 </RCC>

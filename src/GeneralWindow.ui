@@ -301,6 +301,7 @@
    <addaction name="actionRedo"/>
    <addaction name="separator"/>
    <addaction name="actionZoomIn"/>
+   <addaction name="actionResize"/>
    <addaction name="actionZoomOut"/>
    <addaction name="actionToggleGrid"/>
   </widget>
@@ -506,6 +507,18 @@
    </property>
    <property name="toolTip">
     <string>zoom out</string>
+   </property>
+  </action>
+  <action name="actionResize">
+   <property name="icon">
+    <iconset resource="../icons.qrc">
+     <normaloff>:/icons/icon_resize.png</normaloff>:/icons/icon_resize.png</iconset>
+   </property>
+   <property name="text">
+    <string>Resize window</string>
+   </property>
+   <property name="toolTip">
+    <string>Resize window</string>
    </property>
   </action>
  </widget>
