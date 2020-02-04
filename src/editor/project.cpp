@@ -14,16 +14,16 @@
 #include "utils/Logger.hpp"
 #include "utils/mapDocument.hpp"
 
-using std::make_unique;
 using std::make_shared;
+using std::make_unique;
 
 namespace Editor {
 
 Project::Project(const std::string& projectFolder)
-    : m_coreProject(fs::path(projectFolder))
+    : m_projectPath(projectFolder)
 {
     // Try to read the "project.xml" file that should be present in folderPath.
-    QFile xmlProjectFile((m_coreProject.projectPath() / "project.xml").string().c_str());
+    QFile xmlProjectFile((m_projectPath / "project.xml").string().c_str());
     m_domDocument.setContent(&xmlProjectFile);
     xmlProjectFile.close();
 
@@ -119,7 +119,7 @@ void Project::saveProject()
     projectNode.appendChild(startingPointNode);
 
     dumpToXmlNode(doc, mapsNode, m_mapsModel->invisibleRootItem());
-    QString xmlPath((m_coreProject.projectPath() / "project.xml").string().c_str());
+    QString xmlPath((m_projectPath / "project.xml").string().c_str());
 
     // XXX: Handle errors eventually.
     QFile file(xmlPath);
@@ -166,7 +166,7 @@ void Project::createMap(const tMapInfo& mapInfo, QStandardItem& parent)
     const uint16_t h      = mapInfo.m_height;
     const QString mapName = QString::fromStdString(mapInfo.m_mapName);
 
-    auto map = make_shared<Editor::Map>(coreProject(), mapInfo.m_mapName);
+    auto map = make_shared<Editor::Map>(m_projectPath, mapInfo.m_mapName);
     map->setChipset(mapInfo.m_chispetPath);
     map->setMusic(mapInfo.m_musicPath);
     map->reset(w, h);
@@ -178,10 +178,10 @@ void Project::createMap(const tMapInfo& mapInfo, QStandardItem& parent)
     // 1 (the one juste above the character)
     // 2 (another one above)
     Dummy::Local::Floor floor(*map);
-    floor.addGraphicLayer(-1, Dummy::Core::GraphicLayer(w, h));
-    floor.addGraphicLayer(0, Dummy::Core::GraphicLayer(w, h));
-    floor.addGraphicLayer(1, Dummy::Core::GraphicLayer(w, h));
-    floor.addGraphicLayer(2, Dummy::Core::GraphicLayer(w, h));
+    floor.addGraphicLayer(-1, Dummy::Core::GraphicLayer(w, h, {-1, -1}));
+    floor.addGraphicLayer(0, Dummy::Core::GraphicLayer(w, h, {-1, -1}));
+    floor.addGraphicLayer(1, Dummy::Core::GraphicLayer(w, h, {-1, -1}));
+    floor.addGraphicLayer(2, Dummy::Core::GraphicLayer(w, h, {-1, -1}));
 
     map->addFloor(make_unique<Editor::Floor>(floor));
     map->resize(w, h);
@@ -198,7 +198,7 @@ const MapDocument& Project::document(const QString& mapName)
     cleanMapName(cleantMapname);
 
     if (! m_openedMaps.contains(cleantMapname)) {
-        auto map = make_shared<Editor::Map>(m_coreProject, cleantMapname.toStdString());
+        auto map = make_shared<Editor::Map>(m_projectPath, cleantMapname.toStdString());
         map->load();
 
         auto mapDocument = make_shared<MapDocument>(*this, cleantMapname, map);
