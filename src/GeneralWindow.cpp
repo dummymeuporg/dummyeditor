@@ -275,7 +275,7 @@ void GeneralWindow::on_mapsList_doubleClicked(const QModelIndex& selectedIndex)
 
     // update chipset scene
     QString chipsetPath =
-        QString::fromStdString((m_loadedProject->projectPath() / "chipsets" / map->chipset()).string());
+        QString::fromStdString((m_loadedProject->coreProject().projectPath() / "chipsets" / map->chipset()).string());
     m_chipsetScene.setChipset(chipsetPath);
     m_ui->graphicsViewChipset->viewport()->update();
 

@@ -4,12 +4,17 @@
 #include <cstdint>
 #include <vector>
 
-#include "dummy/core/layer.hpp"
 #include "editor/layer.hpp"
 
 //////////////////////////////////////////////////////////////////////////////
 //  forward declaration
 //////////////////////////////////////////////////////////////////////////////
+
+namespace Dummy {
+namespace Core {
+class BlockingLayer;
+} // namespace Core
+} // namespace Dummy
 
 namespace Editor {
 
@@ -23,11 +28,10 @@ public:
     explicit BlockingLayer(Dummy::Core::BlockingLayer&);
 
     Dummy::Core::BlockingLayer& layer() { return m_layer; }
-    uint8_t at(tilecoords coords) { return m_layer.at(coords); }
-    void set(tilecoords coords, uint8_t val) { m_layer.set(coords, val); }
+    std::uint8_t& operator[](std::size_t index);
 
-    uint16_t width() const;
-    uint16_t height() const;
+    std::uint16_t width() const;
+    std::uint16_t height() const;
 
 private:
     Dummy::Core::BlockingLayer& m_layer;

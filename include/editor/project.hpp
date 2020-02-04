@@ -3,8 +3,9 @@
 
 #include <QDomDocument>
 #include <QMap>
-#include <filesystem>
 #include <memory>
+
+#include <dummy/local/project.hpp>
 
 #include "editor/startingPoint.hpp"
 #include "mapsTree.hpp"
@@ -37,7 +38,7 @@ public:
 
     // Getters
     MapsTreeModel* mapsModel();
-    const std::filesystem::path& projectPath() const { return m_projectPath; }
+    const Dummy::Local::Project& coreProject() const { return m_coreProject; }
     const MapDocument& document(const QString& mapName);
     QMap<QString, std::shared_ptr<MapDocument>> openedMaps() const;
 
@@ -59,7 +60,7 @@ private:
     static void createFolders(const QString&);
 
 private:
-    std::filesystem::path m_projectPath;
+    Dummy::Local::Project m_coreProject;
     QDomDocument m_domDocument;
     std::unique_ptr<MapsTreeModel> m_mapsModel;
     bool m_isModified = false;

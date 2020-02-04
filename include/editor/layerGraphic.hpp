@@ -4,12 +4,17 @@
 #include <cstdint>
 #include <vector>
 
-#include "dummy/core/layer.hpp"
 #include "editor/layer.hpp"
 
 //////////////////////////////////////////////////////////////////////////////
 //  forward declaration
 //////////////////////////////////////////////////////////////////////////////
+
+namespace Dummy {
+namespace Core {
+class GraphicLayer;
+} // namespace Core
+} // namespace Dummy
 
 namespace Editor {
 
@@ -23,8 +28,7 @@ public:
     explicit GraphicLayer(Dummy::Core::GraphicLayer&);
 
     Dummy::Core::GraphicLayer& layer() { return m_layer; }
-    tileaspect at(tilecoords coords) { return m_layer.at(coords); }
-    void set(tilecoords coords, tileaspect val) { m_layer.set(coords, val); }
+    std::pair<std::int8_t, std::int8_t>& operator[](std::size_t index);
 
     std::uint16_t width() const;
     std::uint16_t height() const;

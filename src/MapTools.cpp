@@ -252,7 +252,6 @@ void MapTools::eraseBlocking(const QRect& region)
 }
 void MapTools::copyCut(eCopyCut action)
 {
-<<<<<<< HEAD
     if (m_currLayerType == eLayerType::Visible && m_visLayer != nullptr)
     {
         QRect selectedRect = m_mapScene.selectionRect().toRect();

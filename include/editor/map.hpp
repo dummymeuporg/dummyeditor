@@ -5,7 +5,6 @@
 #include <memory>
 #include <string>
 
-#include <dummy/core/layer.hpp>
 #include <dummy/local/map.hpp>
 
 #include "editor/floor.hpp"
@@ -22,6 +21,12 @@ extern "C"
 //  forward declaration
 //////////////////////////////////////////////////////////////////////////////
 
+namespace Dummy {
+namespace Core {
+class GraphicLayer;
+} // namespace Core
+} // namespace Dummy
+
 namespace Editor {
 class Floor;
 using Floors = std::vector<std::unique_ptr<Floor>>;
@@ -33,10 +38,10 @@ using Floors = std::vector<std::unique_ptr<Floor>>;
 class Map : public Dummy::Local::Map
 {
 public:
-    explicit Map(const std::filesystem::path&, const std::string&);
+    explicit Map(const Dummy::Local::Project&, const std::string&);
     virtual ~Map();
 
-    void setName(const std::string&);
+    void setName (const std::string&);
     void setChipset(const std::string&);
     void setMusic(const std::string&);
     void reset(std::uint16_t, std::uint16_t);
@@ -63,8 +68,10 @@ private:
     void saveEventsFile();
 
     void resizeFloor(Editor::Floor&, std::uint16_t, std::uint16_t);
-    void resizeBlockingLayer(Editor::BlockingLayer&, std::uint16_t, std::uint16_t);
-    void resizeGraphicLayer(Editor::GraphicLayer&, std::uint16_t, std::uint16_t);
+    void resizeBlockingLayer(Editor::BlockingLayer&, std::uint16_t,
+                             std::uint16_t);
+    void resizeGraphicLayer(Editor::GraphicLayer&, std::uint16_t,
+                            std::uint16_t);
 
     static void writeStdString(std::ofstream&, const std::string&);
     void writeFloor(std::ofstream&, const Dummy::Local::Floor&) const;

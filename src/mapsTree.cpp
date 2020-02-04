@@ -120,7 +120,8 @@ void MapsTreeView::editMap(int result)
 
     std::string strChipset = m_editDialog->getChipset().toStdString();
     if (strChipset != m_editedMap->chipset()) {
-        emit chipsetMapChanged(QString::fromStdString((m_project->projectPath() / "chipsets" / strChipset).string()));
+        emit chipsetMapChanged(
+            QString::fromStdString((m_project->coreProject().projectPath() / "chipsets" / strChipset).string()));
         m_editedMap->setChipset(strChipset);
     }
     m_editedMap->setMusic(m_editDialog->getMusic().toStdString());
