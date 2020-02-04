@@ -185,6 +185,7 @@ void Project::createMap(const tMapInfo& mapInfo, QStandardItem& parent)
 
     map->addFloor(make_unique<Editor::Floor>(floor));
     map->resize(w, h);
+    map->save();
 
     // Add the new map into the tree.
     QList<QStandardItem*> mapRow {new QStandardItem(mapName)};

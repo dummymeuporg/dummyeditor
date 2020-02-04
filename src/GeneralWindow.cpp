@@ -360,6 +360,14 @@ void GeneralWindow::on_actionRedo_triggered()
 {
     m_mapTools.redo();
 }
+void GeneralWindow::on_actionZoomIn_triggered()
+{
+    m_ui->graphicsViewMap->scale(2.0, 2.0);
+}
+void GeneralWindow::on_actionZoomOut_triggered()
+{
+    m_ui->graphicsViewMap->scale(0.5, 0.5);
+}
 
 //////////////////////////////////////////////////////////////////////////////
 

@@ -33,5 +33,7 @@
         <file>icons/Redo_icon.png</file>
         <file>icons/Undo_icon.png</file>
         <file>icons/close_icon_red.png</file>
+        <file>icons/icon_zoom_in.png</file>
+        <file>icons/icon_zoom_out.png</file>
     </qresource>
 </RCC>

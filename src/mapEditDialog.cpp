@@ -80,13 +80,13 @@ bool MapEditDialog::inputsAreValid(QString* errorMessage)
 
     } else if (m_ui->spinBoxMapHeight->value() < 1) { // should not happen
         if (errorMessage != nullptr)
-            *errorMessage = tr("You map's height must be above or equal to 1.");
+            *errorMessage = tr("The map's height must be above or equal to 1.");
 
         return false;
 
     } else if (m_ui->spinBoxMapWidth->value() < 1) { // should not happen
         if (errorMessage != nullptr)
-            *errorMessage = tr("You map's width must be above or equal to 1.");
+            *errorMessage = tr("The map's width must be above or equal to 1.");
 
         return false;
     }
