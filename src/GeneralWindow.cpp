@@ -6,8 +6,6 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
-#include <QDebug>
-
 #include "editor/layerBlocking.hpp"
 #include "editor/layerGraphic.hpp"
 #include "editor/map.hpp"
@@ -372,6 +370,9 @@ void GeneralWindow::on_actionZoomOut_triggered()
 }
 void GeneralWindow::on_actionResize_triggered()
 {
+    if (m_mapScene.height() == 0 || m_mapScene.width() == 0)
+        return;
+
     qreal minScale = std::min(m_ui->graphicsViewMap->height()/m_mapScene.height(),m_ui->graphicsViewMap->width()/m_mapScene.width());
     m_ui->graphicsViewMap->resetTransform();
     m_ui->graphicsViewMap->scale(minScale,minScale);
