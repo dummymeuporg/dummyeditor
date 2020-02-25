@@ -53,9 +53,13 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent*) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent*) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent*) override;
+    void wheelEvent(QGraphicsSceneWheelEvent*) override;
 
 public slots:
     void clear();
+
+signals:
+    void zooming(QString);
 
 private:
     void instantiateFloor(Editor::Floor&, const QPixmap& chip, int& zIdxInOut);

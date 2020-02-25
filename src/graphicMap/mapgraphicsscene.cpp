@@ -172,4 +172,17 @@ QRectF MapGraphicsScene::selectionRect()
     else
         return m_selectionRectItem->rect();
 }
+
+void MapGraphicsScene::wheelEvent(QGraphicsSceneWheelEvent* e)
+{
+    if (e->modifiers().testFlag(Qt::ControlModifier) && (e->delta() > 0))
+    {
+        emit zooming(QString::fromStdString("+"));
+    }
+    else if (e->modifiers().testFlag(Qt::ControlModifier) && (e->delta() < 0))
+    {
+        emit zooming(QString::fromStdString("-"));
+    }
+
+}
 } // namespace GraphicMap

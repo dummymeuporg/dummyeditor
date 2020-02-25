@@ -45,6 +45,10 @@ public:
     bool loadProject(const QString& path);
     bool closeProject();
 
+public slots:
+
+    void mapZoomTriggered(QString);
+
 private slots:
     void on_actionNew_triggered();
     void on_actionOpen_triggered();

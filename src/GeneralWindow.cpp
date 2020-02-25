@@ -2,6 +2,7 @@
 #include "ui_GeneralWindow.h"
 
 #include <QCloseEvent>
+#include <QDebug>
 #include <QDir>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -13,6 +14,7 @@
 #include "graphicMap/layerGraphicBlocking.hpp"
 #include "graphicMap/layerGraphicVisible.hpp"
 #include "utils/definitions.hpp"
+#include "utils/Logger.hpp"
 #include "utils/mapDocument.hpp"
 
 using Editor::Project;
@@ -73,8 +75,9 @@ GeneralWindow::GeneralWindow(QWidget* parent)
     m_ui->actionRedo->setShortcutContext(Qt::ApplicationShortcut);
 
     // connect ui items
-    connect(m_ui->btnNewMap, SIGNAL(clicked()), m_ui->mapsList, SLOT(addMapAtRoot()));
-    connect(m_ui->mapsList, SIGNAL(chipsetMapChanged(QString)), &m_chipsetScene, SLOT(setChipset(QString)));
+    connect(m_ui->btnNewMap, &QPushButton::clicked, m_ui->mapsList, &MapsTreeView::addMapAtRoot);
+    connect(m_ui->mapsList, &MapsTreeView::chipsetMapChanged, &m_chipsetScene, &ChipsetGraphicsScene::setChipset);
+    connect(&m_mapScene, &GraphicMap::MapGraphicsScene::zooming, this, &GeneralWindow::mapZoomTriggered);
 }
 
 GeneralWindow::~GeneralWindow()
@@ -376,6 +379,18 @@ void GeneralWindow::on_actionResize_triggered()
     qreal minScale = std::min(m_ui->graphicsViewMap->height()/m_mapScene.height(),m_ui->graphicsViewMap->width()/m_mapScene.width());
     m_ui->graphicsViewMap->resetTransform();
     m_ui->graphicsViewMap->scale(minScale,minScale);
+}
+
+void GeneralWindow::mapZoomTriggered(QString zoom)
+{
+    if (zoom == "+")
+    {
+        m_ui->graphicsViewMap->scale(1.25, 1.25);
+    }
+    else if (zoom == "-")
+    {
+        m_ui->graphicsViewMap->scale(0.75, 0.75);
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////
