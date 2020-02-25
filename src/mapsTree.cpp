@@ -22,16 +22,16 @@ MapsTreeView::MapsTreeView(QWidget* parent)
     m_mapMenu->addAction(m_newMapAction);
     m_mapMenu->addAction(m_editAction);
     // connect actions
-    connect(m_newMapAction, SIGNAL(triggered()), this, SLOT(showNewMapDlg()));
-    connect(m_editAction, SIGNAL(triggered()), this, SLOT(showEditDlg()));
+    connect(m_newMapAction, &QAction::triggered, this, &MapsTreeView::showNewMapDlg);
+    connect(m_editAction, &QAction::triggered, this, &MapsTreeView::showEditDlg);
     // connect menu pop-up
-    connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showContextMenu(const QPoint&)));
+    connect(this, &QWidget::customContextMenuRequested, this, &MapsTreeView::showContextMenu);
     m_mapMenu->setEnabled(false);
 
     // connect new map dialog
-    connect(m_newMapDialog, SIGNAL(finished(int)), this, SLOT(createMap(int)));
+    connect(m_newMapDialog, &QDialog::finished, this, &MapsTreeView::createMap);
     // connect edit dialog
-    connect(m_editDialog, SIGNAL(finished(int)), this, SLOT(editMap(int)));
+    connect(m_editDialog, &QDialog::finished, this, &MapsTreeView::editMap);
 }
 
 void MapsTreeView::setProject(std::shared_ptr<Editor::Project> project)

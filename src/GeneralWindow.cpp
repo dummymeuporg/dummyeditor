@@ -286,14 +286,14 @@ void GeneralWindow::on_mapsList_doubleClicked(const QModelIndex& selectedIndex)
 
     // link visible layers
     for (const auto& pVisLayer : m_mapScene.graphicLayers()) {
-        connect(pVisLayer.get(), SIGNAL(layerSelected(GraphicMap::VisibleGraphicLayer*)), this,
-                SLOT(graphicLayerSelected(GraphicMap::VisibleGraphicLayer*)));
+        connect(pVisLayer.get(), &GraphicMap::VisibleGraphicLayer::layerSelected, this,
+                &GeneralWindow::graphicLayerSelected);
     }
 
     // link blocking layers
     for (const auto& pBlockLayer : m_mapScene.blockingLayers()) {
-        connect(pBlockLayer.get(), SIGNAL(layerSelected(GraphicMap::BlockingGraphicLayer*)), this,
-                SLOT(blockingLayerSelected(GraphicMap::BlockingGraphicLayer*)));
+        connect(pBlockLayer.get(), &GraphicMap::BlockingGraphicLayer::layerSelected, this,
+                &GeneralWindow::blockingLayerSelected);
     }
 
     // link events layers ?

@@ -16,8 +16,8 @@ VisibleGraphicLayer::VisibleGraphicLayer(Editor::GraphicLayer& layer, const QPix
 {
     indexedItems().resize(m_graphicLayer.width() * m_graphicLayer.height());
 
-    connect(&m_graphicLayer, SIGNAL(visibilityChanged(bool)), this, SLOT(setVisibility(bool)));
-    connect(&m_graphicLayer, SIGNAL(setSelected()), this, SLOT(setSelected()));
+    connect(&m_graphicLayer, &Editor::GraphicLayer::visibilityChanged, this, &MapSceneLayer::setVisibility);
+    connect(&m_graphicLayer, &Editor::GraphicLayer::setSelected, this, &VisibleGraphicLayer::setSelected);
 
     size_t index = 0;
     for (const auto& cellCoord : m_graphicLayer.layer()) {
