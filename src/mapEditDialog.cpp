@@ -32,7 +32,7 @@ void MapEditDialog::setup(const Editor::Project& project, const MapDocument* map
     }
 
     // TODO replace call to filesystem with QFile ?
-    m_chipsetPath = QString::fromStdString((project.coreProject().projectPath() / "chipsets").string());
+    m_chipsetPath = QString::fromStdString((project.projectPath() / "chipsets").string());
 
     // On Windows, fs::pash puts some backslashes. That sucks.
     // Clean path uses slashes, remove weird paths as "folder/../folder"
