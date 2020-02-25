@@ -20,14 +20,13 @@ VisibleGraphicLayer::VisibleGraphicLayer(Editor::GraphicLayer& layer, const QPix
     connect(&m_graphicLayer, &Editor::GraphicLayer::setSelected, this, &VisibleGraphicLayer::setSelected);
 
     size_t index = 0;
-    for (const auto& cellCoord : m_graphicLayer.layer()) {
-        indexedItems()[index] = nullptr;
-        quint16 posX          = (index % m_graphicLayer.width());
-        quint16 posY          = (index / m_graphicLayer.width());
-
-        setTile(posX, posY, cellCoord);
-        ++index;
-    }
+    uint16_t w   = m_graphicLayer.width();
+    uint16_t h   = m_graphicLayer.height();
+    for (uint16_t x = 0; x < w; ++x)
+        for (uint16_t y = 0; y < h; ++y) {
+            setTile(x, y, m_graphicLayer.at({x, y}));
+            ++index;
+        }
 }
 
 void VisibleGraphicLayer::setSelected()
@@ -39,8 +38,7 @@ std::pair<int8_t, int8_t> VisibleGraphicLayer::tile(quint16 x, quint16 y) const
 {
     if (x > m_graphicLayer.width() || y > m_graphicLayer.height())
         return {-1, -1};
-    size_t index = (y * m_graphicLayer.width()) + x;
-    return m_graphicLayer[index];
+    return m_graphicLayer.at({x, y});
 }
 
 void VisibleGraphicLayer::setTile(quint16 x, quint16 y, std::pair<int8_t, int8_t> values)
@@ -63,9 +61,9 @@ void VisibleGraphicLayer::setTile(quint16 x, quint16 y, std::pair<int8_t, int8_t
         indexedItems()[index]->setPos(x * CELL_W, y * CELL_H);
         graphicItems()->addToGroup(indexedItems()[index]);
 
-        m_graphicLayer[index] = values;
+        m_graphicLayer.set({x, y}, values);
     } else {
-        m_graphicLayer[index] = std::pair<int8_t, int8_t>(-1, -1);
+        m_graphicLayer.set({x, y}, {-1, -1});
     }
 }
 

@@ -1,16 +1,19 @@
 #include "editor/map.hpp"
 
 #include <QDebug>
-
-#include <dummy/local/project.hpp>
+#include <filesystem>
+#include <fstream>
 
 #include "editor/layerBlocking.hpp"
 #include "editor/layerEvents.hpp"
 #include "editor/layerGraphic.hpp"
 #include "utils/Logger.hpp"
 
+
+namespace fs = std::filesystem;
+
 namespace Editor {
-Map::Map(const Dummy::Local::Project& project, const std::string& name)
+Map::Map(const std::filesystem::path& project, const std::string& name)
     : Dummy::Local::Map(project, name)
 {}
 
@@ -58,45 +61,42 @@ void Map::saveEventsFile()
 {
     // Simply create the .lua file if it does not exist.
     std::string filename(m_name + ".lua");
-    fs::path filePath(m_project.projectPath() / "maps" / filename);
+    fs::path filePath(m_projectPath / "maps" / filename);
     if (! fs::exists(filePath)) {
         std::ofstream ofs(filePath);
         ofs.close();
     }
 }
 
-void Map::resizeGraphicLayer(Editor::GraphicLayer& graphicLayer,
-                             std::uint16_t width, std::uint16_t height)
+void Map::resizeGraphicLayer(Editor::GraphicLayer& graphicLayer, std::uint16_t width, std::uint16_t height)
 {
     // XXX: fix this
-    Dummy::Core::GraphicLayer newGraphicLayer(width, height);
+    Dummy::Core::GraphicLayer newGraphicLayer(width, height, {-1, -1});
 
     for (std::uint16_t y = 0; y < height; ++y) {
         for (std::uint16_t x = 0; x < width; ++x) {
             if (x < m_width && y < m_height) {
-                newGraphicLayer[(y * width) + x] =
-                    graphicLayer[(y * m_width) + x];
+                newGraphicLayer.set({x, y}, graphicLayer.at({x, y}));
             } else {
-                newGraphicLayer[(y * width) + x] =
-                    std::pair<std::int8_t, std::int8_t>(-1, -1);
+                newGraphicLayer.set({x, y}, {-1, -1});
             }
         }
     }
     graphicLayer.layer() = std::move(newGraphicLayer);
 }
 
-void Map::resizeBlockingLayer(Editor::BlockingLayer& blockingLayer,
-                              std::uint16_t width, std::uint16_t height)
+void Map::resizeBlockingLayer(Editor::BlockingLayer& blockingLayer, std::uint16_t width, std::uint16_t height)
 {
-    Dummy::Core::BlockingLayer newBlockingLayer(width, height);
+    width *= 2;
+    height *= 2;
+    Dummy::Core::BlockingLayer newBlockingLayer(width, height, 0);
 
     for (std::uint16_t y = 0; y < height; ++y) {
         for (std::uint16_t x = 0; x < width; ++x) {
             if (x < m_width && y < m_height) {
-                newBlockingLayer[(y * width) + x] =
-                    blockingLayer[(y * m_width) + x];
+                newBlockingLayer.set({x, y}, blockingLayer.at({x, y}));
             } else {
-                newBlockingLayer[(y * width) + x] = 0;
+                newBlockingLayer.set({x, y}, 0);
             }
         }
     }
@@ -112,8 +112,7 @@ void Map::resize(std::uint16_t width, std::uint16_t height)
     m_height = height;
 }
 
-void Map::resizeFloor(Editor::Floor& floor, std::uint16_t width,
-                      std::uint16_t height)
+void Map::resizeFloor(Editor::Floor& floor, std::uint16_t width, std::uint16_t height)
 {
     resizeBlockingLayer(floor.blockingLayer(), width, height);
 
@@ -126,18 +125,14 @@ void Map::saveBlockingLayers()
 {
     std::uint32_t magicNumber = BLK_MAGIC_WORD;
     std::string filename(m_name + ".blk");
-    std::ofstream ofs(m_project.projectPath() / "maps" / filename,
-                      std::ios::binary);
+    std::ofstream ofs(m_projectPath / "maps" / filename, std::ios::binary);
 
     // Write the magic number
-    ofs.write(reinterpret_cast<const char*>(&magicNumber),
-              sizeof(std::uint32_t));
+    ofs.write(reinterpret_cast<const char*>(&magicNumber), sizeof(std::uint32_t));
 
     // Write the blocking layers
     for (auto& floor : m_floors) {
-        ofs.write(reinterpret_cast<const char*>(floor.blockingLayer().data()),
-                  static_cast<std::streamsize>(floor.blockingLayer().size()
-                                               * sizeof(std::int8_t)));
+        floor.blockingLayer().writeRawData(ofs);
     }
 
     ofs.close();
@@ -148,12 +143,10 @@ void Map::saveGraphicLayers()
     std::uint32_t magicNumber = MAP_MAGIC_WORD;
     std::uint16_t version     = 2; // XXX for now.
     std::string filename(m_name + ".map");
-    std::ofstream ofs(m_project.projectPath() / "maps" / filename,
-                      std::ios::binary);
+    std::ofstream ofs(m_projectPath / "maps" / filename, std::ios::binary);
 
     // write the magic number
-    ofs.write(reinterpret_cast<const char*>(&magicNumber),
-              sizeof(std::uint32_t));
+    ofs.write(reinterpret_cast<const char*>(&magicNumber), sizeof(std::uint32_t));
 
     // write the version number
     ofs.write(reinterpret_cast<const char*>(&version), sizeof(std::uint16_t));
@@ -193,12 +186,8 @@ void Map::writeFloor(std::ofstream& ofs, const Dummy::Local::Floor& floor) const
     ofs.write(reinterpret_cast<char*>(&layersCount), sizeof(std::uint8_t));
 
     for (const auto& [position, layer] : floor.graphicLayers()) {
-        ofs.write(reinterpret_cast<const char*>(&position),
-                  sizeof(std::int8_t));
-        ofs.write(
-            reinterpret_cast<const char*>(layer.data()),
-            static_cast<std::streamsize>(
-                layer.size() * sizeof(std::pair<std::int8_t, std::int8_t>)));
+        ofs.write(reinterpret_cast<const char*>(&position), sizeof(std::int8_t));
+        layer.writeRawData(ofs);
     }
 }
 

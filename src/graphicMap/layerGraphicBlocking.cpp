@@ -21,14 +21,13 @@ BlockingGraphicLayer::BlockingGraphicLayer(Editor::BlockingLayer& blockingLayer,
     const size_t nbCells = m_blockingLayer.layer().size();
     indexedItems().resize(nbCells);
 
-    for (size_t index = 0; index < nbCells; ++index) {
-        if (m_blockingLayer[index] != 0) {
-            const size_t posX(index % (m_blockingLayer.width()));
-            const size_t posY(index / (m_blockingLayer.width()));
+    uint16_t w = m_blockingLayer.layer().width();
+    uint16_t h = m_blockingLayer.layer().height();
 
-            setTile(static_cast<quint16>(posX), static_cast<quint16>(posY), true);
-        }
-    }
+    for (uint16_t x = 0; x < w; ++x)
+        for (uint16_t y = 0; y < h; ++y)
+            if (m_blockingLayer.at({x, y}) != 0)
+                setTile(x, y, 1);
 }
 
 void BlockingGraphicLayer::setSelected()
@@ -41,9 +40,7 @@ void BlockingGraphicLayer::toggleTile(quint16 x, quint16 y)
     if (x > m_blockingLayer.width() || y > m_blockingLayer.height())
         return;
 
-    size_t index = (y * m_blockingLayer.width() + x);
-
-    if (m_blockingLayer[index] != 0) {
+    if (m_blockingLayer.at({x, y}) != 0) {
         setTile(x, y, false);
     } else {
         setTile(x, y, true);
@@ -55,7 +52,7 @@ bool BlockingGraphicLayer::tile(quint16 x, quint16 y) const
     if (x > m_blockingLayer.width() || y > m_blockingLayer.height())
         return false;
 
-    return m_blockingLayer[(y * m_blockingLayer.width()) + x];
+    return m_blockingLayer.at({x, y});
 }
 
 void BlockingGraphicLayer::setTile(quint16 x, quint16 y, bool isBlocking)
@@ -76,7 +73,7 @@ void BlockingGraphicLayer::setTile(quint16 x, quint16 y, bool isBlocking)
         graphicItems()->addToGroup(indexedItems()[index]);
     }
 
-    m_blockingLayer[index] = isBlocking;
+    m_blockingLayer.set({x, y}, isBlocking);
 }
 
 } // namespace GraphicMap

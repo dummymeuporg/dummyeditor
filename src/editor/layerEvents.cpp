@@ -1,6 +1,6 @@
 #include "editor/layerEvents.hpp"
 
-#include <dummy/core/blocking_layer.hpp>
+#include <dummy/core/layer.hpp>
 #include <dummy/local/floor.hpp>
 
 namespace Editor {
