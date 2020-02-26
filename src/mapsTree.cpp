@@ -1,7 +1,6 @@
 #include "mapsTree.hpp"
 
 #include <QAction>
-#include <QDebug>
 #include <QDomNode>
 #include <QTreeWidgetItem>
 

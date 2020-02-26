@@ -1,7 +1,5 @@
 #include "graphicMap/layerGraphicBlocking.hpp"
 
-#include <QDebug>
-
 #include "editor/layerBlocking.hpp"
 #include "editor/map.hpp"
 #include "graphicMap/graphicItem.hpp"

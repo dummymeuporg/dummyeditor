@@ -2,7 +2,6 @@
 
 #include <algorithm>
 
-#include <QDebug>
 #include <QDir>
 #include <QObject>
 

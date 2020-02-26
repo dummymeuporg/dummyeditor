@@ -1,7 +1,5 @@
 #include "utils/mapDocument.hpp"
 
-#include <QDebug>
-
 #include "editor/map.hpp"
 
 MapDocument::MapDocument(Editor::Project& project, const QString& name,

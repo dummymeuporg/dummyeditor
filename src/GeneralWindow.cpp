@@ -2,7 +2,6 @@
 #include "ui_GeneralWindow.h"
 
 #include <QCloseEvent>
-#include <QDebug>
 #include <QDir>
 #include <QFileDialog>
 #include <QMessageBox>

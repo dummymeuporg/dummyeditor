@@ -1,6 +1,5 @@
 #include "editor/map.hpp"
 
-#include <QDebug>
 #include <filesystem>
 #include <fstream>
 
